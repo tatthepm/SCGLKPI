@@ -13,7 +13,7 @@ namespace SCGLKPIUI.Controllers.Master {
             try {
                 TempData["Msg"] = sms;
                 var q = objBs.reasonAcceptedBs.GetAll();
-
+                //test
                 return View(q);
 
             } catch (Exception ex) {
