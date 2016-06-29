@@ -1,0 +1,189 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>
+    <i class="fa fa-bar-chart"></i> Adjust on-time outbound
+</h4>
+
+@Html.Partial("pv_FilterByMonth")
+
+@if (TempData["Msg"] != null) {
+    if (TempData["Msg"].ToString().Contains("Successfully")) {
+        <div class="alert alert-dismissable alert-info">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <span style="font-size:small"> @TempData["Msg"].ToString()</span>
+        </div>
+    }
+    else {
+        <div class="alert alert-dismissable alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <span style="font-size:small"> @TempData["Msg"].ToString()</span>
+        </div>
+    }
+}
+
+        @*get partial view*@
+        <div id="divResult"></div>
+
+        @section Styles {
+            @Styles.Render("~/bundles/datatables/css")
+            @Styles.Render("~/bundles/xeditable/css")
+            @Styles.Render("~/bundles/select2/css")
+            @Styles.Render("~/bundles/touchspin/css")
+            @Styles.Render("~/bundles/datepicker/css")
+            @Styles.Render("~/bundles/bootstrapCheckbox/css")
+            @Styles.Render("~/bundles/datetimepicker/css")
+            @Styles.Render("~/bundles/clockpicker/css")
+            @Styles.Render("~/bundles/sweetAlert/css")
+            @Styles.Render("~/bundles/toastr/css")
+            @Styles.Render("~/bundles/ladda/css")
+            <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+
+        }
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/moment/js")
+            @Scripts.Render("~/bundles/xeditable/js")
+            @Scripts.Render("~/bundles/select2/js")
+            @Scripts.Render("~/bundles/touchspin/js")
+            @Scripts.Render("~/bundles/clockpicker/js")
+            @Scripts.Render("~/bundles/chartjs/js")
+            @Scripts.Render("~/bundles/datatables/js")
+            @Scripts.Render("~/bundles/datatablesBootstrap/js")
+            @Scripts.Render("~/bundles/datatablesPlugins/js")
+            @Scripts.Render("~/bundles/sweetAlert/js")
+            @Scripts.Render("~/bundles/toastr/js")
+            @Scripts.Render("~/bundles/ladda/js")
+            <script src="~/Scripts/jquery.datetimepicker.js"></script>
+            <script src="~/Scripts/fnReloadAjax.js"></script>
+
+            <script type="text/javascript">
+                //start javascript
+
+
+                //
+                //#region 1 autocomplete dropdownlist
+                $(".js-source-states").select2();
+                //#endregion
+
+                //#region 4 getJson Section
+                $("#DepartmentId").change(function (res) {
+                    departmentId = $("#DepartmentId").val();
+                    $.getJSON('/AdjustOutbounded/SectionFilter?departmentId=' + departmentId, function (data) {
+                        var ddl = $("#SectionId");
+                        // ddl.removeAttrs('disabled style');
+                        ddl.addClass('js-source-states');
+                        var string = '<option value="">ALL</option>';
+                        $.each(data, function (i, S) {
+                            string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                        });
+                        ddl.html(string);
+                    });
+                });
+                //#endregion
+
+                //#region  5 getJson MatName
+                $("#SectionId").change(function (res) {
+                    departmentId = $("#DepartmentId").val();
+                    sectionId = $("#SectionId").val();
+                    $.getJSON('/AdjustOutbounded/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
+                        var ddl = $("#MatNameId");
+                        // ddl.removeAttrs('disabled style');
+                        ddl.addClass('js-source-states');
+                        var string = '<option value="">ALL</option>';
+                        $.each(data, function (i, S) {
+                            string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                        });
+                        ddl.html(string);
+                    });
+                });
+                //#endregion
+
+                $("#btnSearch").click(function () {
+
+                    if ($('#DepartmentId').val() == "") {
+                        swal({
+                            title: "Warning!",
+                            text: "Sorry!, Department is not selected ",
+                            type: "warning"
+                        });
+                    } else if ($('#SectionId').val() == "") {
+                        swal({
+                            title: "Warning!",
+                            text: "Sorry!, Section is not selected ",
+                            type: "warning"
+                        });
+                    } else if ($('#MatNameId').val() == "") {
+                        swal({
+                            title: "Warning!",
+                            text: "Sorry!, MatName is not selected ",
+                            type: "warning"
+                        });
+                    } else if ($('#YearId').val() == "") {
+                        swal({
+                            title: "Warning!",
+                            text: "Sorry!, Year is not selected ",
+                            type: "warning"
+                        });
+                    } else if ($('#MonthId').val() == "") {
+                        swal({
+                            title: "Warning!",
+                            text: "Sorry!, Month is not selected ",
+                            type: "warning"
+                        });
+                    }
+                    else {
+
+                        // on-time adjust outbound dataTable
+                        var departmentId = $('#DepartmentId').val();
+                        var sectionId = $('#SectionId').val();
+                        var matNameId = $('#MatNameId').val();
+                        var yearId = $('#YearId').val();
+                        var monthId = $('#MonthId').val();
+
+                        $('#divResult').load("/AdjustOutbounded/GetDelayOutboundedData?DepartmentId="
+                                              + departmentId
+                                              + "&SectionId=" + sectionId
+                                              + "&YearId=" + yearId
+                                              + "&MonthId=" + monthId
+                                              + "&MatNameId=" + matNameId);
+                    }
+                });
+
+                //#region 6 Bind normal buttons
+
+                $('.ladda-button').ladda('bind', { timeout: 2000 });
+
+                // Bind progress buttons and simulate loading progress
+                Ladda.bind('.progress-demo .ladda-button', {
+                    callback: function (instance) {
+                        var progress = 0;
+                        var interval = setInterval(function () {
+                            progress = Math.min(progress + Math.random() * 0.1, 1);
+                            instance.setProgress(progress);
+
+                            if (progress === 1) {
+                                instance.stop();
+                                clearInterval(interval);
+                            }
+                        }, 200);
+                    }
+                });
+
+                var l = $('.ladda-button-demo').ladda();
+                l.click(function () {
+                    // Start loading
+                    l.ladda('start');
+
+                    // Timeout example
+                    // Do something in backend and then stop ladda
+                    setTimeout(function () {
+                        l.ladda('stop');
+                    }, 25000)
+                });
+                //#endregion
+
+            </script>//stop javascript
+        }

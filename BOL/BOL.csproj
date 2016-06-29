@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{053A9041-41EA-4305-9C1E-E3FA9A95A2C8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BOL</RootNamespace>
+    <AssemblyName>BOL</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\SCGLKPIUI\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\SCGLKPIUI\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AcceptedDelay.cs" />
+    <Compile Include="DocReturnDelay.cs" />
+    <Compile Include="DOM_CMD_VENDOR.cs" />
+    <Compile Include="DOM_MDS_ORGANIZATION.cs" />
+    <Compile Include="DOM_SAP_MATFRIGRP.cs" />
+    <Compile Include="InboundDelay.cs" />
+    <Compile Include="KPI.cs" />
+    <Compile Include="KPIFrequency.cs" />
+    <Compile Include="MenuTable.cs" />
+    <Compile Include="Migrations\201605250327240_createSCGLKPI.cs" />
+    <Compile Include="Migrations\201605250327240_createSCGLKPI.Designer.cs">
+      <DependentUpon>201605250327240_createSCGLKPI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605270705009_crateOntimeAcceptMonth.cs" />
+    <Compile Include="Migrations\201605270705009_crateOntimeAcceptMonth.Designer.cs">
+      <DependentUpon>201605270705009_crateOntimeAcceptMonth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606010439497_createReasonAccepted.cs" />
+    <Compile Include="Migrations\201606010439497_createReasonAccepted.Designer.cs">
+      <DependentUpon>201606010439497_createReasonAccepted.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606020231548_addRemark.cs" />
+    <Compile Include="Migrations\201606020231548_addRemark.Designer.cs">
+      <DependentUpon>201606020231548_addRemark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606020255400_addTO_SHPG_LOC_CD.cs" />
+    <Compile Include="Migrations\201606020255400_addTO_SHPG_LOC_CD.Designer.cs">
+      <DependentUpon>201606020255400_addTO_SHPG_LOC_CD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606020923567_addIndexACPDDATE_D.cs" />
+    <Compile Include="Migrations\201606020923567_addIndexACPDDATE_D.Designer.cs">
+      <DependentUpon>201606020923567_addIndexACPDDATE_D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606020927047_addIndexDEPARTMENT_ID.cs" />
+    <Compile Include="Migrations\201606020927047_addIndexDEPARTMENT_ID.Designer.cs">
+      <DependentUpon>201606020927047_addIndexDEPARTMENT_ID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606020950478_createTableAcceptedDelay.cs" />
+    <Compile Include="Migrations\201606020950478_createTableAcceptedDelay.Designer.cs">
+      <DependentUpon>201606020950478_createTableAcceptedDelay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606021018036_addVenderCode.cs" />
+    <Compile Include="Migrations\201606021018036_addVenderCode.Designer.cs">
+      <DependentUpon>201606021018036_addVenderCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606021040192_editMatName.cs" />
+    <Compile Include="Migrations\201606021040192_editMatName.Designer.cs">
+      <DependentUpon>201606021040192_editMatName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606100310399_addFieldLoaddedDate.cs" />
+    <Compile Include="Migrations\201606100310399_addFieldLoaddedDate.Designer.cs">
+      <DependentUpon>201606100310399_addFieldLoaddedDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606100313473_addFieldLoaddedDate2.cs" />
+    <Compile Include="Migrations\201606100313473_addFieldLoaddedDate2.Designer.cs">
+      <DependentUpon>201606100313473_addFieldLoaddedDate2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606130658027_createOntimeAcceptYear.cs" />
+    <Compile Include="Migrations\201606130658027_createOntimeAcceptYear.Designer.cs">
+      <DependentUpon>201606130658027_createOntimeAcceptYear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606150641479_createOntimeTender.cs" />
+    <Compile Include="Migrations\201606150641479_createOntimeTender.Designer.cs">
+      <DependentUpon>201606150641479_createOntimeTender.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606151550324_createReasonTendered.cs" />
+    <Compile Include="Migrations\201606151550324_createReasonTendered.Designer.cs">
+      <DependentUpon>201606151550324_createReasonTendered.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606151733240_createTenderedDelay.cs" />
+    <Compile Include="Migrations\201606151733240_createTenderedDelay.Designer.cs">
+      <DependentUpon>201606151733240_createTenderedDelay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606160132319_createOntimeTenderYears.cs" />
+    <Compile Include="Migrations\201606160132319_createOntimeTenderYears.Designer.cs">
+      <DependentUpon>201606160132319_createOntimeTenderYears.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606160327354_createInbouds.cs" />
+    <Compile Include="Migrations\201606160327354_createInbouds.Designer.cs">
+      <DependentUpon>201606160327354_createInbouds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606160346482_createOntimeInboundMonths.cs" />
+    <Compile Include="Migrations\201606160346482_createOntimeInboundMonths.Designer.cs">
+      <DependentUpon>201606160346482_createOntimeInboundMonths.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606160415514_createOntimeInboundYears.cs" />
+    <Compile Include="Migrations\201606160415514_createOntimeInboundYears.Designer.cs">
+      <DependentUpon>201606160415514_createOntimeInboundYears.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606160444422_createInboundDelays.cs" />
+    <Compile Include="Migrations\201606160444422_createInboundDelays.Designer.cs">
+      <DependentUpon>201606160444422_createInboundDelays.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606160652114_reasonInbounds.cs" />
+    <Compile Include="Migrations\201606160652114_reasonInbounds.Designer.cs">
+      <DependentUpon>201606160652114_reasonInbounds.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606160812433_createOntimeOutbound.cs" />
+    <Compile Include="Migrations\201606160812433_createOntimeOutbound.Designer.cs">
+      <DependentUpon>201606160812433_createOntimeOutbound.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606160819020_createOntimeOutboundMonth.cs" />
+    <Compile Include="Migrations\201606160819020_createOntimeOutboundMonth.Designer.cs">
+      <DependentUpon>201606160819020_createOntimeOutboundMonth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606160825539_createOntimeOutboundYear.cs" />
+    <Compile Include="Migrations\201606160825539_createOntimeOutboundYear.Designer.cs">
+      <DependentUpon>201606160825539_createOntimeOutboundYear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606160835596_createOutboundDelay.cs" />
+    <Compile Include="Migrations\201606160835596_createOutboundDelay.Designer.cs">
+      <DependentUpon>201606160835596_createOutboundDelay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606160838016_createNewOutboundDelay.cs" />
+    <Compile Include="Migrations\201606160838016_createNewOutboundDelay.Designer.cs">
+      <DependentUpon>201606160838016_createNewOutboundDelay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606160840591_createReasonOutbound.cs" />
+    <Compile Include="Migrations\201606160840591_createReasonOutbound.Designer.cs">
+      <DependentUpon>201606160840591_createReasonOutbound.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606161147329_createOutboundDocReturnDelivery.cs" />
+    <Compile Include="Migrations\201606161147329_createOutboundDocReturnDelivery.Designer.cs">
+      <DependentUpon>201606161147329_createOutboundDocReturnDelivery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606180520079_addMatNameSM.cs" />
+    <Compile Include="Migrations\201606180520079_addMatNameSM.Designer.cs">
+      <DependentUpon>201606180520079_addMatNameSM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606200208576_editDocreturn.cs" />
+    <Compile Include="Migrations\201606200208576_editDocreturn.Designer.cs">
+      <DependentUpon>201606200208576_editDocreturn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606290847144_addIsAdjust.cs" />
+    <Compile Include="Migrations\201606290847144_addIsAdjust.Designer.cs">
+      <DependentUpon>201606290847144_addIsAdjust.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="OntimeAccept.cs" />
+    <Compile Include="DWH_ONTIME_DN.cs" />
+    <Compile Include="DWH_ONTIME_SHIPMENT.cs" />
+    <Compile Include="OntimeAcceptMonth.cs" />
+    <Compile Include="OntimeAcceptYear.cs" />
+    <Compile Include="OntimeDelay.cs" />
+    <Compile Include="OntimeDelivery.cs" />
+    <Compile Include="OntimeDeliveryMonth.cs" />
+    <Compile Include="OntimeDeliveryYear.cs" />
+    <Compile Include="OntimeDocReturn.cs" />
+    <Compile Include="OntimeDocReturnMonth.cs" />
+    <Compile Include="OntimeDocReturnYear.cs" />
+    <Compile Include="OntimeInbound.cs" />
+    <Compile Include="OntimeInboundMonth.cs" />
+    <Compile Include="OntimeInboundYear.cs" />
+    <Compile Include="OntimeOutbound.cs" />
+    <Compile Include="OntimeOutboundMonth.cs" />
+    <Compile Include="OntimeOutboundYear.cs" />
+    <Compile Include="OntimeTender.cs" />
+    <Compile Include="OntimeTenderMonth.cs" />
+    <Compile Include="OntimeTenderYear.cs" />
+    <Compile Include="OutboundDelay.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReasonAccepted.cs" />
+    <Compile Include="ReasonDocReturn.cs" />
+    <Compile Include="ReasonInbound.cs" />
+    <Compile Include="ReasonOntime.cs" />
+    <Compile Include="ReasonOutbound.cs" />
+    <Compile Include="ReasonTendered.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="SCGLKPIDbContext.cs" />
+    <Compile Include="TenderedDelay.cs" />
+    <Compile Include="TUser.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201605250327240_createSCGLKPI.resx">
+      <DependentUpon>201605250327240_createSCGLKPI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605270705009_crateOntimeAcceptMonth.resx">
+      <DependentUpon>201605270705009_crateOntimeAcceptMonth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606010439497_createReasonAccepted.resx">
+      <DependentUpon>201606010439497_createReasonAccepted.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606020231548_addRemark.resx">
+      <DependentUpon>201606020231548_addRemark.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606020255400_addTO_SHPG_LOC_CD.resx">
+      <DependentUpon>201606020255400_addTO_SHPG_LOC_CD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606020923567_addIndexACPDDATE_D.resx">
+      <DependentUpon>201606020923567_addIndexACPDDATE_D.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606020927047_addIndexDEPARTMENT_ID.resx">
+      <DependentUpon>201606020927047_addIndexDEPARTMENT_ID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606020950478_createTableAcceptedDelay.resx">
+      <DependentUpon>201606020950478_createTableAcceptedDelay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606021018036_addVenderCode.resx">
+      <DependentUpon>201606021018036_addVenderCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606021040192_editMatName.resx">
+      <DependentUpon>201606021040192_editMatName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606100310399_addFieldLoaddedDate.resx">
+      <DependentUpon>201606100310399_addFieldLoaddedDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606100313473_addFieldLoaddedDate2.resx">
+      <DependentUpon>201606100313473_addFieldLoaddedDate2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606130658027_createOntimeAcceptYear.resx">
+      <DependentUpon>201606130658027_createOntimeAcceptYear.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606150641479_createOntimeTender.resx">
+      <DependentUpon>201606150641479_createOntimeTender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606151550324_createReasonTendered.resx">
+      <DependentUpon>201606151550324_createReasonTendered.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606151733240_createTenderedDelay.resx">
+      <DependentUpon>201606151733240_createTenderedDelay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606160132319_createOntimeTenderYears.resx">
+      <DependentUpon>201606160132319_createOntimeTenderYears.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606160327354_createInbouds.resx">
+      <DependentUpon>201606160327354_createInbouds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606160346482_createOntimeInboundMonths.resx">
+      <DependentUpon>201606160346482_createOntimeInboundMonths.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606160415514_createOntimeInboundYears.resx">
+      <DependentUpon>201606160415514_createOntimeInboundYears.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606160444422_createInboundDelays.resx">
+      <DependentUpon>201606160444422_createInboundDelays.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606160652114_reasonInbounds.resx">
+      <DependentUpon>201606160652114_reasonInbounds.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606160812433_createOntimeOutbound.resx">
+      <DependentUpon>201606160812433_createOntimeOutbound.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606160819020_createOntimeOutboundMonth.resx">
+      <DependentUpon>201606160819020_createOntimeOutboundMonth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606160825539_createOntimeOutboundYear.resx">
+      <DependentUpon>201606160825539_createOntimeOutboundYear.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606160835596_createOutboundDelay.resx">
+      <DependentUpon>201606160835596_createOutboundDelay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606160838016_createNewOutboundDelay.resx">
+      <DependentUpon>201606160838016_createNewOutboundDelay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606160840591_createReasonOutbound.resx">
+      <DependentUpon>201606160840591_createReasonOutbound.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606161147329_createOutboundDocReturnDelivery.resx">
+      <DependentUpon>201606161147329_createOutboundDocReturnDelivery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606180520079_addMatNameSM.resx">
+      <DependentUpon>201606180520079_addMatNameSM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606200208576_editDocreturn.resx">
+      <DependentUpon>201606200208576_editDocreturn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606290847144_addIsAdjust.resx">
+      <DependentUpon>201606290847144_addIsAdjust.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

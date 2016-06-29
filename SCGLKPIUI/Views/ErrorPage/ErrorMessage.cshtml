@@ -1,0 +1,18 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "ErrorMessage";
+    Layout = "~/Views/Shared/_Layout_Blank.cshtml";
+}
+
+<div class="error-container">
+    <i class="pe-7s-way text-success big-icon"></i>
+    <h1>500</h1>
+    <strong>Internal Server Error</strong>
+    <p>
+        The server encountered something unexpected that didn't allow it to complete the request. We apologize.
+    </p>
+    <p>@TempData["Msg"]</p>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-xs btn-success">Go back to SCGL KPI</a>
+</div>
+

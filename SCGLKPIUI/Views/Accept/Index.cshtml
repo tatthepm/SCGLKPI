@@ -1,0 +1,186 @@
+﻿@using SCGLKPIUI.Models
+@model IEnumerable<AcceptOntimeViewModels>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>
+    <i class="fa fa-bar-chart"></i> Accepted tender : @TempData["KpiName"]
+</h4>
+<div class="back-link">
+    <a href="@Url.Action("Index", "MenuTableAccepted")" class="btn btn-primary">Back to List</a>
+</div>
+
+
+@using (Html.BeginForm("Index", "Accept", FormMethod.Get, new { enctype = "multipart/form-data" })) {
+    @Html.Hidden("kpiId")
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-heading">
+                    <div class="panel-tools">
+                        <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+                        @*<a class="closebox"><i class="fa fa-times"></i></a>*@
+                    </div>
+                    <i class="pe-7s-filter"></i><span class="font-icon-name"> Filter by</span>
+                </div>
+                @if (ViewBag.CountAcceptName != 0) {
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-1">@Html.Label("FROM ", new { @style = "width:100%" })<span style="color:red">*</span></div>
+                            <div class="col-md-2">
+                                <div class="input-group date">
+                                    <input type="text" class="form-control" id="FromDateSearch" placeholder="YYYY/MM/DD" name="FromDateSearch"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-1">@Html.Label("TO ", new { @style = "width:100%" })<span style="color:red">*</span></div>
+                            <div class="col-md-2">
+                                <div class="input-group date">
+                                    <input type="text" class="form-control" id="ToDateSearch" placeholder="YYYY/MM/DD" name="ToDateSearch"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-1">@Html.Label("MATNAME")</div>
+                            <div class="col-md-2">
+                                @Html.DropDownList("MatNameId", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
+                            </div>
+                            <div class="col-md-1"><button type="submit" class="btn btn-outline btn-success" id="btnSearch">Search</button></div>
+                        </div>
+                    </div>
+                </div>
+                } else {
+                <div class="panel-body">
+                    <div class="alert alert-dismissable alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <span class="label label-warning" style="font-size:large">No data available in this kpi </span>
+                    </div>
+                </div>
+                }
+                @if (TempData["Msg"] != null) {
+                    if (TempData["Msg"].ToString().Contains("Successfully")) {
+                <div class="alert alert-dismissable alert-info">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <span style="font-size:small"> @TempData["Msg"].ToString()</span>
+                </div>
+                    } else {
+                <div class="alert alert-dismissable alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    @*<span style="font-size:small"> @TempData["Msg"].ToString()</span>*@
+                    <span class="label label-warning" style="font-size:large"> @TempData["Msg"].ToString()     </span>
+                </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
+@Html.Partial("pv_SummaryAcceptOntime", Model)
+@Html.Partial("pv_AcceptOntime", Model)
+
+@section Styles {
+    @Styles.Render("~/bundles/datatables/css")
+    @Styles.Render("~/bundles/xeditable/css")
+    @Styles.Render("~/bundles/select2/css")
+    @Styles.Render("~/bundles/touchspin/css")
+    @Styles.Render("~/bundles/datepicker/css")
+    @Styles.Render("~/bundles/bootstrapCheckbox/css")
+    @Styles.Render("~/bundles/datetimepicker/css")
+    @Styles.Render("~/bundles/clockpicker/css")
+    @Styles.Render("~/bundles/sweetAlert/css")
+    @Styles.Render("~/bundles/toastr/css")
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/moment/js")
+    @Scripts.Render("~/bundles/xeditable/js")
+    @Scripts.Render("~/bundles/select2/js")
+    @Scripts.Render("~/bundles/touchspin/js")
+    @Scripts.Render("~/bundles/clockpicker/js")
+    @Scripts.Render("~/bundles/chartjs/js")
+    @Scripts.Render("~/bundles/datatables/js")
+    @Scripts.Render("~/bundles/datatablesBootstrap/js")
+    @Scripts.Render("~/bundles/datatablesPlugins/js")
+    @Scripts.Render("~/bundles/sweetAlert/js")
+    @Scripts.Render("~/bundles/toastr/js")
+
+
+    <script src="~/Scripts/jquery.datetimepicker.js"></script>
+    <script type="text/javascript">
+        //1
+        $(".js-source-states").select2();
+
+        //2
+        jQuery(function () {
+            jQuery('#FromDateSearch').datetimepicker({
+                format: 'Y/m/d',
+                onShow: function (ct) {
+                    this.setOptions({
+                        maxDate: jQuery('#ToDateSearch').val() ? jQuery('#ToDateSearch').val() : false
+                    })
+                },
+                timepicker: false
+            });
+            jQuery('#ToDateSearch').datetimepicker({
+                format: 'Y/m/d',
+                onShow: function (ct) {
+                    this.setOptions({
+                        minDate: jQuery('#FromDateSearch').val() ? jQuery('#FromDateSearch').val() : false
+                    })
+                },
+                timepicker: false
+            });
+
+            //RequestedDate
+            jQuery('#RequestedDate').datetimepicker({
+                format: 'Y/m/d',
+                timepicker: false
+            });
+
+        });
+
+
+        //4
+        $(function () {
+            // Initialize Example 2
+            $('#acceptTender').dataTable({
+                dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                buttons: [
+                    { extend: 'copy', className: 'btn-sm' },
+                    { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
+                    { extend: 'pdf', title: 'ExampleFile', className: 'btn-sm' },
+                ]
+            });
+
+            //acceptSummary
+            $('#acceptSummary').dataTable({
+                dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                buttons: [
+                    { extend: 'copy', className: 'btn-sm' },
+                    { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
+                    { extend: 'pdf', title: 'ExampleFile', className: 'btn-sm' },
+                ]
+            });
+            //
+        });
+
+        //3
+        $(function () {
+            $("#btnSearch").click(function () {
+                var sdate = $('#FromDateSearch').val();
+                var edate = $('#ToDateSearch').val();
+                if (sdate == "" && edate == "") {
+                    alert("You must choose date in the calendar");
+                }
+            });
+        });
+        //
+
+    </script>
+}

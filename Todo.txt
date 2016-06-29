@@ -1,0 +1,118 @@
+=========TEST dictionary ==========
+//test dictonary
+                var dept = (from d in viewOntimeAccept select new { d.DepartmentName }).Distinct();
+                var sec = (from s in viewOntimeAccept select new { s.SectionName }).Distinct();
+                var data = new Dictionary<string, Dictionary<string, List<AccepModels>>>();
+                foreach (var item1 in dept) {
+                    var sub1 = from v1 in viewOntimeAccept
+                               where v1.DepartmentName == item1.DepartmentName
+                               select v1;
+                    var data2 = new Dictionary<string, List<AccepModels>>();
+
+                    foreach (var item2 in sec) {
+                        var sub2 = from v2 in viewOntimeAccept
+                                   where v2.DepartmentName == item1.DepartmentName && v2.SectionName == item2.SectionName
+                                   select v2;
+                        data2.Add(item2.SectionName, sub2.ToList());
+                    }
+                    data.Add(item1.DepartmentName, data2);
+                }
+                //
+                ViewBag.Result = data;
+				//
+=======================
+===========view dictionary ===========
+var data = (Dictionary<string, Dictionary<string, List<AccepModels>>>)ViewBag.Result;
+@*test*@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="hpanel">
+            <div class="panel-heading">
+                <div class="panel-tools">
+                    <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+                </div>
+                Test Dictionary
+            </div>
+        </div>
+        <table class="table table-bordered table-colored table-condensed table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th colspan="4" style="text-align:center;font-weight:bold">Summary Of Invoice Return</th>
+                </tr>
+                <tr>
+                    <th>Department</th>
+                    <th>Section</th>
+                    <th>Matname</th>
+                    <th>MatFriGrp</th>
+                    <th>SumofAccept</th>
+                    <th>Ontime</th>
+                    <th>Delay</th>
+                    <th>%ontime</th>
+                </tr>
+            </thead>
+            @foreach (var row in data) {
+                <tbody>
+                    <tr>
+                        <td>@row.Key</td>
+                    </tr>
+                    @foreach (var res1 in row.Value) {
+                        <tr>
+                            <td>@res1.Key</td>
+                        </tr>
+                        foreach (var res2 in res1.Value) {
+                            <tr>
+                                <td colspan="3"></td>
+                                <td>@res2.MatFriGrp</td>
+                                <td>@res2.SumOfAccept</td>
+                                <td>@res2.OnTime</td>
+                                <td>@res2.Delay</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+            }
+        </table>
+    </div>
+</div>
+@*endtest*@
+==========================================
+summary table
+DEPARTMENT		SECTION			SUM OF ACCEPT	ONTIME	DELAY	%ACCEPT
+Central Region	Bulk Transport	35000			33000	2000	94.28%
+==========
+  //
+                    var dept = (from d in viewSummaryModel select new { d.DepartmentName }).Distinct();
+                    var sec = (from s in viewSummaryModel select new { s.SectionName }).Distinct();
+                    foreach (var item1 in dept) {
+                       // var sub1 = from s1 in q where s1.DepartmentName == item1.DepartmentName select s1;
+                        var data2 = new Dictionary<string, IEnumerable<ACPDSummaryViewModels>>();
+                        foreach (var item2 in sec) {
+                            data2.Add(item2.SectionName, viewSummaryModel);
+                        }
+                        data.Add(item1.DepartmentName, data2);
+                    }
+============================= $.ajax ===========
+$.ajax({
+                    type: "GET",
+                    url: "@Url.Action("Index", "OntimeAccepted")",
+                    traditional: true,
+                    data: {
+                        DepartmentId: departmentId,
+                        SectionId:sectionId,
+                        FromDateSearch: sdate,
+                        ToDateSearch: edate,
+                        MatNameId: matNameId,
+                    },
+                    success: successFunc,
+                    error: errorFunc
+                });
+                function successFunc(data) {
+                    console.info(data);
+                    // window.open("/OntimeAcceptedChart/jsonData?DepartmentId=" + departmentId + "&FromDateSearch=" + sdate + "&ToDateSearch=" + edate + "&MatNameId=" + matNameId);
+
+                    // window.location.href = '/OntimeAcceptedChart/jsonData?DepartmentId=' + departmentId + '&FromDateSearch=' + sdate + '&ToDateSearch=' + edate + '&MatNameId=' + matNameId;
+                }
+                function errorFunc() {
+                    alert('error');
+                }

@@ -1,0 +1,18 @@
+//1 on-time accepted tendered
+-- daily report --
+OntimeAcceptedDailyControllerController
+	- action : OntimeAcceptTableDaily	model : AcceptOntimeViewModels
+	- action : OntimeAcceptSummaryDaily model : AcceptOntimeSummaryViewModels
+
+OntimeAcceptedDailyChartController
+	- action : jsonData			model : AcceptOntimeChartDailyViewModels
+	- action : jsonPieData		model : AcceptOntimePieChartDailyViewModels
+
+-- monthly report --
+OntimeAcceptedMonthlyController
+	- action : OntimeAcceptTableMonthly			model : AcceptOntimeMonthlyViewModels
+	- action : OntimeAcceptTableSummaryMonthly	model : AcceptOntimeSummaryMonthlyViewModels
+
+OntimeAcceptedMonthlyChartController
+	- action : jsonData    (on process)			model : AcceptOntimeChartMonthlyViewModels
+	- action : jsonPieData (on process)			model : AcceptOntimePieChartMonthlyViewModels

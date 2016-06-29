@@ -1,0 +1,484 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .chart-legend li span {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-right: 5px;
+        list-style: none;
+    }
+
+    .chart-legend ul {
+        list-style-type: none;
+    }
+</style>
+<h4>
+    <i class="fa fa-bar-chart"></i> Chart on-time delivery | Monthly
+</h4>
+@*filter by month*@
+@Html.Partial("pv_FilterByMonth")
+
+@Html.Partial("pv_DeliveryOntimeChartMonthly")
+
+@Html.Partial("pv_DeliveryOntimeTableMonthly")
+
+
+@section Styles {
+    @Styles.Render("~/bundles/datatables/css")
+    @Styles.Render("~/bundles/xeditable/css")
+    @Styles.Render("~/bundles/select2/css")
+    @Styles.Render("~/bundles/touchspin/css")
+    @Styles.Render("~/bundles/datepicker/css")
+    @Styles.Render("~/bundles/bootstrapCheckbox/css")
+    @Styles.Render("~/bundles/datetimepicker/css")
+    @Styles.Render("~/bundles/clockpicker/css")
+    @Styles.Render("~/bundles/sweetAlert/css")
+    @Styles.Render("~/bundles/toastr/css")
+    @Styles.Render("~/bundles/ladda/css")
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/moment/js")
+    @Scripts.Render("~/bundles/xeditable/js")
+    @Scripts.Render("~/bundles/select2/js")
+    @Scripts.Render("~/bundles/touchspin/js")
+    @Scripts.Render("~/bundles/clockpicker/js")
+    @Scripts.Render("~/bundles/chartjs/js")
+    @Scripts.Render("~/bundles/datatables/js")
+    @Scripts.Render("~/bundles/datatablesBootstrap/js")
+    @Scripts.Render("~/bundles/datatablesPlugins/js")
+    @Scripts.Render("~/bundles/sweetAlert/js")
+    @Scripts.Render("~/bundles/toastr/js")
+    @Scripts.Render("~/bundles/ladda/js")
+    <script src="~/Scripts/jquery.datetimepicker.js"></script>
+    <script src="~/Scripts/fnReloadAjax.js"></script>
+
+    <script>
+
+        //created global object Then just before initializing the chart i destroyed
+        var chartOntime;
+        var chartOntimeAdj;
+        var chartShipment;
+        var pieChartOntime;
+        //
+
+        //#region 1 autocomplete dropdownlist
+        $(".js-source-states").select2();
+        //#endregion
+
+        //#region 2 filter section
+        $("#DepartmentId").change(function (res) {
+            departmentId = $("#DepartmentId").val();
+            $.getJSON('/OntimeDeliveredMonthlyChart/SectionFilter?departmentId=' + departmentId, function (data) {
+                var ddl = $("#SectionId");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                });
+                ddl.html(string);
+            });
+        });
+        //#endregion
+
+        //#region 3 filter matname
+        $("#SectionId").change(function (res) {
+            departmentId = $("#DepartmentId").val();
+            sectionId = $("#SectionId").val();
+            $.getJSON('/OntimeDeliveredMonthlyChart/MatNameFilter?departmentId=' + departmentId
+                + '&sectionid=' + sectionId, function (data) {
+                    var ddl = $("#MatNameId");
+                    // ddl.removeAttrs('disabled style');
+                    ddl.addClass('js-source-states');
+                    var string = '<option value="">ALL</option>';
+                    $.each(data, function (i, S) {
+                        string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                    });
+                    ddl.html(string);
+                });
+        });
+        //#endregion
+
+        //#region 4 btnSearch click
+        //#endregion
+        $("#btnSearch").click(function () {
+            //if ($('#DepartmentId').val() == "") {
+            //    swal({
+            //        title: "Warning!",
+            //        text: "Sorry!, Department is not selected ",
+            //        type: "warning"
+            //    });
+            //} else
+            if ($('#YearId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Year is not selected ",
+                    type: "warning"
+                });
+            } else {
+
+                var departmentId = $('#DepartmentId').val();
+                var sectionId = $('#SectionId').val();
+                var matNameId = $('#MatNameId').val();
+                var yearId = $('#YearId').val();
+                var monthId = $('#MonthId').val();
+
+                var label = [];
+                var plan = [];
+                var actual = [];
+                var adjust = [];
+                var shipment = [];
+                var planshipment = [];
+
+                var jsonString = $.getJSON('/OntimeDeliveredMonthlyChart/jsonData?DepartmentId=' + departmentId
+                    + '&SectionId=' + sectionId
+                    + '&YearId=' + yearId
+                    + '&MonthId=' + monthId
+                    + '&MatNameId=' + matNameId, function (data) {
+                        // console.info(data);
+                        $.each(data, function (index, item) {
+                            label.push(item.Month);
+                            plan.push(item.Plan);
+                            actual.push(item.Actual);
+                            adjust.push(item.Adjust);
+                            shipment.push(item.SumOfDelivery);
+                            planshipment.push(item.SumOfDelivery);
+                        });
+                        //console.info(label);
+
+                        //#region 1 bar chart ontime accepted
+                        var steps = 5;
+                        var barOptions = {
+                            scaleBeginAtZero: true,
+                            scaleShowGridLines: true,
+                            scaleGridLineColor: "rgba(0,0,0,.05)",
+                            scaleGridLineWidth: 1,
+                            barShowStroke: true,
+                            barStrokeWidth: 2,
+                            barValueSpacing: 5,
+                            barDatasetSpacing: 1,
+                            responsive: true,
+                            //
+                            scaleOverride: true,
+                            scaleSteps: steps,
+                            scaleStepWidth: Math.ceil(100 / steps),
+                            scaleStartValue: 0
+                            //
+                        };
+                        /**
+                         * Data for Bar chart
+                         */
+                        var barData = {
+                            labels: label, //["January", "February", "March", "April", "May"],
+                            datasets: [
+                                {
+                                    label: "PLAN",
+                                    fillColor: "rgba(220,220,220,0.5)",
+                                    //strokeColor: "rgba(220,220,220,0.8)",
+                                    strokeColor: 'rgba(0, 0, 0, 0.8)',
+                                    highlightFill: "rgba(220,220,220,0.75)",
+                                    //highlightStroke: "rgba(220,220,220,1)",
+                                    highlightStroke: 'rgba(47, 132, 71, 0.8)',
+                                    data: plan //[100, 100, 100, 100, 100],
+                                },
+                                {
+                                    label: "ACTUAL",
+                                    fillColor: "rgba(98,203,49,0.5)",
+                                    strokeColor: "rgba(98,203,49,0.8)",
+                                    highlightFill: "rgba(98,203,49,0.75)",
+                                    highlightStroke: "rgba(98,203,49,1)",
+                                    data: actual //[28, 48, 40, 19, 86],
+                                }
+                            ]
+                        };
+
+                        //Then just before initializing the chart i destroyed
+                        if (chartOntime != undefined || chartOntime != null) {
+                            chartOntime.destroy();
+                        }
+
+                        var ctx = document.getElementById("barOntimeDeliveryMonthly").getContext("2d");
+                        chartOntime = new Chart(ctx).Bar(barData, barOptions);
+                        document.getElementById('js-legend').innerHTML = chartOntime.generateLegend();
+
+                        //#endregion
+
+                        //#region 2 bar chart ontime accepted adjust
+                        /**
+                      * Options for Bar chart
+                      */
+                        var steps = 5;
+                        var barOptions = {
+                            scaleBeginAtZero: true,
+                            scaleShowGridLines: true,
+                            scaleGridLineColor: "rgba(0,0,0,.05)",
+                            scaleGridLineWidth: 1,
+                            barShowStroke: true,
+                            barStrokeWidth: 2,
+                            barValueSpacing: 5,
+                            barDatasetSpacing: 1,
+                            responsive: true,
+                            scaleOverride: true,
+                            scaleSteps: steps,
+                            scaleStepWidth: Math.ceil(100 / steps),
+                            scaleStartValue: 0
+                        };
+                        /**
+                         * Data for Bar chart
+                         */
+                        var barData = {
+                            labels: label,
+                            datasets: [
+                                {
+                                    label: "PLAN",
+                                    fillColor: "rgba(220,220,220,0.5)",
+                                    // strokeColor: "rgba(220,220,220,0.8)",
+                                    strokeColor: 'rgba(47, 132, 71, 1.8)',
+                                    highlightFill: "rgba(220,220,220,0.75)",
+                                    highlightStroke: "rgba(220,220,220,1)",
+                                    highlightStroke: 'rgba(47, 132, 71, 1.8)',
+                                    data: plan //[100, 100, 100, 100, 100]
+                                },
+                                {
+                                    label: "ACTUAL",
+                                    fillColor: "rgba(98,203,49,0.5)",
+                                    strokeColor: "rgba(98,203,49,0.8)",
+                                    highlightFill: "rgba(98,203,49,0.75)",
+                                    highlightStroke: "rgba(98,203,49,1)",
+                                    data: adjust //[28, 48, 40, 19, 86]
+                                }
+                            ]
+                        };
+
+                        //Then just before initializing the chart i destroyed
+                        if (chartOntimeAdj != undefined || chartOntimeAdj != null) {
+                            chartOntimeAdj.destroy();
+                        }
+
+                        var ctx = document.getElementById("barOntimeDeliveryAdjustMonthly").getContext("2d");
+                        chartOntimeAdj = new Chart(ctx).Bar(barData, barOptions);
+                        document.getElementById('js-legend2').innerHTML = chartOntimeAdj.generateLegend();
+
+                        //#endregion
+
+                        //#region 3 bar chart shipment
+                        /**
+                      * Options for Bar chart
+                      */
+                        var barOptions = {
+                            scaleBeginAtZero: true,
+                            scaleShowGridLines: true,
+                            scaleGridLineColor: "rgba(0,0,0,.05)",
+                            scaleGridLineWidth: 1,
+                            barShowStroke: true,
+                            barStrokeWidth: 2,
+                            barValueSpacing: 5,
+                            barDatasetSpacing: 1,
+                            responsive: true,
+                        };
+                        /**
+                         * Data for Bar chart
+                         */
+                        var barData = {
+                            labels: label,
+                            datasets: [
+                                {
+                                    label: "PLAN",
+                                    fillColor: "rgba(220,220,220,0.5)",
+                                    // strokeColor: "rgba(220,220,220,0.8)",
+                                    strokeColor: 'rgba(47, 132, 71, 1.8)',
+                                    highlightFill: "rgba(220,220,220,0.75)",
+                                    highlightStroke: "rgba(220,220,220,1)",
+                                    highlightStroke: 'rgba(47, 132, 71, 1.8)',
+                                    data: shipment //[100, 100, 100, 100, 100]
+                                },
+                                {
+                                    label: "ACTUAL",
+                                    fillColor: "rgba(98,203,49,0.5)",
+                                    strokeColor: "rgba(98,203,49,0.8)",
+                                    highlightFill: "rgba(98,203,49,0.75)",
+                                    highlightStroke: "rgba(98,203,49,1)",
+                                    data: shipment //[28, 48, 40, 19, 86]
+                                }
+                            ]
+                        };
+
+                        //Then just before initializing the chart i destroyed
+                        if (chartShipment != undefined || chartShipment != null) {
+                            chartShipment.destroy();
+                        }
+
+                        var ctx = document.getElementById("barChartShipmentMonthly").getContext("2d");
+                        chartShipment = new Chart(ctx).Bar(barData, barOptions);
+                        document.getElementById('js-legend3').innerHTML = chartOntimeAdj.generateLegend();
+
+                        //#endregion
+
+                    }); //end getJson
+
+                //#region 4 pie chart jsonPieString
+
+                var valuePie = [];
+                var labelPie = [];
+                var colorPie = [];
+                var jsonPieString = $.getJSON('/OntimeDeliveredMonthlyChart/jsonPieData?DepartmentId=' + departmentId
+                    + '&SectionId=' + sectionId
+                    + '&YearId=' + yearId
+                    + '&MonthId=' + monthId
+                    + '&MatNameId=' + matNameId, function (data) {
+                        // console.info(data);
+
+                        var doughnutData = data;
+                        var doughnutOptions = {
+                            segmentShowStroke: true,
+                            segmentStrokeColor: "#fff",
+                            segmentStrokeWidth: 2,
+                            percentageInnerCutout: 45, // This is 0 for Pie charts
+                            animationSteps: 100,
+                            animationEasing: "easeOutBounce",
+                            animateRotate: true,
+                            animateScale: false,
+                            responsive: true,
+                        };
+
+                        //Then just before initializing the chart i destroyed
+                        if (pieChartOntime != undefined || pieChartOntime != null) {
+                            pieChartOntime.destroy();
+                        }
+
+                        var ctx = document.getElementById("doughnutChartMonthly").getContext("2d");
+                        //var myNewChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+                        pieChartOntime = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+                        document.getElementById('js-legend4').innerHTML = pieChartOntime.generateLegend();
+
+                    }); // end jsonPieString
+
+                //#endregion
+
+                //#region table
+                // on-time inbound detail dataTable
+                var departmentId = $('#DepartmentId').val();
+                var sectionId = $('#SectionId').val();
+                var matNameId = $('#MatNameId').val();
+                var yearId = $('#YearId').val();
+                var monthId = $('#MonthId').val();
+
+                var delivery = $('#delivery').dataTable();
+                delivery.fnDestroy();
+                delivery.dataTable({
+                    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "ajax": {
+                        "type": "POST",
+                        "url": '@(Url.RouteUrl("OntimeDeliveredMonthly"))',
+                        "data": function (d) {
+                            d.DepartmentId = departmentId;
+                            d.SectionId = sectionId;
+                            d.YearId = yearId;
+                            d.MonthId = monthId;
+                            d.MatNameId = matNameId;
+                        },
+                        "dataSrc": ""
+                    },
+                    columns: [
+                   { data: "Month" },
+                   { data: "DepartmentName" },
+                   { data: "SectionName" },
+                   { data: "MatName" },
+                   { data: "SumOfDelivery" },
+                   { data: "OnTime" },
+                   { data: "Delay" },
+                   { data: "AdjustDelivery" },
+                   { data: "Percent" },
+                   { data: "PercentAdjust" }
+                    ],
+                    select: true,
+                    buttons: [
+                        { extend: 'copy', className: 'btn-sm' },
+                        { extend: 'csv', title: 'On-time Delivery Monthly', className: 'btn-sm' },
+                        { extend: 'pdf', title: 'On-time Delivery Monthly', className: 'btn-sm' },
+                    ]
+                });
+
+                //on-time accept summary daily
+                var deliverySummary = $('#deliverySummary').dataTable();
+                deliverySummary.fnDestroy();
+                deliverySummary.dataTable({
+                    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "ajax": {
+                        "type": "POST",
+                        "url": '@(Url.RouteUrl("OntimeDeliveredSummaryMonthly"))',
+                        "data": function (d) {
+                            d.DepartmentId = departmentId;
+                            d.SectionId = sectionId;
+                            d.YearId = yearId;
+                            d.MonthId = monthId;
+                            d.MatNameId = matNameId;
+                        },
+                        "dataSrc": ""
+                    },
+                    columns: [
+                   { data: "DepartmentName" },
+                   { data: "SectionName" },
+                   { data: "SumOfDelivery" },
+                   { data: "OnTime" },
+                   { data: "Delay" },
+                   { data: "Adjust" },
+                   { data: "Percent" },
+                   { data: "PercentAdjust" }
+                    ],
+                    select: true,
+                    buttons: [
+                        { extend: 'copy', className: 'btn-sm' },
+                        { extend: 'csv', title: 'Delivery summary monthly', className: 'btn-sm' },
+                        { extend: 'pdf', title: 'Delivery summary monthly', className: 'btn-sm' },
+                    ]
+                });
+
+                //#endregion table
+
+            } //end if else
+
+        }); //end btnSerarch click
+
+        //#region 5 Bind normal buttons
+
+        $('.ladda-button').ladda('bind', { timeout: 2000 });
+
+        // Bind progress buttons and simulate loading progress
+        Ladda.bind('.progress-demo .ladda-button', {
+            callback: function (instance) {
+                var progress = 0;
+                var interval = setInterval(function () {
+                    progress = Math.min(progress + Math.random() * 0.1, 1);
+                    instance.setProgress(progress);
+
+                    if (progress === 1) {
+                        instance.stop();
+                        clearInterval(interval);
+                    }
+                }, 200);
+            }
+        });
+
+        var l = $('.ladda-button-demo').ladda();
+        l.click(function () {
+            // Start loading
+            l.ladda('start');
+
+            // Timeout example
+            // Do something in backend and then stop ladda
+            setTimeout(function () {
+                l.ladda('stop');
+            }, 5000)
+        });
+        //#endregion
+    </script>
+}
+
