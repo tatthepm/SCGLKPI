@@ -26,6 +26,27 @@
 
 @Html.Partial("pv_TenderedOntimeTableMonthly")
 
+<div>
+    <div id="loading" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Loading...</h4>
+                </div>
+                <div class="modal-body">
+                    @*<div class="progress progress-success">
+                            <div class="progress-bar" style="width:100%"></div>
+                        </div>*@
+                    <div class="progress m-t-xs full progress-small">
+                        <div style="width:100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-striped active">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Styles {
     @Styles.Render("~/bundles/datatables/css")
     @Styles.Render("~/bundles/xeditable/css")
@@ -65,6 +86,15 @@
         var chartShipment;
         var pieChartOntime;
         //
+        // show progress
+        $(document).ajaxStart(function () {
+            $("#loading").show();
+        });
+
+        $(document).ajaxStop(function () {
+            $("#loading").hide();
+        });
+
 
         //#region 1 autocomplete dropdownlist
         $(".js-source-states").select2();

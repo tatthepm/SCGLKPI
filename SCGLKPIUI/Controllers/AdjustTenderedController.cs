@@ -174,9 +174,10 @@ namespace SCGLKPIUI.Controllers {
                             string reasonId = ReasonId[i];
                             string remark = txtRemark[i];
                             string reasonName = objBs.reasonTenderedBs.GetByID(Convert.ToInt32(reasonId)).Name;
+                            bool isadjust = objBs.reasonTenderedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
 
                             DWH_ONTIME_SHIPMENT ontimeShipment = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm);
-                            ontimeShipment.TNRD_ADJUST = 1;
+                            ontimeShipment.TNRD_ADJUST = isadjust ? 1 : 0;
                             ontimeShipment.TNRD_ADJUST_BY = User.Identity.Name;
                             ontimeShipment.TNRD_ADJUST_DATE = DateTime.Now;
                             ontimeShipment.TNRD_ONTIME_REASON = reasonName;

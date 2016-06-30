@@ -24,168 +24,196 @@
     }
 }
 
-        @*get partial view*@
-        <div id="divResult"></div>
-
-        @section Styles {
-            @Styles.Render("~/bundles/datatables/css")
-            @Styles.Render("~/bundles/xeditable/css")
-            @Styles.Render("~/bundles/select2/css")
-            @Styles.Render("~/bundles/touchspin/css")
-            @Styles.Render("~/bundles/datepicker/css")
-            @Styles.Render("~/bundles/bootstrapCheckbox/css")
-            @Styles.Render("~/bundles/datetimepicker/css")
-            @Styles.Render("~/bundles/clockpicker/css")
-            @Styles.Render("~/bundles/sweetAlert/css")
-            @Styles.Render("~/bundles/toastr/css")
-            @Styles.Render("~/bundles/ladda/css")
-            <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-
-        }
-
-        @section Scripts {
-            @Scripts.Render("~/bundles/moment/js")
-            @Scripts.Render("~/bundles/xeditable/js")
-            @Scripts.Render("~/bundles/select2/js")
-            @Scripts.Render("~/bundles/touchspin/js")
-            @Scripts.Render("~/bundles/clockpicker/js")
-            @Scripts.Render("~/bundles/chartjs/js")
-            @Scripts.Render("~/bundles/datatables/js")
-            @Scripts.Render("~/bundles/datatablesBootstrap/js")
-            @Scripts.Render("~/bundles/datatablesPlugins/js")
-            @Scripts.Render("~/bundles/sweetAlert/js")
-            @Scripts.Render("~/bundles/toastr/js")
-            @Scripts.Render("~/bundles/ladda/js")
-            <script src="~/Scripts/jquery.datetimepicker.js"></script>
-            <script src="~/Scripts/fnReloadAjax.js"></script>
-
-            <script type="text/javascript">
-                //start javascript
+<div id="divResult"></div>
+<div>
+    <div id="loading" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Loading...</h4>
+                </div>
+                <div class="modal-body">
+                    @*<div class="progress progress-success">
+                            <div class="progress-bar" style="width:100%"></div>
+                        </div>*@
+                    <div class="progress m-t-xs full progress-small">
+                        <div style="width:100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-striped active">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-                //
-                //#region 1 autocomplete dropdownlist
-                $(".js-source-states").select2();
-                //#endregion
+@section Styles {
+    @Styles.Render("~/bundles/datatables/css")
+    @Styles.Render("~/bundles/xeditable/css")
+    @Styles.Render("~/bundles/select2/css")
+    @Styles.Render("~/bundles/touchspin/css")
+    @Styles.Render("~/bundles/datepicker/css")
+    @Styles.Render("~/bundles/bootstrapCheckbox/css")
+    @Styles.Render("~/bundles/datetimepicker/css")
+    @Styles.Render("~/bundles/clockpicker/css")
+    @Styles.Render("~/bundles/sweetAlert/css")
+    @Styles.Render("~/bundles/toastr/css")
+    @Styles.Render("~/bundles/ladda/css")
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
 
-                //#region 4 getJson Section
-                $("#DepartmentId").change(function (res) {
-                    departmentId = $("#DepartmentId").val();
-                    $.getJSON('/AdjustDocReturned/SectionFilter?departmentId=' + departmentId, function (data) {
-                        var ddl = $("#SectionId");
-                        // ddl.removeAttrs('disabled style');
-                        ddl.addClass('js-source-states');
-                        var string = '<option value="">ALL</option>';
-                        $.each(data, function (i, S) {
-                            string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                        });
-                        ddl.html(string);
-                    });
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/moment/js")
+    @Scripts.Render("~/bundles/xeditable/js")
+    @Scripts.Render("~/bundles/select2/js")
+    @Scripts.Render("~/bundles/touchspin/js")
+    @Scripts.Render("~/bundles/clockpicker/js")
+    @Scripts.Render("~/bundles/chartjs/js")
+    @Scripts.Render("~/bundles/datatables/js")
+    @Scripts.Render("~/bundles/datatablesBootstrap/js")
+    @Scripts.Render("~/bundles/datatablesPlugins/js")
+    @Scripts.Render("~/bundles/sweetAlert/js")
+    @Scripts.Render("~/bundles/toastr/js")
+    @Scripts.Render("~/bundles/ladda/js")
+    <script src="~/Scripts/jquery.datetimepicker.js"></script>
+    <script src="~/Scripts/fnReloadAjax.js"></script>
+
+    <script type="text/javascript">
+        //start javascript
+        // show progress
+        $(document).ajaxStart(function () {
+            $("#loading").show();
+        });
+
+        $(document).ajaxStop(function () {
+            $("#loading").hide();
+        });
+
+        // end show progress
+        //
+        //#region 1 autocomplete dropdownlist
+        $(".js-source-states").select2();
+        //#endregion
+
+        //#region 4 getJson Section
+        $("#DepartmentId").change(function (res) {
+            departmentId = $("#DepartmentId").val();
+            $.getJSON('/AdjustDocReturned/SectionFilter?departmentId=' + departmentId, function (data) {
+                var ddl = $("#SectionId");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
                 });
-                //#endregion
+                ddl.html(string);
+            });
+        });
+        //#endregion
 
-                //#region  5 getJson MatName
-                $("#SectionId").change(function (res) {
-                    departmentId = $("#DepartmentId").val();
-                    sectionId = $("#SectionId").val();
-                    $.getJSON('/AdjustDocReturned/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
-                        var ddl = $("#MatNameId");
-                        // ddl.removeAttrs('disabled style');
-                        ddl.addClass('js-source-states');
-                        var string = '<option value="">ALL</option>';
-                        $.each(data, function (i, S) {
-                            string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                        });
-                        ddl.html(string);
-                    });
+        //#region  5 getJson MatName
+        $("#SectionId").change(function (res) {
+            departmentId = $("#DepartmentId").val();
+            sectionId = $("#SectionId").val();
+            $.getJSON('/AdjustDocReturned/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
+                var ddl = $("#MatNameId");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
                 });
-                //#endregion
+                ddl.html(string);
+            });
+        });
+        //#endregion
 
-                $("#btnSearch").click(function () {
+        $("#btnSearch").click(function () {
 
-                    if ($('#DepartmentId').val() == "") {
-                        swal({
-                            title: "Warning!",
-                            text: "Sorry!, Department is not selected ",
-                            type: "warning"
-                        });
-                    } else if ($('#SectionId').val() == "") {
-                        swal({
-                            title: "Warning!",
-                            text: "Sorry!, Section is not selected ",
-                            type: "warning"
-                        });
-                    } else if ($('#MatNameId').val() == "") {
-                        swal({
-                            title: "Warning!",
-                            text: "Sorry!, MatName is not selected ",
-                            type: "warning"
-                        });
-                    } else if ($('#YearId').val() == "") {
-                        swal({
-                            title: "Warning!",
-                            text: "Sorry!, Year is not selected ",
-                            type: "warning"
-                        });
-                    } else if ($('#MonthId').val() == "") {
-                        swal({
-                            title: "Warning!",
-                            text: "Sorry!, Month is not selected ",
-                            type: "warning"
-                        });
+            if ($('#DepartmentId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Department is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#SectionId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Section is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#MatNameId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, MatName is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#YearId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Year is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#MonthId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Month is not selected ",
+                    type: "warning"
+                });
+            }
+            else {
+
+                // on-time accept daliy dataTable
+                var departmentId = $('#DepartmentId').val();
+                var sectionId = $('#SectionId').val();
+                var matNameId = $('#MatNameId').val();
+                var yearId = $('#YearId').val();
+                var monthId = $('#MonthId').val();
+
+                $('#divResult').load("/AdjustDocReturned/GetDelayDocReturnedData?DepartmentId="
+                                      + departmentId
+                                      + "&SectionId=" + sectionId
+                                      + "&YearId=" + yearId
+                                      + "&MonthId=" + monthId
+                                      + "&MatNameId=" + matNameId);
+            }
+        });
+
+        //#region 6 Bind normal buttons
+
+        $('.ladda-button').ladda('bind', { timeout: 2000 });
+
+        // Bind progress buttons and simulate loading progress
+        Ladda.bind('.progress-demo .ladda-button', {
+            callback: function (instance) {
+                var progress = 0;
+                var interval = setInterval(function () {
+                    progress = Math.min(progress + Math.random() * 0.1, 1);
+                    instance.setProgress(progress);
+
+                    if (progress === 1) {
+                        instance.stop();
+                        clearInterval(interval);
                     }
-                    else {
+                }, 200);
+            }
+        });
 
-                        // on-time accept daliy dataTable
-                        var departmentId = $('#DepartmentId').val();
-                        var sectionId = $('#SectionId').val();
-                        var matNameId = $('#MatNameId').val();
-                        var yearId = $('#YearId').val();
-                        var monthId = $('#MonthId').val();
+        var l = $('.ladda-button-demo').ladda();
+        l.click(function () {
+            // Start loading
+            l.ladda('start');
 
-                        $('#divResult').load("/AdjustDocReturned/GetDelayDocReturnedData?DepartmentId="
-                                              + departmentId
-                                              + "&SectionId=" + sectionId
-                                              + "&YearId=" + yearId
-                                              + "&MonthId=" + monthId
-                                              + "&MatNameId=" + matNameId);
-                    }
-                });
+            // Timeout example
+            // Do something in backend and then stop ladda
+            setTimeout(function () {
+                l.ladda('stop');
+            }, 25000)
+        });
+        //#endregion
 
-                //#region 6 Bind normal buttons
-
-                $('.ladda-button').ladda('bind', { timeout: 2000 });
-
-                // Bind progress buttons and simulate loading progress
-                Ladda.bind('.progress-demo .ladda-button', {
-                    callback: function (instance) {
-                        var progress = 0;
-                        var interval = setInterval(function () {
-                            progress = Math.min(progress + Math.random() * 0.1, 1);
-                            instance.setProgress(progress);
-
-                            if (progress === 1) {
-                                instance.stop();
-                                clearInterval(interval);
-                            }
-                        }, 200);
-                    }
-                });
-
-                var l = $('.ladda-button-demo').ladda();
-                l.click(function () {
-                    // Start loading
-                    l.ladda('start');
-
-                    // Timeout example
-                    // Do something in backend and then stop ladda
-                    setTimeout(function () {
-                        l.ladda('stop');
-                    }, 25000)
-                });
-                //#endregion
-
-            </script>//stop javascript
-        }
+    </script>//stop javascript
+}
 
 

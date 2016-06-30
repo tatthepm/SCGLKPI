@@ -137,9 +137,10 @@ namespace SCGLKPIUI.Controllers {
                             string reasonId = ReasonId[i];
                             string remark = txtRemark[i];
                             string reasonName = objBs.reasonOutboundBs.GetByID(Convert.ToInt32(reasonId)).Name;
+                            bool isadjust = objBs.reasonOutboundBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
 
                             DWH_ONTIME_DN ontimeDn = objBs.dWH_ONTIME_DNBs.GetByID(dn);
-                            ontimeDn.OUTB_ADJUST = 1;
+                            ontimeDn.OUTB_ADJUST = isadjust ? 1 : 0;
                             ontimeDn.OUTB_ADJUST_BY = User.Identity.Name;
                             ontimeDn.OUTB_ADJUST_DATE = DateTime.Now;
                             ontimeDn.OUTB_REASON = reasonName;

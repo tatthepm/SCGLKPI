@@ -23,192 +23,233 @@
     }
 }
 
-        @*get partial view*@
-        <div id="divResult"></div>
+<div id="divResult"></div>
 
+<div>
+    <div id="loading" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Loading...</h4>
+                </div>
+                <div class="modal-body">
+                    @*<div class="progress progress-success">
+                            <div class="progress-bar" style="width:100%"></div>
+                        </div>*@
+                    <div class="progress m-t-xs full progress-small">
+                        <div style="width:100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-striped active">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-        @section Styles {
-            @Styles.Render("~/bundles/datatables/css")
-            @Styles.Render("~/bundles/xeditable/css")
-            @Styles.Render("~/bundles/select2/css")
-            @Styles.Render("~/bundles/touchspin/css")
-            @Styles.Render("~/bundles/datepicker/css")
-            @Styles.Render("~/bundles/bootstrapCheckbox/css")
-            @Styles.Render("~/bundles/datetimepicker/css")
-            @Styles.Render("~/bundles/clockpicker/css")
-            @Styles.Render("~/bundles/sweetAlert/css")
-            @Styles.Render("~/bundles/toastr/css")
-            @Styles.Render("~/bundles/ladda/css")
-            <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-        }
+@section Styles {
+    @Styles.Render("~/bundles/datatables/css")
+    @Styles.Render("~/bundles/xeditable/css")
+    @Styles.Render("~/bundles/select2/css")
+    @Styles.Render("~/bundles/touchspin/css")
+    @Styles.Render("~/bundles/datepicker/css")
+    @Styles.Render("~/bundles/bootstrapCheckbox/css")
+    @Styles.Render("~/bundles/datetimepicker/css")
+    @Styles.Render("~/bundles/clockpicker/css")
+    @Styles.Render("~/bundles/sweetAlert/css")
+    @Styles.Render("~/bundles/toastr/css")
+    @Styles.Render("~/bundles/ladda/css")
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+}
 
-        @section Scripts {
-            @Scripts.Render("~/bundles/moment/js")
-            @Scripts.Render("~/bundles/xeditable/js")
-            @Scripts.Render("~/bundles/select2/js")
-            @Scripts.Render("~/bundles/touchspin/js")
-            @Scripts.Render("~/bundles/clockpicker/js")
-            @Scripts.Render("~/bundles/chartjs/js")
-            @Scripts.Render("~/bundles/datatables/js")
-            @Scripts.Render("~/bundles/datatablesBootstrap/js")
-            @Scripts.Render("~/bundles/datatablesPlugins/js")
-            @Scripts.Render("~/bundles/sweetAlert/js")
-            @Scripts.Render("~/bundles/toastr/js")
-            @Scripts.Render("~/bundles/ladda/js")
-            <script src="~/Scripts/jquery.datetimepicker.js"></script>
-            <script src="~/Scripts/fnReloadAjax.js"></script>
-            <script type="text/javascript">
-                //start javascript
-                //$(document).ajaxStart(function () {
-                //    $("#loading").show();
-                //});
-                //$(document).ajaxStop(function () {
-                //    setTimeout(function () {
-                //        $("#loading").hide();
-                //    }, 120000);
-                //});
+@section Scripts {
+    @Scripts.Render("~/bundles/moment/js")
+    @Scripts.Render("~/bundles/xeditable/js")
+    @Scripts.Render("~/bundles/select2/js")
+    @Scripts.Render("~/bundles/touchspin/js")
+    @Scripts.Render("~/bundles/clockpicker/js")
+    @Scripts.Render("~/bundles/chartjs/js")
+    @Scripts.Render("~/bundles/datatables/js")
+    @Scripts.Render("~/bundles/datatablesBootstrap/js")
+    @Scripts.Render("~/bundles/datatablesPlugins/js")
+    @Scripts.Render("~/bundles/sweetAlert/js")
+    @Scripts.Render("~/bundles/toastr/js")
+    @Scripts.Render("~/bundles/ladda/js")
+    <script src="~/Scripts/jquery.datetimepicker.js"></script>
+    <script src="~/Scripts/fnReloadAjax.js"></script>
+    <script type="text/javascript">
+        //start javascript
 
+        // show progress
+        $(document).ajaxStart(function () {
+            $("#loading").show();
+        });
+
+        $(document).ajaxStop(function () {
+            $("#loading").hide();
+        });
+
+        // end show progress
+
+        //
+        //#region 1 autocomplete dropdownlist
+        $(".js-source-states").select2();
+        //#endregion
+
+        //#region 2 date time picker
+        jQuery('#FromDateSearch').datetimepicker({
+            format: 'Y/m/d',
+            onShow: function (ct) {
+                this.setOptions({
+                    maxDate: jQuery('#ToDateSearch').val() ? jQuery('#ToDateSearch').val() : false
+                })
+            },
+            timepicker: false
+        });
+        jQuery('#ToDateSearch').datetimepicker({
+            format: 'Y/m/d',
+            onShow: function (ct) {
+                this.setOptions({
+                    minDate: jQuery('#FromDateSearch').val() ? jQuery('#FromDateSearch').val() : false
+                })
+            },
+            timepicker: false
+        });
+        //#endregion
+
+        //#region 4 getJson Section
+        $("#DepartmentId").change(function (res) {
+            departmentId = $("#DepartmentId").val();
+            $.getJSON('/AdjustAccepted/SectionFilter?departmentId=' + departmentId, function (data) {
+                var ddl = $("#SectionId");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                });
+                ddl.html(string);
+            });
+        });
+        //#endregion
+
+        //#region  5 getJson MatName
+        $("#SectionId").change(function (res) {
+            departmentId = $("#DepartmentId").val();
+            sectionId = $("#SectionId").val();
+            $.getJSON('/AdjustAccepted/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
+                var ddl = $("#MatNameId");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                });
+                ddl.html(string);
+            });
+        });
+        //#endregion
+
+        $("#btnSearch").click(function () {
+
+            var sdate = $('#FromDateSearch').val();
+            var edate = $('#ToDateSearch').val();
+            var day_start = new Date(sdate);
+            var day_end = new Date(edate);
+            var total_days = ((day_end - day_start) / (1000 * 60 * 60 * 24)) + 1;
+
+            if ($('#DepartmentId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Department is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#SectionId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Section is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#MatNameId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, MatName is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#YearId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Year is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#MonthId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Month is not selected ",
+                    type: "warning"
+                });
+            }
+            else if (sdate == "" || edate == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, You must choose date in the calendar",
+                    type: "warning"
+                });
+            }
+            else if (total_days > 31) {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, you can not use duration more than 31 days",
+                    type: "warning"
+                });
+            } else {
+
+                // on-time accept daliy dataTable
+                var departmentId = $('#DepartmentId').val();
+                var sectionId = $('#SectionId').val();
+                var matNameId = $('#MatNameId').val();
+                var yearId = $('#YearId').val();
+                var monthId = $('#MonthId').val();
+
+                $.ajax({})
+                $('#divResult').load("/AdjustAccepted/GetDelayAcceptedData?DepartmentId="
+                                      + departmentId
+                                      + "&SectionId=" + sectionId
+                                      + "&YearId=" + yearId
+                                      + "&MonthId=" + monthId
+                                      + "&MatNameId=" + matNameId);
+
+                @*$.ajax({
+                    type: "POST",
+                    url: "@Url.Action("GetDelayAcceptedData", "AdjustAccepted")",
+                    traditional: true,
+                  //  dataType: 'json',
+                    data: {
+                        DepartmentId: departmentId,
+                        SectionId: sectionId,
+                        YearId: yearId,
+                        MonthId: monthId,
+                        MatNameId: matNameId
+                    },
+                    success: successFunc,
+                    error: errorFunc
+                });
+                function successFunc(data) {
+                    alert(data);
+                    location.reload();
+                }
+                function errorFunc() {
+                    alert('error');
+                }*@
                 //
-                //#region 1 autocomplete dropdownlist
-                $(".js-source-states").select2();
-                //#endregion
-
-                //#region 2 date time picker
-                jQuery('#FromDateSearch').datetimepicker({
-                    format: 'Y/m/d',
-                    onShow: function (ct) {
-                        this.setOptions({
-                            maxDate: jQuery('#ToDateSearch').val() ? jQuery('#ToDateSearch').val() : false
-                        })
-                    },
-                    timepicker: false
-                });
-                jQuery('#ToDateSearch').datetimepicker({
-                    format: 'Y/m/d',
-                    onShow: function (ct) {
-                        this.setOptions({
-                            minDate: jQuery('#FromDateSearch').val() ? jQuery('#FromDateSearch').val() : false
-                        })
-                    },
-                    timepicker: false
-                });
-                //#endregion
-
-                //#region 4 getJson Section
-                $("#DepartmentId").change(function (res) {
-                    departmentId = $("#DepartmentId").val();
-                    $.getJSON('/AdjustAccepted/SectionFilter?departmentId=' + departmentId, function (data) {
-                        var ddl = $("#SectionId");
-                        // ddl.removeAttrs('disabled style');
-                        ddl.addClass('js-source-states');
-                        var string = '<option value="">ALL</option>';
-                        $.each(data, function (i, S) {
-                            string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                        });
-                        ddl.html(string);
-                    });
-                });
-                //#endregion
-
-                //#region  5 getJson MatName
-                $("#SectionId").change(function (res) {
-                    departmentId = $("#DepartmentId").val();
-                    sectionId = $("#SectionId").val();
-                    $.getJSON('/AdjustAccepted/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
-                        var ddl = $("#MatNameId");
-                        // ddl.removeAttrs('disabled style');
-                        ddl.addClass('js-source-states');
-                        var string = '<option value="">ALL</option>';
-                        $.each(data, function (i, S) {
-                            string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                        });
-                        ddl.html(string);
-                    });
-                });
-                //#endregion
-
-                $("#btnSearch").click(function () {
-
-                    var sdate = $('#FromDateSearch').val();
-                    var edate = $('#ToDateSearch').val();
-                    var day_start = new Date(sdate);
-                    var day_end = new Date(edate);
-                    var total_days = ((day_end - day_start) / (1000 * 60 * 60 * 24)) + 1;
-
-                    if ($('#DepartmentId').val() == "") {
-                        swal({
-                            title: "Warning!",
-                            text: "Sorry!, Department is not selected ",
-                            type: "warning"
-                        });
-                    } else if ($('#SectionId').val() == "") {
-                        swal({
-                            title: "Warning!",
-                            text: "Sorry!, Section is not selected ",
-                            type: "warning"
-                        });
-                    } else if ($('#MatNameId').val() == "") {
-                        swal({
-                            title: "Warning!",
-                            text: "Sorry!, MatName is not selected ",
-                            type: "warning"
-                        });
-                    } else if ($('#YearId').val() == "") {
-                        swal({
-                            title: "Warning!",
-                            text: "Sorry!, Year is not selected ",
-                            type: "warning"
-                        });
-                    } else if ($('#MonthId').val() == "") {
-                        swal({
-                            title: "Warning!",
-                            text: "Sorry!, Month is not selected ",
-                            type: "warning"
-                        });
-                    }
-                    else if (sdate == "" || edate == "") {
-                        swal({
-                            title: "Warning!",
-                            text: "Sorry!, You must choose date in the calendar",
-                            type: "warning"
-                        });
-                    }
-                    else if (total_days > 31) {
-                        swal({
-                            title: "Warning!",
-                            text: "Sorry!, you can not use duration more than 31 days",
-                            type: "warning"
-                        });
-                    } else {
-
-                        // on-time accept daliy dataTable
-                        var departmentId = $('#DepartmentId').val();
-                        var sectionId = $('#SectionId').val();
-                        var matNameId = $('#MatNameId').val();
-                        var yearId = $('#YearId').val();
-                        var monthId = $('#MonthId').val();
-
-                        $('#divResult').load("/AdjustAccepted/GetDelayAcceptedData?DepartmentId="
-                                              + departmentId
-                                              + "&SectionId=" + sectionId
-                                              + "&YearId=" + yearId
-                                              + "&MonthId=" + monthId
-                                              + "&MatNameId=" + matNameId);
-
-                        // $("#btnSearch").click(function () {
-                        //$.ajax({});
-                        // });
-
-                        @*//
-                //adjust accepted table
-                var adjestAcceptedTender = $('#adjustAcceptedTable').dataTable();
-                adjestAcceptedTender.fnDestroy();
-                adjestAcceptedTender.dataTable({
+                @*//2
+                var acceptAdjust = $('#adjustAcceptedTable').dataTable();
+                acceptAdjust.fnDestroy();
+                acceptAdjust.dataTable({
                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                     "ajax": {
                         "type": "POST",
-                        "url": '@(Url.RouteUrl("AdjustAccept"))',
+                        "url": '@Url.Action("JsonAcceptTable", "AdjustAccepted")',
                         "data": function (d) {
                             d.DepartmentId = departmentId;
                             d.SectionId = sectionId;
@@ -219,76 +260,102 @@
                         "dataSrc": ""
                     },
                     columns: [
-                           { data: "Shipment" },
-                           { data: "CarrierId" },
-                           { data: "SoldtoName" },
-                           { data: "ShiptoName" },
-                           { data: "PlanAccept", type: "date", "dateFormat": "yy-mm-dd" },
-                           { data: "LastAccept" }
+                   { data: "Shipment" },
+                   { data: "CarrierId" },
+                   { data: "RegionName" },
+                   { data: "SoldtoName" },
+                   { data: "ShiptoName" },
+                   { data: "PlanAccept" },
+                   { data: "LastAccept" }
                     ],
                     select: true,
                     buttons: [
                         { extend: 'copy', className: 'btn-sm' },
-                        { extend: 'csv', title: 'On-time Accept Summary Daily', className: 'btn-sm' },
-                        { extend: 'pdf', title: 'On-time Accept Summary Daily', className: 'btn-sm' },
+                        { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
+                        { extend: 'pdf', title: 'ExampleFile', className: 'btn-sm' },
                     ]
-                });  //end adjust accepted table*@
-
-                    }
 
                 });
+                //end2*@
+            }
+        });
 
-                //#region 6 Bind normal buttons
-
-                $('.ladda-button').ladda('bind', { timeout: 2000 });
-
-                // Bind progress buttons and simulate loading progress
-                Ladda.bind('.progress-demo .ladda-button', {
-                    callback: function (instance) {
-                        var progress = 0;
-                        var interval = setInterval(function () {
-                            progress = Math.min(progress + Math.random() * 0.1, 1);
-                            instance.setProgress(progress);
-
-                            if (progress === 1) {
-                                instance.stop();
-                                clearInterval(interval);
-                            }
-                        }, 200);
-                    }
-                });
-
-
-                var l = $('.ladda-button-demo').ladda();
-                l.click(function () {
-                    // Start loading
-                    l.ladda('start');
-
-                    // Timeout example
-                    // Do something in backend and then stop ladda
-                    setTimeout(function () {
-                        l.ladda('stop');
-                    }, 15000)
-                });
-                //#endregion
-
-                ////#region 7 datatable
-                //$('#adjustAcceptedTable').dataTable({
-                //    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-                //    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                //    buttons: [
-                //        { extend: 'copy', className: 'btn-sm' },
-                //        { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
-                //        { extend: 'pdf', title: 'ExampleFile', className: 'btn-sm' },
-                //    ]
-                //});
-                ////#endregion
-
-
-                //stop javascript
-            </script>
-
-
+        // button excel click
+        $("#btnExcel").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetDelayAcceptedData", "ExportExcel")",
+                traditional: true,
+            //  dataType: 'json',
+            data: {
+                DepartmentId: departmentId,
+                SectionId: sectionId,
+                YearId: yearId,
+                MonthId: monthId,
+                MatNameId: matNameId
+            },
+            success: successFunc,
+            error: errorFunc
+        });
+        function successFunc(data) {
+            alert(data);
+            location.reload();
         }
+        function errorFunc() {
+            alert('error');
+        }
+        });
+        //end button excel
+
+        //#region 6 Bind normal buttons
+
+        $('.ladda-button').ladda('bind', { timeout: 2000 });
+
+        // Bind progress buttons and simulate loading progress
+        Ladda.bind('.progress-demo .ladda-button', {
+            callback: function (instance) {
+                var progress = 0;
+                var interval = setInterval(function () {
+                    progress = Math.min(progress + Math.random() * 0.1, 1);
+                    instance.setProgress(progress);
+
+                    if (progress === 1) {
+                        instance.stop();
+                        clearInterval(interval);
+                    }
+                }, 200);
+            }
+        });
 
 
+        var l = $('.ladda-button-demo').ladda();
+        l.click(function () {
+            // Start loading
+            l.ladda('start');
+
+            // Timeout example
+            // Do something in backend and then stop ladda
+            setTimeout(function () {
+                l.ladda('stop');
+            }, 15000)
+        });
+        //#endregion
+
+        ////#region 7 datatable
+        $('#adjustAcceptedTable').dataTable({
+            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            buttons: [
+                { extend: 'copy', className: 'btn-sm' },
+                { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
+                { extend: 'pdf', title: 'ExampleFile', className: 'btn-sm' },
+            ]
+        });
+        ////#endregion
+
+
+        //stop javascript
+    </script>
+
+
+}

@@ -7,13 +7,10 @@ using BLL;
 using BOL;
 
 
-namespace SCGLKPIUI.Controllers.Master
-{
-    public class ReasonDeliveredController : BaseController
-    {
+namespace SCGLKPIUI.Controllers.Master {
+    public class ReasonDeliveredController : BaseController {
         // GET: ReasonDelivered
-        public ActionResult Index(string sms)
-        {
+        public ActionResult Index(string sms) {
             try {
                 TempData["Msg"] = sms;
                 var q = objBs.reasonOntimeBs.GetAll();
@@ -26,14 +23,20 @@ namespace SCGLKPIUI.Controllers.Master
         }
 
         [HttpPost]
-        public ActionResult Create(string reasonName) {
+        public ActionResult Create(string reasonName, string isAdjust) {
             try {
-                ReasonOntime reasonOntime = new ReasonOntime();
-                reasonOntime.Name = reasonName;
-                if (ModelState.IsValid) {
-                    objBs.reasonOntimeBs.Insert(reasonOntime);
+                if (!string.IsNullOrEmpty(reasonName)) {
+                    ReasonOntime reasonOntime = new ReasonOntime();
+                    reasonOntime.Name = reasonName;
+                    if (isAdjust == "True") reasonOntime.IsAdjust = true;
+                    if (ModelState.IsValid) {
+                        objBs.reasonOntimeBs.Insert(reasonOntime);
+                    }
+                    return RedirectToAction("Index", new { sms = "Created Successfully !" });
                 }
-                return RedirectToAction("Index", new { sms = "Created Successfully !" });
+                else {
+                    return RedirectToAction("Index", new { sms = "reason is null or empty !" });
+                }
             }
             catch (Exception ex) {
                 return RedirectToAction("Index", new { sms = "Operation Create failed ! " + ex.InnerException.InnerException.Message.ToString() });

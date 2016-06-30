@@ -137,9 +137,10 @@ namespace SCGLKPIUI.Controllers {
                             string reasonId = ReasonId[i];
                             string remark = txtRemark[i];
                             string reasonName = objBs.reasonDocReturnBs.GetByID(Convert.ToInt32(reasonId)).Name;
+                            bool isadjust = objBs.reasonDocReturnBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
 
                             DWH_ONTIME_DN ontimeDn = objBs.dWH_ONTIME_DNBs.GetByID(dn);
-                            ontimeDn.SCGL_DOCRET_ADJUST = 1;
+                            ontimeDn.SCGL_DOCRET_ADJUST = isadjust ? 1 : 0;
                             ontimeDn.SCGL_DOCRET_ADJUST_BY = User.Identity.Name;
                             ontimeDn.SCGL_DOCRET_ADJUST_DATE = DateTime.Now;
                             ontimeDn.SCGL_DOCRET_REASON = reasonName;
@@ -164,7 +165,7 @@ namespace SCGLKPIUI.Controllers {
 
                             int adjDOCRET = ontimeDocReturn.AdjustDocReturn + 1;
                             ontimeDocReturn.AdjustDocReturn = adjDOCRET;
-                            ontimeDocReturn.SumOfAdjustDocReturn= ontimeDocReturn.OnTime + adjDOCRET;
+                            ontimeDocReturn.SumOfAdjustDocReturn = ontimeDocReturn.OnTime + adjDOCRET;
                             objBs.ontimeDocReturnBs.Update(ontimeDocReturn);
                             countDN++;
                         }

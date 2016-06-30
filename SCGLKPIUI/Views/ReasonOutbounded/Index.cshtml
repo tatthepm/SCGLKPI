@@ -19,13 +19,25 @@
                 <div class="panel-body">
                     @using (Html.BeginForm("Create", "ReasonOutbounded", FormMethod.Post, new { @class = "form-horizontal" })) {
                         @Html.AntiForgeryToken()
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Reason</label>
-                            <div class="col-sm-10"><input type="text" class="form-control" name="reasonName"></div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Reason</label>
+                                <div class="col-sm-10"><input type="text" class="form-control" name="reasonName"></div>
+                            </div>
                         </div>
-                        <div class="form-group">
+                        <div class="row">
                             <div class="col-sm-8 col-sm-offset-2">
-                                <button class="btn btn-primary" type="submit">Save changes</button>
+                                <input type="checkbox" name="isAdjust" value="True">Adjustable
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br />
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">Save changes</button>
+                                </div>
                             </div>
                         </div>
                     }
@@ -68,6 +80,7 @@
                                 <tr>
                                     <th width="5%">#</th>
                                     <th>Reason</th>
+                                    <th>IsAdjust</th>
                                     <th width="10%"></th>
 
                                 </tr>
@@ -79,6 +92,7 @@
                                     <tr>
                                         <td>@(itemNo++)</td>
                                         <td>@item.Name</td>
+                                        <td>@item.IsAdjust</td>
                                         <td>
                                             <a href="/ReasonOutbounded/Delete?Id=@item.Id" onclick="return ConfirmDelete()"><span class="btn btn-danger"><i class="fa fa-trash-o"></i> Delete</span></a>
                                         </td>

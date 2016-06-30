@@ -16,21 +16,30 @@ namespace SCGLKPIUI.Controllers.Master {
                 //test
                 return View(q);
 
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 return RedirectToAction("Index", new { sms = "Opeartion reason accepted failed " + ex.InnerException.InnerException.Message.ToString() });
             }
         }
 
         [HttpPost]
-        public ActionResult Create(string reasonName,bool? isAdjust) {
+        public ActionResult Create(string reasonName, string isAdjust) {
             try {
-                ReasonAccepted reasonAccepted = new ReasonAccepted();
-                reasonAccepted.Name = reasonName;
-                if (ModelState.IsValid) {
-                    objBs.reasonAcceptedBs.Insert(reasonAccepted);
+                if (!string.IsNullOrEmpty(reasonName)) {
+
+                    ReasonAccepted reasonAccepted = new ReasonAccepted();
+                    reasonAccepted.Name = reasonName;
+                    if (isAdjust == "True") reasonAccepted.IsAdjust = true;
+                    if (ModelState.IsValid) {
+                        objBs.reasonAcceptedBs.Insert(reasonAccepted);
+                    }
+                    return RedirectToAction("Index", new { sms = "Created Successfully !" });
                 }
-                return RedirectToAction("Index", new { sms = "Created Successfully !" });
-            } catch (Exception ex) {
+                else {
+                    return RedirectToAction("Index", new { sms = "reason is null or empty !" });
+                }
+            }
+            catch (Exception ex) {
                 return RedirectToAction("Index", new { sms = "Operation Create failed ! " + ex.InnerException.InnerException.Message.ToString() });
             }
         }
@@ -40,7 +49,8 @@ namespace SCGLKPIUI.Controllers.Master {
                 objBs.reasonAcceptedBs.Delete(Id);
                 return RedirectToAction("Index", new { sms = "Deleted Successfully !" });
 
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 return RedirectToAction("Index", new { sms = "Operation delete failed ! " + ex.InnerException.InnerException.Message.ToString() });
             }
         }

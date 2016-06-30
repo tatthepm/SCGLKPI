@@ -361,6 +361,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\green.ico" />
     <Content Include="Content\jquery.datetimepicker.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="Content\style.css" />
@@ -3016,8 +3017,7 @@
     <Content Include="Views\OntimeDocReturnedYearlyChart\pv_DocReturnOntimeTableYearly.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Content\img\" />
+    <Folder Include="App_Data\UploadFiles\" />
     <Folder Include="Icons\" />
     <Folder Include="Vendor\moment\src\lib\create\" />
     <Folder Include="Vendor\moment\src\lib\duration\" />

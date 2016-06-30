@@ -27,14 +27,20 @@ namespace SCGLKPIUI.Controllers.Master
         }
 
         [HttpPost]
-        public ActionResult Create(string reasonName) {
+        public ActionResult Create(string reasonName, string isAdjust) {
             try {
-                ReasonTendered reasonTendered = new ReasonTendered();
-                reasonTendered.Name = reasonName;
-                if (ModelState.IsValid) {
-                    objBs.reasonTenderedBs.Insert(reasonTendered);
+                if (!string.IsNullOrEmpty(reasonName)) {
+                    ReasonTendered reasonTendered = new ReasonTendered();
+                    reasonTendered.Name = reasonName;
+                    if (isAdjust == "True") reasonTendered.IsAdjust = true;
+                    if (ModelState.IsValid) {
+                        objBs.reasonTenderedBs.Insert(reasonTendered);
+                    }
+                    return RedirectToAction("Index", new { sms = "Created Successfully !" });
                 }
-                return RedirectToAction("Index", new { sms = "Created Successfully !" });
+                else {
+                    return RedirectToAction("Index", new { sms = "reason is null or empty !" });
+                }
             }
             catch (Exception ex) {
                 return RedirectToAction("Index", new { sms = "Operation Create failed ! " + ex.InnerException.InnerException.Message.ToString() });
