@@ -206,7 +206,10 @@ namespace SCGLKPIUI.Controllers {
                     q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
                 }
                 else {
-                    q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) >= FromDateSearch.Value.Date && Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                    DateTime A1 = Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString());
+                    DateTime A2 = Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString());
+                    q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) >= Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
