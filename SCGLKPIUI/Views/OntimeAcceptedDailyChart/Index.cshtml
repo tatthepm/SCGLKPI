@@ -15,8 +15,12 @@
         list-style-type: none;
     }
 
-    td.highlight {
-        font-weight: bold;
+    /* Green check. */
+    .glyphicon-ok {
+        color: green;
+    }
+    /* Red X. */
+    .glyphicon-remove {
         color: red;
     }
 </style>
@@ -467,7 +471,21 @@
                    { data: "AdjustAccept" },
                    { data: "Plan" },
                    { data: "Percent" },
-                   { data: "PercentAdjust" }
+                   { data: "PercentAdjust" },
+                    ],
+                    "columnDefs": [
+                {
+                    "render": function (data, type, row) {
+                        return row.DepartmentName + " " + row.SectionName;
+                    },
+                    "targets": 1
+                },
+                {
+                    "render": function (data, type, row) {
+                        return (row.Percent >= 98.0) ? '<img src="/Content/img/green.ico" />' : '<span class="glyphicon glyphicon-remove"></span>'
+                    },
+                    "targets": 11
+                }
                     ],
                     select: true,
                     buttons: [
