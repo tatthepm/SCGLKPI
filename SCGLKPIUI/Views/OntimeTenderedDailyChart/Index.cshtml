@@ -20,7 +20,7 @@
     <i class="fa fa-bar-chart"></i> Chart on-time tender | Daily
 </h4>
 @*filter by date*@
-@Html.Partial("pv_FilterByDate")
+@Html.Partial("pv_FilterSegmentByDate")
 
 @Html.Partial("pv_TenderedOntimeChartDaily")
 
@@ -119,38 +119,9 @@
         //#endregion
 
         //#region 4 getJson Section
-        $("#DepartmentId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            $.getJSON('/OntimeAcceptedDailyChart/SectionFilter?departmentId=' + departmentId, function (data) {
-                var ddl = $("#SectionId");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddl.html(string);
-            });
-        });
-
         //#endregion
 
         //#region 5 getJson MatName
-        $("#SectionId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            sectionId = $("#SectionId").val();
-            $.getJSON('/OntimeAcceptedDailyChart/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
-                var ddl = $("#MatNameId");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddl.html(string);
-            });
-        });
-
         //#endregion
 
         //#region 4 btnSearch button click
@@ -182,15 +153,11 @@
                 var adjust = [];
                 var shipment = [];
                 var planshipment = [];
-                var departmentId = $('#DepartmentId').val();
-                var sectionId = $('#SectionId').val();
-                var matNameId = $('#MatNameId').val();
+                var segmentId = $('#SegmentId').val();
 
-                var jsonString = $.getJSON('/OntimeTenderedDailyChart/jsonData?DepartmentId=' + departmentId
-                    + '&SectionId=' + sectionId
+                var jsonString = $.getJSON('/OntimeTenderedDailyChart/jsonData?SegmentId=' + segmentId
                     + '&FromDateSearch=' + sdate
-                    + '&ToDateSearch=' + edate
-                    + '&MatNameId=' + matNameId, function (data) {
+                    + '&ToDateSearch=' + edate, function (data) {
                         // console.info(data);
                         $.each(data, function (index, item) {
                             //
@@ -392,11 +359,9 @@
                 var valuePie = [];
                 var labelPie = [];
                 var colorPie = [];
-                var jsonPieString = $.getJSON('/OntimeTenderedDailyChart/jsonPieData?DepartmentId=' + departmentId
-                    + '&SectionId=' + sectionId
+                var jsonPieString = $.getJSON('/OntimeTenderedDailyChart/jsonPieData?SegmentId=' + segmentId
                     + '&FromDateSearch=' + sdate
-                    + '&ToDateSearch=' + edate
-                    + '&MatNameId=' + matNameId, function (data) {
+                    + '&ToDateSearch=' + edate, function (data) {
                         // console.info(data);
 
                         var doughnutData = data;
@@ -428,9 +393,7 @@
 
                 //#region table
                 // on-time accept daliy dataTable
-                var departmentId = $('#DepartmentId').val();
-                var sectionId = $('#SectionId').val();
-                var matNameId = $('#MatNameId').val();
+                var segmentId = $('#SegmentId').val();
 
                 var tender = $('#tender').dataTable();
                 tender.fnDestroy();
@@ -441,9 +404,7 @@
                         "type": "POST",
                         "url": '@(Url.RouteUrl("OntimeTenderedDaily"))',
                         "data": function (d) {
-                            d.DepartmentId = departmentId;
-                            d.SectionId = sectionId;
-                            d.matNameId = matNameId;
+                            d.SegmentId = segmentId;
                             d.FromDateSearch = sdate;
                             d.ToDateSearch = edate;
                         },
@@ -451,7 +412,7 @@
                     },
                     columns: [
                    { data: "FirstTenderDate" },
-                   { data: "DepartmentName" },
+                   { data: "SegmentName" },
                    { data: "SectionName" },
                    { data: "MatName" },
                    { data: "SumOfTender" },
@@ -489,16 +450,14 @@
                         "type": "POST",
                         "url": '@(Url.RouteUrl("OntimeTenderedSummaryDaily"))',
                         "data": function (d) {
-                            d.DepartmentId = departmentId;
-                            d.SectionId = sectionId;
-                            d.matNameId = matNameId;
+                            d.SegmentId = segmentId;
                             d.FromDateSearch = sdate;
                             d.ToDateSearch = edate;
                         },
                         "dataSrc": ""
                     },
                     columns: [
-                   { data: "DepartmentName" },
+                   { data: "SegmentName" },
                    { data: "SectionName" },
                    { data: "SumOfTender" },
                    { data: "OnTime" },
@@ -507,6 +466,14 @@
                    { data: "Plan" },
                    { data: "Percent" },
                    { data: "PercentAdjust" }
+                    ],
+                    "columnDefs": [
+                        {
+                            "render": function (data, type, row) {
+                                return (row.Percent >= 98.0) ? '<img src="/Content/img/TrafficLight-Green-small50-18.png" />' : '<img src="/Content/img/TrafficLight-Red-small50-18.png" />'
+                            },
+                            "targets": 9
+                        }
                     ],
                     select: true,
                     buttons: [

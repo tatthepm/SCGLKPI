@@ -8,9 +8,7 @@
         @ViewBag.YearId
         @ViewBag.MonthId*@
     @using (Html.BeginForm("UpdateTenderedReason", "AdjustTendered", FormMethod.Post)) {
-        <input type="hidden" name="DepartmentId" value="@ViewBag.DepartmentId" />
-        <input type="hidden" name="SectionId" value="@ViewBag.SectionId" />
-        <input type="hidden" name="MatNameId" value="@ViewBag.MatNameId" />
+        <input type="hidden" name="SegmentId" value="@ViewBag.SegmentId" />
         <input type="hidden" name="YearId" value="@ViewBag.YearId" />
         <input type="hidden" name="MonthId" value="@ViewBag.MonthId" />
 

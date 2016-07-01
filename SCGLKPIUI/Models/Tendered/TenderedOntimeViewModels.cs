@@ -6,7 +6,7 @@ using System.Web;
 namespace SCGLKPIUI.Models {
     public class TenderedOntimeViewModels {
         public string FirstTenderDate { get; set; }
-        public string DepartmentName { get; set; }
+        public string SegmentName { get; set; }
         public string SectionName { get; set; }
         public string MatName { get; set; }
         public int SumOfTender { get; set; }

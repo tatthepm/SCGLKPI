@@ -11,15 +11,11 @@ using SCGLKPIUI.Models;
 namespace SCGLKPIUI.Controllers {
     public class OntimeTenderedDailyChartController : BaseController {
         // GET: OntimeTenderedDailyChart
-        public ActionResult Index(string DepartmentId, string SectionId, DateTime? FromDateSearch, DateTime? ToDateSearch, string MatNameId) {
+        public ActionResult Index(string SegmentId, DateTime? FromDateSearch, DateTime? ToDateSearch) {
             try {
                 DropDownList ddl = new DropDownList();
-                var ddlDept = ddl.GetDropDownList("Department");
-                var ddlSec = ddl.GetDropDownList("Section");
-                var ddlMatName = ddl.GetDropDownListMatNameDaily("ontime-accepted");
-                ViewBag.DepartmentId = new SelectList(ddlDept.ToList(), "Id", "Name");
-                ViewBag.SectionId = new SelectList(ddlSec.ToList(), "Id", "Name");
-                ViewBag.MatNameId = new SelectList(ddlMatName.ToList(), "Id", "Name");
+                var ddlSeg = ddl.GetDropDownListSegment();
+                ViewBag.SegmentId = new SelectList(ddlSeg.ToList(), "Id", "Name");
 
                 return View();
             }
@@ -28,30 +24,7 @@ namespace SCGLKPIUI.Controllers {
             }
         }
 
-        public JsonResult SectionFilter(string departmentId) {
-            var result = (from m in objBs.ontimeTenderBs.GetAll()
-                          where m.DepartmentId == departmentId
-                          select new {
-                              Id = m.SectionId,
-                              Name = m.SectionName
-                          }).Distinct().OrderBy(x => x.Name);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult MatNameFilter(string departmentId, string sectionid) {
-            var result = (from m in objBs.ontimeTenderBs.GetAll()
-                          where m.DepartmentId == departmentId
-                          && m.SectionId == sectionid
-                          select new {
-                              Id = m.MatFriGrp,
-                              Name = m.MatName
-                          }).Distinct().OrderBy(x => x.Name);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult jsonData(string DepartmentId, string SectionId, DateTime? FromDateSearch, DateTime? ToDateSearch, string MatNameId) {
+        public JsonResult jsonData(string SegmentId,  DateTime? FromDateSearch, DateTime? ToDateSearch) {
 
             //add summary data
             List<TenderedOntimeChartDailyViewModels> viewSummaryModel = new List<TenderedOntimeChartDailyViewModels>();
@@ -61,17 +34,9 @@ namespace SCGLKPIUI.Controllers {
 
             //.Where(x => x.DepartmentId == DepartmentId);
 
-            //filter department
-            if (!string.IsNullOrEmpty(DepartmentId))
-                q = q.Where(x => x.DepartmentId == DepartmentId);
-
-            //filter section
-            if (!String.IsNullOrEmpty(SectionId))
-                q = q.Where(x => x.SectionId == SectionId);
-
-            //filter matname
-            if (!String.IsNullOrEmpty(MatNameId))
-                q = q.Where(x => x.MatFriGrp == MatNameId);
+            //filter segment
+            if (!string.IsNullOrEmpty(SegmentId))
+                q = q.Where(x => x.Segment == SegmentId);
 
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
@@ -117,7 +82,7 @@ namespace SCGLKPIUI.Controllers {
             return Json(viewSummaryModel, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult jsonPieData(string DepartmentId, string SectionId, DateTime? FromDateSearch, DateTime? ToDateSearch, string MatNameId) {
+        public JsonResult jsonPieData(string SegmentId, DateTime? FromDateSearch, DateTime? ToDateSearch) {
 
             //add summary data
             List<TenderedOntimePieChartDailyViewModels> viewSummaryModel = new List<TenderedOntimePieChartDailyViewModels>();
@@ -126,17 +91,9 @@ namespace SCGLKPIUI.Controllers {
                     .Where(x => !String.IsNullOrEmpty(x.DepartmentName));
             //.Where(x => x.DepartmentId == DepartmentId);
 
-            //filter department
-            if (!String.IsNullOrEmpty(DepartmentId))
-                q = q.Where(x => x.DepartmentId == DepartmentId);
-
-            //filter section
-            if (!String.IsNullOrEmpty(SectionId))
-                q = q.Where(x => x.SectionId == SectionId);
-
-            //filter matname
-            if (!String.IsNullOrEmpty(MatNameId))
-                q = q.Where(x => x.MatFriGrp == MatNameId);
+            //filter segment
+            if (!String.IsNullOrEmpty(SegmentId))
+                q = q.Where(x => x.Segment == SegmentId);
 
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
@@ -178,7 +135,7 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public JsonResult OntimeTenderedTableDaily(string DepartmentId, string SectionId, DateTime? FromDateSearch, DateTime? ToDateSearch, string MatNameId) {
+        public JsonResult OntimeTenderedTableDaily(string SegmentId, DateTime? FromDateSearch, DateTime? ToDateSearch) {
 
             // add IEnumerable<OntimeAccept>
             List<TenderedOntimeViewModels> viewModel = new List<TenderedOntimeViewModels>();
@@ -191,18 +148,9 @@ namespace SCGLKPIUI.Controllers {
             //                                   && !String.IsNullOrEmpty(x.SectionName)
             //                                   && !String.IsNullOrEmpty(x.MatName));
             //&& x.DepartmentId == DepartmentId);
-            //filter Department
-            if (!String.IsNullOrEmpty(DepartmentId))
-                q = q.Where(x => x.DepartmentId == DepartmentId);
-
-            //filter Section 
-            if (!String.IsNullOrEmpty(SectionId))
-                q = q.Where(x => x.SectionId == SectionId);
-
-            //filter matname
-            if (!String.IsNullOrEmpty(MatNameId)) {
-                q = q.Where(x => x.MatFriGrp == MatNameId);
-            }
+            //filter Segment
+            if (!String.IsNullOrEmpty(SegmentId))
+                q = q.Where(x => x.Segment == SegmentId);
 
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
@@ -226,7 +174,7 @@ namespace SCGLKPIUI.Controllers {
                 string mm = item.FirstTenderDate.Value.Month.ToString();
                 string yyyy = item.FirstTenderDate.Value.Year.ToString();
                 model.FirstTenderDate = dd + "/" + mm + "/" + yyyy;
-                model.DepartmentName = item.DepartmentName;
+                model.SegmentName = item.Segment;
                 model.SectionName = item.SectionName;
                 model.MatName = item.MatName;
                 model.SumOfTender = item.SumOfTender;
@@ -242,7 +190,7 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public JsonResult OntimeTenderedSummaryDaily(string DepartmentId, string SectionId, DateTime? FromDateSearch, DateTime? ToDateSearch, string MatNameId) {
+        public JsonResult OntimeTenderedSummaryDaily(string SegmentId, DateTime? FromDateSearch, DateTime? ToDateSearch) {
 
             // add IEnumerable<AcceptOntimeSummaryViewModels>
             List<TenderedOntimeSummaryViewModels> viewSummaryModel = new List<TenderedOntimeSummaryViewModels>();
@@ -251,22 +199,9 @@ namespace SCGLKPIUI.Controllers {
             var q = objBs.ontimeTenderBs.GetAll()
                     .Where(x => !String.IsNullOrEmpty(x.DepartmentName));
 
-            //var q = objBs.ontimeTenderBs.GetAll().Where(x => !String.IsNullOrEmpty(x.DepartmentName)
-            //                                   && !String.IsNullOrEmpty(x.SectionName)
-            //                                   && !String.IsNullOrEmpty(x.MatName));
-
             //filter Department
-            if (!String.IsNullOrEmpty(DepartmentId))
-                q = q.Where(x => x.DepartmentId == DepartmentId);
-
-            //filter Section 
-            if (!String.IsNullOrEmpty(SectionId))
-                q = q.Where(x => x.SectionId == SectionId);
-
-            //filter matname
-            if (!String.IsNullOrEmpty(MatNameId)) {
-                q = q.Where(x => x.MatFriGrp == MatNameId);
-            }
+            if (!String.IsNullOrEmpty(SegmentId))
+                q = q.Where(x => x.Segment == SegmentId);
 
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
@@ -285,19 +220,19 @@ namespace SCGLKPIUI.Controllers {
             }
 
             var results = (from c in q
-                           group c by new { c.DepartmentName, c.SectionName } into g
+                           group c by new { c.Segment, c.SectionName } into g
                            select new {
-                               DepartmentName = g.Key.DepartmentName,
+                               SegmentId = g.Key.Segment,
                                SectionName = g.Key.SectionName,
                                SumOfTender = g.Sum(x => x.SumOfTender),
                                OnTime = g.Sum(x => x.OnTime),
                                Delay = g.Sum(x => x.Delay),
                                Adjust = g.Sum(x => x.AdjustTender)
-                           }).OrderBy(x => x.DepartmentName);
+                           }).OrderBy(x => x.SegmentId);
 
             foreach (var item in results) {
                 TenderedOntimeSummaryViewModels model = new TenderedOntimeSummaryViewModels();
-                model.DepartmentName = item.DepartmentName;
+                model.SegmentName = item.SegmentId;
                 model.SectionName = item.SectionName;
                 model.SumOfTender = item.SumOfTender;
                 model.OnTime = item.OnTime;

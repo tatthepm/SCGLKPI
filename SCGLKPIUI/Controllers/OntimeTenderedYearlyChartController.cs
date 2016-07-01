@@ -10,15 +10,11 @@ using SCGLKPIUI.Models.Tendered;
 namespace SCGLKPIUI.Controllers {
     public class OntimeTenderedYearlyChartController : BaseController {
         // GET: OntimeTenderedYearlyChart
-        public ActionResult Index(string DepartmentId, string SectionId, string MatNameId) {
+        public ActionResult Index(string SegmentId) {
             try {
                 DropDownList ddl = new DropDownList();
-                var ddlDept = ddl.GetDropDownList("Department");
-                var ddlSec = ddl.GetDropDownList("Section");
-                var ddlMatName = ddl.GetDropDownListTenderedMonth("Matname");
-                ViewBag.DepartmentId = new SelectList(ddlDept.ToList(), "Id", "Name");
-                ViewBag.SectionId = new SelectList(ddlSec.ToList(), "Id", "Name");
-                ViewBag.MatNameId = new SelectList(ddlMatName.ToList(), "Id", "Name");
+                var ddlSeg = ddl.GetDropDownListSegment();
+                ViewBag.SegmentId = new SelectList(ddlSeg.ToList(), "Id", "Name");
             }
             catch (Exception ex) {
                 return RedirectToAction("Index", new { sms = "Operation Tender failed " + ex.InnerException.InnerException.Message.ToString() });
@@ -26,30 +22,7 @@ namespace SCGLKPIUI.Controllers {
             return View();
         }
 
-        public JsonResult SectionFilter(string departmentId) {
-            var result = (from m in objBs.ontimeTenderYearBs.GetAll()
-                          where m.DepartmentId == departmentId
-                          select new {
-                              Id = m.SectionId,
-                              Name = m.SectionName
-                          }).Distinct().OrderBy(x => x.Name);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult MatNameFilter(string departmentId, string sectionid) {
-            var result = (from m in objBs.ontimeTenderYearBs.GetAll()
-                          where m.DepartmentId == departmentId
-                          && m.SectionId == sectionid
-                          select new {
-                              Id = m.MatFriGrp,
-                              Name = m.MatName
-                          }).Distinct().OrderBy(x => x.Name);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult jsonData(string DepartmentId, string SectionId, string MatNameId) {
+        public JsonResult jsonData(string SegmentId) {
 
             //add summary data
             List<TenderedOntimeChartYearlyViewModels> viewSummaryModel = new List<TenderedOntimeChartYearlyViewModels>();
@@ -59,17 +32,9 @@ namespace SCGLKPIUI.Controllers {
                                                && !String.IsNullOrEmpty(x.SectionName)
                                                && !String.IsNullOrEmpty(x.MatName));
 
-            //filter Department
-            if (!String.IsNullOrEmpty(DepartmentId))
-                q = q.Where(x => x.DepartmentId == DepartmentId);
-
-            //filter Section 
-            if (!String.IsNullOrEmpty(SectionId))
-                q = q.Where(x => x.SectionId == SectionId);
-
-            //filter matname
-            if (!String.IsNullOrEmpty(MatNameId))
-                q = q.Where(x => x.MatFriGrp == MatNameId);
+            //filter Segment
+            if (!String.IsNullOrEmpty(SegmentId))
+                q = q.Where(x => x.Segment == SegmentId);
 
             var results = (from c in q
                            group c by new { c.Year } into g
@@ -96,7 +61,7 @@ namespace SCGLKPIUI.Controllers {
             return Json(viewSummaryModel, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult jsonPieData(string DepartmentId, string SectionId, string MatNameId) {
+        public JsonResult jsonPieData(string SegmentId) {
 
             //add summary data
             List<TenderedOntimePieChartYearlyViewModels> viewSummaryModel = new List<TenderedOntimePieChartYearlyViewModels>();
@@ -107,17 +72,9 @@ namespace SCGLKPIUI.Controllers {
                 && !String.IsNullOrEmpty(x.SectionName)
                 && !String.IsNullOrEmpty(x.MatName));
 
-            //filter Department
-            if (!String.IsNullOrEmpty(DepartmentId))
-                q = q.Where(x => x.DepartmentId == DepartmentId);
-
-            //filter Section 
-            if (!String.IsNullOrEmpty(SectionId))
-                q = q.Where(x => x.SectionId == SectionId);
-
-            //filter matname
-            if (!String.IsNullOrEmpty(MatNameId))
-                q = q.Where(x => x.MatFriGrp == MatNameId);
+            //filter Segment
+            if (!String.IsNullOrEmpty(SegmentId))
+                q = q.Where(x => x.Segment == SegmentId);
 
             int TotalTender = q.Sum(x => x.SumOfTender);
             var results = (from c in q
@@ -145,7 +102,7 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public JsonResult OntimeTenderedTableYearly(string DepartmentId, string SectionId, string MatNameId) {
+        public JsonResult OntimeTenderedTableYearly(string SegmentId) {
 
             // add IEnumerable<AcceptOntimeMonthlyViewModels>
             List<TenderedOntimeYearlyViewModels> viewModel = new List<TenderedOntimeYearlyViewModels>();
@@ -154,22 +111,14 @@ namespace SCGLKPIUI.Controllers {
             var q = objBs.ontimeTenderYearBs.GetAll().Where(x => !String.IsNullOrEmpty(x.DepartmentName)
                                                && !String.IsNullOrEmpty(x.SectionName)
                                                && !String.IsNullOrEmpty(x.MatName));
-            //filter Department
-            if (!String.IsNullOrEmpty(DepartmentId))
-                q = q.Where(x => x.DepartmentId == DepartmentId);
-
-            //filter Section 
-            if (!String.IsNullOrEmpty(SectionId))
-                q = q.Where(x => x.SectionId == SectionId);
-
-            //filter matname
-            if (!String.IsNullOrEmpty(MatNameId))
-                q = q.Where(x => x.MatFriGrp == MatNameId);
+            //filter Segment
+            if (!String.IsNullOrEmpty(SegmentId))
+                q = q.Where(x => x.Segment == SegmentId);
 
             foreach (var item in q.OrderBy(x => x.Year).ThenBy(x => x.DepartmentName)) {
                 TenderedOntimeYearlyViewModels model = new TenderedOntimeYearlyViewModels();
                 model.Year = item.Year;
-                model.DepartmentName = item.DepartmentName;
+                model.SegmentName = item.Segment;
                 model.SectionName = item.SectionName;
                 model.MatName = item.MatName;
                 model.SumOfTender = item.SumOfTender;
@@ -187,7 +136,7 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public JsonResult OntimeTenderedTableSummaryYearly(string DepartmentId, string SectionId, string MatNameId) {
+        public JsonResult OntimeTenderedTableSummaryYearly(string SegmentId) {
 
             // add IEnumerable<AcceptOntimeSummaryViewModels>
             List<TenderedOntimeSummaryYearlyViewModels> viewSummaryModel = new List<TenderedOntimeSummaryYearlyViewModels>();
@@ -197,32 +146,24 @@ namespace SCGLKPIUI.Controllers {
                                                && !String.IsNullOrEmpty(x.SectionName)
                                                && !String.IsNullOrEmpty(x.MatName));
 
-            //filter department
-            if (!String.IsNullOrEmpty(DepartmentId))
-                q = q.Where(x => x.DepartmentId == DepartmentId);
-
-            //filter Section 
-            if (!String.IsNullOrEmpty(SectionId))
-                q = q.Where(x => x.SectionId == SectionId);
-
-            //filter matname
-            if (!String.IsNullOrEmpty(MatNameId))
-                q = q.Where(x => x.MatFriGrp == MatNameId);
+            //filter segment
+            if (!String.IsNullOrEmpty(SegmentId))
+                q = q.Where(x => x.Segment == SegmentId);
 
            var results = (from c in q
-                           group c by new { c.DepartmentName, c.SectionName } into g
+                           group c by new { c.Segment, c.SectionName } into g
                            select new {
-                               DepartmentName = g.Key.DepartmentName,
+                               SegmentId = g.Key.Segment,
                                SectionName = g.Key.SectionName,
                                SumOfTender = g.Sum(x => x.SumOfTender),
                                OnTime = g.Sum(x => x.OnTime),
                                Delay = g.Sum(x => x.Delay),
                                Adjust = g.Sum(x => x.AdjustTender)
-                           }).OrderBy(x => x.DepartmentName);
+                           }).OrderBy(x => x.SegmentId);
 
             foreach (var item in results) {
                 TenderedOntimeSummaryYearlyViewModels model = new TenderedOntimeSummaryYearlyViewModels();
-                model.DepartmentName = item.DepartmentName;
+                model.SegmentName = item.SegmentId;
                 model.SectionName = item.SectionName;
                 model.SumOfTender = item.SumOfTender;
                 model.OnTime = item.OnTime;

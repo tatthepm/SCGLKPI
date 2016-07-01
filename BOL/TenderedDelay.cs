@@ -51,6 +51,9 @@ namespace BOL {
         [StringLength(100)]
         public string SECTION_NAME { get; set; }
 
+        [StringLength(20)]
+        public string SEGMENT { get; set; }
+
         [StringLength(10)]
         public string SOLDTO { get; set; }
 

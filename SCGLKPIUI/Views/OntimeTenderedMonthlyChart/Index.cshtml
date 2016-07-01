@@ -20,7 +20,7 @@
 </h4>
 
 @*filter by month*@
-@Html.Partial("pv_FilterByMonth")
+@Html.Partial("pv_FilterSegmentByMonth")
 
 @Html.Partial("pv_TenderedOntimeChartMonthly")
 
@@ -101,37 +101,9 @@
         //#endregion
 
         //#region 2 filter section
-        $("#DepartmentId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            $.getJSON('/OntimeTenderedMonthlyChart/SectionFilter?departmentId=' + departmentId, function (data) {
-                var ddl = $("#SectionId");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddl.html(string);
-            });
-        });
         //#endregion
 
         //#region 3 filter matname
-        $("#SectionId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            sectionId = $("#SectionId").val();
-            $.getJSON('/OntimeTenderedMonthlyChart/MatNameFilter?departmentId=' + departmentId
-                + '&sectionid=' + sectionId, function (data) {
-                    var ddl = $("#MatNameId");
-                    // ddl.removeAttrs('disabled style');
-                    ddl.addClass('js-source-states');
-                    var string = '<option value="">ALL</option>';
-                    $.each(data, function (i, S) {
-                        string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                    });
-                    ddl.html(string);
-                });
-        });
         //#endregion
 
         //#region 4 btnSearch click
@@ -152,9 +124,7 @@
                 });
             } else {
 
-                var departmentId = $('#DepartmentId').val();
-                var sectionId = $('#SectionId').val();
-                var matNameId = $('#MatNameId').val();
+                var segmentId = $('#SegmentId').val();
                 var yearId = $('#YearId').val();
                 var monthId = $('#MonthId').val();
 
@@ -165,11 +135,9 @@
                 var shipment = [];
                 var planshipment = [];
 
-                var jsonString = $.getJSON('/OntimeTenderedMonthlyChart/jsonData?DepartmentId=' + departmentId
-                    + '&SectionId=' + sectionId
+                var jsonString = $.getJSON('/OntimeTenderedMonthlyChart/jsonData?SegmentId=' + segmentId
                     + '&YearId=' + yearId
-                    + '&MonthId=' + monthId
-                    + '&MatNameId=' + matNameId, function (data) {
+                    + '&MonthId=' + monthId, function (data) {
                         // console.info(data);
                         $.each(data, function (index, item) {
                             label.push(item.Month);
@@ -356,11 +324,9 @@
                 var valuePie = [];
                 var labelPie = [];
                 var colorPie = [];
-                var jsonPieString = $.getJSON('/OntimeTenderedMonthlyChart/jsonPieData?DepartmentId=' + departmentId
-                    + '&SectionId=' + sectionId
+                var jsonPieString = $.getJSON('/OntimeTenderedMonthlyChart/jsonPieData?SegmentId=' + segmentId
                     + '&YearId=' + yearId
-                    + '&MonthId=' + monthId
-                    + '&MatNameId=' + matNameId, function (data) {
+                    + '&MonthId=' + monthId, function (data) {
                         // console.info(data);
 
                         var doughnutData = data;
@@ -392,9 +358,7 @@
 
                 //#region table
                 // on-time tender monthly dataTable
-                var departmentId = $('#DepartmentId').val();
-                var sectionId = $('#SectionId').val();
-                var matNameId = $('#MatNameId').val();
+                var segmentId = $('#SegmentId').val();
                 var yearId = $('#YearId').val();
                 var monthId = $('#MonthId').val();
 
@@ -407,17 +371,15 @@
                         "type": "POST",
                         "url": '@(Url.RouteUrl("OntimeTenderedMonthly"))',
                         "data": function (d) {
-                            d.DepartmentId = departmentId;
-                            d.SectionId = sectionId;
+                            d.SegmentId = segmentId;
                             d.YearId = yearId;
                             d.MonthId = monthId;
-                            d.MatNameId = matNameId;
                         },
                         "dataSrc": ""
                     },
                     columns: [
                    { data: "Month" },
-                   { data: "DepartmentName" },
+                   { data: "SegmentName" },
                    { data: "SectionName" },
                    { data: "MatName" },
                    { data: "SumOfTender" },
@@ -454,16 +416,14 @@
                         "type": "POST",
                         "url": '@(Url.RouteUrl("OntimeTenderedSummaryMonthly"))',
                         "data": function (d) {
-                            d.DepartmentId = departmentId;
-                            d.SectionId = sectionId;
+                            d.SegmentId = segmentId;
                             d.YearId = yearId;
                             d.MonthId = monthId;
-                            d.MatNameId = matNameId;
                         },
                         "dataSrc": ""
                     },
                     columns: [
-                   { data: "DepartmentName" },
+                   { data: "SegmentName" },
                    { data: "SectionName" },
                    { data: "SumOfTender" },
                    { data: "OnTime" },
@@ -472,6 +432,14 @@
                    { data: "Plan" },
                    { data: "Percent" },
                    { data: "PercentAdjust" }
+                    ],
+                    "columnDefs": [
+                        {
+                            "render": function (data, type, row) {
+                                return (row.Percent >= 98.0) ? '<img src="/Content/img/TrafficLight-Green-small50-18.png" />' : '<img src="/Content/img/TrafficLight-Red-small50-18.png" />'
+                            },
+                            "targets": 9
+                        }
                     ],
                     select: true,
                     buttons: [

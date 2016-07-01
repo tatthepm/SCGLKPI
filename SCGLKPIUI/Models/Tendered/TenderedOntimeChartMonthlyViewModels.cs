@@ -6,7 +6,7 @@ using System.Web;
 namespace SCGLKPIUI.Models.Tendered {
     public class TenderedOntimeChartMonthlyViewModels {
         public string Month { get; set; }
-        public string DepartmentName { get; set; }
+        public string SegmentName { get; set; }
         public string SectionName { get; set; }
         public double Plan { get; set; }
         public double Actual { get; set; }

@@ -19,7 +19,7 @@
     <i class="fa fa-bar-chart"></i> Chart on-time tender | Yearly
 </h4>
 @*filter by month*@
-@Html.Partial("pv_FilterByYear")
+@Html.Partial("pv_FilterSegmentByYear")
 
 @Html.Partial("pv_TenderOntimeChartYearly")
 
@@ -100,45 +100,15 @@
         //#endregion
 
         //#region 2 filter section
-        $("#DepartmentId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            $.getJSON('/OntimeTenderedYearlyChart/SectionFilter?departmentId=' + departmentId, function (data) {
-                var ddl = $("#SectionId");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddl.html(string);
-            });
-        });
         //#endregion
 
         //#region 3 filter matname
-        $("#SectionId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            sectionId = $("#SectionId").val();
-            $.getJSON('/OntimeTenderedYearlyChart/MatNameFilter?departmentId=' + departmentId
-                + '&sectionid=' + sectionId, function (data) {
-                    var ddl = $("#MatNameId");
-                    // ddl.removeAttrs('disabled style');
-                    ddl.addClass('js-source-states');
-                    var string = '<option value="">ALL</option>';
-                    $.each(data, function (i, S) {
-                        string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                    });
-                    ddl.html(string);
-                });
-        });
         //#endregion
 
         //#region 4 btnSearch click
         //#endregion
         $("#btnSearch").click(function () {
-                var departmentId = $('#DepartmentId').val();
-                var sectionId = $('#SectionId').val();
-                var matNameId = $('#MatNameId').val();
+                var segmentId = $('#SegmentId').val();
 
                 var label = [];
                 var plan = [];
@@ -147,9 +117,7 @@
                 var shipment = [];
                 var planshipment = [];
 
-                var jsonString = $.getJSON('/OntimeTenderedYearlyChart/jsonData?DepartmentId=' + departmentId
-                    + '&SectionId=' + sectionId
-                    + '&MatNameId=' + matNameId, function (data) {
+                var jsonString = $.getJSON('/OntimeTenderedYearlyChart/jsonData?SegmentId=' + segmentId, function (data) {
                         // console.info(data);
                         $.each(data, function (index, item) {
                             label.push(item.Year);
@@ -336,9 +304,7 @@
                 var valuePie = [];
                 var labelPie = [];
                 var colorPie = [];
-                var jsonPieString = $.getJSON('/OntimeTenderedYearlyChart/jsonPieData?DepartmentId=' + departmentId
-                    + '&SectionId=' + sectionId
-                    + '&MatNameId=' + matNameId, function (data) {
+                var jsonPieString = $.getJSON('/OntimeTenderedYearlyChart/jsonPieData?SegmentmentId=' + segmentId, function (data) {
                         // console.info(data);
                         var doughnutData = data;
                         var doughnutOptions = {
@@ -369,9 +335,7 @@
 
                 //#region table
                 // on-time inbound detail dataTable
-                var departmentId = $('#DepartmentId').val();
-                var sectionId = $('#SectionId').val();
-                var matNameId = $('#MatNameId').val();
+                var segmentId = $('#SegmentId').val();
 
                 var tender = $('#tender').dataTable();
                 tender.fnDestroy();
@@ -382,15 +346,13 @@
                         "type": "POST",
                         "url": '@(Url.RouteUrl("OntimeTenderYearly"))',
                         "data": function (d) {
-                            d.DepartmentId = departmentId;
-                            d.SectionId = sectionId;
-                            d.MatNameId = matNameId;
+                            d.segmentId = segmentId;
                         },
                         "dataSrc": ""
                     },
                     columns: [
                    { data: "Year" },
-                   { data: "DepartmentName" },
+                   { data: "SegmentName" },
                    { data: "SectionName" },
                    { data: "MatName" },
                    { data: "SumOfTender" },
@@ -427,14 +389,12 @@
                         "type": "POST",
                         "url": '@(Url.RouteUrl("OntimeTenderSummaryYearly"))',
                         "data": function (d) {
-                            d.DepartmentId = departmentId;
-                            d.SectionId = sectionId;
-                            d.MatNameId = matNameId;
+                            d.segmentId = segmentId;
                         },
                         "dataSrc": ""
                     },
                     columns: [
-                   { data: "DepartmentName" },
+                   { data: "SegmentName" },
                    { data: "SectionName" },
                    { data: "SumOfTender" },
                    { data: "OnTime" },
@@ -443,6 +403,14 @@
                    { data: "Plan" },
                    { data: "Percent" },
                    { data: "PercentAdjust" }
+                    ],
+                    "columnDefs": [
+                        {
+                            "render": function (data, type, row) {
+                                return (row.Percent >= 98.0) ? '<img src="/Content/img/TrafficLight-Green-small50-18.png" />' : '<img src="/Content/img/TrafficLight-Red-small50-18.png" />'
+                            },
+                            "targets": 9
+                        }
                     ],
                     select: true,
                     buttons: [

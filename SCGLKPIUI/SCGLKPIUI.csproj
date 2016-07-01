@@ -3026,6 +3026,9 @@
     <Content Include="Views\OntimeDocReturnedYearlyChart\Index.cshtml" />
     <Content Include="Views\OntimeDocReturnedYearlyChart\pv_DocReturnOntimeChartYearly.cshtml" />
     <Content Include="Views\OntimeDocReturnedYearlyChart\pv_DocReturnOntimeTableYearly.cshtml" />
+    <Content Include="Views\Shared\pv_FilterSegmentByDate.cshtml" />
+    <Content Include="Views\Shared\pv_FilterSegmentByMonth.cshtml" />
+    <Content Include="Views\Shared\pv_FilterSegmentByYear.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\UploadFiles\" />

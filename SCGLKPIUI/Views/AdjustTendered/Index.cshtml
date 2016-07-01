@@ -6,7 +6,7 @@
 <h4>
     <i class="fa fa-bar-chart"></i> Adjust on-time tendered
 </h4>
-@Html.Partial("pv_FilterByMonth")
+@Html.Partial("pv_FilterSegmentByMonth")
 
 @if (TempData["Msg"] != null) {
     if (TempData["Msg"].ToString().Contains("Successfully")) {
@@ -92,56 +92,17 @@
         //#endregion
 
         //#region 4 getJson Section
-        $("#DepartmentId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            $.getJSON('/AdjustTendered/SectionFilter?departmentId=' + departmentId, function (data) {
-                var ddl = $("#SectionId");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddl.html(string);
-            });
-        });
         //#endregion
 
         //#region  5 getJson MatName
-        $("#SectionId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            sectionId = $("#SectionId").val();
-            $.getJSON('/AdjustTendered/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
-                var ddl = $("#MatNameId");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddl.html(string);
-            });
-        });
         //#endregion
 
         $("#btnSearch").click(function () {
 
-            if ($('#DepartmentId').val() == "") {
+            if ($('#SegmentId').val() == "") {
                 swal({
                     title: "Warning!",
-                    text: "Sorry!, Department is not selected ",
-                    type: "warning"
-                });
-            } else if ($('#SectionId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, Section is not selected ",
-                    type: "warning"
-                });
-            } else if ($('#MatNameId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, MatName is not selected ",
+                    text: "Sorry!, Segment is not selected ",
                     type: "warning"
                 });
             } else if ($('#YearId').val() == "") {
@@ -160,18 +121,14 @@
             else {
 
                 // on-time accept daliy dataTable
-                var departmentId = $('#DepartmentId').val();
-                var sectionId = $('#SectionId').val();
-                var matNameId = $('#MatNameId').val();
+                var segmentId = $('#SegmentId').val();
                 var yearId = $('#YearId').val();
                 var monthId = $('#MonthId').val();
 
-                $('#divResult').load("/AdjustTendered/GetDelayTenderedData?DepartmentId="
-                                      + departmentId
-                                      + "&SectionId=" + sectionId
+                $('#divResult').load("/AdjustTendered/GetDelayTenderedData?SegmentId="
+                                      + segmentId
                                       + "&YearId=" + yearId
-                                      + "&MonthId=" + monthId
-                                      + "&MatNameId=" + matNameId);
+                                      + "&MonthId=" + monthId);
             }
         });
 

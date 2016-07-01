@@ -24,6 +24,9 @@ namespace BOL {
 
         public string SectionName { get; set; }
 
+        [StringLength(20)]
+        public string Segment { get; set; }
+
         public string MatFriGrp { get; set; }
 
         public string MatName { get; set; }

@@ -13,7 +13,7 @@ using System.Transactions;
 namespace SCGLKPIUI.Controllers {
     public class AdjustTenderedController : BaseController {
         // GET: AdjustTendered
-        public ActionResult Index(string sms, string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId) {
+        public ActionResult Index(string sms, string SegmentId, string YearId, string MonthId) {
             try {
 
                 TempData["Msg"] = sms;
@@ -55,24 +55,12 @@ namespace SCGLKPIUI.Controllers {
                 //                }).Distinct().OrderBy(x => x.Id);
 
                 DropDownList ddl = new DropDownList();
-                var ddlDept = ddl.GetDropDownList("Department");
-                var ddlSec = ddl.GetDropDownList("Section");
+                var ddlSeg = ddl.GetDropDownListSegment();
                 var ddlYear = ddl.GetDropDownListTenderedMonth("Year");
                 var ddlMonth = ddl.GetDropDownListTenderedMonth("Month");
-                ViewBag.DepartmentId = new SelectList(ddlDept.ToList(), "Id", "Name");
-                ViewBag.SectionId = new SelectList(ddlSec.ToList(), "Id", "Name");
+                ViewBag.SegmentId = new SelectList(ddlSeg.ToList(), "Id", "Name");
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
-
-                //1 DropdownList 
-                var ddlMatName = (from m in objBs.tenderedDelayBs.GetAll()
-                                  where !String.IsNullOrEmpty(m.MATNAME)
-                                  select new {
-                                      Id = m.MATFRIGRP,
-                                      Name = m.MATNAME,
-                                  }).Distinct();
-
-                ViewBag.MatNameId = new SelectList(ddlMatName.ToList(), "Id", "Name");
 
                 return View();
 
@@ -82,34 +70,9 @@ namespace SCGLKPIUI.Controllers {
             }
         }
 
-        public JsonResult SectionFilter(string departmentId) {
-            var result = (from m in objBs.tenderedDelayBs.GetAll()
-                          where m.DEPARTMENT_ID == departmentId
-                          select new {
-                              Id = m.SECTION_ID,
-                              Name = m.SECTION_NAME
-                          }).Distinct().OrderBy(x => x.Name);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult MatNameFilter(string departmentId, string sectionid) {
-            var result = (from m in objBs.tenderedDelayBs.GetAll()
-                          where m.DEPARTMENT_ID == departmentId
-                          && m.SECTION_ID == sectionid
-                          select new {
-                              Id = m.MATFRIGRP,
-                              Name = m.MATNAME
-                          }).Distinct().OrderBy(x => x.Name);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult GetDelayTenderedData(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId) {
+        public ActionResult GetDelayTenderedData(string SegmentId, string YearId, string MonthId) {
             try {
-                ViewBag.DepartmentId = DepartmentId;
-                ViewBag.SectionId = SectionId;
-                ViewBag.MatNameId = MatNameId;
+                ViewBag.SegmentId = SegmentId;
                 ViewBag.YearId = YearId;
                 ViewBag.MonthId = MonthId;
 
@@ -118,16 +81,10 @@ namespace SCGLKPIUI.Controllers {
 
                 //filter department
                 var q = from d in objBs.tenderedDelayBs.GetAll()
-                        where d.DEPARTMENT_ID == DepartmentId
-                        && d.SECTION_ID == SectionId
+                        where d.SEGMENT == SegmentId
                         && d.FTNRDDATE_D.Value.Month == Convert.ToInt32(MonthId)
                         && d.FTNRDDATE_D.Value.Year == Convert.ToInt32(YearId)
                         select d;
-
-                //filter matname
-                if (!String.IsNullOrEmpty(MatNameId)) {
-                    q = q.Where(x => x.MATFRIGRP == MatNameId);
-                }
 
                 int c = q.Count();
 
@@ -162,7 +119,7 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public ActionResult UpdateTenderedReason(List<String> ReasonId, List<string> txtSM, List<string> txtRemark, string DepartmentId, string SectionId, string MatNameId, string YearId, string MonthId) {
+        public ActionResult UpdateTenderedReason(List<String> ReasonId, List<string> txtSM, List<string> txtRemark, string SegmentId, string YearId, string MonthId) {
             using (TransactionScope Trans = new TransactionScope()) {
 
                 try {
@@ -193,9 +150,7 @@ namespace SCGLKPIUI.Controllers {
 
                             int id = objBs.ontimeTenderBs.GetAll()
                                 .Where(x => x.FirstTenderDate == FTNRDDate
-                                       && x.DepartmentId == DepartmentId
-                                       && x.SectionId == SectionId
-                                       && x.MatFriGrp == MatNameId).FirstOrDefault().Id;
+                                       && x.Segment == SegmentId).FirstOrDefault().Id;
 
                             OntimeTender ontimeTender = objBs.ontimeTenderBs.GetByID(id);
 
@@ -211,9 +166,7 @@ namespace SCGLKPIUI.Controllers {
                     int idM = objBs.ontimeTenderMonthBs.GetAll()
                               .Where(x => x.Year == YearId
                               && x.Month == MonthId
-                              && x.DepartmentId == DepartmentId
-                              && x.SectionId == SectionId
-                              && x.MatFriGrp == MatNameId).FirstOrDefault().Id;
+                              && x.Segment == SegmentId).FirstOrDefault().Id;
 
                     OntimeTenderMonth ontimeTenderMonth = objBs.ontimeTenderMonthBs.GetByID(idM);
 
@@ -225,9 +178,7 @@ namespace SCGLKPIUI.Controllers {
                     // update sum of adjust yearly
                     int idY = objBs.ontimeTenderYearBs.GetAll()
                               .Where(x => x.Year == YearId
-                              && x.DepartmentId == DepartmentId
-                              && x.SectionId == SectionId
-                              && x.MatFriGrp == MatNameId).FirstOrDefault().Id;
+                              && x.Segment == SegmentId).FirstOrDefault().Id;
 
                     OntimeTenderYear ontimeTenderYear = objBs.ontimeTenderYearBs.GetByID(idY);
 

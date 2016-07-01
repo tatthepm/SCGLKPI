@@ -186,6 +186,10 @@
     <Compile Include="Migrations\201606290847144_addIsAdjust.Designer.cs">
       <DependentUpon>201606290847144_addIsAdjust.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607010456455_add-segment.cs" />
+    <Compile Include="Migrations\201607010456455_add-segment.Designer.cs">
+      <DependentUpon>201607010456455_add-segment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OntimeAccept.cs" />
     <Compile Include="DWH_ONTIME_DN.cs" />
@@ -321,6 +325,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606290847144_addIsAdjust.resx">
       <DependentUpon>201606290847144_addIsAdjust.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607010456455_add-segment.resx">
+      <DependentUpon>201607010456455_add-segment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SCGLKPIUI.Models {
     public class TenderedOntimeSummaryViewModels {
-        public string DepartmentName { get; set; }
+        public string SegmentName { get; set; }
         public string SectionName { get; set; }
         public int SumOfTender { get; set; }
         public int OnTime { get; set; }
