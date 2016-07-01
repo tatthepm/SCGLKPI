@@ -476,12 +476,6 @@
                     "columnDefs": [
                 {
                     "render": function (data, type, row) {
-                        return row.DepartmentName + " " + row.SectionName;
-                    },
-                    "targets": 1
-                },
-                {
-                    "render": function (data, type, row) {
                         return (row.Percent >= 98.0) ? '<img src="/Content/img/TrafficLight-Green-small50-18.png" />' : '<img src="/Content/img/TrafficLight-Red-small50-18.png" />'
                     },
                     "targets": 11
