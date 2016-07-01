@@ -229,6 +229,7 @@ namespace SCGLKPIUI.Controllers {
                 model.OnTime = item.OnTime;
                 model.Delay = item.Delay;
                 model.AdjustOutbound = item.AdjustOutbound;
+                model.Plan = 98.0;
                 model.Percent = Math.Round(((double)item.OnTime / (double)item.SumOfOutbound) * 100, 2);
                 model.PercentAdjust = Math.Round((((double)item.OnTime + (double)item.AdjustOutbound) / (double)item.SumOfOutbound) * 100, 2);
                 viewModel.Add(model);
@@ -295,6 +296,7 @@ namespace SCGLKPIUI.Controllers {
                 model.OnTime = item.OnTime;
                 model.Delay = item.Delay;
                 model.Adjust = item.Adjust;
+                model.Plan = 98.0;
                 model.Percent = Math.Round(((double)item.OnTime / (double)item.SumOfOutbound) * 100, 2);
                 model.PercentAdjust = Math.Round((((double)item.OnTime + (double)item.Adjust) / (double)item.SumOfOutbound) * 100, 2);
                 viewSummaryModel.Add(model);

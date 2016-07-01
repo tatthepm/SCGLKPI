@@ -13,6 +13,7 @@ namespace SCGLKPIUI.Models.Delivered {
         public int OnTime { get; set; }
         public int Delay { get; set; }
         public int AdjustDelivery { get; set; }
+        public double Plan { get; set; }
         public double Percent { get; set; }
         public double PercentAdjust { get; set; }
     }

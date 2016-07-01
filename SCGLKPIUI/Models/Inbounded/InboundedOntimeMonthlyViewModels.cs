@@ -13,6 +13,7 @@ namespace SCGLKPIUI.Models.Inbounded {
         public int OnTime { get; set; }
         public int Delay { get; set; }
         public int AdjustInbound { get; set; }
+        public double Plan { get; set; }
         public double Percent { get; set; }
         public double PercentAdjust { get; set; }
     }

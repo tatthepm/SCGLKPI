@@ -423,8 +423,23 @@
                    { data: "OnTime" },
                    { data: "Delay" },
                    { data: "AdjustDocReturn" },
+                   { data: "Plan" },
                    { data: "Percent" },
                    { data: "PercentAdjust" }
+                    ],
+                    "columnDefs": [
+                {
+                    "render": function (data, type, row) {
+                        return row.DepartmentName + " " + row.SectionName;
+                    },
+                    "targets": 1
+                },
+                {
+                    "render": function (data, type, row) {
+                        return (row.Percent >= 98.0) ? '<img src="/Content/img/TrafficLight-Green-small.png" />' : '<img src="/Content/img/TrafficLight-Red-small.png" />'
+                    },
+                    "targets": 11
+                }
                     ],
                     select: true,
                     buttons: [
@@ -459,6 +474,7 @@
                    { data: "OnTime" },
                    { data: "Delay" },
                    { data: "Adjust" },
+                   { data: "Plan" },
                    { data: "Percent" },
                    { data: "PercentAdjust" }
                     ],
