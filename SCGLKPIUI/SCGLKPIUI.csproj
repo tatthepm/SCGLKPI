@@ -365,10 +365,13 @@
     <Content Include="Content\img\green.ico" />
     <Content Include="Content\img\green.png" />
     <Content Include="Content\img\TrafficLight-Green-small.png" />
+    <Content Include="Content\img\TrafficLight-Green-small50-18.png" />
     <Content Include="Content\img\TrafficLight-Green.png" />
     <Content Include="Content\img\TrafficLight-Red-small.png" />
+    <Content Include="Content\img\TrafficLight-Red-small50-18.png" />
     <Content Include="Content\img\TrafficLight-Red.png" />
     <Content Include="Content\img\TrafficLight-Yellow-small.png" />
+    <Content Include="Content\img\TrafficLight-Yellow-small50-18.png" />
     <Content Include="Content\img\TrafficLight-Yellow.png" />
     <Content Include="Content\jquery.datetimepicker.css" />
     <Content Include="Content\nprogress.css" />
