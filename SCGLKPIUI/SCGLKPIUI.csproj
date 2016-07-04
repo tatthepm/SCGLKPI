@@ -214,6 +214,7 @@
     <Compile Include="Controllers\AdjustDocReturnedController.cs" />
     <Compile Include="Controllers\AdjustInboundedController.cs" />
     <Compile Include="Controllers\AdjustOutboundedController.cs" />
+    <Compile Include="Controllers\PendingTenderedController.cs" />
     <Compile Include="Controllers\AdjustTenderedController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
@@ -342,6 +343,7 @@
     <Compile Include="Models\sp_ontime_tender_Result.cs">
       <DependentUpon>ModelSCGLKPI.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tendered\PendingTenderedViewModels.cs" />
     <Compile Include="Models\Tendered\AdjustTenderedViewModels.cs" />
     <Compile Include="Models\Tendered\TenderedOntimeChartDailyViewModels.cs" />
     <Compile Include="Models\Tendered\TenderedOntimeChartMonthlyViewModels.cs" />
@@ -3029,6 +3031,8 @@
     <Content Include="Views\Shared\pv_FilterSegmentByDate.cshtml" />
     <Content Include="Views\Shared\pv_FilterSegmentByMonth.cshtml" />
     <Content Include="Views\Shared\pv_FilterSegmentByYear.cshtml" />
+    <Content Include="Views\PendingTendered\Index.cshtml" />
+    <Content Include="Views\PendingTendered\pv_PendingTendered.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\UploadFiles\" />

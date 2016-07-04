@@ -11,12 +11,14 @@ namespace SCGLKPIUI.Controllers {
     public class OntimeTenderedYearlyChartController : BaseController {
         // GET: OntimeTenderedYearlyChart
         public ActionResult Index(string SegmentId) {
-            try {
+            try
+            {
                 DropDownList ddl = new DropDownList();
                 var ddlSeg = ddl.GetDropDownListSegment();
                 ViewBag.SegmentId = new SelectList(ddlSeg.ToList(), "Id", "Name");
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index", new { sms = "Operation Tender failed " + ex.InnerException.InnerException.Message.ToString() });
             }
             return View();

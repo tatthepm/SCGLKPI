@@ -45,7 +45,7 @@ var data = (Dictionary<string, Dictionary<string, List<AccepModels>>>)ViewBag.Re
                     <th>Matname</th>
                     <th>MatFriGrp</th>
                     <th>SumofAccept</th>
-                    <th>Ontime</th>
+                    <th>ON TIME</th>
                     <th>Delay</th>
                     <th>%ontime</th>
                 </tr>
