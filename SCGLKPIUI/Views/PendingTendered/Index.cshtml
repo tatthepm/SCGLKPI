@@ -2,28 +2,28 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style type="text/css">
+    .chart-legend li span {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-right: 5px;
+        list-style: none;
+    }
 
+    .chart-legend ul {
+        list-style-type: none;
+    }
+</style>
 <h4>
-    <i class="fa fa-bar-chart"></i> Adjust on-time tendered
+    <i class="fa fa-bar-chart"></i> Chart on-time tender | Monthly
 </h4>
+
+@*filter by month*@
 @Html.Partial("pv_FilterSegmentByMonth")
 
-@if (TempData["Msg"] != null) {
-    if (TempData["Msg"].ToString().Contains("Successfully")) {
-        <div class="alert alert-dismissable alert-info">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <span style="font-size:small"> @TempData["Msg"].ToString()</span>
-        </div>
-    }
-    else {
-        <div class="alert alert-dismissable alert-danger">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <span style="font-size:small"> @TempData["Msg"].ToString()</span>
-        </div>
-    }
-}
+@Html.Partial("pv_PendingTendered")
 
-<div id="divResult"></div>
 <div>
     <div id="loading" class="modal">
         <div class="modal-dialog">
@@ -44,6 +44,7 @@
         </div>
     </div>
 </div>
+
 @section Styles {
     @Styles.Render("~/bundles/datatables/css")
     @Styles.Render("~/bundles/xeditable/css")
@@ -57,7 +58,6 @@
     @Styles.Render("~/bundles/toastr/css")
     @Styles.Render("~/bundles/ladda/css")
     <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-
 }
 
 @section Scripts {
@@ -75,8 +75,15 @@
     @Scripts.Render("~/bundles/ladda/js")
     <script src="~/Scripts/jquery.datetimepicker.js"></script>
     <script src="~/Scripts/fnReloadAjax.js"></script>
-    <script type="text/javascript">
-        //start javascript
+
+    <script>
+
+        //created global object Then just before initializing the chart i destroyed
+        var chartOntime;
+        var chartOntimeAdj;
+        var chartShipment;
+        var pieChartOntime;
+        //
         // show progress
         $(document).ajaxStart(function () {
             $("#loading").show();
@@ -85,54 +92,78 @@
         $(document).ajaxStop(function () {
             $("#loading").hide();
         });
-        // end show progress
-        //
+
+
         //#region 1 autocomplete dropdownlist
         $(".js-source-states").select2();
         //#endregion
 
-        //#region 4 getJson Section
+        //#region 2 filter section
         //#endregion
 
-        //#region  5 getJson MatName
+        //#region 3 filter matname
         //#endregion
 
+        //#region 4 btnSearch click
+        //#endregion
         $("#btnSearch").click(function () {
-
-            if ($('#SegmentId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, Segment is not selected ",
-                    type: "warning"
-                });
-            } else if ($('#YearId').val() == "") {
+            //if ($('#DepartmentId').val() == "") {
+            //    swal({
+            //        title: "Warning!",
+            //        text: "Sorry!, Department is not selected ",
+            //        type: "warning"
+            //    });
+            //} else
+            if ($('#YearId').val() == "") {
                 swal({
                     title: "Warning!",
                     text: "Sorry!, Year is not selected ",
                     type: "warning"
                 });
-            } else if ($('#MonthId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, Month is not selected ",
-                    type: "warning"
-                });
-            }
-            else {
+            } else {
 
-                // on-time accept daliy dataTable
+                //#region table
+                // on-time tender monthly dataTable
                 var segmentId = $('#SegmentId').val();
                 var yearId = $('#YearId').val();
                 var monthId = $('#MonthId').val();
 
-                $('#divResult').load("/AdjustTendered/GetDelayTenderedData?SegmentId="
-                                      + segmentId
-                                      + "&YearId=" + yearId
-                                      + "&MonthId=" + monthId);
-            }
-        });
+                var tender = $('#PendingTender').dataTable();
+                tender.fnDestroy();
+                tender.dataTable({
+                    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "ajax": {
+                        "type": "POST",
+                        "url": '@(Url.RouteUrl("PendingTenderedTableSummary"))',
+                        "data": function (d) {
+                            d.SegmentId = segmentId;
+                            d.YearId = yearId;
+                            d.MonthId = monthId;
+                        },
+                        "dataSrc": ""
+                    },
+                    columns: [
+                   { data: "Shipment" },
+                   { data: "RegionName" },
+                   { data: "SoldtoName" },
+                   { data: "ShiptoName" },
+                   { data: "PlanTender" },
+                    ],
+                    select: true,
+                    buttons: [
+                        { extend: 'copy', className: 'btn-sm' },
+                        { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
+                        { extend: 'pdf', title: 'ExampleFile', className: 'btn-sm' },
+                    ]
+                });
+                //#endregion table
 
-        //#region 6 Bind normal buttons
+            } //end if else
+
+        }); //end btnSerarch click
+
+        //#region 5 Bind normal buttons
 
         $('.ladda-button').ladda('bind', { timeout: 2000 });
 
@@ -161,14 +192,8 @@
             // Do something in backend and then stop ladda
             setTimeout(function () {
                 l.ladda('stop');
-            }, 25000)
+            }, 5000)
         });
         //#endregion
-
-    </script>//stop javascript
+    </script>
 }
-
-
-
-
-

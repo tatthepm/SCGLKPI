@@ -7,37 +7,37 @@ using System.Data.Entity;
 using BOL;
 
 namespace DAL {
-   public class AcceptedDelayDb {
+   public class AcceptedPendingDb {
         private SCGLKPIDbContext db;
-        public AcceptedDelayDb() {
+        public AcceptedPendingDb() {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<AcceptedDelay> GetAll() {
-            return db.AcceptedDelays.ToList();
+        public IEnumerable<AcceptedPending> GetAll() {
+            return db.AcceptedPendings.ToList();
         }
 
         //GetById
-        public AcceptedDelay GetByID(string shipmentNo) {
-            return db.AcceptedDelays.Find(shipmentNo);
+        public AcceptedPending GetByID(string shipmentNo) {
+            return db.AcceptedPendings.Find(shipmentNo);
         }
 
         //Insert
-        public void Insert(AcceptedDelay acceptedDelay) {
-            db.AcceptedDelays.Add(acceptedDelay);
+        public void Insert(AcceptedPending acceptedPending) {
+            db.AcceptedPendings.Add(acceptedPending);
             Save();
         }
 
         //Update
-        public void Update(AcceptedDelay acceptedDelay) {
-            db.Entry(acceptedDelay).State = EntityState.Modified;
+        public void Update(AcceptedPending acceptedPending) {
+            db.Entry(acceptedPending).State = EntityState.Modified;
             Save();
         }
 
         //Delete
         public void Delete(string shipmentNo) {
-            AcceptedDelay acceptedDelay = db.AcceptedDelays.Find(shipmentNo);
-            db.AcceptedDelays.Remove(acceptedDelay);
+            AcceptedPending acceptedPending = db.AcceptedPendings.Find(shipmentNo);
+            db.AcceptedPendings.Remove(acceptedPending);
             Save();
         }
 

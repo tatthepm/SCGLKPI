@@ -10,11 +10,15 @@ using SCGLKPIUI.Models;
 using SCGLKPIUI.Models.Tendered;
 using System.Transactions;
 
-namespace SCGLKPIUI.Controllers {
-    public class PendingTenderedController : BaseController {
+namespace SCGLKPIUI.Controllers
+{
+    public class PendingTenderedController : BaseController
+    {
         // GET: PendingTendered
-        public ActionResult Index(string sms, string SegmentId, string YearId, string MonthId) {
-            try {
+        public ActionResult Index(string sms, string SegmentId, string YearId, string MonthId)
+        {
+            try
+            {
 
                 TempData["Msg"] = sms;
 
@@ -29,48 +33,43 @@ namespace SCGLKPIUI.Controllers {
                 return View();
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index", new { sms = "Operation Accept failed " + ex.InnerException.InnerException.Message.ToString() });
             }
         }
 
-        public ActionResult GetPendingTenderedData(string SegmentId, string YearId, string MonthId) {
-            try {
-                ViewBag.SegmentId = SegmentId;
-                ViewBag.YearId = YearId;
-                ViewBag.MonthId = MonthId;
+        [HttpPost]
+        public JsonResult PendingTenderedTableSummary(string SegmentId, string YearId, string MonthId)
+        {
+            // add IEnumerable<AcceptOntimeSummaryViewModels>
+            List<PendingTenderedViewModels> viewSummaryModel = new List<PendingTenderedViewModels>();
 
-                // add IEnumerable<AdjustAcceptedViewModels>
-                List<PendingTenderedViewModels> viewModel = new List<PendingTenderedViewModels>();
+            // filter by department
+            var q = objBs.tenderedPendingBs.GetAll().Where(x => !String.IsNullOrEmpty(x.DEPARTMENT_Name)
+                                               && !String.IsNullOrEmpty(x.SECTION_NAME)
+                                               && !String.IsNullOrEmpty(x.MATNAME)
+                                               && DateTime.Parse(x.PLNTNRDDATE.ToString(), new CultureInfo("en-US")).Year.ToString() == YearId);
+            //filter Segment
+            if (!String.IsNullOrEmpty(SegmentId))
+                q = q.Where(x => x.SEGMENT == SegmentId);
 
-                //filter department
-                var q = from d in objBs.tenderedDelayBs.GetAll()
-                        where d.SEGMENT == SegmentId
-                        && d.PLNTNRDDATE_D.Value.Month == Convert.ToInt32(MonthId)
-                        && d.PLNTNRDDATE_D.Value.Year == Convert.ToInt32(YearId)
-                        select d;
+            //filter month
+            if (!String.IsNullOrEmpty(MonthId))
+                q = q.Where(x => Convert.ToDateTime(x.PLNTNRDDATE.Value.Date.ToShortDateString()).Month.ToString() == MonthId);
 
-                int c = q.Count();
-
-                foreach (var item in q) {
-                    PendingTenderedViewModels model = new PendingTenderedViewModels();
-                    model.Shipment = item.SHPMNTNO;
-                    model.RegionId = item.REGION_ID;
-                    model.RegionName = item.REGION_NAME_TH;
-                    model.Soldto = item.SOLDTO;
-                    model.SoldtoName = item.SOLDTO_NAME;
-                    model.Shipto = item.SHIPTO;
-                    model.ShiptoName = item.LAST_SHPG_LOC_NAME;
-                    model.PlanTender = Convert.ToDateTime(item.PLNTNRDDATE);
-                    viewModel.Add(model);
-                }
-
-                return PartialView("pv_PendingTendered", viewModel);
-
+            foreach (var item in q)
+            {
+                PendingTenderedViewModels model = new PendingTenderedViewModels();
+                model.Shipment = item.SHPMNTNO;
+                model.RegionName = item.REGION_NAME_TH;
+                model.SoldtoName = item.SOLDTO_NAME;
+                model.ShiptoName = item.SHIPTO;
+                model.PlanTender = item.PLNTNRDDATE_D.Value.ToString();
+                viewSummaryModel.Add(model);
             }
-            catch (Exception ex) {
-                return RedirectToAction("Index", new { sms = "Operation getDelayTenderedData failed ! " + ex.InnerException.InnerException.Message.ToString() });
-            }
+
+            return Json(viewSummaryModel, JsonRequestBehavior.AllowGet);
         }
     }
 }

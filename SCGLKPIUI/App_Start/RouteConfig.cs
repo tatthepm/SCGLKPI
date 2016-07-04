@@ -86,6 +86,11 @@ namespace SCGLKPIUI {
                 new { controller = "OntimeTenderedYearlyChart", action = "OntimeTenderedTableSummaryYearly" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
+            //7 doc pending
+            routes.MapRoute("PendingTenderedTableSummary", "PendingTendered/PendingTenderedTableSummary/",
+                new { controller = "PendingTendered", action = "PendingTenderedTableSummary" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
             #endregion
 
             #region 3 on-time inbounded

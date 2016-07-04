@@ -54,14 +54,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcceptedPendingBs.cs" />
     <Compile Include="AcceptedDelayBs.cs" />
     <Compile Include="BaseBs.cs" />
+    <Compile Include="DocReturnPendingBs.cs" />
     <Compile Include="DocReturnDelayBs.cs" />
     <Compile Include="DOM_CMD_VENDORBs.cs" />
     <Compile Include="DOM_MDS_ORGANIZATIONBs.cs" />
     <Compile Include="DOM_SAP_MATFRIGRPBs.cs" />
     <Compile Include="DWH_ONTIME_DNBs.cs" />
     <Compile Include="DWH_ONTIME_SHIPMENTBs.cs" />
+    <Compile Include="InboundPendingBs.cs" />
     <Compile Include="InboundDelayBs.cs" />
     <Compile Include="KPIBs.cs" />
     <Compile Include="KPIFrequencyBS.cs" />
@@ -69,6 +72,7 @@
     <Compile Include="OntimeAcceptBs.cs" />
     <Compile Include="OntimeAcceptMonthBs.cs" />
     <Compile Include="OntimeAcceptYearBs.cs" />
+    <Compile Include="OntimePendingBs.cs" />
     <Compile Include="OntimeDelayBs.cs" />
     <Compile Include="OntimeDeliveryBs.cs" />
     <Compile Include="OntimeDeliveryMonthBs.cs" />
@@ -85,6 +89,7 @@
     <Compile Include="OntimeTenderBs.cs" />
     <Compile Include="OntimeTenderMonthBs.cs" />
     <Compile Include="OntimeTenderYearBs.cs" />
+    <Compile Include="OutboundPendingBs.cs" />
     <Compile Include="OutboundDelayBs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReasonAcceptedBs.cs" />
@@ -94,6 +99,7 @@
     <Compile Include="ReasonOutboundBs.cs" />
     <Compile Include="ReasonTenderedBs.cs" />
     <Compile Include="RoleBs.cs" />
+    <Compile Include="TenderedPendingBs.cs" />
     <Compile Include="TenderedDelayBs.cs" />
     <Compile Include="TUserBs.cs" />
   </ItemGroup>

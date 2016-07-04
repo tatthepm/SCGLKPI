@@ -12,6 +12,6 @@ namespace SCGLKPIUI.Models.Tendered {
         public string SoldtoName { get; set; }
         public string Shipto { get; set; }
         public string ShiptoName { get; set; }
-        public DateTime? PlanTender { get; set; }
+        public string PlanTender { get; set; }
     }
 }

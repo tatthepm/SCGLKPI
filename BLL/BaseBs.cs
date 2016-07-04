@@ -25,36 +25,42 @@ namespace BLL {
         public OntimeAcceptYearBs ontimeAcceptYearBs { get; set; }
         public ReasonAcceptedBs reasonAcceptedBs { get; set; }
         public AcceptedDelayBs acceptedDelayBs { get; set; }
+        public AcceptedPendingBs acceptedPendingBs { get; set; }
         //tendered
         public OntimeTenderBs ontimeTenderBs { get; set; }
         public OntimeTenderMonthBs ontimeTenderMonthBs { get; set; }
         public ReasonTenderedBs reasonTenderedBs { get; set; }
         public TenderedDelayBs tenderedDelayBs { get; set; }
         public OntimeTenderYearBs ontimeTenderYearBs { get; set; }
+        public TenderedPendingBs tenderedPendingBs { get; set; }
         //inbounded
         public OntimeInboundBs ontimeInboundBs { get; set; }
         public OntimeInboundMonthBs ontimeInboundMonthBs { get; set; }
         public OntimeInboundYearBs ontimeInboundYearBs { get; set; }
         public InboundDelayBs inboundDelayBs { get; set; }
         public ReasonInboundBs reasonInboundBs { get; set; }
+        public InboundPendingBs inboundPendingBs { get; set; }
         //outbound
         public OntimeOutboundBs ontimeOutboundBs { get; set; }
         public OntimeOutboundMonthBs ontimeOutboundMonthBs { get; set; }
         public OntimeOutboundYearBs ontimeOutboundYearBs { get; set; }
         public OutboundDelayBs outboundDelayBs { get; set; }
         public ReasonOutboundBs reasonOutboundBs { get; set; }
+        public OutboundPendingBs outboundPendingBs { get; set; }
         //doc return
         public OntimeDocReturnBs ontimeDocReturnBs { get; set; }
         public OntimeDocReturnMonthBs ontimeDocReturnMonthBs { get; set; }
         public OntimeDocReturnYearBs ontimeDocReturnYearBs { get; set; }
         public DocReturnDelayBs docReturnDelayBs { get; set; }
         public ReasonDocReturnBs reasonDocReturnBs { get; set; }
+        public DocReturnPendingBs docReturnPendingBs { get; set; }
         //delivery
         public OntimeDeliveryBs ontimeDeliveryBs { get; set; }
         public OntimeDeliveryMonthBs ontimeDeliveryMonthBs { get; set; }
         public OntimeDeliveryYearBs ontimeDeliveryYearBs { get; set; }
         public OntimeDelayBs ontimeDelayBs { get; set; }
         public ReasonOntimeBs reasonOntimeBs { get; set; }
+        public OntimePendingBs ontimePendingBs { get; set; }
 
         public BaseBs() {
             roleBs = new RoleBs();
@@ -72,6 +78,7 @@ namespace BLL {
             ontimeTenderYearBs = new OntimeTenderYearBs();
             reasonTenderedBs = new ReasonTenderedBs();
             tenderedDelayBs = new TenderedDelayBs();
+            tenderedPendingBs = new TenderedPendingBs();
 
             //accepted
             ontimeAcceptBs = new OntimeAcceptBs();
@@ -79,6 +86,7 @@ namespace BLL {
             reasonAcceptedBs = new ReasonAcceptedBs();
             ontimeAcceptYearBs = new OntimeAcceptYearBs();
             acceptedDelayBs = new AcceptedDelayBs();
+            acceptedPendingBs = new AcceptedPendingBs();
 
             //inbounded
             ontimeInboundBs = new OntimeInboundBs();
@@ -86,6 +94,7 @@ namespace BLL {
             ontimeInboundYearBs = new OntimeInboundYearBs();
             inboundDelayBs = new InboundDelayBs();
             reasonInboundBs = new ReasonInboundBs();
+            inboundPendingBs = new InboundPendingBs();
 
             //outbound
             ontimeOutboundBs = new OntimeOutboundBs();
@@ -93,6 +102,7 @@ namespace BLL {
             ontimeOutboundYearBs = new OntimeOutboundYearBs();
             outboundDelayBs = new OutboundDelayBs();
             reasonOutboundBs = new ReasonOutboundBs();
+            outboundPendingBs = new OutboundPendingBs();
 
             //doc returnt
             ontimeDocReturnBs = new OntimeDocReturnBs();
@@ -100,6 +110,7 @@ namespace BLL {
             ontimeDocReturnYearBs = new OntimeDocReturnYearBs();
             docReturnDelayBs = new DocReturnDelayBs();
             reasonDocReturnBs = new ReasonDocReturnBs();
+            docReturnPendingBs = new DocReturnPendingBs();
 
             //delivery
             ontimeDeliveryBs = new OntimeDeliveryBs();
@@ -107,6 +118,7 @@ namespace BLL {
             ontimeDeliveryYearBs = new OntimeDeliveryYearBs();
             ontimeDelayBs = new OntimeDelayBs();
             reasonOntimeBs = new ReasonOntimeBs();
+            ontimePendingBs = new OntimePendingBs();
         }
     }
 
