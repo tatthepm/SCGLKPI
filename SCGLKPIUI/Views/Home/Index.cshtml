@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SCGLKPIUI.Models.HomeModels
+@{
     ViewBag.Title = "KPI Report";
     var currentDate = DateTime.Now;
 }
@@ -35,17 +36,17 @@
                             </div>
                             <div>
                                 <h1 class="font-extra-bold m-t-xl m-b-xs">
-                                    226,802
+                                    @Model.shipmentLastMonthCount
                                 </h1>
                                 <small>Shipment in last month</small>
                             </div>
                             <div class="small m-t-xl">
-                                <i class="fa fa-clock-o"></i> Data from January
+                                <i class="fa fa-clock-o"></i> Data from @Model.LastMonth @Model.Year
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="text-center small">
-                                <i class="fa fa-laptop"></i> Ontime Accept Tender in 2016
+                                <i class="fa fa-laptop"></i> Ontime Accept Tender in @Model.LastMonth @Model.Year
                             </div>
                             <div class="flot-chart" style="height: 160px">
                                 <div class="flot-chart-content" id="flot-line-chart"></div>
@@ -57,12 +58,12 @@
                             </div>
                             <div>
                                 <h1 class="font-extra-bold m-t-xl m-b-xs">
-                                    12 Months
+                                    @Model.daysDIff Days
                                 </h1>
-                                <small>And four weeks</small>
+                                @*<small>And four weeks</small>*@
                             </div>
                             <div class="small m-t-xl">
-                                <i class="fa fa-clock-o"></i> Last active in 12.12.2015
+                                <i class="fa fa-clock-o"></i> Data since January 1, 2016
                             </div>
                         </div>
                     </div>

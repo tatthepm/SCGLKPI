@@ -1,0 +1,26 @@
+ Volume in drive C is OS
+ Volume Serial Number is 2603-03A0
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Models\Inbounded
+
+[.]
+[..]
+AdjustInbounedViewModels.cs
+InboundedOntimeChartDailyViewModels.cs
+InboundedOntimeChartMonthlyViewModels.cs
+InboundedOntimeChartYearlyViewModels.cs
+InboundedOntimeMonthlyViewModels.cs
+InboundedOntimePieChartDailyViewModels.cs
+InboundedOntimePieChartMonthlyViewModels.cs
+InboundedOntimePieChartYearlyViewModels.cs
+InboundedOntimeSummaryMonthlyViewModels.cs
+InboundedOntimeSummaryViewModels.cs
+InboundedOntimeSummaryYearlyViewModels.cs
+InboundedOntimeViewModels.cs
+InboundedOntimeYearlyViewModels.cs
+list.txt
+              14 File(s)          7,449 bytes
+
+     Total Files Listed:
+              14 File(s)          7,449 bytes
+               2 Dir(s)  30,213,922,816 bytes free

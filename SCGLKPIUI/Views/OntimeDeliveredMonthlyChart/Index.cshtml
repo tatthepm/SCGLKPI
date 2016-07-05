@@ -433,16 +433,8 @@
                             "render": function (data, type, row) {
                                 return (row.Percent >= 98.0) ? '<img src="/Content/img/TrafficLight-Green-small50-18.png" />' : '<img src="/Content/img/TrafficLight-Red-small50-18.png" />'
                             },
-                            "targets": 9
+                            "targets": 11
                         }
-                    ],
-                    "columnDefs": [
-                {
-                    "render": function (data, type, row) {
-                        return (row.Percent >= 98.0) ? '<img src="/Content/img/TrafficLight-Green-small50-18.png" />' : '<img src="/Content/img/TrafficLight-Red-small50-18.png" />'
-                    },
-                    "targets": 11
-                }
                     ],
                     select: true,
                     buttons: [
@@ -480,6 +472,14 @@
                    { data: "Plan" },
                    { data: "Percent" },
                    { data: "PercentAdjust" }
+                    ],
+                    "columnDefs": [
+                        {
+                            "render": function (data, type, row) {
+                                return (row.Percent >= 98.0) ? '<img src="/Content/img/TrafficLight-Green-small50-18.png" />' : '<img src="/Content/img/TrafficLight-Red-small50-18.png" />'
+                            },
+                            "targets": 9
+                        }
                     ],
                     select: true,
                     buttons: [

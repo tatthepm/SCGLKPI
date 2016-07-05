@@ -1,0 +1,27 @@
+ Volume in drive C is OS
+ Volume Serial Number is 2603-03A0
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Models\Tendered
+
+[.]
+[..]
+AdjustTenderedViewModels.cs
+list.txt
+PendingTenderedViewModels.cs
+TenderedOntimeChartDailyViewModels.cs
+TenderedOntimeChartMonthlyViewModels.cs
+TenderedOntimeChartYearlyViewModels.cs
+TenderedOntimeMonthlyViewModels.cs
+TenderedOntimePieChartDailyViewModels.cs
+TenderedOntimePieChartMonthlyViewModels.cs
+TenderedOntimePieChartYearlyViewModels.cs
+TenderedOntimeSummaryMonthlyViewModels.cs
+TenderedOntimeSummaryViewModels.cs
+TenderedOntimeSummaryYearlyViewModels.cs
+TenderedOntimeViewModels.cs
+TenderedOntimeYearlyViewModels.cs
+              15 File(s)          7,884 bytes
+
+     Total Files Listed:
+              15 File(s)          7,884 bytes
+               2 Dir(s)  30,214,049,792 bytes free

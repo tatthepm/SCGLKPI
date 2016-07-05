@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BOL;
 using BLL;
+using SCGLKPIUI.Models;
 
 namespace SCGLKPIUI.Controllers {
-    public class HomeController : Controller {
+    public class HomeController : BaseController {
         public ActionResult Index() {
-            return View();
+            HomeModels model = new HomeModels();
+            int last_month = DateTime.Now.AddMonths(-1).Month;
+            model.daysDIff = Convert.ToInt32((DateTime.Now - Convert.ToDateTime("01/01/2016")).TotalDays).ToString();
+            model.LastMonth = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(last_month);
+            model.Year = DateTime.Now.Year.ToString();
+            model.shipmentLastMonthCount = "92267";
+            model.DNLastMonthCount = "112242";
+            return View(model);
         }
 
         public ActionResult About() {

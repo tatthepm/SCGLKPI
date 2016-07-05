@@ -293,6 +293,7 @@
     <Compile Include="Models\DocReturned\DocReturnedOntimeYearlyViewModels.cs" />
     <Compile Include="Models\DropDownList.cs" />
     <Compile Include="Models\DropdownlistViewModels.cs" />
+    <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\DocReturned\AdjustDocReturnedViewModels.cs" />
     <Compile Include="Models\Inbounded\AdjustInbounedViewModels.cs" />

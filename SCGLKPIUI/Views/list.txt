@@ -1,0 +1,308 @@
+ Volume in drive C is OS
+ Volume Serial Number is 2603-03A0
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views
+
+[.]                             [..]
+[Accept]                        [AcceptChart]
+[Account]                       [AdjustAccepted]
+[AdjustDelivered]               [AdjustDocReturned]
+[AdjustInbounded]               [AdjustOutbounded]
+[AdjustTendered]                [Charts]
+[ErrorPage]                     [Home]
+list.txt                        [Login]
+[Manage]                        [MenuChartAccepted]
+[MenuTableAccepted]             [OntimeAcceptedDailyChart]
+[OntimeAcceptedMonthlyChart]    [OntimeAcceptedYearlyChart]
+[OntimeDeliveredDailyChart]     [OntimeDeliveredMonthlyChart]
+[OntimeDeliveredYearlyChart]    [OntimeDocReturnedDailyChart]
+[OntimeDocReturnedMonthlyChart] [OntimeDocReturnedYearlyChart]
+[OntimeInboundedDailyChart]     [OntimeInboundedMonthlyChart]
+[OntimeInboundedYearlyChart]    [OntimeOutboundedDailyChart]
+[OntimeOutboundedMonthlyChart]  [OntimeOutbounedYearlyChart]
+[OntimeTenderedDailyChart]      [OntimeTenderedMonthlyChart]
+[OntimeTenderedYearlyChart]     [PendingTendered]
+[ReasonAccepted]                [ReasonDelivered]
+[ReasonDocReturned]             [ReasonInbounded]
+[ReasonOutbounded]              [ReasonTendered]
+[Shared]                        Web.config
+_ViewStart.cshtml               
+               3 File(s)          1,987 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\Accept
+
+[.]                             [..]
+Index.cshtml                    pv_AcceptOntime.cshtml
+pv_SummaryAcceptOntime.cshtml   
+               3 File(s)         16,664 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\AcceptChart
+
+[.]            [..]           Index.cshtml   
+               1 File(s)          8,380 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\Account
+
+[.]                                 [..]
+ConfirmEmail.cshtml                 ExternalLoginConfirmation.cshtml
+ExternalLoginFailure.cshtml         ForgotPassword.cshtml
+ForgotPasswordConfirmation.cshtml   Login.cshtml
+Register.cshtml                     ResetPassword.cshtml
+ResetPasswordConfirmation.cshtml    SendCode.cshtml
+VerifyCode.cshtml                   _ExternalLoginsListPartial.cshtml
+              12 File(s)         12,172 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\AdjustAccepted
+
+[.]                        [..]
+Index.cshtml               pv_AdjustAccepted.cshtml
+               2 File(s)         18,132 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\AdjustDelivered
+
+[.]                         [..]
+Index.cshtml                pv_AdjustDelivered.cshtml
+               2 File(s)         12,911 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\AdjustDocReturned
+
+[.]                           [..]
+Index.cshtml                  pv_AdjustDocReturned.cshtml
+               2 File(s)         12,977 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\AdjustInbounded
+
+[.]                         [..]
+Index.cshtml                pv_AdjustInbounded.cshtml
+               2 File(s)         13,031 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\AdjustOutbounded
+
+[.]                          [..]
+Index.cshtml                 pv_AdjustOutbounded.cshtml
+               2 File(s)         12,936 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\AdjustTendered
+
+[.]                        [..]
+Index.cshtml               pv_AdjustTendered.cshtml
+               2 File(s)         10,801 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\Charts
+
+[.]              [..]             ChartJs.cshtml   
+               1 File(s)         18,472 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\ErrorPage
+
+[.]                   [..]                  ErrorMessage.cshtml
+               1 File(s)            559 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\Home
+
+[.]              [..]             About.cshtml     Contact.cshtml
+Index.cshtml     
+               3 File(s)         12,364 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\Login
+
+[.]                     [..]                    ChangePassword.cshtml
+Index.cshtml            
+               2 File(s)          9,866 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\Manage
+
+[.]                        [..]
+AddPhoneNumber.cshtml      ChangePassword.cshtml
+Index.cshtml               ManageLogins.cshtml
+SetPassword.cshtml         VerifyPhoneNumber.cshtml
+               6 File(s)         10,670 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\MenuChartAccepted
+
+[.]            [..]           Index.cshtml   
+               1 File(s)          3,189 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\MenuTableAccepted
+
+[.]            [..]           Index.cshtml   
+               1 File(s)          3,901 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeAcceptedDailyChart
+
+[.]                                [..]
+Index.cshtml                       pv_AcceptOntimeChartDaily.cshtml
+pv_AcceptOntimeTableDaily.cshtml   
+               3 File(s)         33,239 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeAcceptedMonthlyChart
+
+[.]                                  [..]
+Index.cshtml                         pv_AcceptOntimeChartMonthly.cshtml
+pv_AcceptOntimeTableMonthly.cshtml   
+               3 File(s)         31,504 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeAcceptedYearlyChart
+
+[.]                                 [..]
+Index.cshtml                        pv_AcceptOntimeChartYearly.cshtml
+pv_AcceptOntimeTableYearly.cshtml   
+               3 File(s)         30,299 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeDeliveredDailyChart
+
+[.]                                  [..]
+Index.cshtml                         pv_DeliveryOntimeChartDaily.cshtml
+pv_DeliveryOntimeTableDaily.cshtml   
+               3 File(s)         33,080 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeDeliveredMonthlyChart
+
+[.]                                    [..]
+Index.cshtml                           pv_DeliveryOntimeChartMonthly.cshtml
+pv_DeliveryOntimeTableMonthly.cshtml   
+               3 File(s)         31,504 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeDeliveredYearlyChart
+
+[.]                                   [..]
+Index.cshtml                          pv_DeliveryOntimeChartYearly.cshtml
+pv_DeliveryOntimeTableYearly.cshtml   
+               3 File(s)         30,303 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeDocReturnedDailyChart
+
+[.]                                   [..]
+Index.cshtml                          pv_DocReturnOntimeChartDaily.cshtml
+pv_DocReturnOntimeTableDaily.cshtml   
+               3 File(s)         33,185 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeDocReturnedMonthlyChart
+
+[.]                                     [..]
+Index.cshtml                            pv_DocReturnOntimeChartMonthly.cshtml
+pv_DocReturnOntimeTableMonthly.cshtml   
+               3 File(s)         31,022 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeDocReturnedYearlyChart
+
+[.]                                    [..]
+Index.cshtml                           pv_DocReturnOntimeChartYearly.cshtml
+pv_DocReturnOntimeTableYearly.cshtml   
+               3 File(s)         29,225 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeInboundedDailyChart
+
+[.]                                 [..]
+Index.cshtml                        pv_InboundOntimeChartDaily.cshtml
+pv_InboundOntimeTableDaily.cshtml   
+               3 File(s)         33,029 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeInboundedMonthlyChart
+
+[.]                                   [..]
+Index.cshtml                          pv_InboundOntimeChartMonthly.cshtml
+pv_InboundOntimeTableMonthly.cshtml   
+               3 File(s)         31,405 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeInboundedYearlyChart
+
+[.]                                  [..]
+Index.cshtml                         pv_InboundOntimeChartYearly.cshtml
+pv_InboundOntimeTableYearly.cshtml   
+               3 File(s)         30,260 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeOutboundedDailyChart
+
+[.]                                  [..]
+Index.cshtml                         pv_OutboundOntimeChartDaily.cshtml
+pv_OutboundOntimeTableDaily.cshtml   
+               3 File(s)         33,090 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeOutboundedMonthlyChart
+
+[.]                                    [..]
+Index.cshtml                           pv_OutboundOntimeChartMonthly.cshtml
+pv_OutboundOntimeTableMonthly.cshtml   
+               3 File(s)         31,453 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeOutbounedYearlyChart
+
+[.]                                   [..]
+Index.cshtml                          pv_OutboundOntimeChartYearly.cshtml
+pv_OutboundOntimeTableYearly.cshtml   
+               3 File(s)         30,283 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeTenderedDailyChart
+
+[.]                                  [..]
+Index.cshtml                         pv_TenderedOntimeChartDaily.cshtml
+pv_TenderedOntimeTableDaily.cshtml   
+               3 File(s)         30,982 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeTenderedMonthlyChart
+
+[.]                                    [..]
+Index.cshtml                           pv_TenderedOntimeChartMonthly.cshtml
+pv_TenderedOntimeTableMonthly.cshtml   
+               3 File(s)         29,288 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\OntimeTenderedYearlyChart
+
+[.]                                 [..]
+Index.cshtml                        pv_TenderOntimeChartYearly.cshtml
+pv_TenderOntimeTableYearly.cshtml   
+               3 File(s)         28,139 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\PendingTendered
+
+[.]                         [..]
+Index.cshtml                pv_PendingTendered.cshtml
+               2 File(s)          8,605 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\ReasonAccepted
+
+[.]            [..]           Index.cshtml   
+               1 File(s)          6,155 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\ReasonDelivered
+
+[.]            [..]           Index.cshtml   
+               1 File(s)          6,167 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\ReasonDocReturned
+
+[.]            [..]           Index.cshtml   
+               1 File(s)          6,182 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\ReasonInbounded
+
+[.]            [..]           Index.cshtml   
+               1 File(s)          6,146 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\ReasonOutbounded
+
+[.]            [..]           Index.cshtml   
+               1 File(s)          6,156 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\ReasonTendered
+
+[.]            [..]           Index.cshtml   
+               1 File(s)          6,142 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Views\Shared
+
+[.]                              [..]
+Lockout.cshtml                   pv_FilterByDate.cshtml
+pv_FilterByMonth.cshtml          pv_FilterByYear.cshtml
+pv_FilterSegmentByDate.cshtml    pv_FilterSegmentByMonth.cshtml
+pv_FilterSegmentByYear.cshtml    _Error.cshtml
+_Footer.cshtml                   _Header.cshtml
+_Layout.cshtml                   _LayoutOLD.cshtml
+_Layout_Blank.cshtml             _LoginPartial.cshtml
+_Navigation.cshtml               _Right_Sidebar.cshtml
+              16 File(s)         49,069 bytes
+
+     Total Files Listed:
+             124 File(s)        834,924 bytes
+             128 Dir(s)  30,202,257,408 bytes free

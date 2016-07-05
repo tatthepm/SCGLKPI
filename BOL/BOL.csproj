@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="AcceptedPending.cs" />
     <Compile Include="AcceptedDelay.cs" />
+    <Compile Include="HomeKPI.cs" />
     <Compile Include="DocReturnPending.cs" />
     <Compile Include="DocReturnDelay.cs" />
     <Compile Include="DOM_CMD_VENDOR.cs" />

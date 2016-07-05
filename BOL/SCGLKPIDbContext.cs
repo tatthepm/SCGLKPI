@@ -16,6 +16,7 @@ namespace BOL {
         public DbSet<DWH_ONTIME_DN> DWH_ONTIME_DNs { get; set; }
         public DbSet<DWH_ONTIME_SHIPMENT> DWH_ONTIME_SHIPMENTs { get; set; }
         public DbSet<KPI> KPIs { get; set; }
+        public DbSet<HomeKPI> HomeKPIs { get; set; }
         public DbSet<MenuTable> MenuTables { get; set; }
         public DbSet<KPIFrequency> KPIFrequencies { get; set; }
         //tendered

@@ -1,0 +1,57 @@
+ Volume in drive C is OS
+ Volume Serial Number is 2603-03A0
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Controllers
+
+[.]
+[..]
+AccountController.cs
+AdjustAcceptedController.cs
+AdjustDeliveredController.cs
+AdjustDocReturnedController.cs
+AdjustInboundedController.cs
+AdjustOutboundedController.cs
+AdjustTenderedController.cs
+BaseController.cs
+ChartsController.cs
+ErrorPageController.cs
+HomeController.cs
+list.txt
+LoginController.cs
+ManageController.cs
+[Master]
+MenuChartAcceptedController.cs
+MenuTableAcceptedController.cs
+OntimeAcceptedDailyChartController.cs
+OntimeAcceptedMonthlyChartController.cs
+OntimeAcceptedYearlyChartController.cs
+OntimeDeliveredDailyChartController.cs
+OntimeDeliveredMonthlyChartController.cs
+OntimeDeliveredYearlyChartController.cs
+OntimeDocReturnedDailyChartController.cs
+OntimeDocReturnedMonthlyChartController.cs
+OntimeDocReturnedYearlyChartController.cs
+OntimeInboundedDailyChartController.cs
+OntimeInboundedMonthlyChartController.cs
+OntimeInboundedYearlyChartController.cs
+OntimeOutboundedDailyChartController.cs
+OntimeOutboundedMonthlyChartController.cs
+OntimeOutbounedYearlyChartController.cs
+OntimeTenderedDailyChartController.cs
+OntimeTenderedMonthlyChartController.cs
+OntimeTenderedYearlyChartController.cs
+PendingTenderedController.cs
+              35 File(s)        355,918 bytes
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Controllers\Master
+
+[.]                              [..]
+master.txt                       ReasonAcceptedController.cs
+ReasonDeliveredController.cs     ReasonDocReturnedController.cs
+ReasonInboundedController.cs     ReasonOutboundedController.cs
+ReasonTenderedController.cs      
+               7 File(s)         13,597 bytes
+
+     Total Files Listed:
+              42 File(s)        369,515 bytes
+               5 Dir(s)  30,219,206,656 bytes free

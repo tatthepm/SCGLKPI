@@ -145,7 +145,7 @@ namespace SCGLKPIUI.Controllers {
                                MatName = g.Key.MatName,
                                SumOfDelivery = g.Sum(x => x.SumOfDelivery),
                                Ratio = ((double)g.Sum(x => x.SumOfDelivery) / (double)TotalDelivery) * 100
-                           });
+                           }).OrderByDescending(x=>x.Ratio);
 
             var random = new Random();
             foreach (var item in results) {
@@ -155,7 +155,7 @@ namespace SCGLKPIUI.Controllers {
                 model.value = Math.Round(item.Ratio, 2);
                 model.color = color;
                 model.highlight = color;
-                model.label = item.MatName + "-" + Math.Round(item.Ratio, 2).ToString();
+                model.label = item.MatName + " - " + Math.Round(item.Ratio, 2).ToString();
                 viewSummaryModel.Add(model);
             }
 

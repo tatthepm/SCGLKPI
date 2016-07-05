@@ -1,0 +1,26 @@
+ Volume in drive C is OS
+ Volume Serial Number is 2603-03A0
+
+ Directory of C:\Users\saranaci\Source\Repos\SCGLKPI\SCGLKPIUI\Models\DocReturned
+
+[.]
+[..]
+AdjustDocReturnedViewModels.cs
+DocReturnedOntimeChartDailyViewModels.cs
+DocReturnedOntimeChartMonthlyViewModels.cs
+DocReturnedOntimeChartYearlyViewModels.cs
+DocReturnedOntimeMonthlyViewModels.cs
+DocReturnedOntimePieChartDailyViewModels.cs
+DocReturnedOntimePieChartMonthlyViewModels.cs
+DocReturnedOntimePieChartYearlyViewModels.cs
+DocReturnedOntimeSummaryMonthlyViewModels.cs
+DocReturnedOntimeSummaryViewModels.cs
+DocReturnedOntimeSummaryYearlyViewModels.cs
+DocReturnedOntimeViewModels.cs
+DocReturnedOntimeYearlyViewModels.cs
+list.txt
+              14 File(s)          7,552 bytes
+
+     Total Files Listed:
+              14 File(s)          7,552 bytes
+               2 Dir(s)  30,213,931,008 bytes free

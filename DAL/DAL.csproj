@@ -66,6 +66,7 @@
     <Compile Include="OntimeAcceptDb.cs" />
     <Compile Include="OntimeAcceptMonthDb.cs" />
     <Compile Include="OntimeAcceptYearDb.cs" />
+    <Compile Include="HomeKPIDb.cs" />
     <Compile Include="OntimePendingDb.cs" />
     <Compile Include="OntimeDelayDb.cs" />
     <Compile Include="OntimeDeliveryDb.cs" />
@@ -93,8 +94,8 @@
     <Compile Include="ReasonOutboundDb.cs" />
     <Compile Include="ReasonTenderedDb.cs" />
     <Compile Include="RoleDb.cs" />
-    <Compile Include="TenderedPendingDb.cs" />
     <Compile Include="TenderedDelayDb.cs" />
+    <Compile Include="TenderedPendingDb.cs" />
     <Compile Include="TUserDb.cs" />
   </ItemGroup>
   <ItemGroup>

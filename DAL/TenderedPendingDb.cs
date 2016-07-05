@@ -7,37 +7,37 @@ using System.Data.Entity;
 using BOL;
 
 namespace DAL {
-    public class TenderedDelayDb {
+    public class TenderedPendingDb {
         private SCGLKPIDbContext db;
-        public TenderedDelayDb() {
+        public TenderedPendingDb() {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<TenderedDelay> GetAll() {
-            return db.TenderedDelays.ToList();
+        public IEnumerable<TenderPending> GetAll() {
+            return db.TenderPendings.ToList();
         }
 
         //GetById
-        public TenderedDelay GetByID(string shipmentNo) {
-            return db.TenderedDelays.Find(shipmentNo);
+        public TenderPending GetByID(string shipmentNo) {
+            return db.TenderPendings.Find(shipmentNo);
         }
 
         //Insert
-        public void Insert(TenderedDelay tenderedDelay) {
-            db.TenderedDelays.Add(tenderedDelay);
+        public void Insert(TenderPending tenderedPending) {
+            db.TenderPendings.Add(tenderedPending);
             Save();
         }
 
         //Update
-        public void Update(TenderedDelay tenderedDelay) {
-            db.Entry(tenderedDelay).State = EntityState.Modified;
+        public void Update(TenderPending tenderedPending) {
+            db.Entry(tenderedPending).State = EntityState.Modified;
             Save();
         }
 
         //Delete
         public void Delete(string shipmentNo) {
-            TenderedDelay tenderedDelay = db.TenderedDelays.Find(shipmentNo);
-            db.TenderedDelays.Remove(tenderedDelay);
+            TenderPending tenderedPending = db.TenderPendings.Find(shipmentNo);
+            db.TenderPendings.Remove(tenderedPending);
             Save();
         }
 

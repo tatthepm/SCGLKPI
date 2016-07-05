@@ -72,6 +72,7 @@
     <Compile Include="OntimeAcceptBs.cs" />
     <Compile Include="OntimeAcceptMonthBs.cs" />
     <Compile Include="OntimeAcceptYearBs.cs" />
+    <Compile Include="OntimeHomeKPIBs.cs" />
     <Compile Include="OntimePendingBs.cs" />
     <Compile Include="OntimeDelayBs.cs" />
     <Compile Include="OntimeDeliveryBs.cs" />
