@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SCGLKPIUI.Models.Tendered {
-    public class PendingTenderedViewModels {
+namespace SCGLKPIUI.Models {
+    public class PendingAcceptViewModels {
         public string Shipment { get; set; }
         public string RegionId { get; set; }
         public string RegionName { get; set; }
@@ -12,6 +12,6 @@ namespace SCGLKPIUI.Models.Tendered {
         public string SoldtoName { get; set; }
         public string Shipto { get; set; }
         public string ShiptoName { get; set; }
-        public string PlanTender { get; set; }
+        public string PlanAccept { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using System.Transactions;
 
 namespace SCGLKPIUI.Controllers
 {
-    public class PendingTenderedController : BaseController
+    public class PendingTenderController : BaseController
     {
         // GET: PendingTendered
         public ActionResult Index(string sms, string SegmentId, string YearId, string MonthId)
@@ -40,27 +40,24 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public JsonResult PendingTenderedTableSummary(string SegmentId, string YearId, string MonthId)
+        public JsonResult PendingTenderTableSummary(string SegmentId, string YearId, string MonthId)
         {
             // add IEnumerable<AcceptOntimeSummaryViewModels>
-            List<PendingTenderedViewModels> viewSummaryModel = new List<PendingTenderedViewModels>();
+            List<PendingTenderViewModels> viewSummaryModel = new List<PendingTenderViewModels>();
 
             // filter by department
             var q = objBs.tenderedPendingBs.GetAll().Where(x => !String.IsNullOrEmpty(x.DEPARTMENT_Name)
                                                && !String.IsNullOrEmpty(x.SECTION_NAME)
                                                && !String.IsNullOrEmpty(x.MATNAME)
-                                               && DateTime.Parse(x.PLNTNRDDATE.ToString(), new CultureInfo("en-US")).Year.ToString() == YearId);
+                                               && x.PLNTNRDDATE_D.Value.Year == Convert.ToInt32(YearId)
+                                               && x.PLNTNRDDATE_D.Value.Month == Convert.ToInt32(MonthId));
             //filter Segment
             if (!String.IsNullOrEmpty(SegmentId))
                 q = q.Where(x => x.SEGMENT == SegmentId);
 
-            //filter month
-            if (!String.IsNullOrEmpty(MonthId))
-                q = q.Where(x => Convert.ToDateTime(x.PLNTNRDDATE.Value.Date.ToShortDateString()).Month.ToString() == MonthId);
-
             foreach (var item in q)
             {
-                PendingTenderedViewModels model = new PendingTenderedViewModels();
+                PendingTenderViewModels model = new PendingTenderViewModels();
                 model.Shipment = item.SHPMNTNO;
                 model.RegionName = item.REGION_NAME_TH;
                 model.SoldtoName = item.SOLDTO_NAME;

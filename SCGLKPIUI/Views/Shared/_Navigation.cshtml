@@ -173,29 +173,29 @@
 
             @*Pending*@
 
-            @*<li>
-                <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> PENDING</span> <span class="label label-success pull-right">v.1</span> </a>
+            <li>
+                <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> PENDING</span> <span class="label label-success pull-right">v.2</span> </a>
                 <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(controller:"PendingDelivered")">
-                        <a href="@Url.Action("Index","PendiongDelivered")"><span class="nav-label"> Pending on-time delivered</span></a>
+                    <li class="@Html.IsSelected(controller:"PendingDelivery")">
+                        <a href="@Url.Action("Index","PendingDelivery")"><span class="nav-label"> Pending on-time delivered</span></a>
                     </li>
-                    <li class="@Html.IsSelected(controller:"PendingTendered")">
-                        <a href="@Url.Action("Index","PendingTendered")"><span class="nav-label"> Pending on-time tendered</span></a>
+                    <li class="@Html.IsSelected(controller:"PendingTender")">
+                        <a href="@Url.Action("Index","PendingTender")"><span class="nav-label"> Pending on-time tendered</span></a>
                     </li>
-                    <li class="@Html.IsSelected(controller:"PendingAccepted")">
-                        <a href="@Url.Action("Index","PendingAccepted")"><span class="nav-label"> Pending on-time accepted tendered</span></a>
+                    <li class="@Html.IsSelected(controller:"PendingAccept")">
+                        <a href="@Url.Action("Index","PendingAccept")"><span class="nav-label"> Pending on-time accepted tendered</span></a>
                     </li>
-                    <li class="@Html.IsSelected(controller:"PendingInbounded")">
-                        <a href="@Url.Action("Index","PendingInbounded")"><span class="nav-label"> Pending on-time inbound</span></a>
+                    <li class="@Html.IsSelected(controller:"PendingInbound")">
+                        <a href="@Url.Action("Index","PendingInbound")"><span class="nav-label"> Pending on-time inbound</span></a>
                     </li>
-                    <li class="@Html.IsSelected(controller:"PendingOutbounded")">
-                        <a href="@Url.Action("Index","PendingOutbounded")"><span class="nav-label"> Pending on-time outbound</span></a>
+                    <li class="@Html.IsSelected(controller:"PendingOutbound")">
+                        <a href="@Url.Action("Index","PendingOutbound")"><span class="nav-label"> Pending on-time outbound</span></a>
                     </li>
-                    <li class="@Html.IsSelected(controller:"PendingDocReturned")">
-                        <a href="@Url.Action("Index","PendingDocReturned")"><span class="nav-label"> Pending on-time document returned</span></a>
+                    <li class="@Html.IsSelected(controller:"PendingDocReturn")">
+                        <a href="@Url.Action("Index","PendingDocReturn")"><span class="nav-label"> Pending on-time document returned</span></a>
                     </li>
                 </ul>
-            </li>*@
+            </li>
 
         </ul>
     }

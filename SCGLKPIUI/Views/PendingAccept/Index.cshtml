@@ -1,5 +1,4 @@
-﻿@model IEnumerable<SCGLKPIUI.Models.HomeModels>
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -17,13 +16,13 @@
     }
 </style>
 <h4>
-    <i class="fa fa-bar-chart"></i> Chart on-time tender | Monthly
+    <i class="fa fa-truck"></i> Pending accept | Monthly
 </h4>
 
 @*filter by month*@
-@Html.Partial("pv_FilterSegmentByMonth")
+@Html.Partial("pv_FilterByMonth")
 
-@Html.Partial("pv_PendingTendered")
+@Html.Partial("pv_PendingAccept")
 
 <div>
     <div id="loading" class="modal">
@@ -121,24 +120,36 @@
                     text: "Sorry!, Year is not selected ",
                     type: "warning"
                 });
-            } else {
+            }
+            else if ($('#MonthId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Month is not selected ",
+                    type: "warning"
+                });
+            }
+            else {
 
                 //#region table
                 // on-time tender monthly dataTable
-                var segmentId = $('#SegmentId').val();
+                var departmentId = $('#DepartmentId').val();
+                var sectionId = $('#SectionId').val();
+                var matNameId = $('#MatNameId').val();
                 var yearId = $('#YearId').val();
                 var monthId = $('#MonthId').val();
 
-                var tender = $('#PendingTender').dataTable();
+                var tender = $('#PendingAcceptSummary').dataTable();
                 tender.fnDestroy();
                 tender.dataTable({
                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                     "ajax": {
                         "type": "POST",
-                        "url": '@(Url.RouteUrl("PendingTenderedTableSummary"))',
+                        "url": '@(Url.RouteUrl("PendingAcceptTableSummary"))',
                         "data": function (d) {
-                            d.SegmentId = segmentId;
+                            d.departmentId = departmentId;
+                            d.sectionId = sectionId;
+                            d.matNameId = matNameId;
                             d.YearId = yearId;
                             d.MonthId = monthId;
                         },

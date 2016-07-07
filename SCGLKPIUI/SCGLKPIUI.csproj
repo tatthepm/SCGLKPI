@@ -214,7 +214,12 @@
     <Compile Include="Controllers\AdjustDocReturnedController.cs" />
     <Compile Include="Controllers\AdjustInboundedController.cs" />
     <Compile Include="Controllers\AdjustOutboundedController.cs" />
-    <Compile Include="Controllers\PendingTenderedController.cs" />
+    <Compile Include="Controllers\PendingDocReturnController.cs" />
+    <Compile Include="Controllers\PendingDeliveryController.cs" />
+    <Compile Include="Controllers\PendingOutboundController.cs" />
+    <Compile Include="Controllers\PendingInboundController.cs" />
+    <Compile Include="Controllers\PendingAcceptController.cs" />
+    <Compile Include="Controllers\PendingTenderController.cs" />
     <Compile Include="Controllers\AdjustTenderedController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
@@ -264,8 +269,10 @@
     <Compile Include="Models\Accepted\AcceptOntimeSummaryYearlyViewModels.cs" />
     <Compile Include="Models\Accepted\AcceptOntimeViewModels.cs" />
     <Compile Include="Models\Accepted\AcceptOntimeYearlyViewModels.cs" />
+    <Compile Include="Models\Accepted\PendingAcceptViewModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Accepted\AdjustAcceptedViewModels.cs" />
+    <Compile Include="Models\Delivered\PendingDeliveryiewModels.cs" />
     <Compile Include="Models\Delivered\AdjustDeliveredViewModels.cs" />
     <Compile Include="Models\Delivered\DeliveredOntimeChartDailyViewModels.cs" />
     <Compile Include="Models\Delivered\DeliveredOntimeChartMonthlyViewModels.cs" />
@@ -279,6 +286,7 @@
     <Compile Include="Models\Delivered\DeliveredOntimeSummaryYearlyViewModels.cs" />
     <Compile Include="Models\Delivered\DeliveredOntimeViewModels.cs" />
     <Compile Include="Models\Delivered\DeliveredOntimeYearlyViewModels.cs" />
+    <Compile Include="Models\DocReturned\PendingDocReturnViewModels.cs" />
     <Compile Include="Models\DocReturned\DocReturnedOntimeChartDailyViewModels.cs" />
     <Compile Include="Models\DocReturned\DocReturnedOntimeChartMonthlyViewModels.cs" />
     <Compile Include="Models\DocReturned\DocReturnedOntimeChartYearlyViewModels.cs" />
@@ -296,6 +304,7 @@
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\DocReturned\AdjustDocReturnedViewModels.cs" />
+    <Compile Include="Models\Inbounded\PendingInboundViewModels.cs" />
     <Compile Include="Models\Inbounded\AdjustInbounedViewModels.cs" />
     <Compile Include="Models\Inbounded\InboundedOntimeChartDailyViewModels.cs" />
     <Compile Include="Models\Inbounded\InboundedOntimeChartMonthlyViewModels.cs" />
@@ -325,6 +334,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelSCGLKPI.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Outbounded\PendingOutboundViewModels.cs" />
     <Compile Include="Models\Outbounded\AdjustOutbounedViewModels.cs" />
     <Compile Include="Models\Outbounded\OutboundedOntimeChartDailyViewModels.cs" />
     <Compile Include="Models\Outbounded\OutboundedOntimeChartMonthlyViewModels.cs" />
@@ -344,7 +354,7 @@
     <Compile Include="Models\sp_ontime_tender_Result.cs">
       <DependentUpon>ModelSCGLKPI.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tendered\PendingTenderedViewModels.cs" />
+    <Compile Include="Models\Tendered\PendingTenderViewModels.cs" />
     <Compile Include="Models\Tendered\AdjustTenderedViewModels.cs" />
     <Compile Include="Models\Tendered\TenderedOntimeChartDailyViewModels.cs" />
     <Compile Include="Models\Tendered\TenderedOntimeChartMonthlyViewModels.cs" />
@@ -3032,8 +3042,18 @@
     <Content Include="Views\Shared\pv_FilterSegmentByDate.cshtml" />
     <Content Include="Views\Shared\pv_FilterSegmentByMonth.cshtml" />
     <Content Include="Views\Shared\pv_FilterSegmentByYear.cshtml" />
-    <Content Include="Views\PendingTendered\Index.cshtml" />
-    <Content Include="Views\PendingTendered\pv_PendingTendered.cshtml" />
+    <Content Include="Views\PendingTender\Index.cshtml" />
+    <Content Include="Views\PendingTender\pv_PendingTender.cshtml" />
+    <Content Include="Views\PendingAccept\Index.cshtml" />
+    <Content Include="Views\PendingAccept\pv_PendingAccept.cshtml" />
+    <Content Include="Views\PendingInbound\Index.cshtml" />
+    <Content Include="Views\PendingInbound\pv_PendingInbound.cshtml" />
+    <Content Include="Views\PendingDelivery\Index.cshtml" />
+    <Content Include="Views\PendingDelivery\pv_PendingDelivery.cshtml" />
+    <Content Include="Views\PendingOutbound\Index.cshtml" />
+    <Content Include="Views\PendingOutbound\pv_PendingOutbound.cshtml" />
+    <Content Include="Views\PendingDocReturn\Index.cshtml" />
+    <Content Include="Views\PendingDocReturn\pv_PendingDocReturn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\UploadFiles\" />

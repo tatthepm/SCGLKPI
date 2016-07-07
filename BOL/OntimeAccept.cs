@@ -10,7 +10,6 @@ namespace BOL {
     public class OntimeAccept {
 
         public int Id { get; set; }
-
         [Column(TypeName = "datetime2")]
         public DateTime? AcceptDate { get; set; }
 

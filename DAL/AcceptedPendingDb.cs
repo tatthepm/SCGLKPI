@@ -18,7 +18,8 @@ namespace DAL {
         }
 
         //GetById
-        public AcceptedDelay GetByID(string shipmentNo) {
+        public AcceptedDelay GetByID(string shipmentNo)
+        {
             return db.AcceptedDelays.Find(shipmentNo);
         }
 

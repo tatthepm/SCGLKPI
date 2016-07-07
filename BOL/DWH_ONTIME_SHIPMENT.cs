@@ -50,7 +50,7 @@ namespace BOL {
         public string SOLDTO_NAME { get; set; }
 
         [StringLength(5)]
-        [Index(IsUnique = false)]
+        [Index("DN_SECTION", 5, IsUnique = false)]
         public string SECTION_ID { get; set; }
 
         [StringLength(100)]
@@ -68,12 +68,14 @@ namespace BOL {
         public DateTime? SHCRDATE { get; set; }
 
         [Column(TypeName = "datetime2")]
+        [Index("DN_SHCRDATE",1,IsUnique = false)]
         public DateTime? SHCRDATE_D { get; set; } //added
 
         [Column(TypeName = "datetime2")]
         public DateTime? FTNRDDATE { get; set; }
 
         [Column(TypeName = "datetime2")]
+        [Index("DN_FTNRDDATE", 3, IsUnique = false)]
         public DateTime? FTNRDDATE_D { get; set; } //added
 
         [Column(TypeName = "datetime2")]
@@ -86,7 +88,7 @@ namespace BOL {
         public DateTime? LACPDDATE { get; set; }
 
         [Column(TypeName = "datetime2")]
-        [Index(IsUnique = false)]
+        [Index("DN_LACPDDATE", 2, IsUnique = false)]
         public DateTime? LACPDDATE_D { get; set; } //added
 
         public int? TNRD_ONTIME { get; set; }
@@ -136,7 +138,7 @@ namespace BOL {
         public DateTime? LOADEDDATE { get; set; }
 
         [StringLength(5)]
-        [Index(IsUnique = false)]
+        [Index("DN_DEPARTMENT", 4, IsUnique = false)]
         public string DEPARTMENT_ID { get; set; }
 
         [StringLength(100)]

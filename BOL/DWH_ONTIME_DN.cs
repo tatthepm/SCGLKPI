@@ -21,6 +21,7 @@ namespace BOL {
         [StringLength(3)]
         public string WORK_TYPE { get; set; }
         [Column(TypeName = "datetime2")]
+        [Index(IsUnique = false)]
         public DateTime? ACTGIDATE { get; set; }
 
 
@@ -243,6 +244,7 @@ namespace BOL {
         //added date 20 fields
 
         [Column(TypeName = "datetime2")]
+        [Index(IsUnique = false)]
         public DateTime? ACTGIDATE_D { get; set; }  //1
 
         [Column(TypeName = "datetime2")]
@@ -267,6 +269,7 @@ namespace BOL {
         public DateTime? PLDLVDATE_D { get; set; } //8
 
         [Column(TypeName = "datetime2")]
+        [Index(IsUnique = false)]
         public DateTime? ACDLVDATE_D { get; set; } //9
 
         [Column(TypeName = "datetime2")]
@@ -279,6 +282,7 @@ namespace BOL {
         public DateTime? ENDSHPDATE_D { get; set; } //12
 
         [Column(TypeName = "datetime2")]
+        [Index(IsUnique = false)]
         public DateTime? DOCRETDATE_SCGL_D { get; set; } //13
 
         [Column(TypeName = "datetime2")]

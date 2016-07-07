@@ -47,7 +47,10 @@ namespace SCGLKPIUI {
                 new { controller = "OntimeAcceptedYearlyChart", action = "OntimeAcceptedTableSummaryYearly" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
-
+            //7 doc pending
+            routes.MapRoute("PendingAcceptTableSummary", "PendingAccepted/PendingAcceptTableSummary/",
+                new { controller = "PendingAccept", action = "PendingAcceptTableSummary" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
 
             routes.MapRoute("AdjustAccept", "AdjustAccepted/tableJsonData/",
                 new { controller = "AdjustAccepted", action = "tableJsonData" },
@@ -87,8 +90,8 @@ namespace SCGLKPIUI {
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
             //7 doc pending
-            routes.MapRoute("PendingTenderedTableSummary", "PendingTendered/PendingTenderedTableSummary/",
-                new { controller = "PendingTendered", action = "PendingTenderedTableSummary" },
+            routes.MapRoute("PendingTenderTableSummary", "PendingTender/PendingTenderTableSummary/",
+                new { controller = "PendingTender", action = "PendingTenderTableSummary" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
             #endregion
@@ -124,6 +127,10 @@ namespace SCGLKPIUI {
                 new { controller = "OntimeInboundedYearlyChart", action = "OntimeInboundedTableSummaryYearly" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
+            //7 doc pending
+            routes.MapRoute("PendingInboundTableSummary", "PendingInbound/PendingInboundTableSummary/",
+                new { controller = "PendingInbound", action = "PendingInboundTableSummary" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
 
             #endregion
 
@@ -158,6 +165,11 @@ namespace SCGLKPIUI {
                new { controller = "OntimeOutbounedYearlyChart", action = "OntimeOutboundedTableSummaryYearly" },
                new[] { "JsonRenderingMvcApplication.Controllers" });
 
+            //7 doc pending
+            routes.MapRoute("PendingOutboundTableSummary", "PendingOutbound/PendingOutboundTableSummary/",
+                new { controller = "PendingOutbound", action = "PendingOutboundTableSummary" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
             #endregion
 
             #region 5 on-time document return
@@ -191,6 +203,11 @@ namespace SCGLKPIUI {
                 new { controller = "OntimeDocReturnedYearlyChart", action = "OntimeDocReturnedTableSummaryYearly" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
+            //7 doc pending
+            routes.MapRoute("PendingDocReturnTableSummary", "PendingDocReturn/PendingDocReturnTableSummary/",
+                new { controller = "PendingDocReturn", action = "PendingDocReturnTableSummary" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
             #endregion
 
             #region 6 on-time delivery
@@ -222,6 +239,11 @@ namespace SCGLKPIUI {
             //6 doc return summary yearly
             routes.MapRoute("OntimeDeliveredSummaryYearly", "OntimeDeliveredYearlyChart/OntimeDeliveredTableSummaryYearly/",
                 new { controller = "OntimeDeliveredYearlyChart", action = "OntimeDeliveredTableSummaryYearly" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
+            //7 doc pending
+            routes.MapRoute("PendingDeliveryTableSummary", "PendingDelivery/PendingDeliveryTableSummary/",
+                new { controller = "PendingDelivery", action = "PendingDeliveryTableSummary" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
             #endregion
