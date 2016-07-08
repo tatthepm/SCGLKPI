@@ -11,11 +11,15 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System.IO;
 
-namespace SCGLKPIUI.Controllers {
-    public class AdjustAcceptedController : BaseController {
+namespace SCGLKPIUI.Controllers
+{
+    public class AdjustAcceptedController : BaseController
+    {
         // GET: AdjustAccepted
-        public ActionResult Index(string sms, string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId) {
-            try {
+        public ActionResult Index(string sms, string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
+        {
+            try
+            {
 
                 TempData["Msg"] = sms;
 
@@ -32,7 +36,8 @@ namespace SCGLKPIUI.Controllers {
                 //1 DropdownList 
                 var ddlMatName = (from m in objBs.acceptedDelayBs.GetAll()
                                   where !String.IsNullOrEmpty(m.MATNAME)
-                                  select new {
+                                  select new
+                                  {
                                       Id = m.MATFRIGRP,
                                       Name = m.MATNAME,
                                   }).Distinct();
@@ -42,15 +47,18 @@ namespace SCGLKPIUI.Controllers {
                 return View();
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index", new { sms = "Operation Accept failed " + ex.InnerException.InnerException.Message.ToString() });
             }
         }
 
-        public JsonResult SectionFilter(string departmentId) {
+        public JsonResult SectionFilter(string departmentId)
+        {
             var result = (from m in objBs.acceptedDelayBs.GetAll()
                           where m.DEPARTMENT_ID == departmentId
-                          select new {
+                          select new
+                          {
                               Id = m.SECTION_ID,
                               Name = m.SECTION_NAME
                           }).Distinct().OrderBy(x => x.Name);
@@ -58,11 +66,13 @@ namespace SCGLKPIUI.Controllers {
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult MatNameFilter(string departmentId, string sectionid) {
+        public JsonResult MatNameFilter(string departmentId, string sectionid)
+        {
             var result = (from m in objBs.acceptedDelayBs.GetAll()
                           where m.DEPARTMENT_ID == departmentId
                           && m.SECTION_ID == sectionid
-                          select new {
+                          select new
+                          {
                               Id = m.MATFRIGRP,
                               Name = m.MATNAME
                           }).Distinct().OrderBy(x => x.Name);
@@ -70,8 +80,21 @@ namespace SCGLKPIUI.Controllers {
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetDelayAcceptedData(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId) {
-            try {
+        public JsonResult ReasonFilter()
+        {
+            var result = (from r in objBs.reasonAcceptedBs.GetAll()
+                            select new
+                            {
+                                Id = r.Id,
+                                Name = r.Name
+                            }).Distinct().OrderBy(x => x.Name);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetDelayAcceptedData(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
+        {
+            try
+            {
                 ViewBag.DepartmentId = DepartmentId;
                 ViewBag.SectionId = SectionId;
                 ViewBag.MatNameId = MatNameId;
@@ -90,13 +113,15 @@ namespace SCGLKPIUI.Controllers {
                         select d;
 
                 //filter matname
-                if (!String.IsNullOrEmpty(MatNameId)) {
+                if (!String.IsNullOrEmpty(MatNameId))
+                {
                     q = q.Where(x => x.MATFRIGRP == MatNameId);
                 }
 
                 //int c = q.Count();
 
-                foreach (var item in q) {
+                foreach (var item in q)
+                {
                     AdjustAcceptedViewModels model = new AdjustAcceptedViewModels();
                     model.Shipment = item.SHPMNTNO;
                     model.CarrierId = item.CARRIER_ID;
@@ -112,37 +137,99 @@ namespace SCGLKPIUI.Controllers {
                 }
 
                 var ddlReason = (from r in objBs.reasonAcceptedBs.GetAll()
-                                 select new {
+                                 select new
+                                 {
                                      Id = r.Id,
                                      Name = r.Name
                                  }).Distinct().OrderBy(x => x.Name);
-                ViewBag.ReasonId = new SelectList(ddlReason.ToList(), "Id", "Name");
 
+                //ViewBag.ReasonId = new SelectList(ddlReason.ToList(), "Id", "Name");
                 return PartialView("pv_AdjustAccepted", viewModel);
                 //return View("Index", viewModel);
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index", new { sms = "Operation getDelayAccepteData failed ! " + ex.InnerException.InnerException.Message.ToString() });
             }
         }
 
         [HttpPost]
-        public ActionResult UpdateAcceptReason(List<String> ReasonId, List<string> txtSM, List<string> txtRemark, string DepartmentId, string SectionId, string MatNameId, string YearId, string MonthId) {
-            using (TransactionScope Trans = new TransactionScope()) {
+        public JsonResult JsonAcceptTable(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
+        {
+            ViewBag.DepartmentId = DepartmentId;
+            ViewBag.SectionId = SectionId;
+            ViewBag.MatNameId = MatNameId;
+            ViewBag.YearId = YearId;
+            ViewBag.MonthId = MonthId;
+            // add IEnumerable<AdjustAcceptedViewModels>
+            List<AdjustAcceptedViewModels> viewModel = new List<AdjustAcceptedViewModels>();
 
-                try {
+            //filter department
+            var q = from d in objBs.acceptedDelayBs.GetAll()
+                    where d.DEPARTMENT_ID == DepartmentId
+                    && d.SECTION_ID == SectionId
+                    && d.LACPDDATE_D.Value.Month == Convert.ToInt32(MonthId)
+                    && d.LACPDDATE_D.Value.Year == Convert.ToInt32(YearId)
+                    select d;
+
+            //filter matname
+            if (!String.IsNullOrEmpty(MatNameId))
+            {
+                q = q.Where(x => x.MATFRIGRP == MatNameId);
+            }
+
+            //int c = q.Count();
+
+            foreach (var item in q)
+            {
+                AdjustAcceptedViewModels model = new AdjustAcceptedViewModels();
+                model.Shipment = item.SHPMNTNO;
+                model.CarrierId = item.CARRIER_ID;
+                model.RegionId = item.REGION_ID;
+                model.RegionName = item.REGION_NAME_TH;
+                model.Soldto = item.SOLDTO;
+                model.SoldtoName = item.SOLDTO_NAME;
+                model.Shipto = item.SHIPTO;
+                model.ShiptoName = item.LAST_SHPG_LOC_NAME;
+                model.PlanAccept = Convert.ToDateTime(item.PLNACPDDATE);
+                model.LastAccept = Convert.ToDateTime(item.LACPDDATE);
+                viewModel.Add(model);
+            }
+
+            var ddlReason = (from r in objBs.reasonAcceptedBs.GetAll()
+                             select new
+                             {
+                                 Id = r.Id,
+                                 Name = r.Name
+                             }).Distinct().OrderBy(x => x.Name);
+            ViewBag.ReasonId = new SelectList(ddlReason.ToList(), "Id", "Name");
+
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateAcceptReason(List<String> dynamic_select, List<string> txtSM, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
+        {
+            using (TransactionScope Trans = new TransactionScope())
+            {
+
+                try
+                {
                     // List<string> listSM = new List<string>();
                     int countSM = 0;
-                    for (int i = 0; i < ReasonId.Count; i++) {
-                        if (!String.IsNullOrEmpty(ReasonId[i])) {
+                    for (int i = 0; i < dynamic_select.Count; i++)
+                    {
+                        if (!String.IsNullOrEmpty(dynamic_select[i]))
+                        {
                             string sm = txtSM[i];
-                            string reasonId = ReasonId[i];
+                            string reasonId = dynamic_select[i];
                             string remark = txtRemark[i];
                             string reasonName = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).Name;
                             bool isadjust = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
                             DWH_ONTIME_SHIPMENT ontimeShipment = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm);
-                            ontimeShipment.ACPD_ADJUST = isadjust ? 1 : 0;
+                            //Change adjustable here
+                            ontimeShipment.ACPD_ADJUST = isadjust ? 0 : 0;
                             ontimeShipment.ACPD_ADJUST_BY = User.Identity.Name;
                             ontimeShipment.ACPD_ADJUST_DATE = DateTime.Now;
                             ontimeShipment.ACPD_REASON = reasonName;
@@ -158,9 +245,9 @@ namespace SCGLKPIUI.Controllers {
 
                             int id = objBs.ontimeAcceptBs.GetAll()
                                 .Where(x => x.AcceptDate == LACPDDate
-                                       && x.DepartmentId == DepartmentId
-                                       && x.SectionId == SectionId
-                                       && x.MatFriGrp == MatNameId).FirstOrDefault().Id;
+                                       && x.DepartmentId == departmentId
+                                       && x.SectionId == sectionId
+                                       && x.MatFriGrp == matNameId).FirstOrDefault().Id;
                             OntimeAccept ontimeAccept = objBs.ontimeAcceptBs.GetByID(id);
                             int adjACPD = ontimeAccept.AdjustAccept + 1;
                             ontimeAccept.AdjustAccept = adjACPD;
@@ -172,11 +259,11 @@ namespace SCGLKPIUI.Controllers {
 
                     // update sum of adjust monthly
                     int idM = objBs.ontimeAcceptMonthBs.GetAll()
-                              .Where(x => x.Year == YearId
-                              && x.Month == MonthId
-                              && x.DepartmentId == DepartmentId
-                              && x.SectionId == SectionId
-                              && x.MatFriGrp == MatNameId).FirstOrDefault().Id;
+                              .Where(x => x.Year == yearId
+                              && x.Month == monthId
+                              && x.DepartmentId == departmentId
+                              && x.SectionId == sectionId
+                              && x.MatFriGrp == matNameId).FirstOrDefault().Id;
                     OntimeAcceptMonth ontimeAcceptMonth = objBs.ontimeAcceptMonthBs.GetByID(idM);
                     int adjACPDMonth = ontimeAcceptMonth.AdjustAccept + countSM;
                     ontimeAcceptMonth.AdjustAccept = adjACPDMonth;
@@ -185,10 +272,10 @@ namespace SCGLKPIUI.Controllers {
 
                     // update sum of adjust yearly
                     int idY = objBs.ontimeAcceptYearBs.GetAll()
-                              .Where(x => x.Year == YearId
-                              && x.DepartmentId == DepartmentId
-                              && x.SectionId == SectionId
-                              && x.MatFriGrp == MatNameId).FirstOrDefault().Id;
+                              .Where(x => x.Year == yearId
+                              && x.DepartmentId == departmentId
+                              && x.SectionId == sectionId
+                              && x.MatFriGrp == matNameId).FirstOrDefault().Id;
                     OntimeAcceptYear ontimeAcceptYear = objBs.ontimeAcceptYearBs.GetByID(idY);
                     int adjACPDYear = ontimeAcceptYear.AdjustAccept + countSM;
                     ontimeAcceptYear.AdjustAccept = adjACPDYear;
@@ -199,7 +286,8 @@ namespace SCGLKPIUI.Controllers {
                     return RedirectToAction("Index", new { sms = countSM + "-Shipment is adjusted Successfully!" });
 
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     return RedirectToAction("Index", new { sms = "Operation update reason accepted failed !" + ex.InnerException.InnerException.Message.ToString() });
                 }
                 //  return View();
@@ -207,11 +295,14 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public ActionResult ExportExcel(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId) {
-            try {
+        public ActionResult ExportExcel(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
+        {
+            try
+            {
                 //delete file
                 var pathDelete = Path.Combine(Server.MapPath("~/App_Data/UploadFiles"), "AcceptDealy.xlsx");
-                if (System.IO.File.Exists(pathDelete)) {
+                if (System.IO.File.Exists(pathDelete))
+                {
                     System.IO.File.Delete(pathDelete);
                 }
                 // set path new file
@@ -230,13 +321,15 @@ namespace SCGLKPIUI.Controllers {
                         select d;
 
                 //filter matname
-                if (!String.IsNullOrEmpty(MatNameId)) {
+                if (!String.IsNullOrEmpty(MatNameId))
+                {
                     q = q.Where(x => x.MATFRIGRP == MatNameId);
                 }
 
                 //int c = q.Count();
 
-                foreach (var item in q) {
+                foreach (var item in q)
+                {
                     AdjustAcceptedViewModels model = new AdjustAcceptedViewModels();
                     model.Shipment = item.SHPMNTNO;
                     model.CarrierId = item.CARRIER_ID;
@@ -251,7 +344,8 @@ namespace SCGLKPIUI.Controllers {
                     viewModel.Add(model);
                 }
                 // export to excel using EPPLus
-                using (ExcelPackage excelPackage = new ExcelPackage(newFile)) {
+                using (ExcelPackage excelPackage = new ExcelPackage(newFile))
+                {
                     excelPackage.Workbook.Properties.Author = "Tatthep";
                     excelPackage.Workbook.Properties.Title = "EPPLus Export";
                     excelPackage.Workbook.Properties.Comments = "This is my generagted Excel File";
@@ -276,7 +370,7 @@ namespace SCGLKPIUI.Controllers {
                     workSheet.Cells[2, 8].Value = "ShiptoName";
                     workSheet.Cells[2, 9].Value = "PlanAccept";
                     workSheet.Cells[2, 10].Value = "LastAccept";
-                 
+
                     var rang = workSheet.Cells["A1:J2"];
                     rang.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                     rang.Style.Border.Top.Style = ExcelBorderStyle.Thin;
@@ -286,7 +380,8 @@ namespace SCGLKPIUI.Controllers {
                     rang.Style.Font.Bold = true;
 
                     int i = 0;
-                    foreach (var item in viewModel) {
+                    foreach (var item in viewModel)
+                    {
                         //  workSheet.Cells[i + 3,1].Value = i + 1;
                         //workSheet.Column(1).Width = 16;
                         //workSheet.Column(4).Width = 25;
@@ -311,7 +406,8 @@ namespace SCGLKPIUI.Controllers {
 
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index", new { sms = "Operation export failed !" + ex.InnerException.InnerException.Message.ToString() });
             }
             string newpath = Server.MapPath(@"~/App_Data/UploadFiles/AcceptDealy.xlsx");
