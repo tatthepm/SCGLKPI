@@ -209,6 +209,10 @@
     <Compile Include="Migrations\201607060839428_update-pending.Designer.cs">
       <DependentUpon>201607060839428_update-pending.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607110249107_AdjustedDB.cs" />
+    <Compile Include="Migrations\201607110249107_AdjustedDB.Designer.cs">
+      <DependentUpon>201607110249107_AdjustedDB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OntimeAccept.cs" />
     <Compile Include="DWH_ONTIME_DN.cs" />
@@ -362,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607060839428_update-pending.resx">
       <DependentUpon>201607060839428_update-pending.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607110249107_AdjustedDB.resx">
+      <DependentUpon>201607110249107_AdjustedDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
