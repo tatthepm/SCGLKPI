@@ -49,14 +49,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AcceptedPending.cs" />
+    <Compile Include="AcceptedAdjusted.cs" />
+    <Compile Include="AcceptPending.cs" />
     <Compile Include="AcceptedDelay.cs" />
+    <Compile Include="DocReturnAdjusted.cs" />
     <Compile Include="HomeKPI.cs" />
     <Compile Include="DocReturnPending.cs" />
     <Compile Include="DocReturnDelay.cs" />
     <Compile Include="DOM_CMD_VENDOR.cs" />
     <Compile Include="DOM_MDS_ORGANIZATION.cs" />
     <Compile Include="DOM_SAP_MATFRIGRP.cs" />
+    <Compile Include="InboundAdjusted.cs" />
     <Compile Include="InboundPending.cs" />
     <Compile Include="InboundDelay.cs" />
     <Compile Include="KPI.cs" />
@@ -212,6 +215,7 @@
     <Compile Include="DWH_ONTIME_SHIPMENT.cs" />
     <Compile Include="OntimeAcceptMonth.cs" />
     <Compile Include="OntimeAcceptYear.cs" />
+    <Compile Include="OntimeAdjusted.cs" />
     <Compile Include="OntimePending.cs" />
     <Compile Include="OntimeDelay.cs" />
     <Compile Include="OntimeDelivery.cs" />
@@ -229,6 +233,7 @@
     <Compile Include="OntimeTender.cs" />
     <Compile Include="OntimeTenderMonth.cs" />
     <Compile Include="OntimeTenderYear.cs" />
+    <Compile Include="OutboundAdjusted.cs" />
     <Compile Include="OutboundPending.cs" />
     <Compile Include="OutboundDelay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -240,6 +245,7 @@
     <Compile Include="ReasonTendered.cs" />
     <Compile Include="Role.cs" />
     <Compile Include="SCGLKPIDbContext.cs" />
+    <Compile Include="TenderedAdjusted.cs" />
     <Compile Include="TenderedPending.cs" />
     <Compile Include="TenderedDelay.cs" />
     <Compile Include="TUser.cs" />

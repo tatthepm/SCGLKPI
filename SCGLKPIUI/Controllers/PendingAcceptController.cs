@@ -32,7 +32,7 @@ namespace SCGLKPIUI.Controllers
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
                 //1 DropdownList 
-                var ddlMatName = (from m in objBs.acceptedPendingBs.GetAll()
+                var ddlMatName = (from m in objBs.acceptPendingBs.GetAll()
                                   where !String.IsNullOrEmpty(m.MATNAME)
                                   select new
                                   {
@@ -85,7 +85,7 @@ namespace SCGLKPIUI.Controllers
             List<PendingAcceptViewModels> viewSummaryModel = new List<PendingAcceptViewModels>();
 
             // filter by department
-            var q = objBs.acceptedPendingBs.GetAll().Where(x => !String.IsNullOrEmpty(x.DEPARTMENT_Name)
+            var q = objBs.acceptPendingBs.GetAll().Where(x => !String.IsNullOrEmpty(x.DEPARTMENT_Name)
                                                && !String.IsNullOrEmpty(x.SECTION_NAME)
                                                && !String.IsNullOrEmpty(x.MATNAME)
                                                && x.PLNACPDDATE_D.Value.Year == Convert.ToInt32(YearId)

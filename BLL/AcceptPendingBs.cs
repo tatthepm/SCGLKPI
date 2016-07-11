@@ -7,28 +7,28 @@ using BOL;
 using DAL;
 
 namespace BLL {
-    public class AcceptedPendingBs {
+    public class AcceptPendingBs {
         private AcceptedPendingDb objDb;
-        public AcceptedPendingBs() {
+        public AcceptPendingBs() {
             objDb = new AcceptedPendingDb();
         }
         //GetAll
-        public IEnumerable<AcceptedPending> GetAll() {
+        public IEnumerable<AcceptPending> GetAll() {
             return objDb.GetAll();
         }
 
         //GetById
-        public AcceptedPending GetByID(string shipmentNo) {
+        public AcceptPending GetByID(string shipmentNo) {
             return objDb.GetByID(shipmentNo);
         }
 
         //Insert
-        public void Insert(AcceptedPending acceptedPending) {
+        public void Insert(AcceptPending acceptedPending) {
             objDb.Insert(acceptedPending);
         }
 
         //Update
-        public void Update(AcceptedPending acceptedPending) {
+        public void Update(AcceptPending acceptedPending) {
             objDb.Update(acceptedPending);
         }
 

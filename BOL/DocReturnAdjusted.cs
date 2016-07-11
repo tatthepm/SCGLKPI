@@ -7,13 +7,22 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BOL {
-   public class AcceptedPending {
+    public class DocReturnAdjusted {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         [StringLength(10)]
-        public string SHPMNTNO { get; set; }
+        public string DELVNO { get; set; }
+
+        [StringLength(32)]
+        public string CARRIER_ID { get; set; }
+
+        [StringLength(40)]
+        public string VENDOR_CODE { get; set; }
+
+        [StringLength(140)]
+        public string VENDOR_NAME { get; set; }
 
         [StringLength(8)]
-        [Index(IsUnique =false)]
+        [Index(IsUnique = false)]
         public string MATFRIGRP { get; set; }
 
         [StringLength(100)]
@@ -52,16 +61,22 @@ namespace BOL {
         public string SHIPTO { get; set; }
 
         [StringLength(280)]
-        public string LAST_SHPG_LOC_NAME { get; set; }
+        public string TO_SHPG_LOC_NAME { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime? PLNACPDDATE { get; set; }
+        public DateTime? PLNDOCRETDATE_SCGL { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime? PLNACPDDATE_D { get; set; }
+        public DateTime? PLNDOCRETDATE_SCGL_D { get; set; }
+
+        [Column(TypeName = "datetime2")]
+        public DateTime? DOCRETDATE_SCGL { get; set; }
+
+        [Column(TypeName = "datetime2")]
+        [Index(IsUnique = false)]
+        public DateTime? DOCRETDATE_SCGL_D { get; set; } //added
 
         [Column(TypeName = "datetime2")]
         public DateTime? LOADED_DATE { get; set; }
-
     }
 }

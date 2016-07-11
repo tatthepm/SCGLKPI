@@ -20,7 +20,6 @@ namespace SCGLKPIUI.Controllers
         {
             try
             {
-
                 TempData["Msg"] = sms;
 
                 DropDownList ddl = new DropDownList();

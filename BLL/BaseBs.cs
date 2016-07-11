@@ -25,7 +25,8 @@ namespace BLL {
         public OntimeAcceptYearBs ontimeAcceptYearBs { get; set; }
         public ReasonAcceptedBs reasonAcceptedBs { get; set; }
         public AcceptedDelayBs acceptedDelayBs { get; set; }
-        public AcceptedPendingBs acceptedPendingBs { get; set; }
+        public AcceptPendingBs acceptPendingBs { get; set; }
+        public AcceptedAdjustedBs acceptedAdjustedBs { get; set; }
         //tendered
         public OntimeTenderBs ontimeTenderBs { get; set; }
         public OntimeTenderMonthBs ontimeTenderMonthBs { get; set; }
@@ -33,6 +34,7 @@ namespace BLL {
         public TenderedDelayBs tenderedDelayBs { get; set; }
         public OntimeTenderYearBs ontimeTenderYearBs { get; set; }
         public TenderedPendingBs tenderedPendingBs { get; set; }
+        public TenderedAdjustedBs tenderedAdjustedBs { get; set; }
         //inbounded
         public OntimeInboundBs ontimeInboundBs { get; set; }
         public OntimeInboundMonthBs ontimeInboundMonthBs { get; set; }
@@ -40,6 +42,7 @@ namespace BLL {
         public InboundDelayBs inboundDelayBs { get; set; }
         public ReasonInboundBs reasonInboundBs { get; set; }
         public InboundPendingBs inboundPendingBs { get; set; }
+        public InboundAdjustedBs inboundAdjustedBs { get; set; }
         //outbound
         public OntimeOutboundBs ontimeOutboundBs { get; set; }
         public OntimeOutboundMonthBs ontimeOutboundMonthBs { get; set; }
@@ -47,6 +50,7 @@ namespace BLL {
         public OutboundDelayBs outboundDelayBs { get; set; }
         public ReasonOutboundBs reasonOutboundBs { get; set; }
         public OutboundPendingBs outboundPendingBs { get; set; }
+        public OutboundAdjustedBs outboundAdjustedBs { get; set; }
         //doc return
         public OntimeDocReturnBs ontimeDocReturnBs { get; set; }
         public OntimeDocReturnMonthBs ontimeDocReturnMonthBs { get; set; }
@@ -54,6 +58,7 @@ namespace BLL {
         public DocReturnDelayBs docReturnDelayBs { get; set; }
         public ReasonDocReturnBs reasonDocReturnBs { get; set; }
         public DocReturnPendingBs docReturnPendingBs { get; set; }
+        public DocReturnAdjustedBs docReturnAdjustedBs { get; set; }
         //delivery
         public OntimeDeliveryBs ontimeDeliveryBs { get; set; }
         public OntimeDeliveryMonthBs ontimeDeliveryMonthBs { get; set; }
@@ -61,6 +66,7 @@ namespace BLL {
         public OntimeDelayBs ontimeDelayBs { get; set; }
         public ReasonOntimeBs reasonOntimeBs { get; set; }
         public OntimePendingBs ontimePendingBs { get; set; }
+        public OntimeAdjustedBs ontimeAdjustedBs { get; set; }
 
         public BaseBs() {
             roleBs = new RoleBs();
@@ -79,6 +85,7 @@ namespace BLL {
             reasonTenderedBs = new ReasonTenderedBs();
             tenderedDelayBs = new TenderedDelayBs();
             tenderedPendingBs = new TenderedPendingBs();
+            tenderedAdjustedBs = new TenderedAdjustedBs();
 
             //accepted
             ontimeAcceptBs = new OntimeAcceptBs();
@@ -86,7 +93,8 @@ namespace BLL {
             reasonAcceptedBs = new ReasonAcceptedBs();
             ontimeAcceptYearBs = new OntimeAcceptYearBs();
             acceptedDelayBs = new AcceptedDelayBs();
-            acceptedPendingBs = new AcceptedPendingBs();
+            acceptPendingBs = new AcceptPendingBs();
+            acceptedAdjustedBs = new AcceptedAdjustedBs();
 
             //inbounded
             ontimeInboundBs = new OntimeInboundBs();
@@ -95,6 +103,7 @@ namespace BLL {
             inboundDelayBs = new InboundDelayBs();
             reasonInboundBs = new ReasonInboundBs();
             inboundPendingBs = new InboundPendingBs();
+            inboundAdjustedBs = new InboundAdjustedBs();
 
             //outbound
             ontimeOutboundBs = new OntimeOutboundBs();
@@ -103,6 +112,7 @@ namespace BLL {
             outboundDelayBs = new OutboundDelayBs();
             reasonOutboundBs = new ReasonOutboundBs();
             outboundPendingBs = new OutboundPendingBs();
+            outboundAdjustedBs = new OutboundAdjustedBs();
 
             //doc returnt
             ontimeDocReturnBs = new OntimeDocReturnBs();
@@ -111,6 +121,7 @@ namespace BLL {
             docReturnDelayBs = new DocReturnDelayBs();
             reasonDocReturnBs = new ReasonDocReturnBs();
             docReturnPendingBs = new DocReturnPendingBs();
+            docReturnAdjustedBs = new DocReturnAdjustedBs();
 
             //delivery
             ontimeDeliveryBs = new OntimeDeliveryBs();
@@ -119,6 +130,7 @@ namespace BLL {
             ontimeDelayBs = new OntimeDelayBs();
             reasonOntimeBs = new ReasonOntimeBs();
             ontimePendingBs = new OntimePendingBs();
+            ontimeAdjustedBs = new OntimeAdjustedBs();
         }
     }
 
