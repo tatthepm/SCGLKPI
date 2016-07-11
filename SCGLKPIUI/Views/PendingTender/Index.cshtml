@@ -107,13 +107,13 @@
         //#region 4 btnSearch click
         //#endregion
         $("#btnSearch").click(function () {
-            //if ($('#DepartmentId').val() == "") {
-            //    swal({
-            //        title: "Warning!",
-            //        text: "Sorry!, Department is not selected ",
-            //        type: "warning"
-            //    });
-            //} else
+            if ($('#SegmentId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Department is not selected ",
+                    type: "warning"
+                });
+            } else
             if ($('#YearId').val() == "") {
                 swal({
                     title: "Warning!",

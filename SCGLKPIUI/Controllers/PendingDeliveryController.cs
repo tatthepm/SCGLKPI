@@ -52,6 +52,33 @@ namespace SCGLKPIUI.Controllers
             }
         }
 
+        public JsonResult SectionFilter(string departmentId)
+        {
+            var result = (from m in objBs.acceptedDelayBs.GetAll()
+                          where m.DEPARTMENT_ID == departmentId
+                          select new
+                          {
+                              Id = m.SECTION_ID,
+                              Name = m.SECTION_NAME
+                          }).Distinct().OrderBy(x => x.Name);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult MatNameFilter(string departmentId, string sectionid)
+        {
+            var result = (from m in objBs.acceptedDelayBs.GetAll()
+                          where m.DEPARTMENT_ID == departmentId
+                          && m.SECTION_ID == sectionid
+                          select new
+                          {
+                              Id = m.MATFRIGRP,
+                              Name = m.MATNAME
+                          }).Distinct().OrderBy(x => x.Name);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult PendingDeliveryTableSummary(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
         {

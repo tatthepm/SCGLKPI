@@ -209,6 +209,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApproveAcceptedController.cs" />
     <Compile Include="Controllers\AdjustAcceptedController.cs" />
     <Compile Include="Controllers\AdjustDeliveredController.cs" />
     <Compile Include="Controllers\AdjustDocReturnedController.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="Models\Accepted\AcceptOntimeSummaryYearlyViewModels.cs" />
     <Compile Include="Models\Accepted\AcceptOntimeViewModels.cs" />
     <Compile Include="Models\Accepted\AcceptOntimeYearlyViewModels.cs" />
+    <Compile Include="Models\Accepted\ApproveAcceptedViewModels.cs" />
     <Compile Include="Models\Accepted\PendingAcceptViewModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Accepted\AdjustAcceptedViewModels.cs" />
@@ -3054,6 +3056,10 @@
     <Content Include="Views\PendingOutbound\pv_PendingOutbound.cshtml" />
     <Content Include="Views\PendingDocReturn\Index.cshtml" />
     <Content Include="Views\PendingDocReturn\pv_PendingDocReturn.cshtml" />
+    <Content Include="Views\ApproveAccepted\Index.cshtml" />
+    <Content Include="Views\ApproveAccepted\pv_ApproveAccepted.cshtml" />
+    <Content Include="Views\Shared\pv_ApproveFilterByMonth.cshtml" />
+    <Content Include="Views\Shared\pv_ApproveFilterSegmentByMonth.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\UploadFiles\" />

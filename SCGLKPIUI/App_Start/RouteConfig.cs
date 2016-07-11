@@ -48,13 +48,18 @@ namespace SCGLKPIUI {
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
             //7 doc pending
-            routes.MapRoute("PendingAcceptTableSummary", "PendingAccepted/PendingAcceptTableSummary/",
+            routes.MapRoute("PendingAcceptTableSummary", "PendingAccept/PendingAcceptTableSummary/",
                 new { controller = "PendingAccept", action = "PendingAcceptTableSummary" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
             //8 adjust accept
-            routes.MapRoute("JsonAcceptTable", "AdjustAccepted/JsonAcceptTable/",
-                new { controller = "AdjustAccepted", action = "JsonAcceptTable" },
+            routes.MapRoute("JsonAdjustAcceptTable", "AdjustAccepted/JsonAdjustAcceptTable/",
+                new { controller = "AdjustAccepted", action = "JsonAdjustAcceptTable" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
+            //8 approve accept
+            routes.MapRoute("JsonApproveAcceptTable", "ApproveAccepted/JsonApproveAcceptTable/",
+                new { controller = "ApproveAccepted", action = "JsonApproveAcceptTable" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
             #endregion

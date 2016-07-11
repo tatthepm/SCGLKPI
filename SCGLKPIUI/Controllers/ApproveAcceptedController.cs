@@ -13,7 +13,7 @@ using System.IO;
 
 namespace SCGLKPIUI.Controllers
 {
-    public class AdjustAcceptedController : BaseController
+    public class ApproveAcceptedController : BaseController
     {
         // GET: AdjustAccepted
         public ActionResult Index(string sms, string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
@@ -42,7 +42,15 @@ namespace SCGLKPIUI.Controllers
                                       Name = m.MATNAME,
                                   }).Distinct();
 
+                var ddlReason = (from m in objBs.reasonAcceptedBs.GetAll()
+                                  select new
+                                  {
+                                      Id = m.Id,
+                                      Name = m.Name,
+                                  }).Distinct();
+
                 ViewBag.MatNameId = new SelectList(ddlMatName.ToList(), "Id", "Name");
+                ViewBag.ReasonId = new SelectList(ddlReason.ToList(), "Id", "Name");
 
                 return View();
 
@@ -93,22 +101,18 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public JsonResult JsonAdjustAcceptTable(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
+        public JsonResult JsonApproveAcceptTable(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
         {
-            ViewBag.DepartmentId = DepartmentId;
-            ViewBag.SectionId = SectionId;
-            ViewBag.MatNameId = MatNameId;
-            ViewBag.YearId = YearId;
-            ViewBag.MonthId = MonthId;
             // add IEnumerable<AdjustAcceptedViewModels>
-            List<AdjustAcceptedViewModels> viewModel = new List<AdjustAcceptedViewModels>();
+            List<ApproveAcceptedViewModels> viewModel = new List<ApproveAcceptedViewModels>();
 
             //filter department
-            var q = from d in objBs.acceptedDelayBs.GetAll()
+            var q = from d in objBs.dWH_ONTIME_SHIPMENTBs.GetAll()
                     where d.DEPARTMENT_ID == DepartmentId
                     && d.SECTION_ID == SectionId
                     && d.LACPDDATE_D.Value.Month == Convert.ToInt32(MonthId)
                     && d.LACPDDATE_D.Value.Year == Convert.ToInt32(YearId)
+                    && d.ACPD_ADJUST == 0
                     select d;
 
             //filter matname
@@ -121,7 +125,7 @@ namespace SCGLKPIUI.Controllers
 
             foreach (var item in q)
             {
-                AdjustAcceptedViewModels model = new AdjustAcceptedViewModels();
+                ApproveAcceptedViewModels model = new ApproveAcceptedViewModels();
                 model.Shipment = item.SHPMNTNO;
                 model.CarrierId = item.CARRIER_ID;
                 model.RegionId = item.REGION_ID;
@@ -132,6 +136,7 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.LAST_SHPG_LOC_NAME;
                 model.PlanAccept = Convert.ToDateTime(item.PLNACPDDATE);
                 model.LastAccept = Convert.ToDateTime(item.LACPDDATE);
+                model.Approve = Convert.ToBoolean(item.ACPD_ADJUST);
                 viewModel.Add(model);
             }
 
@@ -147,11 +152,10 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateAcceptReason(List<String> dynamic_select, List<string> txtSM, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
+        public ActionResult UpdateAcceptApprove(List<String> dynamic_select, List<string> txtSM, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
         {
             using (TransactionScope Trans = new TransactionScope())
             {
-
                 try
                 {
                     // List<string> listSM = new List<string>();
@@ -167,7 +171,7 @@ namespace SCGLKPIUI.Controllers
                             bool isadjust = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
                             DWH_ONTIME_SHIPMENT ontimeShipment = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm);
                             //Change adjustable here
-                            ontimeShipment.ACPD_ADJUST = isadjust ? 0 : 0;
+                            ontimeShipment.ACPD_ADJUST = isadjust ? 1 : 0;
                             ontimeShipment.ACPD_ADJUST_BY = User.Identity.Name;
                             ontimeShipment.ACPD_ADJUST_DATE = DateTime.Now;
                             ontimeShipment.ACPD_REASON = reasonName;

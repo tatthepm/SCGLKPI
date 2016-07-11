@@ -104,24 +104,63 @@
         //#region 3 filter matname
         //#endregion
 
-        //#region 4 btnSearch click
+        //#region 4 getJson Section
+        $("#DepartmentId").change(function (res) {
+            departmentId = $("#DepartmentId").val();
+            $.getJSON('/PendingInbound/SectionFilter?departmentId=' + departmentId, function (data) {
+                var ddl = $("#SectionId");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                });
+                ddl.html(string);
+            });
+        });
         //#endregion
+
+        //#region  5 getJson MatName
+        $("#SectionId").change(function (res) {
+            departmentId = $("#DepartmentId").val();
+            sectionId = $("#SectionId").val();
+            $.getJSON('/PendingInbound/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
+                var ddl = $("#MatNameId");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                });
+                ddl.html(string);
+            });
+        });
         $("#btnSearch").click(function () {
-            //if ($('#DepartmentId').val() == "") {
-            //    swal({
-            //        title: "Warning!",
-            //        text: "Sorry!, Department is not selected ",
-            //        type: "warning"
-            //    });
-            //} else
-            if ($('#YearId').val() == "") {
+            if ($('#DepartmentId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Department is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#SectionId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Section is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#MatNameId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, MatName is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#YearId').val() == "") {
                 swal({
                     title: "Warning!",
                     text: "Sorry!, Year is not selected ",
                     type: "warning"
                 });
-            }
-            else if ($('#MonthId').val() == "") {
+            } else if ($('#MonthId').val() == "") {
                 swal({
                     title: "Warning!",
                     text: "Sorry!, Month is not selected ",
@@ -156,11 +195,11 @@
                         "dataSrc": ""
                     },
                     columns: [
-                   { data: "Shipment" },
+                   { data: "DeliveryNote" },
                    { data: "RegionName" },
                    { data: "SoldtoName" },
                    { data: "ShiptoName" },
-                   { data: "PlanTender" },
+                   { data: "PlanInbound" },
                     ],
                     select: true,
                     buttons: [

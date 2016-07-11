@@ -148,7 +148,7 @@
             @*Adjust*@
 
             <li>
-                <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> ADJUST</span> <span class="label label-success pull-right">v.1</span> </a>
+                <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> ADJUST</span> <span class="label label-success pull-right">v.2</span> </a>
                 <ul class="nav nav-second-level">
                     <li class="@Html.IsSelected(controller:"AdjustDelivered")">
                         <a href="@Url.Action("Index","AdjustDelivered")"><span class="nav-label"> Adjust on-time delivered</span></a>
@@ -174,7 +174,7 @@
             @*Pending*@
 
             <li>
-                <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> PENDING</span> <span class="label label-success pull-right">v.2</span> </a>
+                <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> PENDING</span> <span class="label label-success pull-right">v.1</span> </a>
                 <ul class="nav nav-second-level">
                     <li class="@Html.IsSelected(controller:"PendingDelivery")">
                         <a href="@Url.Action("Index","PendingDelivery")"><span class="nav-label"> Pending on-time delivered</span></a>
@@ -193,6 +193,32 @@
                     </li>
                     <li class="@Html.IsSelected(controller:"PendingDocReturn")">
                         <a href="@Url.Action("Index","PendingDocReturn")"><span class="nav-label"> Pending on-time document returned</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            @*Approve*@
+
+            <li>
+                <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> Approve Adjusted</span> <span class="label label-success pull-right">v.1</span> </a>
+                <ul class="nav nav-second-level">
+                    <li class="@Html.IsSelected(controller:"ApproveDelivered")">
+                        <a href="@Url.Action("Index","ApproveDelivered")"><span class="nav-label"> Approve on-time delivered</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller:"ApproveTendered")">
+                        <a href="@Url.Action("Index","ApproveTendered")"><span class="nav-label"> Approve on-time tendered</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller:"ApproveAccepted")">
+                        <a href="@Url.Action("Index","ApproveAccepted")"><span class="nav-label"> Approve on-time accepted tendered</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller:"ApproveInbounded")">
+                        <a href="@Url.Action("Index","ApproveInbounded")"><span class="nav-label"> Approve on-time inbound</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller:"ApproveOutbounded")">
+                        <a href="@Url.Action("Index","ApproveOutbounded")"><span class="nav-label"> Approve on-time outbound</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller:"ApproveDocReturned")">
+                        <a href="@Url.Action("Index","ApproveDocReturned")"><span class="nav-label"> Approve on-time document returned</span></a>
                     </li>
                 </ul>
             </li>
