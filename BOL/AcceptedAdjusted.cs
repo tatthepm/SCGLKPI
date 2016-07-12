@@ -79,5 +79,18 @@ namespace BOL {
         [Column(TypeName = "datetime2")]
         public DateTime? LOADED_DATE { get; set; }
 
+        public int? ACPD_REASON_ID { get; set; } //added
+
+        public string ACPD_REASON { get; set; } //addded
+
+        public int? ACPD_ADJUST { get; set; } //added
+
+        [StringLength(100)]
+        public string ACPD_ADJUST_BY { get; set; } //added
+
+        [Column(TypeName = "datetime2")]
+        public DateTime? ACPD_ADJUST_DATE { get; set; } //added
+
+        public string ACPD_REMARK { get; set; }
     }
 }

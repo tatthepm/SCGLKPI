@@ -78,5 +78,19 @@ namespace BOL {
 
         [Column(TypeName = "datetime2")]
         public DateTime? LOADED_DATE { get; set; }
+
+        public int? ON_TIME_REASON_ID { get; set; } //added
+
+        public string ON_TIME_REASON { get; set; } //added
+
+        public int? ON_TIME_ADJUST { get; set; } //added
+
+        [StringLength(100)]
+        public string ON_TIME_ADJUST_BY { get; set; } //added
+
+        [Column(TypeName = "datetime2")]
+        public DateTime? ON_TIME_ADJUST_DATE { get; set; } //added
+
+        public string ON_TIME_REMARK { get; set; } //added
     }
 }

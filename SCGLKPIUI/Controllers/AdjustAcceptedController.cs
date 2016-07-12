@@ -167,7 +167,7 @@ namespace SCGLKPIUI.Controllers
                             bool isadjust = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
                             DWH_ONTIME_SHIPMENT ontimeShipment = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm);
                             //Change adjustable here
-                            ontimeShipment.ACPD_ADJUST = isadjust ? 0 : 0;
+                            ontimeShipment.ACPD_ADJUST = 0;
                             ontimeShipment.ACPD_ADJUST_BY = User.Identity.Name;
                             ontimeShipment.ACPD_ADJUST_DATE = DateTime.Now;
                             ontimeShipment.ACPD_REASON = reasonName;
@@ -175,50 +175,45 @@ namespace SCGLKPIUI.Controllers
                             ontimeShipment.ACPD_REMARK = remark;
                             objBs.dWH_ONTIME_SHIPMENTBs.Update(ontimeShipment);
 
+                            AcceptedDelay tmp_adjusted = objBs.acceptedDelayBs.GetByID(sm);
+                            AcceptedAdjusted tmp_toInsert = new AcceptedAdjusted
+                            {
+                                CARRIER_ID = tmp_adjusted.CARRIER_ID,
+                                DEPARTMENT_ID = tmp_adjusted.DEPARTMENT_ID,
+                                DEPARTMENT_Name = tmp_adjusted.DEPARTMENT_Name,
+                                SECTION_ID = tmp_adjusted.SECTION_ID,
+                                SECTION_NAME = tmp_adjusted.SECTION_NAME,
+                                MATFRIGRP = tmp_adjusted.MATFRIGRP,
+                                MATNAME = tmp_adjusted.MATNAME,
+                                REGION_ID = tmp_adjusted.REGION_ID,
+                                REGION_NAME_EN = tmp_adjusted.REGION_NAME_EN,
+                                REGION_NAME_TH = tmp_adjusted.REGION_NAME_TH,
+                                SOLDTO = tmp_adjusted.SOLDTO,
+                                SOLDTO_NAME = tmp_adjusted.SOLDTO_NAME,
+                                SHIPTO = tmp_adjusted.SHIPTO,
+                                LAST_SHPG_LOC_NAME = tmp_adjusted.LAST_SHPG_LOC_NAME,
+                                VENDOR_CODE = tmp_adjusted.VENDOR_CODE,
+                                VENDOR_NAME = tmp_adjusted.VENDOR_NAME,
+                                PLNACPDDATE = tmp_adjusted.PLNACPDDATE,
+                                PLNACPDDATE_D = tmp_adjusted.PLNACPDDATE_D,
+                                LACPDDATE = tmp_adjusted.LACPDDATE,
+                                LACPDDATE_D = tmp_adjusted.LACPDDATE_D,
+                                SHPMNTNO = tmp_adjusted.SHPMNTNO,
+                                LOADED_DATE = DateTime.Now,
+                                ACPD_ADJUST = isadjust ? 1 : 0,
+                                ACPD_ADJUST_BY = User.Identity.Name,
+                                ACPD_ADJUST_DATE = DateTime.Now,
+                                ACPD_REASON = reasonName,
+                                ACPD_REASON_ID = Convert.ToInt32(reasonId),
+                                ACPD_REMARK = remark
+                            };
+                            //insert waiting ofr approval
+                            objBs.acceptedAdjustedBs.Insert(tmp_toInsert);
                             //delete AcceptedDelays
                             objBs.acceptedDelayBs.Delete(sm);
 
-                            //update sum of adjust daily
-                            DateTime LACPDDate = Convert.ToDateTime(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).LACPDDATE_D);
-
-                            int id = objBs.ontimeAcceptBs.GetAll()
-                                .Where(x => x.AcceptDate == LACPDDate
-                                       && x.DepartmentId == departmentId
-                                       && x.SectionId == sectionId
-                                       && x.MatFriGrp == matNameId).FirstOrDefault().Id;
-                            OntimeAccept ontimeAccept = objBs.ontimeAcceptBs.GetByID(id);
-                            int adjACPD = ontimeAccept.AdjustAccept + 1;
-                            ontimeAccept.AdjustAccept = adjACPD;
-                            ontimeAccept.SumOfAdjustAccept = ontimeAccept.OnTime + adjACPD;
-                            objBs.ontimeAcceptBs.Update(ontimeAccept);
-                            countSM++;
                         }
                     }
-
-                    // update sum of adjust monthly
-                    int idM = objBs.ontimeAcceptMonthBs.GetAll()
-                              .Where(x => x.Year == yearId
-                              && x.Month == monthId
-                              && x.DepartmentId == departmentId
-                              && x.SectionId == sectionId
-                              && x.MatFriGrp == matNameId).FirstOrDefault().Id;
-                    OntimeAcceptMonth ontimeAcceptMonth = objBs.ontimeAcceptMonthBs.GetByID(idM);
-                    int adjACPDMonth = ontimeAcceptMonth.AdjustAccept + countSM;
-                    ontimeAcceptMonth.AdjustAccept = adjACPDMonth;
-                    ontimeAcceptMonth.SumOfAdjustAccept = ontimeAcceptMonth.OnTime + adjACPDMonth;
-                    objBs.ontimeAcceptMonthBs.Update(ontimeAcceptMonth);
-
-                    // update sum of adjust yearly
-                    int idY = objBs.ontimeAcceptYearBs.GetAll()
-                              .Where(x => x.Year == yearId
-                              && x.DepartmentId == departmentId
-                              && x.SectionId == sectionId
-                              && x.MatFriGrp == matNameId).FirstOrDefault().Id;
-                    OntimeAcceptYear ontimeAcceptYear = objBs.ontimeAcceptYearBs.GetByID(idY);
-                    int adjACPDYear = ontimeAcceptYear.AdjustAccept + countSM;
-                    ontimeAcceptYear.AdjustAccept = adjACPDYear;
-                    ontimeAcceptYear.SumOfAdjustAccept = ontimeAcceptYear.OnTime + adjACPDYear;
-                    objBs.ontimeAcceptYearBs.Update(ontimeAcceptYear);
 
                     Trans.Complete();
                     return RedirectToAction("Index", new { sms = countSM + "-Shipment is adjusted Successfully!" });

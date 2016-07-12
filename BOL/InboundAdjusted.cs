@@ -78,5 +78,19 @@ namespace BOL {
 
         [Column(TypeName = "datetime2")]
         public DateTime? LOADED_DATE { get; set; }
+
+        public int? INB_REASON_ID { get; set; } //added
+
+        public string INB_REASON { get; set; } //added
+
+        public int? INB_ADJUST { get; set; }    //added 
+
+        [StringLength(100)]
+        public string INB_ADJUST_BY { get; set; } //added
+
+        [Column(TypeName = "datetime2")]
+        public DateTime? INB_ADJUST_DATE { get; set; } //added
+
+        public string INB_REMARK { get; set; } //added
     }
 }

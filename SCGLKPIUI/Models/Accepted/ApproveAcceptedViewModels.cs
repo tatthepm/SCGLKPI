@@ -15,7 +15,11 @@ namespace SCGLKPIUI.Models {
         public string ShiptoName { get; set; }
         public DateTime? PlanAccept { get; set; }
         public DateTime? LastAccept { get; set; }
-        public string ReasonId { get; set; }
+        public string thisReasonId { get; set; }
         public bool Approve { get; set; }
+        public string Reason { get; set; } //addded
+        public int Adjust { get; set; } //added
+        public string AdjustBy { get; set; } //added
+        public string Remark { get; set; }
     }
 }

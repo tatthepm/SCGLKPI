@@ -33,7 +33,7 @@ namespace SCGLKPIUI.Controllers
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
                 //1 DropdownList 
-                var ddlMatName = (from m in objBs.acceptedDelayBs.GetAll()
+                var ddlMatName = (from m in objBs.acceptedAdjustedBs.GetAll()
                                   where !String.IsNullOrEmpty(m.MATNAME)
                                   select new
                                   {
@@ -62,7 +62,7 @@ namespace SCGLKPIUI.Controllers
 
         public JsonResult SectionFilter(string departmentId)
         {
-            var result = (from m in objBs.acceptedDelayBs.GetAll()
+            var result = (from m in objBs.acceptedAdjustedBs.GetAll()
                           where m.DEPARTMENT_ID == departmentId
                           select new
                           {
@@ -75,7 +75,7 @@ namespace SCGLKPIUI.Controllers
 
         public JsonResult MatNameFilter(string departmentId, string sectionid)
         {
-            var result = (from m in objBs.acceptedDelayBs.GetAll()
+            var result = (from m in objBs.acceptedAdjustedBs.GetAll()
                           where m.DEPARTMENT_ID == departmentId
                           && m.SECTION_ID == sectionid
                           select new
@@ -106,7 +106,7 @@ namespace SCGLKPIUI.Controllers
             List<ApproveAcceptedViewModels> viewModel = new List<ApproveAcceptedViewModels>();
 
             //filter department
-            var q = from d in objBs.dWH_ONTIME_SHIPMENTBs.GetAll()
+            var q = from d in objBs.acceptedAdjustedBs.GetAll()
                     where d.DEPARTMENT_ID == DepartmentId
                     && d.SECTION_ID == SectionId
                     && d.LACPDDATE_D.Value.Month == Convert.ToInt32(MonthId)
@@ -119,8 +119,6 @@ namespace SCGLKPIUI.Controllers
             {
                 q = q.Where(x => x.MATFRIGRP == MatNameId);
             }
-
-            //int c = q.Count();
 
             foreach (var item in q)
             {
@@ -136,22 +134,19 @@ namespace SCGLKPIUI.Controllers
                 model.PlanAccept = Convert.ToDateTime(item.PLNACPDDATE);
                 model.LastAccept = Convert.ToDateTime(item.LACPDDATE);
                 model.Approve = Convert.ToBoolean(item.ACPD_ADJUST);
+                model.AdjustBy = item.ACPD_ADJUST_BY;
+                model.Remark = item.ACPD_REMARK;
+                model.Reason = item.ACPD_REASON;
+                model.thisReasonId = Convert.ToString(item.ACPD_REASON_ID);
+
                 viewModel.Add(model);
             }
-
-            var ddlReason = (from r in objBs.reasonAcceptedBs.GetAll()
-                             select new
-                             {
-                                 Id = r.Id,
-                                 Name = r.Name
-                             }).Distinct().OrderBy(x => x.Name);
-            ViewBag.ReasonId = new SelectList(ddlReason.ToList(), "Id", "Name");
 
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult UpdateAcceptApprove(List<String> dynamic_select, List<string> txtSM, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
+        public ActionResult UpdateAcceptApprove(List<string> thisReasonId, List<string> txtSM, List<string> txtApprove, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
         {
             using (TransactionScope Trans = new TransactionScope())
             {
@@ -159,12 +154,13 @@ namespace SCGLKPIUI.Controllers
                 {
                     // List<string> listSM = new List<string>();
                     int countSM = 0;
-                    for (int i = 0; i < dynamic_select.Count; i++)
+                    foreach(string index in txtApprove)
                     {
-                        if (!String.IsNullOrEmpty(dynamic_select[i]))
+                        int i = Convert.ToInt16(index);
+                        if (!String.IsNullOrEmpty(txtApprove[i]))
                         {
                             string sm = txtSM[i];
-                            string reasonId = dynamic_select[i];
+                            string reasonId = thisReasonId[i];
                             string remark = txtRemark[i];
                             string reasonName = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).Name;
                             bool isadjust = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
@@ -179,7 +175,7 @@ namespace SCGLKPIUI.Controllers
                             objBs.dWH_ONTIME_SHIPMENTBs.Update(ontimeShipment);
 
                             //delete AcceptedDelays
-                            objBs.acceptedDelayBs.Delete(sm);
+                            objBs.acceptedAdjustedBs.Delete(sm);
 
                             //update sum of adjust daily
                             DateTime LACPDDate = Convert.ToDateTime(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).LACPDDATE_D);

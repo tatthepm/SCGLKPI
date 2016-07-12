@@ -167,13 +167,16 @@
         });
         //#endregion
         $("#btnSearch").click(function () {
-            //if ($('#DepartmentId').val() == "") {
-            //    swal({
-            //        title: "Warning!",
-            //        text: "Sorry!, Department is not selected ",
-            //        type: "warning"
-            //    });
-            //} else
+
+            var rows_selected = [];
+            //#region table
+            // on-time tender monthly dataTable
+            var departmentId = $('#DepartmentId').val();
+            var sectionId = $('#SectionId').val();
+            var matNameId = $('#MatNameId').val();
+            var yearId = $('#YearId').val();
+            var monthId = $('#MonthId').val();
+            var adjustApproveAccept = $('#approveAcceptedTable').dataTable();
 
             if ($('#DepartmentId').val() == "") {
                 swal({
@@ -209,17 +212,17 @@
             else {
 
 
-
-                //#region table
-                // on-time tender monthly dataTable
-                var departmentId = $('#DepartmentId').val();
-                var sectionId = $('#SectionId').val();
-                var matNameId = $('#MatNameId').val();
-                var yearId = $('#YearId').val();
-                var monthId = $('#MonthId').val();
-                var adjustApproveAccept = $('#approveAcceptedTable').dataTable();
+                //var rows_selected = [];
+                ////#region table
+                //// on-time tender monthly dataTable
+                //var departmentId = $('#DepartmentId').val();
+                //var sectionId = $('#SectionId').val();
+                //var matNameId = $('#MatNameId').val();
+                //var yearId = $('#YearId').val();
+                //var monthId = $('#MonthId').val();
+                //adjustApproveAccept 
                 adjustApproveAccept.fnDestroy();
-                adjustApproveAccept.dataTable({
+                adjustApproveAccept.DataTable({
                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                     "ajax": {
@@ -239,11 +242,12 @@
                         { data: "RegionName" },
                         { data: "SoldtoName" },
                         { data: "ShiptoName" },
+                        { data: "Reason" },
                         {
-                            data: "select_all",
+                            data: "Approve",
                             render: function (data, type, row) {
                                 if (type === 'display') {
-                                    return '<input type="checkbox" class="editor-active">';
+                                    return '<input id="Approve" name="Approve" type="checkbox" class="ckb" />';
                                 }
                                 return data;
                             },
@@ -251,9 +255,12 @@
                         }
                     ],
                     'columnDefs': [{
-                        "targets": 5,
+                        "targets": 6,
                         "data": function (row, type, val, meta) {
-                            return '<input type="text" name="txtRemark" />';
+                            return '<input type="text" name="txtRemark" />\n\
+                                <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\
+                                <input type="hidden" name="txtSM" value="' + row.Shipment + '" />';
+
                         },
                     }],
                     select: true,
@@ -261,11 +268,95 @@
                         { extend: 'copy', className: 'btn-sm' },
                         { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
                         { extend: 'pdf', title: 'ExampleFile', className: 'btn-sm' },
-                    ]
+                    ],
+                    'order': [1, 'asc'],
+                    'rowCallback': function(row, data, dataIndex){
+                        // Get row ID
+                        var rowId = dataIndex;
+                        // Get row Shipment
+                        //var rowId = row.Shipment;
+                        //เช็ค pre-load data ว่ามี check ถูกมาแล้วหรือเปล่า ถ้ามี ให้เก็บเข้าบัฟเฟอร์
+                        // If row ID is in the list of selected row IDs
+                        if($.inArray(rowId, rows_selected) !== -1){
+                            $(row).find('input[type="checkbox"]').prop('checked', true);
+                            $(row).addClass('selected');
+                        }
+                    }
                 });
                 //#endregion table
 
             } //end if else
+            //$("#select_all").click(function (event) {  //on click 
+            //    if (this.checked) { // check select status 
+            //        $('.ckb').each(function () { //loop through each checkbox 
+            //            this.checked = true;  //select all checkboxes with class "checkbox1" 
+            //        });
+            //    } else {
+            //        $('.ckb').each(function () { //loop through each checkbox 
+            //            this.checked = false; //deselect all checkboxes with class "checkbox1" 
+            //        });
+            //    }
+            //});
+            var table = $('#approveAcceptedTable').DataTable();
+
+            $('thead input[name="select_all"]', table.table().container()).on('click', function (e) {
+                if (this.checked) {
+                    $('#approveAcceptedTable tbody input[type="checkbox"]:not(:checked)').trigger('click');
+                } else {
+                    $('#approveAcceptedTable tbody input[type="checkbox"]:checked').trigger('click');
+                }
+                //ดัก event ที่ส่งไป Parent class
+                // Prevent click event from propagating to parent
+                e.stopPropagation();
+            });
+
+            $('#approveAcceptedTable tbody').on('click', 'input[type="checkbox"]', function (e) {
+                //Get current tr
+                var $row = $(this).closest('tr');
+                //Get row index
+                var rowId = table.row($row).index();
+
+                //Get shipment
+                //var rowShipment = (table.row($row).data());
+                //var rowShipmentString = rowShipment.toString();
+                //var rowId = rowShipmentString.substr(0, rowShipmentString.indexOf(','));
+
+                // Determine whether row ID is in the list of selected row IDs 
+                var index = $.inArray(rowId, rows_selected);
+
+                // If checkbox is checked and row ID is not in list of selected row IDs
+                if (this.checked && index === -1) {
+                    rows_selected.push(rowId);
+
+                    // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
+                } else if (!this.checked && index !== -1) {
+                    rows_selected.splice(index, 1);
+                }
+                //tr class select to hightlight.
+                if (this.checked) {
+                    $row.addClass('selected');
+                } else {
+                    $row.removeClass('selected');
+                }
+
+                // Prevent click event from propagating to parent
+                e.stopPropagation();
+            });
+
+            $('#frm').on('submit', function (e) {
+                var form = this;
+
+                // Iterate over all selected checkboxes
+                $.each(rows_selected, function (index, rowId) {
+                    // Create a hidden element 
+                    $(form).append(
+                        $('<input>')
+                           .attr('type', 'hidden')
+                           .attr('name', 'txtApprove')
+                           .val(rowId)
+                    );
+                });
+            });
 
         }); //end btnSerarch click
 
@@ -300,6 +391,11 @@
                 l.ladda('stop');
             }, 5000)
         });
+
+        //
+        // Updates "Select all" control in a data table
+        //
+        
         //#endregion
     </script>
 }
