@@ -77,7 +77,7 @@ namespace SCGLKPIUI.Controllers {
                 ViewBag.MonthId = MonthId;
 
                 // add IEnumerable<AdjustAcceptedViewModels>
-                List<AdjustInbounedViewModels> viewModel = new List<AdjustInbounedViewModels>();
+                List<AdjustInboundedViewModels> viewModel = new List<AdjustInboundedViewModels>();
 
                 //filter department
                 var q = from d in objBs.inboundDelayBs.GetAll()
@@ -95,7 +95,7 @@ namespace SCGLKPIUI.Controllers {
                 int c = q.Count();
 
                 foreach (var item in q) {
-                    AdjustInbounedViewModels model = new AdjustInbounedViewModels();
+                    AdjustInboundedViewModels model = new AdjustInboundedViewModels();
                     model.DeliveryNote = item.DELVNO;
                     model.CarrierId = item.CARRIER_ID;
                     model.RegionId = item.REGION_ID;

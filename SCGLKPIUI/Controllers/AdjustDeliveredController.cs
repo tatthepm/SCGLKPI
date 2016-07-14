@@ -70,77 +70,79 @@ namespace SCGLKPIUI.Controllers {
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetDelayDeliveredData(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId) {
-            try {
-                ViewBag.DepartmentId = DepartmentId;
-                ViewBag.SectionId = SectionId;
-                ViewBag.MatNameId = MatNameId;
-                ViewBag.YearId = YearId;
-                ViewBag.MonthId = MonthId;
+        [HttpPost]
+        public JsonResult JsonAdjustOntimeTable(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
+        {
+            ViewBag.DepartmentId = DepartmentId;
+            ViewBag.SectionId = SectionId;
+            ViewBag.MatNameId = MatNameId;
+            ViewBag.YearId = YearId;
+            ViewBag.MonthId = MonthId;
+            // add IEnumerable<AdjustAcceptedViewModels>
+            List<AdjustDeliveredViewModels> viewModel = new List<AdjustDeliveredViewModels>();
 
-                // add IEnumerable<AdjustAcceptedViewModels>
-                List<AdjustDeliveredViewModels> viewModel = new List<AdjustDeliveredViewModels>();
+            //filter department
+            var q = from d in objBs.ontimeDelayBs.GetAll()
+                    where d.DEPARTMENT_ID == DepartmentId
+                    && d.SECTION_ID == SectionId
+                    && d.ACDLVDATE_D.Value.Month == Convert.ToInt32(MonthId)
+                    && d.ACDLVDATE_D.Value.Year == Convert.ToInt32(YearId)
+                    select d;
 
-                //filter department
-                var q = from d in objBs.ontimeDelayBs.GetAll()
-                        where d.DEPARTMENT_ID == DepartmentId
-                        && d.SECTION_ID == SectionId
-                        && d.ACDLVDATE_D.Value.Month == Convert.ToInt32(MonthId)
-                        && d.ACDLVDATE_D.Value.Year == Convert.ToInt32(YearId)
-                        select d;
-
-                //filter matname
-                if (!String.IsNullOrEmpty(MatNameId)) {
-                    q = q.Where(x => x.MATFRIGRP == MatNameId);
-                }
-
-                int c = q.Count();
-
-                foreach (var item in q) {
-                    AdjustDeliveredViewModels model = new AdjustDeliveredViewModels();
-                    model.DeliveryNote = item.DELVNO;
-                    model.CarrierId = item.CARRIER_ID;
-                    model.RegionId = item.REGION_ID;
-                    model.RegionName = item.REGION_NAME_TH;
-                    model.Soldto = item.SOLDTO;
-                    model.SoldtoName = item.SOLDTO_NAME;
-                    model.Shipto = item.SHIPTO;
-                    model.ShiptoName = item.TO_SHPG_LOC_NAME;
-                    model.PlanDelivery = Convert.ToDateTime(item.PLNONTIMEDATE);
-                    model.ActualDelivery = Convert.ToDateTime(item.ACDLVDATE);
-                    viewModel.Add(model);
-                }
-
-                var ddlReason = (from r in objBs.reasonOntimeBs.GetAll()
-                                 select new {
-                                     Id = r.Id,
-                                     Name = r.Name
-                                 }).Distinct().OrderBy(x => x.Name);
-                ViewBag.ReasonId = new SelectList(ddlReason.ToList(), "Id", "Name");
-
-                return PartialView("pv_AdjustDelivered", viewModel);
-
+            //filter matname
+            if (!String.IsNullOrEmpty(MatNameId))
+            {
+                q = q.Where(x => x.MATFRIGRP == MatNameId);
             }
-            catch (Exception ex) {
-                return RedirectToAction("Index", new { sms = "Operation getDelayDeliveredData failed ! " + ex.InnerException.InnerException.Message.ToString() });
+
+            //int c = q.Count();
+
+            foreach (var item in q)
+            {
+                AdjustDeliveredViewModels model = new AdjustDeliveredViewModels();
+                model.DeliveryNote = item.DELVNO;
+                model.CarrierId = item.CARRIER_ID;
+                model.RegionId = item.REGION_ID;
+                model.RegionName = item.REGION_NAME_TH;
+                model.Soldto = item.SOLDTO;
+                model.SoldtoName = item.SOLDTO_NAME;
+                model.Shipto = item.SHIPTO;
+                model.ShiptoName = item.TO_SHPG_LOC_NAME;
+                model.PlanDelivery = Convert.ToDateTime(item.PLNONTIMEDATE);
+                model.ActualDelivery = Convert.ToDateTime(item.ACDLVDATE);
+                viewModel.Add(model);
             }
+
+            var ddlReason = (from r in objBs.reasonOntimeBs.GetAll()
+                             select new
+                             {
+                                 Id = r.Id,
+                                 Name = r.Name
+                             }).Distinct().OrderBy(x => x.Name);
+            ViewBag.ReasonId = new SelectList(ddlReason.ToList(), "Id", "Name");
+
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult UpdateDeliveredReason(List<String> ReasonId, List<string> txtDN, List<string> txtRemark, string DepartmentId, string SectionId, string MatNameId, string YearId, string MonthId) {
-            using (TransactionScope Trans = new TransactionScope()) {
+        public ActionResult UpdateOntimeReason(List<String> dynamic_select, List<string> txtDN, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
+        {
+            using (TransactionScope Trans = new TransactionScope())
+            {
 
-                try {
-
+                try
+                {
+                    // List<string> listSM = new List<string>();
                     int countDN = 0;
-                    for (int i = 0; i < ReasonId.Count; i++) {
-                        if (!String.IsNullOrEmpty(ReasonId[i])) {
+                    for (int i = 0; i < dynamic_select.Count; i++)
+                    {
+                        if (!String.IsNullOrEmpty(dynamic_select[i]))
+                        {
                             string dn = txtDN[i];
-                            string reasonId = ReasonId[i];
+                            string reasonId = dynamic_select[i];
                             string remark = txtRemark[i];
-                            string reasonName = objBs.reasonOntimeBs.GetByID(Convert.ToInt32(reasonId)).Name;
-                            bool isadjust = objBs.reasonOntimeBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
-
+                            string reasonName = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).Name;
+                            bool isadjust = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
                             DWH_ONTIME_DN ontimeDn = objBs.dWH_ONTIME_DNBs.GetByID(dn);
                             ontimeDn.ON_TIME_ADJUST = isadjust ? 1 : 0;
                             ontimeDn.ON_TIME_ADJUST_BY = User.Identity.Name;
@@ -151,56 +153,44 @@ namespace SCGLKPIUI.Controllers {
 
                             objBs.dWH_ONTIME_DNBs.Update(ontimeDn);
 
+                            OntimeDelay tmp_adjusted = objBs.ontimeDelayBs.GetByID(dn);
+                            OntimeAdjusted tmp_toInsert = new OntimeAdjusted
+                            {
+                                CARRIER_ID = tmp_adjusted.CARRIER_ID,
+                                DEPARTMENT_ID = tmp_adjusted.DEPARTMENT_ID,
+                                DEPARTMENT_Name = tmp_adjusted.DEPARTMENT_Name,
+                                SECTION_ID = tmp_adjusted.SECTION_ID,
+                                SECTION_NAME = tmp_adjusted.SECTION_NAME,
+                                MATFRIGRP = tmp_adjusted.MATFRIGRP,
+                                MATNAME = tmp_adjusted.MATNAME,
+                                REGION_ID = tmp_adjusted.REGION_ID,
+                                REGION_NAME_EN = tmp_adjusted.REGION_NAME_EN,
+                                REGION_NAME_TH = tmp_adjusted.REGION_NAME_TH,
+                                SOLDTO = tmp_adjusted.SOLDTO,
+                                SOLDTO_NAME = tmp_adjusted.SOLDTO_NAME,
+                                SHIPTO = tmp_adjusted.SHIPTO,
+                                TO_SHPG_LOC_NAME = tmp_adjusted.TO_SHPG_LOC_NAME,
+                                VENDOR_CODE = tmp_adjusted.VENDOR_CODE,
+                                VENDOR_NAME = tmp_adjusted.VENDOR_NAME,
+                                PLNONTIMEDATE = tmp_adjusted.PLNONTIMEDATE,
+                                PLNONTIMEDATE_D = tmp_adjusted.PLNONTIMEDATE_D,
+                                ACDLVDATE = tmp_adjusted.ACDLVDATE,
+                                ACDLVDATE_D = tmp_adjusted.ACDLVDATE_D,
+                                DELVNO = tmp_adjusted.DELVNO,
+                                LOADED_DATE = DateTime.Now,
+                                ON_TIME_ADJUST = isadjust ? 1 : 0,
+                                ON_TIME_ADJUST_BY = User.Identity.Name,
+                                ON_TIME_ADJUST_DATE = DateTime.Now,
+                                ON_TIME_REASON = reasonName,
+                                ON_TIME_REASON_ID = Convert.ToInt32(reasonId),
+                                ON_TIME_REMARK = remark
+                            };
+                            //insert waiting for approval
+                            objBs.ontimeAdjustedBs.Insert(tmp_toInsert);
                             //delete AcceptedDelays
                             objBs.ontimeDelayBs.Delete(dn);
-
-                            //update sum of adjust daily
-                            DateTime ONTIMEDate = Convert.ToDateTime(objBs.dWH_ONTIME_DNBs.GetByID(dn).ACDLVDATE_D);
-
-                            int id = objBs.ontimeDeliveryBs.GetAll()
-                                .Where(x => x.ActualGiDate == ONTIMEDate
-                                       && x.DepartmentId == DepartmentId
-                                       && x.SectionId == SectionId
-                                       && x.MatFriGrp == MatNameId).FirstOrDefault().Id;
-
-                            OntimeDelivery ontimeDelivery = objBs.ontimeDeliveryBs.GetByID(id);
-
-                            int adjONTIME = ontimeDelivery.AdjustDelivery + 1;
-                            ontimeDelivery.AdjustDelivery = adjONTIME;
-                            ontimeDelivery.SumOfAdjustDelivery = ontimeDelivery.OnTime + adjONTIME;
-                            objBs.ontimeDeliveryBs.Update(ontimeDelivery);
-                            countDN++;
                         }
                     }
-
-                    // update sum of adjust monthly
-                    int idM = objBs.ontimeDeliveryMonthBs.GetAll()
-                              .Where(x => x.Year == YearId
-                              && x.Month == MonthId
-                              && x.DepartmentId == DepartmentId
-                              && x.SectionId == SectionId
-                              && x.MatFriGrp == MatNameId).FirstOrDefault().Id;
-
-                    OntimeDeliveryMonth ontimeDeliveryMonth = objBs.ontimeDeliveryMonthBs.GetByID(idM);
-
-                    int adjONTIMEMonth = ontimeDeliveryMonth.AdjustDelivery + countDN;
-                    ontimeDeliveryMonth.AdjustDelivery = adjONTIMEMonth;
-                    ontimeDeliveryMonth.SumOfAdjustDelivery = ontimeDeliveryMonth.OnTime + adjONTIMEMonth;
-                    objBs.ontimeDeliveryMonthBs.Update(ontimeDeliveryMonth);
-
-                    // update sum of adjust yearly
-                    int idY = objBs.ontimeDeliveryYearBs.GetAll()
-                              .Where(x => x.Year == YearId
-                              && x.DepartmentId == DepartmentId
-                              && x.SectionId == SectionId
-                              && x.MatFriGrp == MatNameId).FirstOrDefault().Id;
-
-                    OntimeDeliveryYear ontimeDeliveryYear = objBs.ontimeDeliveryYearBs.GetByID(idY);
-
-                    int adjONTIMEYear = ontimeDeliveryYear.AdjustDelivery + countDN;
-                    ontimeDeliveryYear.AdjustDelivery = adjONTIMEYear;
-                    ontimeDeliveryYear.SumOfAdjustDelivery = ontimeDeliveryYear.OnTime + adjONTIMEYear;
-                    objBs.ontimeDeliveryYearBs.Update(ontimeDeliveryYear);
 
                     Trans.Complete();
                     return RedirectToAction("Index", new { sms = countDN + "-DN is adjusted Successfully!" });

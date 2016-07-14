@@ -18,42 +18,6 @@ namespace SCGLKPIUI.Controllers {
 
                 TempData["Msg"] = sms;
 
-                //var ddlDept = (from d in objBs.tenderedDelayBs.GetAll()
-                //               where !String.IsNullOrEmpty(d.MATNAME)
-                //               && !String.IsNullOrEmpty(d.DEPARTMENT_Name)
-                //               && !String.IsNullOrEmpty(d.SECTION_NAME)
-                //               select new {
-                //                   Id = d.DEPARTMENT_ID,
-                //                   Name = d.DEPARTMENT_Name,
-                //               }).Distinct().OrderBy(x=>x.Name);
-
-                //var ddlSec = (from s in objBs.tenderedDelayBs.GetAll()
-                //              where !String.IsNullOrEmpty(s.MATNAME)
-                //              && !String.IsNullOrEmpty(s.DEPARTMENT_Name)
-                //              && !String.IsNullOrEmpty(s.SECTION_NAME)
-                //              select new {
-                //                  Id = s.SECTION_ID,
-                //                  Name = s.SECTION_NAME,
-                //              }).Distinct().OrderBy(x=>x.Name);
-
-                //var ddlYear = (from y in objBs.tenderedDelayBs.GetAll()
-                //               where !String.IsNullOrEmpty(y.MATNAME)
-                //                && !String.IsNullOrEmpty(y.DEPARTMENT_Name)
-                //                && !String.IsNullOrEmpty(y.SECTION_NAME)
-                //               select new {
-                //                   Id = y.FTNRDDATE_D.Value.Year,
-                //                   Name = y.FTNRDDATE_D.Value.Year,
-                //               }).Distinct();
-
-                //var ddlMonth = (from y in objBs.tenderedDelayBs.GetAll()
-                //                where !String.IsNullOrEmpty(y.MATNAME)
-                //                 && !String.IsNullOrEmpty(y.DEPARTMENT_Name)
-                //                 && !String.IsNullOrEmpty(y.SECTION_NAME)
-                //                select new {
-                //                    Id = y.FTNRDDATE_D.Value.Month,
-                //                    Name = DateTimeFormatInfo.InvariantInfo.GetAbbreviatedMonthName(y.FTNRDDATE_D.Value.Month)
-                //                }).Distinct().OrderBy(x => x.Id);
-
                 DropDownList ddl = new DropDownList();
                 var ddlSeg = ddl.GetDropDownListSegment();
                 var ddlYear = ddl.GetDropDownListTenderedMonth("Year");
@@ -70,71 +34,81 @@ namespace SCGLKPIUI.Controllers {
             }
         }
 
-        public ActionResult GetDelayTenderedData(string SegmentId, string YearId, string MonthId) {
-            try {
-                ViewBag.SegmentId = SegmentId;
-                ViewBag.YearId = YearId;
-                ViewBag.MonthId = MonthId;
+        [HttpPost]
+        public JsonResult JsonAdjustTenderTable(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
+        {
+            ViewBag.DepartmentId = DepartmentId;
+            ViewBag.SectionId = SectionId;
+            ViewBag.MatNameId = MatNameId;
+            ViewBag.YearId = YearId;
+            ViewBag.MonthId = MonthId;
+            // add IEnumerable<AdjustAcceptedViewModels>
+            List<AdjustTenderedViewModels> viewModel = new List<AdjustTenderedViewModels>();
 
-                // add IEnumerable<AdjustAcceptedViewModels>
-                List<AdjustTenderedViewModels> viewModel = new List<AdjustTenderedViewModels>();
+            //filter department
+            var q = from d in objBs.tenderedDelayBs.GetAll()
+                    where d.DEPARTMENT_ID == DepartmentId
+                    && d.SECTION_ID == SectionId
+                    && d.FTNRDDATE_D.Value.Month == Convert.ToInt32(MonthId)
+                    && d.FTNRDDATE_D.Value.Year == Convert.ToInt32(YearId)
+                    select d;
 
-                //filter department
-                var q = from d in objBs.tenderedDelayBs.GetAll()
-                        where d.SEGMENT == SegmentId
-                        && d.FTNRDDATE_D.Value.Month == Convert.ToInt32(MonthId)
-                        && d.FTNRDDATE_D.Value.Year == Convert.ToInt32(YearId)
-                        select d;
-
-                int c = q.Count();
-
-                foreach (var item in q) {
-                    AdjustTenderedViewModels model = new AdjustTenderedViewModels();
-                    model.Shipment = item.SHPMNTNO;
-                    model.CarrierId = item.CARRIER_ID;
-                    model.RegionId = item.REGION_ID;
-                    model.RegionName = item.REGION_NAME_TH;
-                    model.Soldto = item.SOLDTO;
-                    model.SoldtoName = item.SOLDTO_NAME;
-                    model.Shipto = item.SHIPTO;
-                    model.ShiptoName = item.LAST_SHPG_LOC_NAME;
-                    model.PlanTender = Convert.ToDateTime(item.PLNTNRDDATE);
-                    model.FirstTender = Convert.ToDateTime(item.FTNRDDATE);
-                    viewModel.Add(model);
-                }
-
-                var ddlReason = (from r in objBs.reasonTenderedBs.GetAll()
-                                 select new {
-                                     Id = r.Id,
-                                     Name = r.Name
-                                 }).Distinct().OrderBy(x => x.Name);
-                ViewBag.ReasonId = new SelectList(ddlReason.ToList(), "Id", "Name");
-
-                return PartialView("pv_AdjustTendered", viewModel);
-
+            //filter matname
+            if (!String.IsNullOrEmpty(MatNameId))
+            {
+                q = q.Where(x => x.MATFRIGRP == MatNameId);
             }
-            catch (Exception ex) {
-                return RedirectToAction("Index", new { sms = "Operation getDelayTenderedData failed ! " + ex.InnerException.InnerException.Message.ToString() });
+
+            //int c = q.Count();
+            foreach (var item in q)
+            {
+                AdjustTenderedViewModels model = new AdjustTenderedViewModels();
+                model.Shipment = item.SHPMNTNO;
+                model.CarrierId = item.CARRIER_ID;
+                model.RegionId = item.REGION_ID;
+                model.RegionName = item.REGION_NAME_TH;
+                model.Soldto = item.SOLDTO;
+                model.SoldtoName = item.SOLDTO_NAME;
+                model.Shipto = item.SHIPTO;
+                model.ShiptoName = item.LAST_SHPG_LOC_NAME;
+                model.PlanTender = Convert.ToDateTime(item.PLNTNRDDATE);
+                model.FirstTender = Convert.ToDateTime(item.FTNRDDATE);
+                viewModel.Add(model);
             }
+
+            var ddlReason = (from r in objBs.reasonOntimeBs.GetAll()
+                             select new
+                             {
+                                 Id = r.Id,
+                                 Name = r.Name
+                             }).Distinct().OrderBy(x => x.Name);
+            ViewBag.ReasonId = new SelectList(ddlReason.ToList(), "Id", "Name");
+
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult UpdateTenderedReason(List<String> ReasonId, List<string> txtSM, List<string> txtRemark, string SegmentId, string YearId, string MonthId) {
-            using (TransactionScope Trans = new TransactionScope()) {
+        public ActionResult UpdateTenderedReason(List<String> dynamic_select, List<string> txtSM, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
+        { 
+            using (TransactionScope Trans = new TransactionScope())
+            {
 
-                try {
+                try
+                {
                     // List<string> listSM = new List<string>();
                     int countSM = 0;
-                    for (int i = 0; i < ReasonId.Count; i++) {
-                        if (!String.IsNullOrEmpty(ReasonId[i])) {
+                    for (int i = 0; i < dynamic_select.Count; i++)
+                    {
+                        if (!String.IsNullOrEmpty(dynamic_select[i]))
+                        {
                             string sm = txtSM[i];
-                            string reasonId = ReasonId[i];
+                            string reasonId = dynamic_select[i];
                             string remark = txtRemark[i];
                             string reasonName = objBs.reasonTenderedBs.GetByID(Convert.ToInt32(reasonId)).Name;
                             bool isadjust = objBs.reasonTenderedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
-
                             DWH_ONTIME_SHIPMENT ontimeShipment = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm);
-                            ontimeShipment.TNRD_ADJUST = isadjust ? 1 : 0;
+                            //Change adjustable here
+                            ontimeShipment.TNRD_ADJUST = 0;
                             ontimeShipment.TNRD_ADJUST_BY = User.Identity.Name;
                             ontimeShipment.TNRD_ADJUST_DATE = DateTime.Now;
                             ontimeShipment.TNRD_ONTIME_REASON = reasonName;
@@ -142,56 +116,51 @@ namespace SCGLKPIUI.Controllers {
                             ontimeShipment.TNRD_ONTIME_REMARK = remark;
                             objBs.dWH_ONTIME_SHIPMENTBs.Update(ontimeShipment);
 
+                            TenderedDelay tmp_adjusted = objBs.tenderedDelayBs.GetByID(sm);
+                            TenderedAdjusted tmp_toInsert = new TenderedAdjusted
+                            {
+                                CARRIER_ID = tmp_adjusted.CARRIER_ID,
+                                DEPARTMENT_ID = tmp_adjusted.DEPARTMENT_ID,
+                                DEPARTMENT_Name = tmp_adjusted.DEPARTMENT_Name,
+                                SECTION_ID = tmp_adjusted.SECTION_ID,
+                                SECTION_NAME = tmp_adjusted.SECTION_NAME,
+                                MATFRIGRP = tmp_adjusted.MATFRIGRP,
+                                MATNAME = tmp_adjusted.MATNAME,
+                                REGION_ID = tmp_adjusted.REGION_ID,
+                                REGION_NAME_EN = tmp_adjusted.REGION_NAME_EN,
+                                REGION_NAME_TH = tmp_adjusted.REGION_NAME_TH,
+                                SOLDTO = tmp_adjusted.SOLDTO,
+                                SOLDTO_NAME = tmp_adjusted.SOLDTO_NAME,
+                                SHIPTO = tmp_adjusted.SHIPTO,
+                                LAST_SHPG_LOC_NAME = tmp_adjusted.LAST_SHPG_LOC_NAME,
+                                VENDOR_CODE = tmp_adjusted.VENDOR_CODE,
+                                VENDOR_NAME = tmp_adjusted.VENDOR_NAME,
+                                PLNTNRDDATE = tmp_adjusted.PLNTNRDDATE,
+                                PLNTNRDDATE_D = tmp_adjusted.PLNTNRDDATE_D,
+                                FTNRDDATE = tmp_adjusted.FTNRDDATE,
+                                FTNRDDATE_D = tmp_adjusted.FTNRDDATE_D,
+                                SHPMNTNO = tmp_adjusted.SHPMNTNO,
+                                LOADED_DATE = DateTime.Now,
+                                TNRD_ADJUST = isadjust ? 1 : 0,
+                                TNRD_ADJUST_BY = User.Identity.Name,
+                                TNRD_ADJUST_DATE = DateTime.Now,
+                                TNRD_ONTIME_REASON = reasonName,
+                                TNRD_ONTIME_REASON_ID = Convert.ToInt32(reasonId),
+                                TNRD_ONTIME_REMARK = remark
+                            };
+                            //insert waiting ofr approval
+                            objBs.tenderedAdjustedBs.Insert(tmp_toInsert);
                             //delete AcceptedDelays
                             objBs.tenderedDelayBs.Delete(sm);
 
-                            //update sum of adjust daily
-                            DateTime FTNRDDate = Convert.ToDateTime(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).FTNRDDATE_D);
-
-                            int id = objBs.ontimeTenderBs.GetAll()
-                                .Where(x => x.FirstTenderDate == FTNRDDate
-                                       && x.Segment == SegmentId).FirstOrDefault().Id;
-
-                            OntimeTender ontimeTender = objBs.ontimeTenderBs.GetByID(id);
-
-                            int adjTNRD = ontimeTender.AdjustTender + 1;
-                            ontimeTender.AdjustTender = adjTNRD;
-                            ontimeTender.SumOfAdjustTender = ontimeTender.OnTime + adjTNRD;
-                            objBs.ontimeTenderBs.Update(ontimeTender);
-                            countSM++;
                         }
                     }
 
-                    // update sum of adjust monthly
-                    int idM = objBs.ontimeTenderMonthBs.GetAll()
-                              .Where(x => x.Year == YearId
-                              && x.Month == MonthId
-                              && x.Segment == SegmentId).FirstOrDefault().Id;
-
-                    OntimeTenderMonth ontimeTenderMonth = objBs.ontimeTenderMonthBs.GetByID(idM);
-
-                    int adjTNRDMonth = ontimeTenderMonth.AdjustTender + countSM;
-                    ontimeTenderMonth.AdjustTender = adjTNRDMonth;
-                    ontimeTenderMonth.SumOfAdjustTender = ontimeTenderMonth.OnTime + adjTNRDMonth;
-                    objBs.ontimeTenderMonthBs.Update(ontimeTenderMonth);
-
-                    // update sum of adjust yearly
-                    int idY = objBs.ontimeTenderYearBs.GetAll()
-                              .Where(x => x.Year == YearId
-                              && x.Segment == SegmentId).FirstOrDefault().Id;
-
-                    OntimeTenderYear ontimeTenderYear = objBs.ontimeTenderYearBs.GetByID(idY);
-
-                    int adjTNRDYear = ontimeTenderYear.AdjustTender + countSM;
-                    ontimeTenderYear.AdjustTender = adjTNRDYear;
-                    ontimeTenderYear.SumOfAdjustTender = ontimeTenderYear.OnTime + adjTNRDYear;
-                    objBs.ontimeTenderYearBs.Update(ontimeTenderYear);
-
                     Trans.Complete();
                     return RedirectToAction("Index", new { sms = countSM + "-Shipment is adjusted Successfully!" });
-
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     return RedirectToAction("Index", new { sms = "Operation update reason accepted failed !" + ex.InnerException.InnerException.Message.ToString() });
                 }
                 //  return View();

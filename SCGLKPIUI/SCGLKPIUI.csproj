@@ -209,6 +209,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApproveDocReturnController.cs" />
+    <Compile Include="Controllers\ApproveOutboundController.cs" />
+    <Compile Include="Controllers\ApproveInboundController.cs" />
+    <Compile Include="Controllers\ApproveTenderedController.cs" />
+    <Compile Include="Controllers\ApproveDeliveredController.cs" />
     <Compile Include="Controllers\ApproveAcceptedController.cs" />
     <Compile Include="Controllers\AdjustAcceptedController.cs" />
     <Compile Include="Controllers\AdjustDeliveredController.cs" />
@@ -274,6 +279,7 @@
     <Compile Include="Models\Accepted\PendingAcceptViewModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Accepted\AdjustAcceptedViewModels.cs" />
+    <Compile Include="Models\Delivered\ApproveDeliveredViewModels.cs" />
     <Compile Include="Models\Delivered\PendingDeliveryiewModels.cs" />
     <Compile Include="Models\Delivered\AdjustDeliveredViewModels.cs" />
     <Compile Include="Models\Delivered\DeliveredOntimeChartDailyViewModels.cs" />
@@ -288,6 +294,7 @@
     <Compile Include="Models\Delivered\DeliveredOntimeSummaryYearlyViewModels.cs" />
     <Compile Include="Models\Delivered\DeliveredOntimeViewModels.cs" />
     <Compile Include="Models\Delivered\DeliveredOntimeYearlyViewModels.cs" />
+    <Compile Include="Models\DocReturned\ApproveDocReturnedViewModels.cs" />
     <Compile Include="Models\DocReturned\PendingDocReturnViewModels.cs" />
     <Compile Include="Models\DocReturned\DocReturnedOntimeChartDailyViewModels.cs" />
     <Compile Include="Models\DocReturned\DocReturnedOntimeChartMonthlyViewModels.cs" />
@@ -306,8 +313,9 @@
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\DocReturned\AdjustDocReturnedViewModels.cs" />
+    <Compile Include="Models\Inbounded\ApproveInboundedViewModels.cs" />
     <Compile Include="Models\Inbounded\PendingInboundViewModels.cs" />
-    <Compile Include="Models\Inbounded\AdjustInbounedViewModels.cs" />
+    <Compile Include="Models\Inbounded\AdjustInboundedViewModels.cs" />
     <Compile Include="Models\Inbounded\InboundedOntimeChartDailyViewModels.cs" />
     <Compile Include="Models\Inbounded\InboundedOntimeChartMonthlyViewModels.cs" />
     <Compile Include="Models\Inbounded\InboundedOntimeChartYearlyViewModels.cs" />
@@ -336,6 +344,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelSCGLKPI.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Outbounded\ApproveOutboundedViewModels.cs" />
     <Compile Include="Models\Outbounded\PendingOutboundViewModels.cs" />
     <Compile Include="Models\Outbounded\AdjustOutbounedViewModels.cs" />
     <Compile Include="Models\Outbounded\OutboundedOntimeChartDailyViewModels.cs" />
@@ -356,6 +365,7 @@
     <Compile Include="Models\sp_ontime_tender_Result.cs">
       <DependentUpon>ModelSCGLKPI.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tendered\ApproveTenderedViewModels.cs" />
     <Compile Include="Models\Tendered\PendingTenderViewModels.cs" />
     <Compile Include="Models\Tendered\AdjustTenderedViewModels.cs" />
     <Compile Include="Models\Tendered\TenderedOntimeChartDailyViewModels.cs" />
@@ -388,6 +398,7 @@
     <Content Include="Content\img\TrafficLight-Yellow-small.png" />
     <Content Include="Content\img\TrafficLight-Yellow-small50-18.png" />
     <Content Include="Content\img\TrafficLight-Yellow.png" />
+    <Content Include="Content\img\VK1_logo-01.png" />
     <Content Include="Content\jquery.datetimepicker.css" />
     <Content Include="Content\nprogress.css" />
     <Content Include="Content\style.css" />

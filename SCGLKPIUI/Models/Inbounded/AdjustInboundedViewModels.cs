@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace SCGLKPIUI.Models.Inbounded {
-    public class AdjustInbounedViewModels {
+    public class AdjustInboundedViewModels {
         public string DeliveryNote { get; set; }
         public string CarrierId { get; set; }
         public string RegionId { get; set; }
