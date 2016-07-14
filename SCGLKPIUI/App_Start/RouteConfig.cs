@@ -57,7 +57,7 @@ namespace SCGLKPIUI {
                 new { controller = "AdjustAccepted", action = "JsonAdjustAcceptTable" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
-            //8 approve accept
+            //9 approve accept
             routes.MapRoute("JsonApproveAcceptTable", "ApproveAccepted/JsonApproveAcceptTable/",
                 new { controller = "ApproveAccepted", action = "JsonApproveAcceptTable" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
@@ -100,6 +100,16 @@ namespace SCGLKPIUI {
                 new { controller = "PendingTender", action = "PendingTenderTableSummary" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
+            //8 adjust tender
+            routes.MapRoute("JsonAdjustTenderTable", "AdjustTendered/JsonAdjustTenderTable/",
+                new { controller = "AdjustTendered", action = "JsonAdjustTenderTable" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
+            //9 approve tender
+            routes.MapRoute("JsonApproveTenderTable", "ApproveTendered/JsonApproveTenderTable/",
+                new { controller = "ApproveTendered", action = "JsonApproveTenderTable" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
             #endregion
 
             #region 3 on-time inbounded
@@ -136,6 +146,16 @@ namespace SCGLKPIUI {
             //7 doc pending
             routes.MapRoute("PendingInboundTableSummary", "PendingInbound/PendingInboundTableSummary/",
                 new { controller = "PendingInbound", action = "PendingInboundTableSummary" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
+            //8 adjust Inbound
+            routes.MapRoute("JsonAdjustInboundTable", "AdjustInbounded/JsonAdjustInboundTable/",
+                new { controller = "AdjustInbounded", action = "JsonAdjustInboundTable" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
+            //9 approve Inbound
+            routes.MapRoute("JsonApproveInboundTable", "ApproveInbounded/JsonApproveInboundTable/",
+                new { controller = "ApproveInbounded", action = "JsonApproveInboundTable" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
             #endregion
@@ -176,6 +196,15 @@ namespace SCGLKPIUI {
                 new { controller = "PendingOutbound", action = "PendingOutboundTableSummary" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
+            //8 adjust Outbound
+            routes.MapRoute("JsonAdjustOutboundTable", "AdjustOutbounded/JsonAdjustOutboundTable/",
+                new { controller = "AdjustOutbounded", action = "JsonAdjustOutboundTable" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
+            //9 approve Outbound
+            routes.MapRoute("JsonApproveOutboundTable", "ApproveOutbounded/JsonApproveOutboundTable/",
+                new { controller = "ApproveOutbounded", action = "JsonApproveOutboundTable" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
             #endregion
 
             #region 5 on-time document return
@@ -214,6 +243,15 @@ namespace SCGLKPIUI {
                 new { controller = "PendingDocReturn", action = "PendingDocReturnTableSummary" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
+            //8 adjust DocReturn
+            routes.MapRoute("JsonAdjustDocReturnTable", "AdjustDocReturned/JsonAdjustDocReturnTable/",
+                new { controller = "AdjustDocReturned", action = "JsonAdjustDocReturnTable" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
+            //9 approve DocReturn
+            routes.MapRoute("JsonApproveDocReturnTable", "ApproveDocReturned/JsonApproveDocReturnTable/",
+                new { controller = "ApproveDocReturned", action = "JsonApproveDocReturnTable" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
             #endregion
 
             #region 6 on-time delivery
@@ -251,7 +289,16 @@ namespace SCGLKPIUI {
             routes.MapRoute("PendingDeliveryTableSummary", "PendingDelivery/PendingDeliveryTableSummary/",
                 new { controller = "PendingDelivery", action = "PendingDeliveryTableSummary" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
+            
+            //8 adjust Deliver
+            routes.MapRoute("JsonAdjustOntimeTable", "AdjustDelivered/JsonAdjustOntimeTable/",
+                new { controller = "AdjustDelivered", action = "JsonAdjustOntimeTable" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
 
+            //9 approve Deliver
+            routes.MapRoute("JsonApproveOntimeTable", "ApproveDelivered/JsonApproveOntimeTable/",
+                new { controller = "ApproveDelivered", action = "JsonApproveOntimeTable" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
             #endregion
         }
     }

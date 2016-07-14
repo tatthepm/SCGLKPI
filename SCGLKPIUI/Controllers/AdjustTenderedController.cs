@@ -88,7 +88,7 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public ActionResult UpdateTenderedReason(List<String> dynamic_select, List<string> txtSM, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
+        public ActionResult UpdateTenderReason(List<String> dynamic_select, List<string> txtSM, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
         { 
             using (TransactionScope Trans = new TransactionScope())
             {

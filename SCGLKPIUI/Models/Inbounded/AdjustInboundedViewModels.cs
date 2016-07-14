@@ -15,5 +15,6 @@ namespace SCGLKPIUI.Models.Inbounded {
         public string ShiptoName { get; set; }
         public DateTime? PlanInbound { get; set; } //PLNINBDATE
         public DateTime? ActualInbound { get; set; } //ACTGIDATE
+        public string ReasonId { get; set; }
     }
 }

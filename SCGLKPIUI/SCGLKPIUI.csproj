@@ -209,9 +209,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ApproveDocReturnController.cs" />
-    <Compile Include="Controllers\ApproveOutboundController.cs" />
-    <Compile Include="Controllers\ApproveInboundController.cs" />
+    <Compile Include="Controllers\ApproveDocReturnedController.cs" />
+    <Compile Include="Controllers\ApproveOutboundedController.cs" />
+    <Compile Include="Controllers\ApproveInboundedController.cs" />
     <Compile Include="Controllers\ApproveTenderedController.cs" />
     <Compile Include="Controllers\ApproveDeliveredController.cs" />
     <Compile Include="Controllers\ApproveAcceptedController.cs" />
@@ -346,7 +346,7 @@
     </Compile>
     <Compile Include="Models\Outbounded\ApproveOutboundedViewModels.cs" />
     <Compile Include="Models\Outbounded\PendingOutboundViewModels.cs" />
-    <Compile Include="Models\Outbounded\AdjustOutbounedViewModels.cs" />
+    <Compile Include="Models\Outbounded\AdjustOutboundedViewModels.cs" />
     <Compile Include="Models\Outbounded\OutboundedOntimeChartDailyViewModels.cs" />
     <Compile Include="Models\Outbounded\OutboundedOntimeChartMonthlyViewModels.cs" />
     <Compile Include="Models\Outbounded\OutboundedOntimeChartYearlyViewModels.cs" />
@@ -3071,6 +3071,16 @@
     <Content Include="Views\ApproveAccepted\pv_ApproveAccepted.cshtml" />
     <Content Include="Views\Shared\pv_ApproveFilterByMonth.cshtml" />
     <Content Include="Views\Shared\pv_ApproveFilterSegmentByMonth.cshtml" />
+    <Content Include="Views\ApproveDelivered\Index.cshtml" />
+    <Content Include="Views\ApproveDelivered\pv_ApproveDelivered.cshtml" />
+    <Content Include="Views\ApproveDocReturned\Index.cshtml" />
+    <Content Include="Views\ApproveDocReturned\pv_ApproveDocReturned.cshtml" />
+    <Content Include="Views\ApproveInbounded\Index.cshtml" />
+    <Content Include="Views\ApproveInbounded\pv_ApproveInbounded.cshtml" />
+    <Content Include="Views\ApproveOutbounded\Index.cshtml" />
+    <Content Include="Views\ApproveOutbounded\pv_ApproveOutbounded.cshtml" />
+    <Content Include="Views\ApproveTendered\Index.cshtml" />
+    <Content Include="Views\ApproveTendered\pv_ApproveTendered.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\UploadFiles\" />

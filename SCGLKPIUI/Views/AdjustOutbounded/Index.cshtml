@@ -1,22 +1,41 @@
-﻿@{
+﻿@model SCGLKPIUI.Models.Outbounded.AdjustOutboundedViewModels
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style type="text/css">
+    .chart-legend li span {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-right: 5px;
+        list-style: none;
+    }
 
+    .chart-legend ul {
+        list-style-type: none;
+    }
+</style>
 <h4>
-    <i class="fa fa-bar-chart"></i> Adjust on-time outbound
+    <i class="fa fa-truck"></i> Adjust Outbound | Monthly
 </h4>
 
+@*filter by month*@
 @Html.Partial("pv_FilterByMonth")
 
-@if (TempData["Msg"] != null) {
-    if (TempData["Msg"].ToString().Contains("Successfully")) {
+@Html.Partial("pv_AdjustOutbounded")
+
+@if (TempData["Msg"] != null)
+{
+    if (TempData["Msg"].ToString().Contains("Successfully"))
+    {
         <div class="alert alert-dismissable alert-info">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <span style="font-size:small"> @TempData["Msg"].ToString()</span>
         </div>
     }
-    else {
+    else
+    {
         <div class="alert alert-dismissable alert-danger">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <span style="font-size:small"> @TempData["Msg"].ToString()</span>
@@ -24,7 +43,6 @@
     }
 }
 
-<div id="divResult"></div>
 <div>
     <div id="loading" class="modal">
         <div class="modal-dialog">
@@ -59,7 +77,6 @@
     @Styles.Render("~/bundles/toastr/css")
     @Styles.Render("~/bundles/ladda/css")
     <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-
 }
 
 @section Scripts {
@@ -78,8 +95,15 @@
     <script src="~/Scripts/jquery.datetimepicker.js"></script>
     <script src="~/Scripts/fnReloadAjax.js"></script>
 
-    <script type="text/javascript">
-        //start javascript
+    <script>
+
+        //created global object Then just before initializing the chart i destroyed
+        var chartOntime;
+        var chartOntimeAdj;
+        var chartShipment;
+        var pieChartOntime;
+        var reasonString;
+        //
         // show progress
         $(document).ajaxStart(function () {
             $("#loading").show();
@@ -89,11 +113,15 @@
             $("#loading").hide();
         });
 
-        // end show progress
 
-        //
         //#region 1 autocomplete dropdownlist
         $(".js-source-states").select2();
+        //#endregion
+
+        //#region 2 filter section
+        //#endregion
+
+        //#region 3 filter matname
         //#endregion
 
         //#region 4 getJson Section
@@ -128,8 +156,14 @@
             });
         });
         //#endregion
-
         $("#btnSearch").click(function () {
+            //if ($('#DepartmentId').val() == "") {
+            //    swal({
+            //        title: "Warning!",
+            //        text: "Sorry!, Department is not selected ",
+            //        type: "warning"
+            //    });
+            //} else
 
             if ($('#DepartmentId').val() == "") {
                 swal({
@@ -164,23 +198,81 @@
             }
             else {
 
-                // on-time adjust outbound dataTable
+                $.getJSON('/AdjustOutbounded/ReasonFilter', function (data) {
+                    reasonString = '<td><select id="dynamic_select" name="dynamic_select">\n'
+                    reasonString += '<option value="">--SELECT--</option>\n';
+                    $.each(data, function (i, S) {
+                        reasonString += '<option value="' + S.Id + '">' + S.Name + '</option>\n'
+                    });
+                    reasonString += '</select></td>'
+                });
+
+                //#region table
+                // on-time tender monthly dataTable
                 var departmentId = $('#DepartmentId').val();
                 var sectionId = $('#SectionId').val();
                 var matNameId = $('#MatNameId').val();
                 var yearId = $('#YearId').val();
                 var monthId = $('#MonthId').val();
 
-                $('#divResult').load("/AdjustOutbounded/GetDelayOutboundedData?DepartmentId="
-                                      + departmentId
-                                      + "&SectionId=" + sectionId
-                                      + "&YearId=" + yearId
-                                      + "&MonthId=" + monthId
-                                      + "&MatNameId=" + matNameId);
-            }
-        });
+                var adjustOutbound = $('#adjustOutboundedTable').dataTable();
+                adjustOutbound.fnDestroy();
+                adjustOutbound.dataTable({
+                    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "ajax": {
+                        "type": "POST",
+                        "url": '@(Url.RouteUrl("JsonAdjustOutboundTable"))',
+                        "data": function (d) {
+                            d.departmentId = departmentId;
+                            d.sectionId = sectionId;
+                            d.matNameId = matNameId;
+                            d.YearId = yearId;
+                            d.MonthId = monthId;
+                        },
+                        "dataSrc": ""
+                    },
+                    columns: [
+                   { data: "Dn" },
+                   { data: "RegionName" },
+                   { data: "SoldtoName" },
+                   { data: "ShiptoName" },
+                    ],
+                    "columnDefs": [
+                                {
+                                    "mRender": function (data, type, full) {
+                                        return reasonString;
+                                    },
+                                    "targets": 4
+                                },
+                                {
+                                    "targets": 5,
+                                    "data": function (row, type, val, meta) {
+                                        return '<input type="text" name="txtRemark" />\n\
+                                            <input type="hidden" id="txtSM" name="txtSM" value="' + row.Dn + '">\n\
+                                            <input type="hidden" name="monthId" value="' + monthId + '" />\n\
+                                            <input type="hidden" name="yearId" value="' + yearId + '" />\n\
+                                            <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
+                                            <input type="hidden" name="sectionId" value="' + sectionId + '" />\n\
+                                            <input type="hidden" name="matNameId" value="' + matNameId + '" />\n';
+                                    }
+                                }
 
-        //#region 6 Bind normal buttons
+                    ],
+                    select: true,
+                    buttons: [
+                        { extend: 'copy', className: 'btn-sm' },
+                        { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
+                        { extend: 'pdf', title: 'ExampleFile', className: 'btn-sm' },
+                    ]
+                });
+                //#endregion table
+
+            } //end if else
+
+        }); //end btnSerarch click
+
+        //#region 5 Bind normal buttons
 
         $('.ladda-button').ladda('bind', { timeout: 2000 });
 
@@ -209,9 +301,8 @@
             // Do something in backend and then stop ladda
             setTimeout(function () {
                 l.ladda('stop');
-            }, 25000)
+            }, 5000)
         });
         //#endregion
-
-    </script>//stop javascript
+    </script>
 }

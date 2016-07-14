@@ -1,4 +1,4 @@
-﻿@model SCGLKPIUI.Models.Accepted.AdjustAcceptedViewModels
+﻿@model SCGLKPIUI.Models.Delivered.AdjustDeliveredViewModels
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,13 +17,13 @@
     }
 </style>
 <h4>
-    <i class="fa fa-truck"></i> Adjust accept | Monthly
+    <i class="fa fa-truck"></i> Adjust ontime | Monthly
 </h4>
 
 @*filter by month*@
 @Html.Partial("pv_ApproveFilterByMonth")
 
-@Html.Partial("pv_ApproveAccepted")
+@Html.Partial("pv_ApproveDelivered")
 
 @if (TempData["Msg"] != null)
 {
@@ -127,7 +127,7 @@
         //#region 4 getJson Section
         $("#DepartmentId").change(function (res) {
             departmentId = $("#DepartmentId").val();
-            $.getJSON('/ApproveAccepted/SectionFilter?departmentId=' + departmentId, function (data) {
+            $.getJSON('/ApproveDelivered/SectionFilter?departmentId=' + departmentId, function (data) {
                 var ddl = $("#SectionId");
                 // ddl.removeAttrs('disabled style');
                 ddl.addClass('js-source-states');
@@ -137,7 +137,7 @@
                 });
                 ddl.html(string);
             });
-            $.getJSON('/ApproveAccepted/ReasonFilter', function (data) {
+            $.getJSON('/ApproveDelivered/ReasonFilter', function (data) {
                 var ddlR = $("#ReasonId");
                 // ddl.removeAttrs('disabled style');
                 ddlR.addClass('js-source-states');
@@ -154,7 +154,7 @@
         $("#SectionId").change(function (res) {
             departmentId = $("#DepartmentId").val();
             sectionId = $("#SectionId").val();
-            $.getJSON('/ApproveAccepted/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
+            $.getJSON('/ApproveDelivered/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
                 var ddl = $("#MatNameId");
                 // ddl.removeAttrs('disabled style');
                 ddl.addClass('js-source-states');
@@ -176,7 +176,7 @@
             var matNameId = $('#MatNameId').val();
             var yearId = $('#YearId').val();
             var monthId = $('#MonthId').val();
-            var adjustApproveAccept = $('#approveAcceptedTable').dataTable();
+            var adjustApproveDeliver = $('#approveDeliveredTable').dataTable();
 
             if ($('#DepartmentId').val() == "") {
                 swal({
@@ -220,14 +220,14 @@
                 //var matNameId = $('#MatNameId').val();
                 //var yearId = $('#YearId').val();
                 //var monthId = $('#MonthId').val();
-                //adjustApproveAccept 
-                adjustApproveAccept.fnDestroy();
-                adjustApproveAccept.DataTable({
+                //adjustApproveDeliver
+                adjustApproveDeliver.fnDestroy();
+                adjustApproveDeliver.DataTable({
                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                     "ajax": {
                         "type": "POST",
-                        "url": '@(Url.RouteUrl("JsonApproveAcceptTable"))',
+                        "url": '@(Url.RouteUrl("JsonApproveOntimeTable"))',
                         "data": function (d) {
                             d.departmentId = departmentId;
                             d.sectionId = sectionId;
@@ -238,7 +238,7 @@
                         "dataSrc": ""
                     },
                     columns: [
-                        { data: "Shipment" },
+                        { data: "Dn" },
                         { data: "RegionName" },
                         { data: "SoldtoName" },
                         { data: "ShiptoName" },
@@ -259,7 +259,7 @@
                         "data": function (row, type, val, meta) {
                             return '<input type="text" name="txtRemark" />\n\
                                 <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\
-                                <input type="hidden" name="txtSM" value="' + row.Shipment + '" />\n\
+                                <input type="hidden" name="txtSM" value="' + row.Dn + '" />\n\
                                 <input type="hidden" name="monthId" value="' + monthId + '" />\n\
                                 <input type="hidden" name="yearId" value="' + yearId + '" />\n\
                                 <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
@@ -302,20 +302,20 @@
             //        });
             //    }
             //});
-            var table = $('#approveAcceptedTable').DataTable();
+            var table = $('#approveDeliveredTable').DataTable();
 
             $('thead input[name="select_all"]', table.table().container()).on('click', function (e) {
                 if (this.checked) {
-                    $('#approveAcceptedTable tbody input[type="checkbox"]:not(:checked)').trigger('click');
+                    $('#approveDeliveredTable tbody input[type="checkbox"]:not(:checked)').trigger('click');
                 } else {
-                    $('#approveAcceptedTable tbody input[type="checkbox"]:checked').trigger('click');
+                    $('#approveDeliveredTable tbody input[type="checkbox"]:checked').trigger('click');
                 }
                 //ดัก event ที่ส่งไป Parent class
                 // Prevent click event from propagating to parent
                 e.stopPropagation();
             });
 
-            $('#approveAcceptedTable tbody').on('click', 'input[type="checkbox"]', function (e) {
+            $('#approveDeliveredTable tbody').on('click', 'input[type="checkbox"]', function (e) {
                 //Get current tr
                 var $row = $(this).closest('tr');
                 //Get row index
@@ -326,7 +326,7 @@
                 //var rowShipmentString = rowShipment.toString();
                 //var rowId = rowShipmentString.substr(0, rowShipmentString.indexOf(','));
 
-                // Determine whether row ID is in the list of selected row IDs 
+                // Determine whether row ID is in the list of selected row IDs
                 var index = $.inArray(rowId, rows_selected);
 
                 // If checkbox is checked and row ID is not in list of selected row IDs
@@ -353,7 +353,7 @@
 
                 // Iterate over all selected checkboxes
                 $.each(rows_selected, function (index, rowId) {
-                    // Create a hidden element 
+                    // Create a hidden element
                     $(form).append(
                         $('<input>')
                            .attr('type', 'hidden')
@@ -400,7 +400,7 @@
         //
         // Updates "Select all" control in a data table
         //
-        
+
         //#endregion
     </script>
 }

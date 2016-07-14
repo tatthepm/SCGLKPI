@@ -143,8 +143,9 @@ namespace SCGLKPIUI.Controllers {
                             string remark = txtRemark[i];
                             string reasonName = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).Name;
                             bool isadjust = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
+
                             DWH_ONTIME_DN ontimeDn = objBs.dWH_ONTIME_DNBs.GetByID(dn);
-                            ontimeDn.ON_TIME_ADJUST = isadjust ? 1 : 0;
+                            ontimeDn.ON_TIME_ADJUST = isadjust ? 0 : 0;
                             ontimeDn.ON_TIME_ADJUST_BY = User.Identity.Name;
                             ontimeDn.ON_TIME_ADJUST_DATE = DateTime.Now;
                             ontimeDn.ON_TIME_REASON = reasonName;
@@ -197,7 +198,7 @@ namespace SCGLKPIUI.Controllers {
 
                 }
                 catch (Exception ex) {
-                    return RedirectToAction("Index", new { sms = "Operation update reason doc return failed !" + ex.InnerException.InnerException.Message.ToString() });
+                    return RedirectToAction("Index", new { sms = "Operation update reason delivery failed !" + ex.InnerException.InnerException.Message.ToString() });
                 }
             }
         }

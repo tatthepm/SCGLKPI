@@ -7,26 +7,25 @@
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        @using (Html.BeginForm("UpdateOntimeReason", "AdjustDelivered", FormMethod.Post))
+                        @using (Html.BeginForm("UpdateOntimeApprove", "ApproveDelivered", FormMethod.Post, new { name = "frm", id = "frm" }))
                         {
-                            @*<input type="hidden" name="DepartmentId" value="@ViewBag.DepartmentId" />
-                                <input type="hidden" name="SectionId" value="@ViewBag.SectionId" />
-                                <input type="hidden" name="MatNameId" value="@ViewBag.MatNameId" />
-                                <input type="hidden" name="YearId" value="@ViewBag.YearId" />
-                                <input type="hidden" name="MonthId" value="@ViewBag.MonthId" />*@
-                            <table id="adjustDeliveredTable" class="table table-striped table-bordered table-hover">
+                            <table id="approveDeliveredTable" class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Dn</th>
+                                        @*<th><input name="select_all" value="1" type="checkbox"></th>*@
+                                        <th>Shipment</th>
                                         <th>RegionName</th>
                                         <th>SoldtoName</th>
                                         <th>ShiptoName</th>
-                                        <th>PlanDeliver</th>
                                         <th>Reason</th>
+                                        <th><input name="select_all" id="select_all" value="1" type="checkbox"> Approve</th>
+                                        <th>Remark</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        @*<td></td>*@
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -37,6 +36,8 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
+                                        @*<td></td>*@
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>

@@ -100,7 +100,7 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public JsonResult JsonApproveOntimeTable(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
+        public JsonResult JsonApproveDocReturnTable(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
         {
             // add IEnumerable<AdjustDocReturnededViewModels>
             List<ApproveDocReturnedViewModels> viewModel = new List<ApproveDocReturnedViewModels>();
@@ -145,7 +145,7 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateOntimeApprove(List<string> thisReasonId, List<string> txtDN, List<string> txtApprove, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
+        public ActionResult UpdateDocReturnApprove(List<string> thisReasonId, List<string> txtDN, List<string> txtApprove, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
         {
             using (TransactionScope Trans = new TransactionScope())
             {
@@ -225,7 +225,6 @@ namespace SCGLKPIUI.Controllers
                         }
                     }
                     countDN++;
-
 
                     Trans.Complete();
                     return RedirectToAction("Index", new { sms = countDN + "-Shipment is adjusted Successfully!" });

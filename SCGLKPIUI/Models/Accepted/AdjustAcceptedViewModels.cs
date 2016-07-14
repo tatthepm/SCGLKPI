@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SCGLKPIUI.Models {
+namespace SCGLKPIUI.Models.Accepted {
     public class AdjustAcceptedViewModels {
         public string Shipment { get; set; }
         public string CarrierId { get; set; }

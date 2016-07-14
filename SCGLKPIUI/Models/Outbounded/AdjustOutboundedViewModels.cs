@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace SCGLKPIUI.Models.Outbounded {
-    public class AdjustOutbounedViewModels {
+    public class AdjustOutboundedViewModels {
         public string DeliveryNote { get; set; }
         public string CarrierId { get; set; }
         public string RegionId { get; set; }
@@ -15,5 +15,6 @@ namespace SCGLKPIUI.Models.Outbounded {
         public string ShiptoName { get; set; }
         public DateTime? PlanOutbound { get; set; } //PLNOUTDATE
         public DateTime? ActualOutbound { get; set; } //ACDLVDATE
+        public string ReasonId { get; set; }
     }
 }

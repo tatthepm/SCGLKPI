@@ -13,9 +13,9 @@ using System.IO;
 
 namespace SCGLKPIUI.Controllers
 {
-    public class ApproveOutboundedController : BaseController
+    public class ApproveInboundedController : BaseController
     {
-        // GET: AdjustOutbounded
+        // GET: AdjustInbounded
         public ActionResult Index(string sms, string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
         {
             try
@@ -25,15 +25,15 @@ namespace SCGLKPIUI.Controllers
                 DropDownList ddl = new DropDownList();
                 var ddlDept = ddl.GetDropDownList("Department");
                 var ddlSec = ddl.GetDropDownList("Section");
-                var ddlYear = ddl.GetDropDownListOutboundMonth("Year");
-                var ddlMonth = ddl.GetDropDownListOutboundMonth("Month");
+                var ddlYear = ddl.GetDropDownListInboundMonth("Year");
+                var ddlMonth = ddl.GetDropDownListInboundMonth("Month");
                 ViewBag.DepartmentId = new SelectList(ddlDept.ToList(), "Id", "Name");
                 ViewBag.SectionId = new SelectList(ddlSec.ToList(), "Id", "Name");
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
                 //1 DropdownList 
-                var ddlMatName = (from m in objBs.outboundAdjustedBs.GetAll()
+                var ddlMatName = (from m in objBs.inboundAdjustedBs.GetAll()
                                   where !String.IsNullOrEmpty(m.MATNAME)
                                   select new
                                   {
@@ -41,7 +41,7 @@ namespace SCGLKPIUI.Controllers
                                       Name = m.MATNAME,
                                   }).Distinct();
 
-                var ddlReason = (from m in objBs.reasonOutboundBs.GetAll()
+                var ddlReason = (from m in objBs.reasonInboundBs.GetAll()
                                  select new
                                  {
                                      Id = m.Id,
@@ -56,13 +56,13 @@ namespace SCGLKPIUI.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", new { sms = "Operation Outbound failed " + ex.InnerException.InnerException.Message.ToString() });
+                return RedirectToAction("Index", new { sms = "Operation Inbound failed " + ex.InnerException.InnerException.Message.ToString() });
             }
         }
 
         public JsonResult SectionFilter(string departmentId)
         {
-            var result = (from m in objBs.outboundAdjustedBs.GetAll()
+            var result = (from m in objBs.inboundAdjustedBs.GetAll()
                           where m.DEPARTMENT_ID == departmentId
                           select new
                           {
@@ -75,7 +75,7 @@ namespace SCGLKPIUI.Controllers
 
         public JsonResult MatNameFilter(string departmentId, string sectionid)
         {
-            var result = (from m in objBs.outboundAdjustedBs.GetAll()
+            var result = (from m in objBs.inboundAdjustedBs.GetAll()
                           where m.DEPARTMENT_ID == departmentId
                           && m.SECTION_ID == sectionid
                           select new
@@ -89,7 +89,7 @@ namespace SCGLKPIUI.Controllers
 
         public JsonResult ReasonFilter()
         {
-            var result = (from r in objBs.reasonOutboundBs.GetAll()
+            var result = (from r in objBs.reasonInboundBs.GetAll()
                           select new
                           {
                               Id = r.Id,
@@ -100,17 +100,17 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public JsonResult JsonApproveOntimeTable(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
+        public JsonResult JsonApproveOnboundTable(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
         {
-            // add IEnumerable<AdjustOutboundedViewModels>
-            List<ApproveOutboundedViewModels> viewModel = new List<ApproveOutboundedViewModels>();
+            // add IEnumerable<AdjustInboundedViewModels>
+            List<ApproveInboundedViewModels> viewModel = new List<ApproveInboundedViewModels>();
 
             //filter department
-            var q = from d in objBs.outboundAdjustedBs.GetAll()
+            var q = from d in objBs.inboundAdjustedBs.GetAll()
                     where d.DEPARTMENT_ID == DepartmentId
                     && d.SECTION_ID == SectionId
-                    && d.ACDLVDATE.Value.Month == Convert.ToInt32(MonthId)
-                    && d.ACDLVDATE.Value.Year == Convert.ToInt32(YearId)
+                    && d.ACTGIDATE_D.Value.Month == Convert.ToInt32(MonthId)
+                    && d.ACTGIDATE_D.Value.Year == Convert.ToInt32(YearId)
                     select d;
 
             //filter matname
@@ -121,7 +121,7 @@ namespace SCGLKPIUI.Controllers
 
             foreach (var item in q)
             {
-                ApproveOutboundedViewModels model = new ApproveOutboundedViewModels();
+                ApproveInboundedViewModels model = new ApproveInboundedViewModels();
                 model.Dn = item.DELVNO;
                 model.CarrierId = item.CARRIER_ID;
                 model.RegionId = item.REGION_ID;
@@ -130,13 +130,13 @@ namespace SCGLKPIUI.Controllers
                 model.SoldtoName = item.SOLDTO_NAME;
                 model.Shipto = item.SHIPTO;
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
-                model.PlanOutbound = Convert.ToDateTime(item.PLNOUTBDATE);
-                model.ActualOutbound = Convert.ToDateTime(item.ACDLVDATE);
-                model.Approve = Convert.ToBoolean(item.OUTB_ADJUST);
-                model.AdjustBy = item.OUTB_ADJUST_BY;
-                model.Remark = item.OUTB_REMARK;
-                model.Reason = item.OUTB_REASON;
-                model.thisReasonId = Convert.ToString(item.OUTB_REASON_ID);
+                model.PlanInbound = Convert.ToDateTime(item.PLNINBDATE);
+                model.ActualInbound = Convert.ToDateTime(item.ACTGIDATE);
+                model.Approve = Convert.ToBoolean(item.INB_ADJUST);
+                model.AdjustBy = item.INB_ADJUST_BY;
+                model.Remark = item.INB_REMARK;
+                model.Reason = item.INB_REASON;
+                model.thisReasonId = Convert.ToString(item.INB_REASON_ID);
 
                 viewModel.Add(model);
             }
@@ -145,7 +145,7 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateOutboundApprove(List<string> thisReasonId, List<string> txtDN, List<string> txtApprove, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
+        public ActionResult UpdateInboundApprove(List<string> thisReasonId, List<string> txtDN, List<string> txtApprove, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
         {
             using (TransactionScope Trans = new TransactionScope())
             {
@@ -160,20 +160,20 @@ namespace SCGLKPIUI.Controllers
                         string dn = txtDN[i];
                         string reasonId = thisReasonId[i];
                         string remark = txtRemark[i];
-                        string reasonName = objBs.reasonOutboundBs.GetByID(Convert.ToInt32(reasonId)).Name;
-                        bool isadjust = objBs.reasonOutboundBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
+                        string reasonName = objBs.reasonInboundBs.GetByID(Convert.ToInt32(reasonId)).Name;
+                        bool isadjust = objBs.reasonInboundBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
                         DWH_ONTIME_DN ontimeDn = objBs.dWH_ONTIME_DNBs.GetByID(dn);
-                        ontimeDn.OUTB_ADJUST = isadjust ? 1 : 0;
-                        ontimeDn.OUTB_ADJUST_BY = User.Identity.Name;
-                        ontimeDn.OUTB_ADJUST_DATE = DateTime.Now;
-                        ontimeDn.OUTB_REASON = reasonName;
-                        ontimeDn.OUTB_REASON_ID = Convert.ToInt32(reasonId);
-                        ontimeDn.OUTB_REMARK = remark;
+                        ontimeDn.INB_ADJUST = isadjust ? 1 : 0;
+                        ontimeDn.INB_ADJUST_BY = User.Identity.Name;
+                        ontimeDn.INB_ADJUST_DATE = DateTime.Now;
+                        ontimeDn.INB_REASON = reasonName;
+                        ontimeDn.INB_REASON_ID = Convert.ToInt32(reasonId);
+                        ontimeDn.INB_REMARK = remark;
 
                         objBs.dWH_ONTIME_DNBs.Update(ontimeDn);
 
-                        //delete OutboundedDelays
-                        objBs.outboundAdjustedBs.Delete(dn);
+                        //delete InboundedDelays
+                        objBs.inboundAdjustedBs.Delete(dn);
 
                         //update sum of adjust daily
                         DateTime ONTIMEDate = Convert.ToDateTime(objBs.dWH_ONTIME_DNBs.GetByID(dn).ACDLVDATE_D);
@@ -181,47 +181,47 @@ namespace SCGLKPIUI.Controllers
                         if (isadjust)
                         {
 
-                            int id = objBs.ontimeOutboundBs.GetAll()
+                            int id = objBs.ontimeInboundBs.GetAll()
                                 .Where(x => x.ActualGiDate == ONTIMEDate
                                        && x.DepartmentId == departmentId
                                        && x.SectionId == sectionId
                                        && x.MatFriGrp == matNameId).FirstOrDefault().Id;
 
-                            OntimeOutbound ontimeOutbound = objBs.ontimeOutboundBs.GetByID(id);
+                            OntimeInbound ontimeInbound = objBs.ontimeInboundBs.GetByID(id);
 
-                            int adjOntime = ontimeOutbound.AdjustOutbound + 1;
-                            ontimeOutbound.AdjustOutbound = adjOntime;
-                            ontimeOutbound.SumOfAdjustOutbound = ontimeOutbound.OnTime + adjOntime;
-                            objBs.ontimeOutboundBs.Update(ontimeOutbound);
+                            int adjOntime = ontimeInbound.AdjustInbound + 1;
+                            ontimeInbound.AdjustInbound = adjOntime;
+                            ontimeInbound.SumOfAdjustInbound = ontimeInbound.OnTime + adjOntime;
+                            objBs.ontimeInboundBs.Update(ontimeInbound);
 
                             // update sum of adjust monthly
-                            int idM = objBs.ontimeOutboundMonthBs.GetAll()
+                            int idM = objBs.ontimeInboundMonthBs.GetAll()
                                       .Where(x => x.Year == yearId
                                       && x.Month == monthId
                                       && x.DepartmentId == departmentId
                                       && x.SectionId == sectionId
                                       && x.MatFriGrp == matNameId).FirstOrDefault().Id;
 
-                            OntimeOutboundMonth ontimeOutboundMonth = objBs.ontimeOutboundMonthBs.GetByID(idM);
+                            OntimeInboundMonth ontimeInboundMonth = objBs.ontimeInboundMonthBs.GetByID(idM);
 
-                            int adjOutboundMonth = ontimeOutboundMonth.AdjustOutbound + countDN;
-                            ontimeOutboundMonth.AdjustOutbound = adjOutboundMonth;
-                            ontimeOutboundMonth.SumOfAdjustOutbound = ontimeOutboundMonth.OnTime + adjOutboundMonth;
-                            objBs.ontimeOutboundMonthBs.Update(ontimeOutboundMonth);
+                            int adjInboundMonth = ontimeInboundMonth.AdjustInbound + countDN;
+                            ontimeInboundMonth.AdjustInbound = adjInboundMonth;
+                            ontimeInboundMonth.SumOfAdjustInbound = ontimeInboundMonth.OnTime + adjInboundMonth;
+                            objBs.ontimeInboundMonthBs.Update(ontimeInboundMonth);
 
                             // update sum of adjust yearly
-                            int idY = objBs.ontimeOutboundYearBs.GetAll()
+                            int idY = objBs.ontimeInboundYearBs.GetAll()
                                       .Where(x => x.Year == yearId
                                       && x.DepartmentId == departmentId
                                       && x.SectionId == sectionId
                                       && x.MatFriGrp == matNameId).FirstOrDefault().Id;
 
-                            OntimeOutboundYear ontimeOutboundYear = objBs.ontimeOutboundYearBs.GetByID(idY);
+                            OntimeInboundYear ontimeInboundYear = objBs.ontimeInboundYearBs.GetByID(idY);
 
-                            int adjOutboundYear = ontimeOutboundYear.AdjustOutbound + countDN;
-                            ontimeOutboundYear.AdjustOutbound = adjOutboundYear;
-                            ontimeOutboundYear.SumOfAdjustOutbound = ontimeOutboundYear.OnTime + adjOutboundYear;
-                            objBs.ontimeOutboundYearBs.Update(ontimeOutboundYear);
+                            int adjInboundYear = ontimeInboundYear.AdjustInbound + countDN;
+                            ontimeInboundYear.AdjustInbound = adjInboundYear;
+                            ontimeInboundYear.SumOfAdjustInbound = ontimeInboundYear.OnTime + adjInboundYear;
+                            objBs.ontimeInboundYearBs.Update(ontimeInboundYear);
                         }
                     }
                     countDN++;
@@ -232,7 +232,7 @@ namespace SCGLKPIUI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return RedirectToAction("Index", new { sms = "Operation update reason Outbounded failed !" + ex.InnerException.InnerException.Message.ToString() });
+                    return RedirectToAction("Index", new { sms = "Operation update reason Inbounded failed !" + ex.InnerException.InnerException.Message.ToString() });
                 }
                 //  return View();
 

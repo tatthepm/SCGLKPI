@@ -15,5 +15,6 @@ namespace SCGLKPIUI.Models.Tendered {
         public string ShiptoName { get; set; }
         public DateTime? PlanTender { get; set; }
         public DateTime? FirstTender { get; set; }
+        public string ReasonId { get; set; }
     }
 }

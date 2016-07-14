@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BLL;
 using BOL;
 using SCGLKPIUI.Models;
+using SCGLKPIUI.Models.Accepted;
 using System.Transactions;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
-using System.IO;
 
 namespace SCGLKPIUI.Controllers
 {
