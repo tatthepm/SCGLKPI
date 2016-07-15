@@ -304,53 +304,53 @@
             /**
              * Flot charts 2 data and options
              */
-            var chartIncomeData = [
-                {
-                    label: "line",
-                    data: [[1, 10], [2, 26], [3, 16], [4, 36], [5, 32], [6, 51]]
-                }
-            ];
-            var chartIncomeOptions = {
-                series: {
-                    lines: {
-                        show: true,
-                        lineWidth: 0,
-                        fill: true,
-                        fillColor: "#64cc34"
+            //var chartIncomeData = [
+            //    {
+            //        label: "line",
+            //        data: [[1, 10], [2, 26], [3, 16], [4, 36], [5, 32], [6, 51]]
+            //    }
+            //];
+            //var chartIncomeOptions = {
+            //    series: {
+            //        lines: {
+            //            show: true,
+            //            lineWidth: 0,
+            //            fill: true,
+            //            fillColor: "#64cc34"
 
-                    }
-                },
-                colors: ["#62cb31"],
-                grid: {
-                    show: false
-                },
-                legend: {
-                    show: false
-                }
-            };
-            $.plot($("#flot-income-chart"), chartIncomeData, chartIncomeOptions);
-
-            //
-            $('.demo2').click(function () {
-                swal({
-                    title: "Good job!",
-                    text: "You clicked the button!",
-                    type: "success"
-                });
-            });
+            //        }
+            //    },
+            //    colors: ["#62cb31"],
+            //    grid: {
+            //        show: false
+            //    },
+            //    legend: {
+            //        show: false
+            //    }
+            //};
+            //$.plot($("#flot-income-chart"), chartIncomeData, chartIncomeOptions);
 
             //
+            //$('.demo2').click(function () {
+            //    swal({
+            //        title: "Good job!",
+            //        text: "You clicked the button!",
+            //        type: "success"
+            //    });
+            //});
+
+            ////
             
-            var sourceRole = [];
-            var jsonString = $.getJSON('/Test/jsonData', function (data) {
-                $.each(data, function (index, item) {
-                    sourceRole.push(item.YEAR);
-                    sourceRole.push(item.Month);
-                    sourceRole.push(item.Total);
-                    sourceRole.push(item.Ontime);
-                    sourceRole.push(item.Percent);
-                });
-            });
+            //var sourceRole = [];
+            //var jsonString = $.getJSON('/Test/jsonData', function (data) {
+            //    $.each(data, function (index, item) {
+            //        sourceRole.push(item.YEAR);
+            //        sourceRole.push(item.Month);
+            //        sourceRole.push(item.Total);
+            //        sourceRole.push(item.Ontime);
+            //        sourceRole.push(item.Percent);
+            //    });
+            //});
 
             //$('#testJson').click(function () {
             //    //swal({
