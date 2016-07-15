@@ -233,7 +233,7 @@
                         "dataSrc": ""
                     },
                     columns: [
-                   { data: "Dn" },
+                   { data: "DeliveryNote" },
                    { data: "RegionName" },
                    { data: "SoldtoName" },
                    { data: "ShiptoName" },
@@ -249,7 +249,7 @@
                                     "targets": 5,
                                     "data": function (row, type, val, meta) {
                                         return '<input type="text" name="txtRemark" />\n\
-                                            <input type="hidden" id="txtSM" name="txtSM" value="' + row.Dn + '">\n\
+                                            <input type="hidden" id="txtSM" name="txtSM" value="' + row.DeliveryNote + '">\n\
                                             <input type="hidden" name="monthId" value="' + monthId + '" />\n\
                                             <input type="hidden" name="yearId" value="' + yearId + '" />\n\
                                             <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
