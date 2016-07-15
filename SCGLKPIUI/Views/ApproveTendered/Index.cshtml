@@ -21,7 +21,7 @@
 </h4>
 
 @*filter by month*@
-@Html.Partial("pv_ApproveFilterByMonth")
+@Html.Partial("pv_ApproveFilterSegmentByMonth")
 
 @Html.Partial("pv_ApproveTendered")
 
@@ -124,19 +124,8 @@
         //#region 3 filter matname
         //#endregion
 
-        //#region 4 getJson Section
-        $("#DepartmentId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            $.getJSON('/ApproveTendered/SectionFilter?departmentId=' + departmentId, function (data) {
-                var ddl = $("#SectionId");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddl.html(string);
-            });
+        //#region 4 getJson Reason
+        $(document).ready(function () {
             $.getJSON('/ApproveTendered/ReasonFilter', function (data) {
                 var ddlR = $("#ReasonId");
                 // ddl.removeAttrs('disabled style');
@@ -151,20 +140,6 @@
         //#endregion
 
         //#region  5 getJson MatName
-        $("#SectionId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            sectionId = $("#SectionId").val();
-            $.getJSON('/ApproveTendered/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
-                var ddl = $("#MatNameId");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddl.html(string);
-            });
-        });
         //#endregion
         $("#btnSearch").click(function () {
 

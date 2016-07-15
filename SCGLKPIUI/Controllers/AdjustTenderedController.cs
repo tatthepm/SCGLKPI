@@ -26,6 +26,14 @@ namespace SCGLKPIUI.Controllers {
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
+                var ddlReason = (from r in objBs.reasonAcceptedBs.GetAll()
+                                 select new
+                                 {
+                                     Id = r.Id,
+                                     Name = r.Name
+                                 }).Distinct().OrderBy(x => x.Name);
+                ViewBag.ReasonId = new SelectList(ddlReason.ToList(), "Id", "Name");
+
                 return View();
 
             }
@@ -35,11 +43,9 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public JsonResult JsonAdjustTenderTable(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
+        public JsonResult JsonAdjustTenderTable(string SegmentId, string YearId, string MonthId)
         {
-            ViewBag.DepartmentId = DepartmentId;
-            ViewBag.SectionId = SectionId;
-            ViewBag.MatNameId = MatNameId;
+            ViewBag.DepartmentId = SegmentId;
             ViewBag.YearId = YearId;
             ViewBag.MonthId = MonthId;
             // add IEnumerable<AdjustAcceptedViewModels>
@@ -47,17 +53,10 @@ namespace SCGLKPIUI.Controllers {
 
             //filter department
             var q = from d in objBs.tenderedDelayBs.GetAll()
-                    where d.DEPARTMENT_ID == DepartmentId
-                    && d.SECTION_ID == SectionId
+                    where d.DEPARTMENT_ID == SegmentId
                     && d.FTNRDDATE_D.Value.Month == Convert.ToInt32(MonthId)
                     && d.FTNRDDATE_D.Value.Year == Convert.ToInt32(YearId)
                     select d;
-
-            //filter matname
-            if (!String.IsNullOrEmpty(MatNameId))
-            {
-                q = q.Where(x => x.MATFRIGRP == MatNameId);
-            }
 
             //int c = q.Count();
             foreach (var item in q)
@@ -88,7 +87,7 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public ActionResult UpdateTenderReason(List<String> dynamic_select, List<string> txtSM, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
+        public ActionResult UpdateTenderReason(List<String> dynamic_select, List<string> txtSM, List<string> txtRemark, string segmentId, string yearId, string monthId)
         { 
             using (TransactionScope Trans = new TransactionScope())
             {

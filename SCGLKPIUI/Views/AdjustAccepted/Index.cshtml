@@ -125,36 +125,21 @@
         //#endregion
 
         //#region 4 getJson Section
-        $("#DepartmentId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            $.getJSON('/AdjustAccepted/SectionFilter?departmentId=' + departmentId, function (data) {
-                var ddl = $("#SectionId");
+        $(document).ready(function () {
+            $.getJSON('/AdjustTendered/ReasonFilter', function (data) {
+                var ddlR = $("#ReasonId");
                 // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
+                ddlR.addClass('js-source-states');
                 var string = '<option value="">ALL</option>';
                 $.each(data, function (i, S) {
                     string += '<option value="' + S.Id + '">' + S.Name + '</option>'
                 });
-                ddl.html(string);
+                ddlR.html(string);
             });
         });
         //#endregion
 
         //#region  5 getJson MatName
-        $("#SectionId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            sectionId = $("#SectionId").val();
-            $.getJSON('/AdjustAccepted/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
-                var ddl = $("#MatNameId");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddl.html(string);
-            });
-        });
         //#endregion
         $("#btnSearch").click(function () {
             //if ($('#DepartmentId').val() == "") {
