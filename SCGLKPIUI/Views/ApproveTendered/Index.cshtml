@@ -146,26 +146,15 @@
             var rows_selected = [];
             //#region table
             // on-time tender monthly dataTable
-            var departmentId = $('#DepartmentId').val();
-            var sectionId = $('#SectionId').val();
-            var matNameId = $('#MatNameId').val();
+            //var departmentId = $('#DepartmentId').val();
+            //var sectionId = $('#SectionId').val();
+            //var matNameId = $('#MatNameId').val();
+            var matNameId = $('#SegmentId').val();
             var yearId = $('#YearId').val();
             var monthId = $('#MonthId').val();
             var adjustApproveTender = $('#approveTenderedTable').dataTable();
 
-            if ($('#DepartmentId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, Department is not selected ",
-                    type: "warning"
-                });
-            } else if ($('#SectionId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, Section is not selected ",
-                    type: "warning"
-                });
-            } else if ($('#MatNameId').val() == "") {
+            if ($('#SegmentId').val() == "") {
                 swal({
                     title: "Warning!",
                     text: "Sorry!, MatName is not selected ",
@@ -193,8 +182,9 @@
                 //var departmentId = $('#DepartmentId').val();
                 //var sectionId = $('#SectionId').val();
                 //var matNameId = $('#MatNameId').val();
-                //var yearId = $('#YearId').val();
-                //var monthId = $('#MonthId').val();
+                var segmentId = $('#SegmentId').val();
+                var yearId = $('#YearId').val();
+                var monthId = $('#MonthId').val();
                 //adjustApproveTender
                 adjustApproveTender.fnDestroy();
                 adjustApproveTender.DataTable({
@@ -204,9 +194,10 @@
                         "type": "POST",
                         "url": '@(Url.RouteUrl("JsonApproveTenderTable"))',
                         "data": function (d) {
-                            d.departmentId = departmentId;
-                            d.sectionId = sectionId;
-                            d.matNameId = matNameId;
+                            //d.departmentId = departmentId;
+                            //d.sectionId = sectionId;
+                            //d.matNameId = matNameId;
+                            d.segmentId = segmentId
                             d.YearId = yearId;
                             d.MonthId = monthId;
                         },

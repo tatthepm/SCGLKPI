@@ -27,15 +27,7 @@ namespace SCGLKPIUI.Controllers {
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
-                //1 DropdownList 
-                var ddlMatName = (from m in objBs.outboundDelayBs.GetAll()
-                                  where !String.IsNullOrEmpty(m.MATNAME)
-                                  select new {
-                                      Id = m.MATFRIGRP,
-                                      Name = m.MATNAME,
-                                  }).Distinct();
-
-                ViewBag.MatNameId = new SelectList(ddlMatName.ToList(), "Id", "Name");
+                ViewBag.MatNameId = new SelectList(objBs.outboundDelayBs.GetByMatName(), "Id", "Name");
 
                 return View();
 
@@ -45,83 +37,26 @@ namespace SCGLKPIUI.Controllers {
             }
         }
 
-        public JsonResult SectionFilter(string departmentId) {
-            var result = (from m in objBs.outboundDelayBs.GetAll()
-                          where m.DEPARTMENT_ID == departmentId
-                          select new {
-                              Id = m.SECTION_ID,
-                              Name = m.SECTION_NAME
+        public JsonResult SectionFilter(string departmentId)
+        {
+            return Json(objBs.outboundDelayBs.GetBySection(departmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult MatNameFilter(string departmentId, string sectionId)
+        {
+            return Json(objBs.outboundDelayBs.GetByMatName(departmentId, sectionId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ReasonFilter()
+        {
+            var result = (from r in objBs.reasonOutboundBs.GetAll()
+                          select new
+                          {
+                              Id = r.Id,
+                              Name = r.Name
                           }).Distinct().OrderBy(x => x.Name);
 
             return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult MatNameFilter(string departmentId, string sectionid) {
-            var result = (from m in objBs.outboundDelayBs.GetAll()
-                          where m.DEPARTMENT_ID == departmentId
-                          && m.SECTION_ID == sectionid
-                          select new {
-                              Id = m.MATFRIGRP,
-                              Name = m.MATNAME
-                          }).Distinct().OrderBy(x => x.Name);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult GetDelayOutboundedData(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId) {
-            try {
-                ViewBag.DepartmentId = DepartmentId;
-                ViewBag.SectionId = SectionId;
-                ViewBag.MatNameId = MatNameId;
-                ViewBag.YearId = YearId;
-                ViewBag.MonthId = MonthId;
-
-                // add IEnumerable<AdjustAcceptedViewModels>
-                List<AdjustOutboundedViewModels> viewModel = new List<AdjustOutboundedViewModels>();
-
-                //filter department
-                var q = from d in objBs.outboundDelayBs.GetAll()
-                        where d.DEPARTMENT_ID == DepartmentId
-                        && d.SECTION_ID == SectionId
-                        && d.ACDLVDATE_D.Value.Month == Convert.ToInt32(MonthId)
-                        && d.ACDLVDATE_D.Value.Year == Convert.ToInt32(YearId)
-                        select d;
-
-                //filter matname
-                if (!String.IsNullOrEmpty(MatNameId)) {
-                    q = q.Where(x => x.MATFRIGRP == MatNameId);
-                }
-
-                int c = q.Count();
-
-                foreach (var item in q) {
-                    AdjustOutboundedViewModels model = new AdjustOutboundedViewModels();
-                    model.DeliveryNote = item.DELVNO;
-                    model.CarrierId = item.CARRIER_ID;
-                    model.RegionId = item.REGION_ID;
-                    model.RegionName = item.REGION_NAME_TH;
-                    model.Soldto = item.SOLDTO;
-                    model.SoldtoName = item.SOLDTO_NAME;
-                    model.Shipto = item.SHIPTO;
-                    model.ShiptoName = item.TO_SHPG_LOC_NAME;
-                    model.PlanOutbound = Convert.ToDateTime(item.PLNOUTBDATE);
-                    model.ActualOutbound = Convert.ToDateTime(item.ACDLVDATE);
-                    viewModel.Add(model);
-                }
-
-                var ddlReason = (from r in objBs.reasonOutboundBs.GetAll()
-                                 select new {
-                                     Id = r.Id,
-                                     Name = r.Name
-                                 }).Distinct().OrderBy(x => x.Name);
-                ViewBag.ReasonId = new SelectList(ddlReason.ToList(), "Id", "Name");
-
-                return PartialView("pv_AdjustOutbounded", viewModel);
-
-            }
-            catch (Exception ex) {
-                return RedirectToAction("Index", new { sms = "Operation getDelayTenderedData failed ! " + ex.InnerException.InnerException.Message.ToString() });
-            }
         }
 
         [HttpPost]
@@ -137,11 +72,7 @@ namespace SCGLKPIUI.Controllers {
             List<AdjustOutboundedViewModels> viewModel = new List<AdjustOutboundedViewModels>();
 
             //filter department
-            var q = from d in objBs.outboundDelayBs.GetAll()
-                    where d.DEPARTMENT_ID == DepartmentId
-                    && d.SECTION_ID == SectionId
-                    && d.ACDLVDATE_D.Value.Month == Convert.ToInt32(MonthId)
-                    && d.ACDLVDATE_D.Value.Year == Convert.ToInt32(YearId)
+            var q = from d in objBs.outboundDelayBs.GetByFilter(DepartmentId, SectionId, Convert.ToInt32(MonthId), Convert.ToInt32(YearId))
                     select d;
 
             //filter matname

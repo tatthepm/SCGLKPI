@@ -147,6 +147,12 @@ namespace SCGLKPIUI
             bundles.Add(new StyleBundle("~/bundles/select2/css").Include(
                       "~/Vendor/select2-3.5.2/select2.css",
                       "~/Vendor/select2-bootstrap/select2-bootstrap.css"));
+            // Select 2 png
+            bundles.Add(new StyleBundle("~/bundles/select2/png").Include(
+                      "~/Vendor/select2-3.5.2/select2.png"));
+            // Select 2 gif
+            bundles.Add(new StyleBundle("~/bundles/select2/gif").Include(
+                      "~/Vendor/select2-3.5.2/select2-spinner.gif"));
 
             // Touchspin
             bundles.Add(new ScriptBundle("~/bundles/touchspin/js").Include(

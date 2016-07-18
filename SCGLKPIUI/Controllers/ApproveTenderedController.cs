@@ -30,7 +30,7 @@ namespace SCGLKPIUI.Controllers
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
-                var ddlReason = (from r in objBs.reasonAcceptedBs.GetAll()
+                var ddlReason = (from r in objBs.reasonTenderedBs.GetAll()
                                  select new
                                  {
                                      Id = r.Id,
@@ -66,10 +66,7 @@ namespace SCGLKPIUI.Controllers
             List<ApproveTenderedViewModels> viewModel = new List<ApproveTenderedViewModels>();
 
             //filter department
-            var q = from d in objBs.tenderedAdjustedBs.GetAll()
-                    where d.SEGMENT == SegmentId
-                    && d.FTNRDDATE.Value.Month == Convert.ToInt32(MonthId)
-                    && d.FTNRDDATE_D.Value.Year == Convert.ToInt32(YearId)
+            var q = from d in objBs.tenderedAdjustedBs.GetByFilter(SegmentId, Convert.ToInt32(MonthId), Convert.ToInt32(YearId))
                     select d;
 
             foreach (var item in q)

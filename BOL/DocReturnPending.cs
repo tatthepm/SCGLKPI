@@ -58,6 +58,7 @@ namespace BOL {
         public DateTime? PLNDOCRETDATE_SCGL { get; set; }
 
         [Column(TypeName = "datetime2")]
+        [Index(IsUnique = false)]
         public DateTime? PLNDOCRETDATE_SCGL_D { get; set; }
 
         [Column(TypeName = "datetime2")]

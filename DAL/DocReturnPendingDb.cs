@@ -16,10 +16,63 @@ namespace DAL {
         public IEnumerable<DocReturnPending> GetAll() {
             return db.DocReturnPendings.ToList();
         }
-
+        //GetByFilter
+        public IEnumerable<DocReturnPending> GetByFilter(string department_id, string section_id, int month, int year)
+        {
+            return db.DocReturnPendings.Where(x => x.DEPARTMENT_ID == department_id && x.SECTION_ID == section_id && x.PLNDOCRETDATE_SCGL_D.Value.Year == year && x.PLNDOCRETDATE_SCGL_D.Value.Month == month);
+        }
         //GetById
-        public DocReturnPending GetByID(string deliveryNote) {
+        public DocReturnPending GetByID(string deliveryNote)
+        {
             return db.DocReturnPendings.Find(deliveryNote);
+        }
+        //GetByMatName
+        public IEnumerable<BOLDropdownLists> GetByMatName()
+        {
+            var Queryable = (from m in db.DocReturnPendings
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.MATFRIGRP,
+                                 Name = m.MATNAME,
+                             }).Distinct().ToList();
+            return Queryable;
+        }
+
+        //GetByMatName (Overload)
+        public IEnumerable<BOLDropdownLists> GetByMatName(string departmentId, string sectionId)
+        {
+            var Queryable = (from m in db.DocReturnPendings
+                             where m.DEPARTMENT_ID == departmentId && m.SECTION_ID == sectionId
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.MATFRIGRP,
+                                 Name = m.MATNAME,
+                             }).Distinct().ToList();
+            return Queryable;
+        }
+
+        //GetBySection
+        public IEnumerable<BOLDropdownLists> GetBySection()
+        {
+            var Queryable = (from m in db.DocReturnPendings
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.SECTION_ID,
+                                 Name = m.SECTION_NAME,
+                             }).Distinct().ToList();
+            return Queryable;
+        }
+        //GetBySection (Overload)
+        public IEnumerable<BOLDropdownLists> GetBySection(string departmentId)
+        {
+            var Queryable = (from m in db.DocReturnPendings
+                             where m.DEPARTMENT_ID == departmentId
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.SECTION_ID,
+                                 Name = m.SECTION_NAME,
+                             }).Distinct().ToList();
+            return Queryable;
         }
 
         //Insert

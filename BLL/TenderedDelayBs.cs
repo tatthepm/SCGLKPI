@@ -16,7 +16,11 @@ namespace BLL {
         public IEnumerable<TenderedDelay> GetAll() {
             return objDb.GetAll();
         }
-
+        //GetByFilter
+        public IEnumerable<TenderedDelay> GetByFilter(string segment_id, int month, int year)
+        {
+            return objDb.GetByFilter(segment_id, month, year);
+        }
         //GetById
         public TenderedDelay GetByID(string shipmentNo) {
             return objDb.GetByID(shipmentNo);

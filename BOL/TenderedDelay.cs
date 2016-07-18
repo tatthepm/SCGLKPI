@@ -22,7 +22,7 @@ namespace BOL {
         public string VENDOR_NAME { get; set; }
 
         [StringLength(8)]
-        [Index(IsUnique = false)]
+        //[Index(IsUnique = false)]
         public string MATFRIGRP { get; set; }
 
         [StringLength(100)]
@@ -38,20 +38,21 @@ namespace BOL {
         public string REGION_NAME_EN { get; set; }
 
         [StringLength(5)]
-        [Index(IsUnique = false)]
+        //[Index(IsUnique = false)]
         public string DEPARTMENT_ID { get; set; }
 
         [StringLength(100)]
         public string DEPARTMENT_Name { get; set; }
 
         [StringLength(5)]
-        [Index(IsUnique = false)]
+        //[Index(IsUnique = false)]
         public string SECTION_ID { get; set; }
 
         [StringLength(100)]
         public string SECTION_NAME { get; set; }
 
         [StringLength(20)]
+        [Index(IsUnique = false)]
         public string SEGMENT { get; set; }
 
         [StringLength(10)]

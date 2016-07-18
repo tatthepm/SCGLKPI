@@ -33,15 +33,7 @@ namespace SCGLKPIUI.Controllers
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
                 //1 DropdownList 
-                var ddlMatName = (from m in objBs.outboundPendingBs.GetAll()
-                                  where !String.IsNullOrEmpty(m.MATNAME)
-                                  select new
-                                  {
-                                      Id = m.MATFRIGRP,
-                                      Name = m.MATNAME,
-                                  }).Distinct();
-
-                ViewBag.MatNameId = new SelectList(ddlMatName.ToList(), "Id", "Name");
+                ViewBag.MatNameId = new SelectList(objBs.outboundPendingBs.GetByMatName(), "Id", "Name");
 
                 return View();
 
@@ -54,29 +46,12 @@ namespace SCGLKPIUI.Controllers
 
         public JsonResult SectionFilter(string departmentId)
         {
-            var result = (from m in objBs.acceptedDelayBs.GetAll()
-                          where m.DEPARTMENT_ID == departmentId
-                          select new
-                          {
-                              Id = m.SECTION_ID,
-                              Name = m.SECTION_NAME
-                          }).Distinct().OrderBy(x => x.Name);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(objBs.outboundPendingBs.GetBySection(departmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult MatNameFilter(string departmentId, string sectionid)
+        public JsonResult MatNameFilter(string departmentId, string sectionId)
         {
-            var result = (from m in objBs.acceptedDelayBs.GetAll()
-                          where m.DEPARTMENT_ID == departmentId
-                          && m.SECTION_ID == sectionid
-                          select new
-                          {
-                              Id = m.MATFRIGRP,
-                              Name = m.MATNAME
-                          }).Distinct().OrderBy(x => x.Name);
-
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(objBs.outboundPendingBs.GetByMatName(departmentId, sectionId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -85,12 +60,10 @@ namespace SCGLKPIUI.Controllers
             // add IEnumerable<OutboundOntimeSummaryViewModels>
             List<PendingOutboundViewModels> viewSummaryModel = new List<PendingOutboundViewModels>();
 
-            // filter by department
-            var q = objBs.outboundPendingBs.GetAll().Where(x => !String.IsNullOrEmpty(x.DEPARTMENT_Name)
-                                               && !String.IsNullOrEmpty(x.SECTION_NAME)
-                                               && !String.IsNullOrEmpty(x.MATNAME)
-                                               && x.PLNOUTBDATE_D.Value.Year == Convert.ToInt32(YearId)
-                                               && x.PLNOUTBDATE_D.Value.Month == Convert.ToInt32(MonthId));
+            //filter department
+            var q = from d in objBs.outboundPendingBs.GetByFilter(DepartmentId, SectionId, Convert.ToInt32(MonthId), Convert.ToInt32(YearId))
+                    select d;
+
             //filter department
             if (!String.IsNullOrEmpty(DepartmentId))
                 q = q.Where(x => x.DEPARTMENT_ID == DepartmentId);

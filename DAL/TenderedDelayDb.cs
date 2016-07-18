@@ -16,12 +16,15 @@ namespace DAL {
         public IEnumerable<TenderedDelay> GetAll() {
             return db.TenderedDelays.ToList();
         }
-
+        //GetByFilter
+        public IEnumerable<TenderedDelay> GetByFilter(string segment_id, int month, int year)
+        {
+            return db.TenderedDelays.Where(x => x.SEGMENT == segment_id && x.FTNRDDATE_D.Value.Year == year && x.FTNRDDATE_D.Value.Month == month);
+        }
         //GetById
         public TenderedDelay GetByID(string shipmentNo) {
             return db.TenderedDelays.Find(shipmentNo);
         }
-
         //Insert
         public void Insert(TenderedDelay tenderedDelay) {
             db.TenderedDelays.Add(tenderedDelay);

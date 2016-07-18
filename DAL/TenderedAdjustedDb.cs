@@ -17,6 +17,12 @@ namespace DAL {
             return db.TenderedAdjusted.ToList();
         }
 
+        //GetByFilter
+        public IEnumerable<TenderedAdjusted> GetByFilter(string segment_id, int month, int year)
+        {
+            return db.TenderedAdjusted.Where(x => x.SEGMENT == segment_id && x.PLNTNRDDATE_D.Value.Year == year && x.PLNTNRDDATE_D.Value.Month == month);
+        }
+
         //GetById
         public TenderedAdjusted GetByID(string shipmentNo) {
             return db.TenderedAdjusted.Find(shipmentNo);

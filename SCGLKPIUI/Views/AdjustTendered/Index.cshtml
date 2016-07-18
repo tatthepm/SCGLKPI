@@ -168,7 +168,7 @@
 
                 //#region table
                 // on-time tender monthly dataTable
-                var departmentId = $('#SegmentId').val();
+                var segmentId = $('#SegmentId').val();
                 var yearId = $('#YearId').val();
                 var monthId = $('#MonthId').val();
 
@@ -181,9 +181,10 @@
                         "type": "POST",
                         "url": '@(Url.RouteUrl("JsonAdjustTenderTable"))',
                         "data": function (d) {
-                            d.departmentId = departmentId;
-                            d.sectionId = sectionId;
-                            d.matNameId = matNameId;
+                            //d.departmentId = departmentId;
+                            //d.sectionId = sectionId;
+                            //d.matNameId = matNameId;
+                            d.segmentId = segmentId;
                             d.YearId = yearId;
                             d.MonthId = monthId;
                         },

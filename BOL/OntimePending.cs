@@ -58,6 +58,7 @@ namespace BOL {
         public DateTime? PLNONTIMEDATE { get; set; }
 
         [Column(TypeName = "datetime2")]
+        [Index(IsUnique = false)]
         public DateTime? PLNONTIMEDATE_D { get; set; }
 
         [Column(TypeName = "datetime2")]

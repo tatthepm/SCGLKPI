@@ -52,6 +52,7 @@
     <Compile Include="AcceptedAdjusted.cs" />
     <Compile Include="AcceptPending.cs" />
     <Compile Include="AcceptedDelay.cs" />
+    <Compile Include="BOLDropdownLists.cs" />
     <Compile Include="DocReturnAdjusted.cs" />
     <Compile Include="HomeKPI.cs" />
     <Compile Include="DocReturnPending.cs" />
@@ -221,6 +222,14 @@
     <Compile Include="Migrations\201607110703478_update_table_name.Designer.cs">
       <DependentUpon>201607110703478_update_table_name.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607180259561_update_tender-index.cs" />
+    <Compile Include="Migrations\201607180259561_update_tender-index.Designer.cs">
+      <DependentUpon>201607180259561_update_tender-index.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607180633468_update-newMethod.cs" />
+    <Compile Include="Migrations\201607180633468_update-newMethod.Designer.cs">
+      <DependentUpon>201607180633468_update-newMethod.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OntimeAccept.cs" />
     <Compile Include="DWH_ONTIME_DN.cs" />
@@ -383,6 +392,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607110703478_update_table_name.resx">
       <DependentUpon>201607110703478_update_table_name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607180259561_update_tender-index.resx">
+      <DependentUpon>201607180259561_update_tender-index.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607180633468_update-newMethod.resx">
+      <DependentUpon>201607180633468_update-newMethod.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

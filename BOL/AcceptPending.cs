@@ -58,6 +58,7 @@ namespace BOL {
         public DateTime? PLNACPDDATE { get; set; }
 
         [Column(TypeName = "datetime2")]
+        [Index(IsUnique = false)]
         public DateTime? PLNACPDDATE_D { get; set; }
 
         [Column(TypeName = "datetime2")]

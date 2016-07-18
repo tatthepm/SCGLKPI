@@ -26,7 +26,7 @@ namespace SCGLKPIUI.Controllers {
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
-                var ddlReason = (from r in objBs.reasonAcceptedBs.GetAll()
+                var ddlReason = (from r in objBs.reasonTenderedBs.GetAll()
                                  select new
                                  {
                                      Id = r.Id,
@@ -42,6 +42,18 @@ namespace SCGLKPIUI.Controllers {
             }
         }
 
+        public JsonResult ReasonFilter()
+        {
+            var result = (from r in objBs.reasonTenderedBs.GetAll()
+                          select new
+                          {
+                              Id = r.Id,
+                              Name = r.Name
+                          }).Distinct().OrderBy(x => x.Name);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult JsonAdjustTenderTable(string SegmentId, string YearId, string MonthId)
         {
@@ -52,10 +64,7 @@ namespace SCGLKPIUI.Controllers {
             List<AdjustTenderedViewModels> viewModel = new List<AdjustTenderedViewModels>();
 
             //filter department
-            var q = from d in objBs.tenderedDelayBs.GetAll()
-                    where d.DEPARTMENT_ID == SegmentId
-                    && d.FTNRDDATE_D.Value.Month == Convert.ToInt32(MonthId)
-                    && d.FTNRDDATE_D.Value.Year == Convert.ToInt32(YearId)
+            var q = from d in objBs.tenderedDelayBs.GetByFilter(SegmentId, Convert.ToInt32(MonthId), Convert.ToInt32(YearId))
                     select d;
 
             //int c = q.Count();

@@ -45,12 +45,10 @@ namespace SCGLKPIUI.Controllers
             // add IEnumerable<AcceptOntimeSummaryViewModels>
             List<PendingTenderViewModels> viewSummaryModel = new List<PendingTenderViewModels>();
 
-            // filter by department
-            var q = objBs.tenderedPendingBs.GetAll().Where(x => !String.IsNullOrEmpty(x.DEPARTMENT_Name)
-                                               && !String.IsNullOrEmpty(x.SECTION_NAME)
-                                               && !String.IsNullOrEmpty(x.MATNAME)
-                                               && x.PLNTNRDDATE_D.Value.Year == Convert.ToInt32(YearId)
-                                               && x.PLNTNRDDATE_D.Value.Month == Convert.ToInt32(MonthId));
+            //filter department
+            var q = from d in objBs.tenderedPendingBs.GetByFilter(SegmentId, Convert.ToInt32(MonthId), Convert.ToInt32(YearId))
+                    select d;
+
             //filter Segment
             if (!String.IsNullOrEmpty(SegmentId))
                 q = q.Where(x => x.SEGMENT == SegmentId);
