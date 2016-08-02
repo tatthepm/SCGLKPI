@@ -57,7 +57,7 @@ namespace SCGLKPIUI.Controllers {
         [HttpPost]
         public JsonResult JsonAdjustTenderTable(string SegmentId, string YearId, string MonthId)
         {
-            ViewBag.DepartmentId = SegmentId;
+            ViewBag.SegmentId = SegmentId;
             ViewBag.YearId = YearId;
             ViewBag.MonthId = MonthId;
             // add IEnumerable<AdjustAcceptedViewModels>
@@ -161,6 +161,7 @@ namespace SCGLKPIUI.Controllers {
                             //delete AcceptedDelays
                             objBs.tenderedDelayBs.Delete(sm);
 
+                            countSM++;
                         }
                     }
 

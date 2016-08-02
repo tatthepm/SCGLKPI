@@ -230,6 +230,14 @@
     <Compile Include="Migrations\201607180633468_update-newMethod.Designer.cs">
       <DependentUpon>201607180633468_update-newMethod.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607210741141_home-kpi.cs" />
+    <Compile Include="Migrations\201607210741141_home-kpi.Designer.cs">
+      <DependentUpon>201607210741141_home-kpi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607220159556_homekpi1.cs" />
+    <Compile Include="Migrations\201607220159556_homekpi1.Designer.cs">
+      <DependentUpon>201607220159556_homekpi1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OntimeAccept.cs" />
     <Compile Include="DWH_ONTIME_DN.cs" />
@@ -398,6 +406,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607180633468_update-newMethod.resx">
       <DependentUpon>201607180633468_update-newMethod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607210741141_home-kpi.resx">
+      <DependentUpon>201607210741141_home-kpi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607220159556_homekpi1.resx">
+      <DependentUpon>201607220159556_homekpi1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -80,8 +80,6 @@ namespace SCGLKPIUI.Controllers {
                 q = q.Where(x => x.MATFRIGRP == MatNameId);
             }
 
-            int c = q.Count();
-
             foreach (var item in q)
             {
                 AdjustInboundedViewModels model = new AdjustInboundedViewModels();

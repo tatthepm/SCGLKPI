@@ -125,22 +125,38 @@
         //#endregion
 
         //#region 4 getJson Section
-        $(document).ready(function () {
-            $.getJSON('/AdjustTendered/ReasonFilter', function (data) {
-                var ddlR = $("#ReasonId");
+        $("#DepartmentId").change(function (res) {
+            departmentId = $("#DepartmentId").val();
+            $.getJSON('/AdjustDelivered/SectionFilter?departmentId=' + departmentId, function (data) {
+                var ddl = $("#SectionId");
                 // ddl.removeAttrs('disabled style');
-                ddlR.addClass('js-source-states');
+                ddl.addClass('js-source-states');
                 var string = '<option value="">ALL</option>';
                 $.each(data, function (i, S) {
                     string += '<option value="' + S.Id + '">' + S.Name + '</option>'
                 });
-                ddlR.html(string);
+                ddl.html(string);
             });
         });
         //#endregion
 
         //#region  5 getJson MatName
+        $("#SectionId").change(function (res) {
+            departmentId = $("#DepartmentId").val();
+            sectionId = $("#SectionId").val();
+            $.getJSON('/AdjustDelivered/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
+                var ddl = $("#MatNameId");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                });
+                ddl.html(string);
+            });
+        });
         //#endregion
+
         $("#btnSearch").click(function () {
             //if ($('#DepartmentId').val() == "") {
             //    swal({

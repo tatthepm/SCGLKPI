@@ -16,7 +16,11 @@ namespace DAL {
         public IEnumerable<DWH_ONTIME_SHIPMENT> GetAll() {
             return db.DWH_ONTIME_SHIPMENTs.ToList();
         }
-
+        //GetCount
+        public int GetCount()
+        {
+            return db.DWH_ONTIME_SHIPMENTs.Count();
+        }
         //GetById
         public DWH_ONTIME_SHIPMENT GetByID(string SHPMNTNO) {
             return db.DWH_ONTIME_SHIPMENTs.Find(SHPMNTNO);

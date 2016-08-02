@@ -17,6 +17,25 @@ namespace DAL {
             return db.HomeKPIs.ToList();
         }
 
+        //GetByFilter
+        public IEnumerable<HomeKPI> GetByFilter(string department_id, string section_id, string segment, int month, int year)
+        {
+            return db.HomeKPIs.Where(x => x.DepartmentId == department_id 
+            && x.SectionId == section_id 
+            && x.Segment == segment
+            && x.Year == year 
+            && x.LastMonth == month).Take(1000);
+        }
+
+        //GetLastMonth
+        public IEnumerable<HomeKPI> GetLastMonth()
+        {
+            DateTime LastMonth = DateTime.Now.AddMonths(-1);
+            int Year = LastMonth.Year;
+            int Month = LastMonth.Month;
+            return db.HomeKPIs.Where(x=> x.Year == Year && x.LastMonth == Month).ToList();
+        }
+
         //Insert
         public void Insert(HomeKPI HomeKPI) {
             db.HomeKPIs.Add(HomeKPI);

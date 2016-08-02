@@ -16,7 +16,11 @@ namespace DAL {
         public IEnumerable<DWH_ONTIME_DN> GetAll() {
             return db.DWH_ONTIME_DNs.ToList();
         }
-
+        //GetCount
+        public int GetCount()
+        {
+            return db.DWH_ONTIME_DNs.Count();
+        }
         //GetById
         public DWH_ONTIME_DN GetByID(string DELVNO) {
             return db.DWH_ONTIME_DNs.Find(DELVNO);

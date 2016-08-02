@@ -126,8 +126,8 @@ namespace SCGLKPIUI.Controllers {
                             string dn = txtDN[i];
                             string reasonId = dynamic_select[i];
                             string remark = txtRemark[i];
-                            string reasonName = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).Name;
-                            bool isadjust = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
+                            string reasonName = objBs.reasonOntimeBs.GetByID(Convert.ToInt32(reasonId)).Name;
+                            bool isadjust = objBs.reasonOntimeBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
 
                             DWH_ONTIME_DN ontimeDn = objBs.dWH_ONTIME_DNBs.GetByID(dn);
                             ontimeDn.ON_TIME_ADJUST = isadjust ? 0 : 0;
@@ -175,6 +175,8 @@ namespace SCGLKPIUI.Controllers {
                             objBs.ontimeAdjustedBs.Insert(tmp_toInsert);
                             //delete AcceptedDelays
                             objBs.ontimeDelayBs.Delete(dn);
+
+                            countDN++;
                         }
                     }
 

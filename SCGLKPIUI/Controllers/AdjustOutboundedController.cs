@@ -138,12 +138,6 @@ namespace SCGLKPIUI.Controllers {
 
                             objBs.dWH_ONTIME_DNBs.Update(ontimeDn);
 
-                            //delete OutboundDelays
-                            objBs.outboundDelayBs.Delete(dn);
-
-                            //update sum of adjust daily
-                            DateTime ACTGIDate = Convert.ToDateTime(objBs.dWH_ONTIME_DNBs.GetByID(dn).ACTGIDATE_D);
-
                             OutboundDelay tmp_adjusted = objBs.outboundDelayBs.GetByID(dn);
                             OutboundAdjusted tmp_toInsert = new OutboundAdjusted
                             {

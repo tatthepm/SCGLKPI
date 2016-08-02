@@ -17,6 +17,11 @@ namespace BLL {
         public IEnumerable<DWH_ONTIME_DN> GetAll() {
             return objDb.GetAll();
         }
+        //GetCount
+        public int GetCount()
+        {
+            return objDb.GetCount();
+        }
 
         //GetById
         public DWH_ONTIME_DN GetByID(string DELVNO) {

@@ -181,6 +181,7 @@ namespace SCGLKPIUI.Controllers
                             //delete AcceptedDelays
                             objBs.acceptedDelayBs.Delete(sm);
 
+                            countSM++;
                         }
                     }
 

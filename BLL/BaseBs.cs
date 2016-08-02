@@ -17,6 +17,7 @@ namespace BLL {
         public DOM_SAP_MATFRIGRPBs dOM_SAP_MATFRIGRPBs { get; set; }
         public DWH_ONTIME_DNBs dWH_ONTIME_DNBs { get; set; }
         public DWH_ONTIME_SHIPMENTBs dWH_ONTIME_SHIPMENTBs { get; set; }
+        public HomeKPIBs HomeKPIBs { get; set; }
         public KPIBs kPIBs { get; set; }
         public MenuTableBs menuTableBs { get; set; }
         //accepted
@@ -77,6 +78,7 @@ namespace BLL {
             dWH_ONTIME_DNBs = new DWH_ONTIME_DNBs();
             dWH_ONTIME_SHIPMENTBs = new DWH_ONTIME_SHIPMENTBs();
             menuTableBs = new MenuTableBs();
+            HomeKPIBs = new HomeKPIBs();
 
             //tendered
             ontimeTenderBs = new OntimeTenderBs();

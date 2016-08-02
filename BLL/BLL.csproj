@@ -69,6 +69,7 @@
     <Compile Include="InboundAdjustedBs.cs" />
     <Compile Include="InboundPendingBs.cs" />
     <Compile Include="InboundDelayBs.cs" />
+    <Compile Include="HomeKPIBs.cs" />
     <Compile Include="KPIBs.cs" />
     <Compile Include="KPIFrequencyBS.cs" />
     <Compile Include="MenuTableBs.cs" />
@@ -76,7 +77,6 @@
     <Compile Include="OntimeAcceptMonthBs.cs" />
     <Compile Include="OntimeAcceptYearBs.cs" />
     <Compile Include="OntimeAdjustedBs.cs" />
-    <Compile Include="OntimeHomeKPIBs.cs" />
     <Compile Include="OntimePendingBs.cs" />
     <Compile Include="OntimeDelayBs.cs" />
     <Compile Include="OntimeDeliveryBs.cs" />

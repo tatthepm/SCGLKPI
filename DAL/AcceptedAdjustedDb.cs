@@ -20,7 +20,7 @@ namespace DAL {
         //GetByFilter
         public IEnumerable<AcceptedAdjusted> GetByFilter(string department_id, string section_id, int month, int year)
         {
-            return db.AcceptedAdjusted.Where(x => x.DEPARTMENT_ID == department_id && x.SECTION_ID == section_id && x.PLNACPDDATE_D.Value.Year == year && x.PLNACPDDATE_D.Value.Month == month);
+            return db.AcceptedAdjusted.Where(x => x.DEPARTMENT_ID == department_id && x.SECTION_ID == section_id && x.PLNACPDDATE_D.Value.Year == year && x.PLNACPDDATE_D.Value.Month == month).Take(1000);
         }
         //GetById
         public AcceptedAdjusted GetByID(string shipmentNo)

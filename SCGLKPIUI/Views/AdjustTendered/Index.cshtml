@@ -139,7 +139,7 @@
             if ($('#SegmentId').val() == "") {
                 swal({
                     title: "Warning!",
-                    text: "Sorry!, Department is not selected ",
+                    text: "Sorry!, Segments is not selected ",
                     type: "warning"
                 });
             } else if ($('#YearId').val() == "") {
@@ -210,7 +210,7 @@
                                             <input type="hidden" id="txtSM" name="txtSM" value="' + row.Shipment + '">\n\
                                             <input type="hidden" name="monthId" value="' + monthId + '" />\n\
                                             <input type="hidden" name="yearId" value="' + yearId + '" />\n\
-                                            <input type="hidden" name="segmentId" value="' + departmentId + '" />\n';
+                                            <input type="hidden" name="segmentId" value="' + segmentId + '" />\n';
                                     }
                                 }
 

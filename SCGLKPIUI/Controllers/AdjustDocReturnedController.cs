@@ -9,11 +9,15 @@ using System.Transactions;
 using BLL;
 using BOL;
 
-namespace SCGLKPIUI.Controllers {
-    public class AdjustDocReturnedController : BaseController {
+namespace SCGLKPIUI.Controllers
+{
+    public class AdjustDocReturnedController : BaseController
+    {
         // GET: AdjustDocReturned
-        public ActionResult Index(string sms, string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId) {
-            try {
+        public ActionResult Index(string sms, string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
+        {
+            try
+            {
 
                 TempData["Msg"] = sms;
 
@@ -32,7 +36,8 @@ namespace SCGLKPIUI.Controllers {
                 return View();
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index", new { sms = "Operation doc return adjust failed " + ex.InnerException.InnerException.Message.ToString() });
             }
         }
@@ -111,10 +116,13 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public ActionResult UpdateDocReturnReason(List<String> dynamic_select, List<string> txtDN, List<string> txtRemark, string DepartmentId, string SectionId, string MatNameId, string YearId, string MonthId) {
-            using (TransactionScope Trans = new TransactionScope()) {
+        public ActionResult UpdateDocReturnReason(List<String> dynamic_select, List<string> txtDN, List<string> txtRemark, string DepartmentId, string SectionId, string MatNameId, string YearId, string MonthId)
+        {
+            using (TransactionScope Trans = new TransactionScope())
+            {
 
-                try {
+                try
+                {
 
                     // List<string> listSM = new List<string>();
                     int countDN = 0;
@@ -135,14 +143,7 @@ namespace SCGLKPIUI.Controllers {
                             ontimeDn.SCGL_DOCRET_REASON = reasonName;
                             ontimeDn.SCGL_DOCRET_REASON_ID = Convert.ToInt32(reasonId);
                             ontimeDn.SCGL_DOCRET_REMARK = remark;
-
                             objBs.dWH_ONTIME_DNBs.Update(ontimeDn);
-
-                            //delete AcceptedDelays
-                            objBs.docReturnDelayBs.Delete(dn);
-
-                            //update sum of adjust daily
-                            DateTime DOCRETDate = Convert.ToDateTime(objBs.dWH_ONTIME_DNBs.GetByID(dn).DOCRETDATE_SCGL_D);
 
                             DocReturnDelay tmp_adjusted = objBs.docReturnDelayBs.GetByID(dn);
                             DocReturnAdjusted tmp_toInsert = new DocReturnAdjusted
@@ -176,7 +177,7 @@ namespace SCGLKPIUI.Controllers {
                                 SCGL_DOCRET_REASON_ID = Convert.ToInt32(reasonId),
                                 SCGL_DOCRET_REMARK = remark
                             };
-                            //insert waiting for approval
+                            //insert for approval
                             objBs.docReturnAdjustedBs.Insert(tmp_toInsert);
                             //delete AcceptedDelays
                             objBs.docReturnDelayBs.Delete(dn);
@@ -189,8 +190,9 @@ namespace SCGLKPIUI.Controllers {
                     return RedirectToAction("Index", new { sms = countDN + "-DN is adjusted Successfully!" });
 
                 }
-                catch (Exception ex) {
-                    return RedirectToAction("Index", new { sms = "Operation update reason doc return failed !" + ex.InnerException.InnerException.Message.ToString() });
+                catch (Exception ex)
+                {
+                    return RedirectToAction("Index",new { sms = "Operation update reason doc return failed !" + ex.InnerException.InnerException.Message.ToString() });
                 }
             }
         }

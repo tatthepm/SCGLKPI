@@ -64,14 +64,6 @@ namespace SCGLKPIUI.Controllers
             var q = from d in objBs.docReturnPendingBs.GetByFilter(DepartmentId, SectionId, Convert.ToInt32(MonthId), Convert.ToInt32(YearId))
                     select d;
 
-            //filter department
-            if (!String.IsNullOrEmpty(DepartmentId))
-                q = q.Where(x => x.DEPARTMENT_ID == DepartmentId);
-
-            //filter Section 
-            if (!String.IsNullOrEmpty(SectionId))
-                q = q.Where(x => x.SECTION_ID == SectionId);
-
             //filter matname
             if (!String.IsNullOrEmpty(MatNameId))
                 q = q.Where(x => x.MATFRIGRP == MatNameId);
