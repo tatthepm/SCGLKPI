@@ -140,6 +140,7 @@ namespace SCGLKPIUI.Controllers {
                                 SOLDTO = tmp_adjusted.SOLDTO,
                                 SOLDTO_NAME = tmp_adjusted.SOLDTO_NAME,
                                 SHIPTO = tmp_adjusted.SHIPTO,
+                                SEGMENT = tmp_adjusted.SEGMENT,
                                 LAST_SHPG_LOC_NAME = tmp_adjusted.LAST_SHPG_LOC_NAME,
                                 VENDOR_CODE = tmp_adjusted.VENDOR_CODE,
                                 VENDOR_NAME = tmp_adjusted.VENDOR_NAME,

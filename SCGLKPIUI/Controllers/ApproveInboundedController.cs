@@ -76,7 +76,7 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public JsonResult JsonApproveOnboundTable(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
+        public JsonResult JsonApproveInboundTable(string DepartmentId, string SectionId, string YearId, string MonthId, string MatNameId)
         {
             // add IEnumerable<AdjustInboundedViewModels>
             List<ApproveInboundedViewModels> viewModel = new List<ApproveInboundedViewModels>();
