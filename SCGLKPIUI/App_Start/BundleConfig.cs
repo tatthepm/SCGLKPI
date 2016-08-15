@@ -265,7 +265,9 @@ namespace SCGLKPIUI
             bundles.Add(new StyleBundle("~/bundles/c3/css").Include(
                       "~/Vendor/c3/c3.min.css"));
 
-
+            //// Login
+            //bundles.Add(new StyleBundle("~/CommonViews/Login").Include(
+            //          "~/Views/Login"));
         }
 
     }
