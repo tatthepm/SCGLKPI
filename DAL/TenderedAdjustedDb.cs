@@ -20,7 +20,7 @@ namespace DAL {
         //GetByFilter
         public IEnumerable<TenderedAdjusted> GetByFilter(string segment_id, int month, int year)
         {
-            return db.TenderedAdjusted.Where(x => x.SEGMENT == segment_id && x.PLNTNRDDATE_D.Value.Year == year && x.PLNTNRDDATE_D.Value.Month == month).Take(1000);
+            return db.TenderedAdjusted.Where(x => x.SEGMENT == segment_id && x.FTNRDDATE_D.Value.Year == year && x.FTNRDDATE_D.Value.Month == month).Take(1000);
         }
 
         //GetById

@@ -354,12 +354,14 @@
                 // Iterate over all selected checkboxes
                 $.each(rows_selected, function (index, rowId) {
                     // Create a hidden element
-                    $(form).append(
-                        $('<input>')
-                           .attr('type', 'hidden')
-                           .attr('name', 'txtApprove')
-                           .val(rowId)
-                    );
+                    if (rowId != null) {
+                        $(form).append(
+                            $('<input>')
+                               .attr('type', 'hidden')
+                               .attr('name', 'txtApprove')
+                               .val(rowId)
+                        );
+                    }
                 });
             });
 

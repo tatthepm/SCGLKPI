@@ -121,11 +121,11 @@ namespace SCGLKPIUI.Controllers
                         ontimeShipment.TNRD_ONTIME_REMARK = remark;
                         objBs.dWH_ONTIME_SHIPMENTBs.Update(ontimeShipment);
 
-                        //delete AcceptedDelays
-                        objBs.acceptedAdjustedBs.Delete(sm);
+                        //delete TenderedDelays
+                        objBs.tenderedAdjustedBs.Delete(sm);
 
                         //update sum of adjust daily
-                        DateTime FTNRDDate = Convert.ToDateTime(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).FTNRDDATE);
+                        DateTime FTNRDDate = Convert.ToDateTime(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).FTNRDDATE_D);
 
                         if (isadjust)
                         {

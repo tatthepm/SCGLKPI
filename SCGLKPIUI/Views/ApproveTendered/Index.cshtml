@@ -228,8 +228,7 @@
                                 <input type="hidden" name="txtSM" value="' + row.Shipment + '" />\n\
                                 <input type="hidden" name="monthId" value="' + monthId + '" />\n\
                                 <input type="hidden" name="yearId" value="' + yearId + '" />\n\
-                                <input type="hidden" name="monthId" value="' + monthId + '" />\n';
-                                //<input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
+                                <input type="hidden" name="segmentId" value="' + segmentId + '" />\n';
                                 //<input type="hidden" name="sectionId" value="' + sectionId + '" />\n\
                                 //<input type="hidden" name="matNameId" value="' + matNameId + '" />\n';
 
@@ -321,12 +320,14 @@
                 // Iterate over all selected checkboxes
                 $.each(rows_selected, function (index, rowId) {
                     // Create a hidden element
-                    $(form).append(
-                        $('<input>')
-                           .attr('type', 'hidden')
-                           .attr('name', 'txtApprove')
-                           .val(rowId)
-                    );
+                    if (rowId != null) {
+                        $(form).append(
+                            $('<input>')
+                               .attr('type', 'hidden')
+                               .attr('name', 'txtApprove')
+                               .val(rowId)
+                        );
+                    }
                 });
             });
 
