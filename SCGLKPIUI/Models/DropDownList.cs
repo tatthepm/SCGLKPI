@@ -425,12 +425,12 @@ namespace SCGLKPIUI.Models
             switch (filtername)
             {
                 case "Matname":
-                    var ddlMatName = (from m in objBs.ontimeDeliveryMonthBs.GetAll()
-                                      where !String.IsNullOrEmpty(m.MatName)
+                    var ddlMatName = (from m in objBs.dOM_SAP_MATFRIGRPBs.GetAll()
+                                      where !String.IsNullOrEmpty(m.MATNAME)
                                       select new
                                       {
-                                          Id = m.MatFriGrp,
-                                          Name = m.MatName
+                                          Id = m.MATFRIGRP,
+                                          Name = m.MATNAME
                                       }).Distinct();
                     foreach (var item in ddlMatName)
                     {

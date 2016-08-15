@@ -20,14 +20,14 @@ namespace SCGLKPIUI.Controllers {
                 DropDownList ddl = new DropDownList();
                 var ddlDept = ddl.GetDropDownList("Department");
                 var ddlSec = ddl.GetDropDownList("Section");
-                var ddlYear = ddl.GetDropDownListOutboundMonth("Year");
-                var ddlMonth = ddl.GetDropDownListOutboundMonth("Month");
+                var ddlYear = ddl.GetDropDownListDeliveryMonth("Year");
+                var ddlMonth = ddl.GetDropDownListDeliveryMonth("Month");
+                var ddlMatName = ddl.GetDropDownListDeliveryMonth("Matname");
                 ViewBag.DepartmentId = new SelectList(ddlDept.ToList(), "Id", "Name");
                 ViewBag.SectionId = new SelectList(ddlSec.ToList(), "Id", "Name");
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
-
-                ViewBag.MatNameId = new SelectList(objBs.outboundDelayBs.GetByMatName(), "Id", "Name");
+                ViewBag.MatNameId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
                 return View();
 
