@@ -12,7 +12,6 @@
                 @*<button class="btn btn-success btn-sm demo2" name="btnJson" id="btnJson">Run example</button>
                 <button class="btn btn-primary" id="testJson">Test Json</button>*@
             </h2>
-
             <p>
                 @*Special <strong>Admin Theme</strong> for small, medium and large webapp with very clean and aesthetic style and feel.*@
             </p>
@@ -54,7 +53,7 @@
                             <div class="text-center small">
                                 <i class="fa fa-laptop"></i> Ontime Accept Tender in @Model.LastMonth @Model.Year
                             </div>
-                            <div class="flot-chart" style="height: 160px">
+                            <div class="flot-chart" style="height: 320px">
                                 <div class="flot-chart-content" id="flot-line-chart"></div>
                             </div>
                         </div>
@@ -278,11 +277,11 @@
             /**
              * Flot charts data and options
              */
-            
-            var data1 = [[0, 55], [1, 48], [2, 40], [3, 36], [4, 40], [5, 60], [6, 50], [7, 51], [8, 60], [9, 40], [10, 31], [11, 31]];
-            var data2 = [[0, 56], [1, 49], [2, 41], [3, 38], [4, 46], [5, 67], [6, 57], [7, 59], [8, 68], [9, 50], [10, 41], [11, 61]];
-            //var data1 = [[0, @Model.TenderLastMonthOntime], [1, @Model.AcceptLastMonthOntime], [2, @Model.DeliveryLastMonthOntime]];
-            //var data2 = [[0, @Model.TenderLastMonthCount], [1, @Model.AcceptLastMonthCount], [2, @Model.DeliveryLastMonthCount]];
+
+            //var data1 = [[0, 55], [1, 48], [2, 40], [3, 36], [4, 40], [5, 60], [6, 50], [7, 51], [8, 60], [9, 40], [10, 31], [11, 31]];
+            //var data2 = [[0, 56], [1, 49], [2, 41], [3, 38], [4, 46], [5, 67], [6, 57], [7, 59], [8, 68], [9, 50], [10, 41], [11, 61]];
+            var data1 = [[0, @Model.DN01], [1, @Model.DN02], [2, @Model.DN03], [3, @Model.DN04], [4, @Model.DN05], [5, @Model.DN06], [6, @Model.DN07], [7, @Model.DN08], [8, @Model.DN09], [9, @Model.DN10], [10, @Model.DN11], [11, @Model.DN12]];
+            var data2 = [[0, @Model.SH01], [1, @Model.SH02], [2, @Model.SH03], [3, @Model.SH04], [4, @Model.SH05], [5, @Model.SH06], [6, @Model.SH07], [7, @Model.SH08], [8, @Model.SH09], [9, @Model.SH10], [10, @Model.SH11], [11, @Model.SH12]];
             var chartUsersOptions = {
                 xaxis: {
                     ticks: [[0, 'Jan'], [1, 'Feb'], [2, 'Mar'], [3, 'Apr'], [4, 'May'], [5, 'Jun'], [6, 'Jul'], [7, 'Aug'], [8, 'Sep'], [9, 'Oct'], [10, 'Nov'], [11, 'Dec']]

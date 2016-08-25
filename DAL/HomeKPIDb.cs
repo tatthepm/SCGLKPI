@@ -36,6 +36,14 @@ namespace DAL {
             return db.HomeKPIs.Where(x=> x.Year == Year && x.LastMonth == Month).ToList();
         }
 
+        //GetMonth
+        public IEnumerable<HomeKPI> GetMonth(int monthAdjust)
+        {
+            int Year = DateTime.Now.Year;
+            int Month = monthAdjust;
+            return db.HomeKPIs.Where(x => x.Year == Year && x.LastMonth == Month).ToList();
+        }
+
         //Insert
         public void Insert(HomeKPI HomeKPI) {
             db.HomeKPIs.Add(HomeKPI);

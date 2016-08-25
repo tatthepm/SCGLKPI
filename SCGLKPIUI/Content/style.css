@@ -1,4 +1,8 @@
 /*@import url("http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");*/
+@font-face {
+    font-family: 'Open-sans';
+    src: url('Open-sans.ttf') format('truetype');
+}
 /* MARGINS & PADDINGS */
 .p-xxs {
   padding: 5px !important;

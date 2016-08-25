@@ -30,6 +30,12 @@ namespace BLL {
             return objDb.GetLastMonth();
         }
 
+        //GetMonth
+        public IEnumerable<HomeKPI> GetMonth(int monthAdjust)
+        {
+            return objDb.GetMonth(monthAdjust);
+        }
+
         //Insert
         public void Insert(HomeKPI kpi) {
             objDb.Insert(kpi);
