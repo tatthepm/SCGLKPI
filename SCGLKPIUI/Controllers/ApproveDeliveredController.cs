@@ -147,7 +147,7 @@ namespace SCGLKPIUI.Controllers
                         objBs.ontimeAdjustedBs.Delete(dn);
 
                         //update sum of adjust daily
-                        DateTime ONTIMEDate = Convert.ToDateTime(objBs.dWH_ONTIME_DNBs.GetByID(dn).ACDLVDATE_D);
+                        DateTime ONTIMEDate = Convert.ToDateTime(objBs.dWH_ONTIME_DNBs.GetByID(dn).ACTGIDATE_D);
 
                         if (isadjust)
                         {
