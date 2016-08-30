@@ -56,151 +56,156 @@
 
                 </ul>
             </li>
-            @*On-time Delivery*@
             <li>
-                <a href="#"><i class="fa fa-bar-chart-o"></i> On-time delivery<span class="fa arrow"></span> </a>
+                <a href="#"><span class="nav-label">KPI Performance</span></a>
                 <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(controller: "OntimeDeliveredDailyChart")">
-                        <a href="@Url.Action("Index", "OntimeDeliveredDailyChart")"><span class="nav-label">Daily chart</span></a>
+                    @*On-time Delivery*@
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o"></i> On-time delivery<span class="fa arrow"></span> </a>
+                        <ul class="nav nav-second-level">
+                            <li class="@Html.IsSelected(controller: "OntimeDeliveredDailyChart")">
+                                <a href="@Url.Action("Index", "OntimeDeliveredDailyChart")"><span class="nav-label">Daily chart</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(controller:"OntimeDeliveredMonthlyChart")">
+                                <a href="@Url.Action("Index", "OntimeDeliveredMonthlyChart")"><span class="nav-label">Monthly chart</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(controller:"OntimeDeliveredYearlyChart")">
+                                <a href="@Url.Action("Index", "OntimeDeliveredYearlyChart")"><span class="nav-label">Yearly chart</span></a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="@Html.IsSelected(controller:"OntimeDeliveredMonthlyChart")">
-                        <a href="@Url.Action("Index", "OntimeDeliveredMonthlyChart")"><span class="nav-label">Monthly chart</span></a>
+                    @*On-time Tendered Charts*@
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o"></i> On-time tendered<span class="fa arrow"></span> </a>
+                        <ul class="nav nav-second-level">
+                            <li class="@Html.IsSelected(controller:"OntimeTenderedDailyChart")">
+                                <a href="@Url.Action("Index", "OntimeTenderedDailyChart")"><span class="nav-label">Daily chart</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(controller:"OntimeTenderedMonthlyChart")">
+                                <a href="@Url.Action("Index", "OntimeTenderedMonthlyChart")"><span class="nav-label">Monthly chart</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(controller:"OntimeTenderedYearlyChart")">
+                                <a href="@Url.Action("Index", "OntimeTenderedYearlyChart")"><span class="nav-label">Yearly chart</span></a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="@Html.IsSelected(controller:"OntimeDeliveredYearlyChart")">
-                        <a href="@Url.Action("Index", "OntimeDeliveredYearlyChart")"><span class="nav-label">Yearly chart</span></a>
+                    @*On-time Accepted Charts*@
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o"></i> On-time accepted tendered<span class="fa arrow"></span> </a>
+                        <ul class="nav nav-second-level">
+                            <li class="@Html.IsSelected(controller:"OntimeAcceptedDailyChart")">
+                                <a href="@Url.Action("Index", "OntimeAcceptedDailyChart")"><span class="nav-label">Daily chart</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(controller:"OntimeAcceptedMonthlyChart")">
+                                <a href="@Url.Action("Index", "OntimeAcceptedMonthlyChart")"><span class="nav-label">Monthly chart</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(controller:"OntimeAcceptedYearlyChart")">
+                                <a href="@Url.Action("Index", "OntimeAcceptedYearlyChart")"><span class="nav-label">Yearly chart</span></a>
+                            </li>
+                        </ul>
                     </li>
-                </ul>
-            </li>
-            @*On-time Tendered Charts*@
-            <li>
-                <a href="#"><i class="fa fa-bar-chart-o"></i> On-time tendered<span class="fa arrow"></span> </a>
-                <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(controller:"OntimeTenderedDailyChart")">
-                        <a href="@Url.Action("Index", "OntimeTenderedDailyChart")"><span class="nav-label">Daily chart</span></a>
+                    @*On-time Inbound*@
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o"></i> On-time inbound<span class="fa arrow"></span> </a>
+                        <ul class="nav nav-second-level">
+                            <li class="@Html.IsSelected(controller:"OntimeInboundedDailyChart")">
+                                <a href="@Url.Action("Index", "OntimeInboundedDailyChart")"><span class="nav-label">Daily chart</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(controller:"OntimeInboundedMonthlyChart")">
+                                <a href="@Url.Action("Index", "OntimeInboundedMonthlyChart")"><span class="nav-label">Monthly chart</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(controller:"OntimeInboundedYearlyChart")">
+                                <a href="@Url.Action("Index", "OntimeInboundedYearlyChart")"><span class="nav-label">Yearly chart</span></a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="@Html.IsSelected(controller:"OntimeTenderedMonthlyChart")">
-                        <a href="@Url.Action("Index", "OntimeTenderedMonthlyChart")"><span class="nav-label">Monthly chart</span></a>
+                    @*On-time Outbound*@
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o"></i> On-time outbound<span class="fa arrow"></span> </a>
+                        <ul class="nav nav-second-level">
+                            <li class="@Html.IsSelected(controller:"OntimeOutboundedDailyChart")">
+                                <a href="@Url.Action("Index", "OntimeOutboundedDailyChart")"><span class="nav-label">Daily chart</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(controller:"OntimeOutboundedMonthlyChart")">
+                                <a href="@Url.Action("Index", "OntimeOutboundedMonthlyChart")"><span class="nav-label">Monthly chart</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(controller:"OntimeOutbounedYearlyChart")">
+                                <a href="@Url.Action("Index", "OntimeOutbounedYearlyChart")"><span class="nav-label">Yearly chart</span></a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="@Html.IsSelected(controller:"OntimeTenderedYearlyChart")">
-                        <a href="@Url.Action("Index", "OntimeTenderedYearlyChart")"><span class="nav-label">Yearly chart</span></a>
-                    </li>
-                </ul>
-            </li>
-            @*On-time Accepted Charts*@
-            <li>
-                <a href="#"><i class="fa fa-bar-chart-o"></i> On-time accepted tendered<span class="fa arrow"></span> </a>
-                <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(controller:"OntimeAcceptedDailyChart")">
-                        <a href="@Url.Action("Index", "OntimeAcceptedDailyChart")"><span class="nav-label">Daily chart</span></a>
-                    </li>
-                    <li class="@Html.IsSelected(controller:"OntimeAcceptedMonthlyChart")">
-                        <a href="@Url.Action("Index", "OntimeAcceptedMonthlyChart")"><span class="nav-label">Monthly chart</span></a>
-                    </li>
-                    <li class="@Html.IsSelected(controller:"OntimeAcceptedYearlyChart")">
-                        <a href="@Url.Action("Index", "OntimeAcceptedYearlyChart")"><span class="nav-label">Yearly chart</span></a>
-                    </li>
-                </ul>
-            </li>
-            @*On-time Inbound*@
-            <li>
-                <a href="#"><i class="fa fa-bar-chart-o"></i> On-time inbound<span class="fa arrow"></span> </a>
-                <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(controller:"OntimeInboundedDailyChart")">
-                        <a href="@Url.Action("Index", "OntimeInboundedDailyChart")"><span class="nav-label">Daily chart</span></a>
-                    </li>
-                    <li class="@Html.IsSelected(controller:"OntimeInboundedMonthlyChart")">
-                        <a href="@Url.Action("Index", "OntimeInboundedMonthlyChart")"><span class="nav-label">Monthly chart</span></a>
-                    </li>
-                    <li class="@Html.IsSelected(controller:"OntimeInboundedYearlyChart")">
-                        <a href="@Url.Action("Index", "OntimeInboundedYearlyChart")"><span class="nav-label">Yearly chart</span></a>
-                    </li>
-                </ul>
-            </li>
-            @*On-time Outbound*@
-            <li>
-                <a href="#"><i class="fa fa-bar-chart-o"></i> On-time outbound<span class="fa arrow"></span> </a>
-                <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(controller:"OntimeOutboundedDailyChart")">
-                        <a href="@Url.Action("Index", "OntimeOutboundedDailyChart")"><span class="nav-label">Daily chart</span></a>
-                    </li>
-                    <li class="@Html.IsSelected(controller:"OntimeOutboundedMonthlyChart")">
-                        <a href="@Url.Action("Index", "OntimeOutboundedMonthlyChart")"><span class="nav-label">Monthly chart</span></a>
-                    </li>
-                    <li class="@Html.IsSelected(controller:"OntimeOutbounedYearlyChart")">
-                        <a href="@Url.Action("Index", "OntimeOutbounedYearlyChart")"><span class="nav-label">Yearly chart</span></a>
-                    </li>
-                </ul>
-            </li>
-            @*On-time DocReturn*@
-            <li>
-                <a href="#"><i class="fa fa-bar-chart-o"></i> On-time document return<span class="fa arrow"></span> </a>
-                <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(controller:"OntimeDocReturnedDailyChart")">
-                        <a href="@Url.Action("Index", "OntimeDocReturnedDailyChart")"><span class="nav-label">Daily chart</span></a>
-                    </li>
-                    <li class="@Html.IsSelected(controller:"OntimeDocReturnedMonthlyChart")">
-                        <a href="@Url.Action("Index", "OntimeDocReturnedMonthlyChart")"><span class="nav-label">Monthly chart</span></a>
-                    </li>
-                    <li class="@Html.IsSelected(controller:"OntimeDocReturnedYearlyChart")">
-                        <a href="@Url.Action("Index", "OntimeDocReturnedYearlyChart")"><span class="nav-label">Yearly chart</span></a>
+                    @*On-time DocReturn*@
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o"></i> On-time document return<span class="fa arrow"></span> </a>
+                        <ul class="nav nav-second-level">
+                            <li class="@Html.IsSelected(controller:"OntimeDocReturnedDailyChart")">
+                                <a href="@Url.Action("Index", "OntimeDocReturnedDailyChart")"><span class="nav-label">Daily chart</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(controller:"OntimeDocReturnedMonthlyChart")">
+                                <a href="@Url.Action("Index", "OntimeDocReturnedMonthlyChart")"><span class="nav-label">Monthly chart</span></a>
+                            </li>
+                            <li class="@Html.IsSelected(controller:"OntimeDocReturnedYearlyChart")">
+                                <a href="@Url.Action("Index", "OntimeDocReturnedYearlyChart")"><span class="nav-label">Yearly chart</span></a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </li>
             @*Adjust*@
+
+            <li>
+                <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> ADJUST</span> <span class="label label-success pull-right">v.2</span> </a>
+                <ul class="nav nav-second-level">
+                    <li class="@Html.IsSelected(controller: "AdjustDelivered")">
+                        <a href="@Url.Action("Index", "AdjustDelivered")"><span class="nav-label"> Adjust on-time delivered</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "AdjustTendered")">
+                        <a href="@Url.Action("Index", "AdjustTendered")"><span class="nav-label"> Adjust on-time tendered</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "AdjustAccepted")">
+                        <a href="@Url.Action("Index", "AdjustAccepted")"><span class="nav-label"> Adjust on-time accepted tendered</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "AdjustInbounded")">
+                        <a href="@Url.Action("Index", "AdjustInbounded")"><span class="nav-label"> Adjust on-time inbound</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "AdjustOutbounded")">
+                        <a href="@Url.Action("Index", "AdjustOutbounded")"><span class="nav-label"> Adjust on-time outbound</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "AdjustDocReturned")">
+                        <a href="@Url.Action("Index", "AdjustDocReturned")"><span class="nav-label"> Adjust on-time document returned</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            @*Pending*@
+
+            <li>
+                <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> PENDING</span> <span class="label label-success pull-right">v.1</span> </a>
+                <ul class="nav nav-second-level">
+                    <li class="@Html.IsSelected(controller: "PendingDelivery")">
+                        <a href="@Url.Action("Index", "PendingDelivery")"><span class="nav-label"> Pending on-time delivered</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "PendingTender")">
+                        <a href="@Url.Action("Index", "PendingTender")"><span class="nav-label"> Pending on-time tendered</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "PendingAccept")">
+                        <a href="@Url.Action("Index", "PendingAccept")"><span class="nav-label"> Pending on-time accepted tendered</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "PendingInbound")">
+                        <a href="@Url.Action("Index", "PendingInbound")"><span class="nav-label"> Pending on-time inbound</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "PendingOutbound")">
+                        <a href="@Url.Action("Index", "PendingOutbound")"><span class="nav-label"> Pending on-time outbound</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "PendingDocReturn")">
+                        <a href="@Url.Action("Index", "PendingDocReturn")"><span class="nav-label"> Pending on-time document returned</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            @*Approve*@
             @if (User.IsInRole("ADMIN"))
             {
-                <li>
-                    <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> ADJUST</span> <span class="label label-success pull-right">v.2</span> </a>
-                    <ul class="nav nav-second-level">
-                        <li class="@Html.IsSelected(controller: "AdjustDelivered")">
-                            <a href="@Url.Action("Index", "AdjustDelivered")"><span class="nav-label"> Adjust on-time delivered</span></a>
-                        </li>
-                        <li class="@Html.IsSelected(controller: "AdjustTendered")">
-                            <a href="@Url.Action("Index", "AdjustTendered")"><span class="nav-label"> Adjust on-time tendered</span></a>
-                        </li>
-                        <li class="@Html.IsSelected(controller: "AdjustAccepted")">
-                            <a href="@Url.Action("Index", "AdjustAccepted")"><span class="nav-label"> Adjust on-time accepted tendered</span></a>
-                        </li>
-                        <li class="@Html.IsSelected(controller: "AdjustInbounded")">
-                            <a href="@Url.Action("Index", "AdjustInbounded")"><span class="nav-label"> Adjust on-time inbound</span></a>
-                        </li>
-                        <li class="@Html.IsSelected(controller: "AdjustOutbounded")">
-                            <a href="@Url.Action("Index", "AdjustOutbounded")"><span class="nav-label"> Adjust on-time outbound</span></a>
-                        </li>
-                        <li class="@Html.IsSelected(controller: "AdjustDocReturned")">
-                            <a href="@Url.Action("Index", "AdjustDocReturned")"><span class="nav-label"> Adjust on-time document returned</span></a>
-                        </li>
-                    </ul>
-                </li>
-
-                @*Pending*@
-
-                <li>
-                    <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> PENDING</span> <span class="label label-success pull-right">v.1</span> </a>
-                    <ul class="nav nav-second-level">
-                        <li class="@Html.IsSelected(controller: "PendingDelivery")">
-                            <a href="@Url.Action("Index", "PendingDelivery")"><span class="nav-label"> Pending on-time delivered</span></a>
-                        </li>
-                        <li class="@Html.IsSelected(controller: "PendingTender")">
-                            <a href="@Url.Action("Index", "PendingTender")"><span class="nav-label"> Pending on-time tendered</span></a>
-                        </li>
-                        <li class="@Html.IsSelected(controller: "PendingAccept")">
-                            <a href="@Url.Action("Index", "PendingAccept")"><span class="nav-label"> Pending on-time accepted tendered</span></a>
-                        </li>
-                        <li class="@Html.IsSelected(controller: "PendingInbound")">
-                            <a href="@Url.Action("Index", "PendingInbound")"><span class="nav-label"> Pending on-time inbound</span></a>
-                        </li>
-                        <li class="@Html.IsSelected(controller: "PendingOutbound")">
-                            <a href="@Url.Action("Index", "PendingOutbound")"><span class="nav-label"> Pending on-time outbound</span></a>
-                        </li>
-                        <li class="@Html.IsSelected(controller: "PendingDocReturn")">
-                            <a href="@Url.Action("Index", "PendingDocReturn")"><span class="nav-label"> Pending on-time document returned</span></a>
-                        </li>
-                    </ul>
-                </li>
-
-                @*Approve*@
-
                 <li>
                     <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> Approve Adjusted</span> <span class="label label-success pull-right">v.1</span> </a>
                     <ul class="nav nav-second-level">

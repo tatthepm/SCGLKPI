@@ -110,6 +110,7 @@
                     string += '<option value="' + S.Id + '">' + S.Name + '</option>'
                 });
                 ddl.html(string);
+                ddl.select2('val', '');
             });
         });
         //#endregion
@@ -128,6 +129,7 @@
                         string += '<option value="' + S.Id + '">' + S.Name + '</option>'
                     });
                     ddl.html(string);
+                    ddl.select2('val', '');
                 });
         });
         //#endregion
@@ -438,7 +440,7 @@
                     buttons: [
                         { extend: 'copy', className: 'btn-sm' },
                         { extend: 'csv', title: 'On-time Outbound Daily', className: 'btn-sm' },
-                        { extend: 'pdf', title: 'On-time Outbound Daily', className: 'btn-sm' },
+                        { extend: 'excel', title: 'On-time Outbound Daily', className: 'btn-sm' },
                     ]
                 });
 
@@ -483,7 +485,7 @@
                     buttons: [
                         { extend: 'copy', className: 'btn-sm' },
                         { extend: 'csv', title: 'Inbound summary monthly', className: 'btn-sm' },
-                        { extend: 'pdf', title: 'Inbound summary monthly', className: 'btn-sm' },
+                        { extend: 'excel', title: 'Inbound summary monthly', className: 'btn-sm' },
                     ]
                 });
 

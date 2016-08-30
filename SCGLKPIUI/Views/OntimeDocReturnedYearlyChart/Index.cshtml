@@ -112,6 +112,7 @@
                     string += '<option value="' + S.Id + '">' + S.Name + '</option>'
                 });
                 ddl.html(string);
+                ddl.select2('val', '');
             });
         });
         //#endregion
@@ -130,6 +131,7 @@
                         string += '<option value="' + S.Id + '">' + S.Name + '</option>'
                     });
                     ddl.html(string);
+                    ddl.select2('val', '');
                 });
         });
         //#endregion
@@ -414,7 +416,7 @@
                 buttons: [
                     { extend: 'copy', className: 'btn-sm' },
                     { extend: 'csv', title: 'On-time DocReturn Yearly', className: 'btn-sm' },
-                    { extend: 'pdf', title: 'On-time DocReturn Yearly', className: 'btn-sm' },
+                    { extend: 'excel', title: 'On-time DocReturn Yearly', className: 'btn-sm' },
                 ]
             });
 
@@ -457,7 +459,7 @@
                 buttons: [
                     { extend: 'copy', className: 'btn-sm' },
                     { extend: 'csv', title: 'DocReturn summary yearly', className: 'btn-sm' },
-                    { extend: 'pdf', title: 'DocReturn summary yearly', className: 'btn-sm' },
+                    { extend: 'excel', title: 'DocReturn summary yearly', className: 'btn-sm' },
                 ]
             });
 

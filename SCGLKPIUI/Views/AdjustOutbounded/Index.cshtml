@@ -136,6 +136,7 @@
                     string += '<option value="' + S.Id + '">' + S.Name + '</option>'
                 });
                 ddl.html(string);
+                ddl.select2('val', '');
             });
         });
         //#endregion
@@ -153,6 +154,7 @@
                     string += '<option value="' + S.Id + '">' + S.Name + '</option>'
                 });
                 ddl.html(string);
+                ddl.select2('val', '');
             });
         });
         //#endregion
@@ -177,12 +179,12 @@
                     text: "Sorry!, Section is not selected ",
                     type: "warning"
                 });
-            } else if ($('#MatNameId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, MatName is not selected ",
-                    type: "warning"
-                });
+            //} else if ($('#MatNameId').val() == "") {
+            //    swal({
+            //        title: "Warning!",
+            //        text: "Sorry!, MatName is not selected ",
+            //        type: "warning"
+            //    });
             } else if ($('#YearId').val() == "") {
                 swal({
                     title: "Warning!",
@@ -263,7 +265,7 @@
                     buttons: [
                         { extend: 'copy', className: 'btn-sm' },
                         { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
-                        { extend: 'pdf', title: 'ExampleFile', className: 'btn-sm' },
+                        { extend: 'excel', title: 'ExampleFile', className: 'btn-sm' },
                     ]
                 });
                 //#endregion table

@@ -238,7 +238,7 @@
                     buttons: [
                         { extend: 'copy', className: 'btn-sm' },
                         { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
-                        { extend: 'pdf', title: 'ExampleFile', className: 'btn-sm' },
+                        { extend: 'excel', title: 'ExampleFile', className: 'btn-sm' },
                     ],
                     'order': [1, 'asc'],
                     'rowCallback': function(row, data, dataIndex){
@@ -285,7 +285,9 @@
                 //Get current tr
                 var $row = $(this).closest('tr');
                 //Get row index
-                var rowId = table.row($row).index();
+                //var rowId = table.row($row).index();
+
+                var rowId = $(this).closest("tr").index();
 
                 //Get shipment
                 //var rowShipment = (table.row($row).data());

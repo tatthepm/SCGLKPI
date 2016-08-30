@@ -132,6 +132,7 @@
                     string += '<option value="' + S.Id + '">' + S.Name + '</option>'
                 });
                 ddl.html(string);
+                ddl.select2('val', '');
             });
         });
 
@@ -150,6 +151,7 @@
                     string += '<option value="' + S.Id + '">' + S.Name + '</option>'
                 });
                 ddl.html(string);
+                ddl.select2('val', '');
             });
         });
 
@@ -478,7 +480,7 @@
                     buttons: [
                         { extend: 'copy', className: 'btn-sm' },
                         { extend: 'csv', title: 'On-time Delivery Daily', className: 'btn-sm' },
-                        { extend: 'pdf', title: 'On-time Delivery Daily', className: 'btn-sm' },
+                        { extend: 'excel', title: 'On-time Delivery Daily', className: 'btn-sm' },
                     ]
                 });
 
@@ -524,7 +526,7 @@
                     buttons: [
                         { extend: 'copy', className: 'btn-sm' },
                         { extend: 'csv', title: 'On-time Delivery Summary', className: 'btn-sm' },
-                        { extend: 'pdf', title: 'On-time Delivery Summary', className: 'btn-sm' },
+                        { extend: 'excel', title: 'On-time Delivery Summary', className: 'btn-sm' },
                     ]
                 });
                 //#endregion data table

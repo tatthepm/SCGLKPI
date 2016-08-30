@@ -12,11 +12,11 @@
             <div class="panel-body">
                 <div class="form-horizontal">
                     <div class="form-group">
-                        <div class="col-md-1">@Html.Label("DEP")</div>
+                        <div class="col-md-1">@Html.Label("DEP")<span style="color:red">*</span></div>
                         <div class="col-md-3">
                             @Html.DropDownList("DepartmentId", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
                         </div>
-                        <div class="col-md-1">@Html.Label("SEC")</div>
+                        <div class="col-md-1">@Html.Label("SEC")<span style="color:red">*</span></div>
                         <div class="col-md-3">
                             @Html.DropDownList("SectionId", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
                         </div>
