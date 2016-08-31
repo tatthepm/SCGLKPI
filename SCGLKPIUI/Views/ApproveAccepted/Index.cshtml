@@ -180,6 +180,7 @@
             var yearId = $('#YearId').val();
             var monthId = $('#MonthId').val();
             var adjustApproveAccept = $('#approveAcceptedTable').dataTable();
+            //remove checked box indexes
 
             if ($('#DepartmentId').val() == "") {
                 swal({
@@ -223,7 +224,7 @@
                 //var matNameId = $('#MatNameId').val();
                 //var yearId = $('#YearId').val();
                 //var monthId = $('#MonthId').val();
-                //adjustApproveAccept 
+                //adjustApproveAccept
                 adjustApproveAccept.fnDestroy();
                 adjustApproveAccept.DataTable({
                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
@@ -281,14 +282,7 @@
                     'rowCallback': function(row, data, dataIndex){
                         // Get row ID
                         var rowId = dataIndex;
-                        // Get row Shipment
-                        //var rowId = row.Shipment;
-                        //เช็ค pre-load data ว่ามี check ถูกมาแล้วหรือเปล่า ถ้ามี ให้เก็บเข้าบัฟเฟอร์
-                        // If row ID is in the list of selected row IDs
-                        if($.inArray(rowId, rows_selected) !== -1){
-                            $(row).find('input[type="checkbox"]').prop('checked', true);
-                            $(row).addClass('selected');
-                        }
+
                     }
                 });
                 //#endregion table
@@ -322,16 +316,10 @@
                 //Get current tr
                 var $row = $(this).closest('tr');
                 //Get row index
-                //var rowId = table.row($row).index();
 
                 var rowId = $(this).closest("tr").index();
 
-                //Get shipment
-                //var rowShipment = (table.row($row).data());
-                //var rowShipmentString = rowShipment.toString();
-                //var rowId = rowShipmentString.substr(0, rowShipmentString.indexOf(','));
-
-                // Determine whether row ID is in the list of selected row IDs 
+                // Determine whether row ID is in the list of selected row IDs
                 var index = $.inArray(rowId, rows_selected);
 
                 // If checkbox is checked and row ID is not in list of selected row IDs
@@ -358,7 +346,7 @@
 
                 // Iterate over all selected checkboxes
                 $.each(rows_selected, function (index, rowId) {
-                    // Create a hidden element 
+                    // Create a hidden element
                     if (rowId != null) {
                         $(form).append(
                             $('<input>')
@@ -368,6 +356,92 @@
                         );
                     }
                 });
+
+                e.preventDefault();
+                //Ajax call table
+                $.ajax({
+                    type: 'post',
+                    url: '/ApproveAccepted/UpdateAcceptApprove/',
+                    data: $('form').serialize(),
+                    success: function () {
+                        //Start load table
+                        alert('ทำการอนุมัติค่า KPI เรียบร้อย');
+                        adjustApproveAccept.fnDestroy();
+                        adjustApproveAccept.DataTable({
+                            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                            "ajax": {
+                                "type": "POST",
+                                "url": '@(Url.RouteUrl("JsonApproveAcceptTable"))',
+                                "data": function (d) {
+                                    d.departmentId = departmentId;
+                                    d.sectionId = sectionId;
+                                    d.matNameId = matNameId;
+                                    d.YearId = yearId;
+                                    d.MonthId = monthId;
+                                },
+                                "dataSrc": ""
+                            },
+                            columns: [
+                                { data: "Shipment" },
+                                { data: "RegionName" },
+                                { data: "SoldtoName" },
+                                { data: "ShiptoName" },
+                                { data: "Reason" },
+                                {
+                                    data: "Approve",
+                                    render: function (data, type, row) {
+                                        if (type === 'display') {
+                                            return '<input id="Approve" name="Approve" type="checkbox" class="ckb" />';
+                                        }
+                                        return data;
+                                    },
+                                    className: "dt-body-center"
+                                }
+                            ],
+                            'columnDefs': [{
+                                "targets": 6,
+                                "data": function (row, type, val, meta) {
+                                    return '<input type="text" name="txtRemark" />\n\
+                                <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\
+                                <input type="hidden" name="txtSM" value="' + row.Shipment + '" />\n\
+                                <input type="hidden" name="monthId" value="' + monthId + '" />\n\
+                                <input type="hidden" name="yearId" value="' + yearId + '" />\n\
+                                <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
+                                <input type="hidden" name="sectionId" value="' + sectionId + '" />\n\
+                                <input type="hidden" name="matNameId" value="' + matNameId + '" />\n';
+
+                                },
+                            }],
+                            select: true,
+                            buttons: [
+                                { extend: 'copy', className: 'btn-sm' },
+                                { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
+                                { extend: 'excel', title: 'ExampleFile', className: 'btn-sm' },
+                            ],
+                            'order': [1, 'asc'],
+                            'rowCallback': function (row, data, dataIndex) {
+                                // Get row ID
+                                var rowId = dataIndex;
+                                // Get row Shipment
+                                //var rowId = row.Shipment;
+                                //เช็ค pre-load data ว่ามี check ถูกมาแล้วหรือเปล่า ถ้ามี ให้เก็บเข้าบัฟเฟอร์
+                                // If row ID is in the list of selected row IDs
+                                //if ($.inArray(rowId, rows_selected) !== -1) {
+                                //    $(row).find('input[type="checkbox"]').prop('checked', true);
+                                //    $(row).addClass('selected');
+                                //}
+                            }
+                        });
+                        //remove checkbox indexes
+                        rows_selected = [];
+                        var txtApprove = document.getElementsByName("txtApprove");
+                        if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
+                            $('input[name="txtApprove"]').remove();
+                        }
+                    }
+                });
+                
             });
 
         }); //end btnSerarch click
@@ -407,7 +481,7 @@
         //
         // Updates "Select all" control in a data table
         //
-        
+
         //#endregion
     </script>
 }

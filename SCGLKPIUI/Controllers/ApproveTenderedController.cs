@@ -102,7 +102,8 @@ namespace SCGLKPIUI.Controllers
                 try
                 {
                     int countSM = 0;
-                    foreach (string index in txtApprove)
+                    List<string> indexes = new List<string>(txtApprove.Distinct());
+                    foreach (string index in indexes)
                     {
                         int i = Convert.ToInt16(index);
 
@@ -167,7 +168,7 @@ namespace SCGLKPIUI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return RedirectToAction("Index", new { sms = "Operation update reason tendered failed !" + ex.InnerException.InnerException.Message.ToString() });
+                    return RedirectToAction("Index", new { sms = "Operation update reason tendered failed !" + ex.ToString() });
                 }
                 //  return View();
             }

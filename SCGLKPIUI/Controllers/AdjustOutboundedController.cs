@@ -27,7 +27,7 @@ namespace SCGLKPIUI.Controllers {
                 ViewBag.SectionId = new SelectList(ddlSec.ToList(), "Id", "Name");
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
-                ViewBag.MatNameId = new SelectList(ddlMonth.ToList(), "Id", "Name");
+                ViewBag.MatNameId = new SelectList(ddlMatName.ToList(), "Id", "Name");
 
                 return View();
 
@@ -116,7 +116,7 @@ namespace SCGLKPIUI.Controllers {
 
                 try {
 
-                    // List<string> listSM = new List<string>();
+                    //Write to Adjested table
                     int countDN = 0;
                     for (int i = 0; i < dynamic_select.Count; i++)
                     {
@@ -172,7 +172,7 @@ namespace SCGLKPIUI.Controllers {
                             };
                             //insert waiting for approval
                             objBs.outboundAdjustedBs.Insert(tmp_toInsert);
-                            //delete AcceptedDelays
+                            //delete OntimeDelays
                             objBs.outboundDelayBs.Delete(dn);
 
                             countDN++;

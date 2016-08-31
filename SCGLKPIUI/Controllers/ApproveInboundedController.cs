@@ -124,7 +124,8 @@ namespace SCGLKPIUI.Controllers
                 {
                     // List<string> listSM = new List<string>();
                     int countDN = 0;
-                    foreach (string index in txtApprove)
+                    List<string> indexes = new List<string>(txtApprove.Distinct());
+                    foreach (string index in indexes)
                     {
                         int i = Convert.ToInt16(index);
 
@@ -203,7 +204,7 @@ namespace SCGLKPIUI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return RedirectToAction("Index", new { sms = "Operation update reason Inbounded failed !" + ex.InnerException.InnerException.Message.ToString() });
+                    return RedirectToAction("Index", new { sms = "Operation update reason Inbounded failed !" + ex.InnerException.ToString() });
                 }
                 //  return View();
 
