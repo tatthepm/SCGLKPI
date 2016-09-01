@@ -160,7 +160,6 @@ namespace SCGLKPIUI.Controllers
                             ontimeTenderYear.SumOfAdjustTender = ontimeTenderYear.OnTime + adjTNRDYear;
                             objBs.ontimeTenderYearBs.Update(ontimeTenderYear);
                         }
-                        countSM++;
                     }
 
                     Trans.Complete();

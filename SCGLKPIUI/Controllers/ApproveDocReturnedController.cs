@@ -176,7 +176,7 @@ namespace SCGLKPIUI.Controllers
 
                             OntimeDocReturnMonth ontimeDocReturnMonth = objBs.ontimeDocReturnMonthBs.GetByID(idM);
 
-                            int adjOntimeMonth = ontimeDocReturnMonth.AdjustDocReturn + countDN;
+                            int adjOntimeMonth = ontimeDocReturnMonth.AdjustDocReturn + 1;
                             ontimeDocReturnMonth.AdjustDocReturn = adjOntimeMonth;
                             ontimeDocReturnMonth.SumOfAdjustDocReturn = ontimeDocReturnMonth.OnTime + adjOntimeMonth;
                             objBs.ontimeDocReturnMonthBs.Update(ontimeDocReturnMonth);
@@ -190,13 +190,14 @@ namespace SCGLKPIUI.Controllers
 
                             OntimeDocReturnYear ontimeDocReturnYear = objBs.ontimeDocReturnYearBs.GetByID(idY);
 
-                            int adjOntimeYear = ontimeDocReturnYear.AdjustDocReturn + countDN;
+                            int adjOntimeYear = ontimeDocReturnYear.AdjustDocReturn + 1;
                             ontimeDocReturnYear.AdjustDocReturn = adjOntimeYear;
                             ontimeDocReturnYear.SumOfAdjustDocReturn = ontimeDocReturnYear.OnTime + adjOntimeYear;
                             objBs.ontimeDocReturnYearBs.Update(ontimeDocReturnYear);
+
+                            countDN++;
                         }
                     }
-                    countDN++;
 
                     Trans.Complete();
                     return RedirectToAction("Index", new { sms = countDN + "-Shipment is adjusted Successfully!" });

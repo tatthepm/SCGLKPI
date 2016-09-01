@@ -161,6 +161,7 @@ namespace SCGLKPIUI.Controllers
 
                             OntimeInbound ontimeInbound = objBs.ontimeInboundBs.GetByID(id);
 
+                            countDN++;
                             int adjOntime = ontimeInbound.AdjustInbound + 1;
                             ontimeInbound.AdjustInbound = adjOntime;
                             ontimeInbound.SumOfAdjustInbound = ontimeInbound.OnTime + adjOntime;
@@ -176,7 +177,7 @@ namespace SCGLKPIUI.Controllers
 
                             OntimeInboundMonth ontimeInboundMonth = objBs.ontimeInboundMonthBs.GetByID(idM);
 
-                            int adjInboundMonth = ontimeInboundMonth.AdjustInbound + countDN;
+                            int adjInboundMonth = ontimeInboundMonth.AdjustInbound + 1;
                             ontimeInboundMonth.AdjustInbound = adjInboundMonth;
                             ontimeInboundMonth.SumOfAdjustInbound = ontimeInboundMonth.OnTime + adjInboundMonth;
                             objBs.ontimeInboundMonthBs.Update(ontimeInboundMonth);
@@ -190,13 +191,14 @@ namespace SCGLKPIUI.Controllers
 
                             OntimeInboundYear ontimeInboundYear = objBs.ontimeInboundYearBs.GetByID(idY);
 
-                            int adjInboundYear = ontimeInboundYear.AdjustInbound + countDN;
+                            int adjInboundYear = ontimeInboundYear.AdjustInbound + 1;
                             ontimeInboundYear.AdjustInbound = adjInboundYear;
                             ontimeInboundYear.SumOfAdjustInbound = ontimeInboundYear.OnTime + adjInboundYear;
                             objBs.ontimeInboundYearBs.Update(ontimeInboundYear);
+
+                            countDN++;
                         }
                     }
-                    countDN++;
 
 
                     Trans.Complete();

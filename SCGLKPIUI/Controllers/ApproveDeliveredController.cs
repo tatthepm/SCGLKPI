@@ -176,7 +176,7 @@ namespace SCGLKPIUI.Controllers
 
                             OntimeDeliveryMonth ontimeDeliveryMonth = objBs.ontimeDeliveryMonthBs.GetByID(idM);
 
-                            int adjOntimeMonth = ontimeDeliveryMonth.AdjustDelivery + countDN;
+                            int adjOntimeMonth = ontimeDeliveryMonth.AdjustDelivery + 1;
                             ontimeDeliveryMonth.AdjustDelivery = adjOntimeMonth;
                             ontimeDeliveryMonth.SumOfAdjustDelivery = ontimeDeliveryMonth.OnTime + adjOntimeMonth;
                             objBs.ontimeDeliveryMonthBs.Update(ontimeDeliveryMonth);
@@ -190,13 +190,15 @@ namespace SCGLKPIUI.Controllers
 
                             OntimeDeliveryYear ontimeDeliveryYear = objBs.ontimeDeliveryYearBs.GetByID(idY);
 
-                            int adjOntimeYear = ontimeDeliveryYear.AdjustDelivery + countDN;
+                            int adjOntimeYear = ontimeDeliveryYear.AdjustDelivery + 1;
                             ontimeDeliveryYear.AdjustDelivery = adjOntimeYear;
                             ontimeDeliveryYear.SumOfAdjustDelivery = ontimeDeliveryYear.OnTime + adjOntimeYear;
                             objBs.ontimeDeliveryYearBs.Update(ontimeDeliveryYear);
+
+                            countDN++;
                         }
                     }
-                    countDN++;
+                    
 
 
                     Trans.Complete();

@@ -176,7 +176,7 @@ namespace SCGLKPIUI.Controllers
 
                             OntimeOutboundMonth ontimeOutboundMonth = objBs.ontimeOutboundMonthBs.GetByID(idM);
 
-                            int adjOutboundMonth = ontimeOutboundMonth.AdjustOutbound + countDN;
+                            int adjOutboundMonth = ontimeOutboundMonth.AdjustOutbound + 1;
                             ontimeOutboundMonth.AdjustOutbound = adjOutboundMonth;
                             ontimeOutboundMonth.SumOfAdjustOutbound = ontimeOutboundMonth.OnTime + adjOutboundMonth;
                             objBs.ontimeOutboundMonthBs.Update(ontimeOutboundMonth);
@@ -190,14 +190,14 @@ namespace SCGLKPIUI.Controllers
 
                             OntimeOutboundYear ontimeOutboundYear = objBs.ontimeOutboundYearBs.GetByID(idY);
 
-                            int adjOutboundYear = ontimeOutboundYear.AdjustOutbound + countDN;
+                            int adjOutboundYear = ontimeOutboundYear.AdjustOutbound + 1;
                             ontimeOutboundYear.AdjustOutbound = adjOutboundYear;
                             ontimeOutboundYear.SumOfAdjustOutbound = ontimeOutboundYear.OnTime + adjOutboundYear;
                             objBs.ontimeOutboundYearBs.Update(ontimeOutboundYear);
+
+                            countDN++;
                         }
                     }
-                    countDN++;
-
 
                     Trans.Complete();
                     return RedirectToAction("Index", new { sms = countDN + "-Shipment is adjusted Successfully!" });
