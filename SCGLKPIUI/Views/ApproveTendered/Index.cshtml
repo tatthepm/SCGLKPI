@@ -98,6 +98,7 @@
     <script>
 
         //created global object Then just before initializing the chart i destroyed
+        var rows_selected = [];
         var chartOntime;
         var chartOntimeAdj;
         var chartShipment;
@@ -135,6 +136,7 @@
                     string += '<option value="' + S.Id + '">' + S.Name + '</option>'
                 });
                 ddlR.html(string);
+                ddlR.select2('val', '');
             });
         });
         //#endregion
@@ -143,12 +145,7 @@
         //#endregion
         $("#btnSearch").click(function () {
 
-            var rows_selected = [];
             //#region table
-            var matNameId = $('#SegmentId').val();
-            var yearId = $('#YearId').val();
-            var monthId = $('#MonthId').val();
-            var adjustApproveTender = $('#approveTenderedTable').dataTable();
 
             if ($('#SegmentId').val() == "") {
                 swal({
@@ -170,218 +167,48 @@
                 });
             }
             else {
-
-
-                //var rows_selected = [];
-                ////#region table
-                var segmentId = $('#SegmentId').val();
-                var yearId = $('#YearId').val();
-                var monthId = $('#MonthId').val();
-                //adjustApproveTender
-                adjustApproveTender.fnDestroy();
-                adjustApproveTender.DataTable({
-                    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                    "ajax": {
-                        "type": "POST",
-                        "url": '@(Url.RouteUrl("JsonApproveTenderTable"))',
-                        "data": function (d) {
-                            d.segmentId = segmentId
-                            d.YearId = yearId;
-                            d.MonthId = monthId;
-                        },
-                        "dataSrc": ""
-                    },
-                    columns: [
-                        { data: "Shipment" },
-                        { data: "RegionName" },
-                        { data: "SoldtoName" },
-                        { data: "ShiptoName" },
-                        { data: "Reason" },
-                        {
-                            data: "Approve",
-                            render: function (data, type, row) {
-                                if (type === 'display') {
-                                    return '<input id="Approve" name="Approve" type="checkbox" class="ckb" />';
-                                }
-                                return data;
-                            },
-                            className: "dt-body-center"
-                        }
-                    ],
-                    'columnDefs': [{
-                        "targets": 6,
-                        "data": function (row, type, val, meta) {
-                            return '<input type="text" name="txtRemark" />\n\
-                                <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\
-                                <input type="hidden" name="txtSM" value="' + row.Shipment + '" />\n\
-                                <input type="hidden" name="monthId" value="' + monthId + '" />\n\
-                                <input type="hidden" name="yearId" value="' + yearId + '" />\n\
-                                <input type="hidden" name="segmentId" value="' + segmentId + '" />\n';
-
-                        },
-                    }],
-                    select: true,
-                    buttons: [
-                        { extend: 'copy', className: 'btn-sm' },
-                        { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
-                        { extend: 'excel', title: 'ExampleFile', className: 'btn-sm' },
-                    ],
-                    'order': [1, 'asc'],
-                    'rowCallback': function(row, data, dataIndex){
-                        // Get row ID
-                        var rowId = dataIndex;
-                        // Get row Shipment
-                    }
-                });
-                //#endregion table
-                rows_selected = [];
+                loadDataTable();
             } //end if else
 
-            var table = $('#approveTenderedTable').DataTable();
-
-            $('thead input[name="select_all"]', table.table().container()).on('click', function (e) {
-                if (this.checked) {
-                    $('#approveTenderedTable tbody input[type="checkbox"]:not(:checked)').trigger('click');
-                } else {
-                    $('#approveTenderedTable tbody input[type="checkbox"]:checked').trigger('click');
-                }
-                //ดัก event ที่ส่งไป Parent class
-                // Prevent click event from propagating to parent
-                e.stopPropagation();
-            });
-
-            $('#approveTenderedTable tbody').on('click', 'input[type="checkbox"]', function (e) {
-                //Get current tr
-                var $row = $(this).closest('tr');
-                //Get row index
-                //var rowId = table.row($row).index();
-
-                var rowId = $(this).closest("tr").index();
-
-                //Get shipment
-                //var rowShipment = (table.row($row).data());
-                //var rowShipmentString = rowShipment.toString();
-                //var rowId = rowShipmentString.substr(0, rowShipmentString.indexOf(','));
-
-                // Determine whether row ID is in the list of selected row IDs
-                var index = $.inArray(rowId, rows_selected);
-
-                // If checkbox is checked and row ID is not in list of selected row IDs
-                if (this.checked && index === -1) {
-                    rows_selected.push(rowId);
-
-                    // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
-                } else if (!this.checked && index !== -1) {
-                    rows_selected.splice(index, 1);
-                }
-                //tr class select to hightlight.
-                if (this.checked) {
-                    $row.addClass('selected');
-                } else {
-                    $row.removeClass('selected');
-                }
-
-                // Prevent click event from propagating to parent
-                e.stopPropagation();
-            });
-
-            $('#frm').on('submit', function (e) {
-
-                var txtApprove = document.getElementsByName("txtApprove");
-                if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
-                    $('input[name="txtApprove"]').remove();
-                }
-
-                var form = this;
-
-                // Iterate over all selected checkboxes
-                $.each(rows_selected, function (index, rowId) {
-                    // Create a hidden element
-                    if (rowId != null) {
-                        $(form).append(
-                            $('<input>')
-                               .attr('type', 'hidden')
-                               .attr('name', 'txtApprove')
-                               .val(rowId)
-                        );
-                    }
-                });
-
-                e.preventDefault();
-
-                $.ajax({
-                    type: 'post',
-                    url: '/ApproveTendered/UpdateTenderApprove/',
-                    data: $('form').serialize(),
-                    success: function (results) {
-                        //Start load table
-                        //alert('ทำการอนุมัติค่า KPI เรียบร้อย');
-                        alert(results)
-                        //reset row indexes
-                        rows_selected = [];
-                        adjustApproveTender.fnDestroy();
-                        adjustApproveTender.DataTable({
-                            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                            "ajax": {
-                                "type": "POST",
-                                "url": '@(Url.RouteUrl("JsonApproveTenderTable"))',
-                                "data": function (d) {
-                                    d.segmentId = segmentId
-                                    d.YearId = yearId;
-                                    d.MonthId = monthId;
-                                },
-                                "dataSrc": ""
-                            },
-                            columns: [
-                                { data: "Shipment" },
-                                { data: "RegionName" },
-                                { data: "SoldtoName" },
-                                { data: "ShiptoName" },
-                                { data: "Reason" },
-                                {
-                                    data: "Approve",
-                                    render: function (data, type, row) {
-                                        if (type === 'display') {
-                                            return '<input id="Approve" name="Approve" type="checkbox" class="ckb" />';
-                                        }
-                                        return data;
-                                    },
-                                    className: "dt-body-center"
-                                }
-                            ],
-                            'columnDefs': [{
-                                "targets": 6,
-                                "data": function (row, type, val, meta) {
-                                    return '<input type="text" name="txtRemark" />\n\
-                                <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\
-                                <input type="hidden" name="txtSM" value="' + row.Shipment + '" />\n\
-                                <input type="hidden" name="monthId" value="' + monthId + '" />\n\
-                                <input type="hidden" name="yearId" value="' + yearId + '" />\n\
-                                <input type="hidden" name="segmentId" value="' + segmentId + '" />\n';
-
-                                },
-                            }],
-                            select: true,
-                            buttons: [
-                                { extend: 'copy', className: 'btn-sm' },
-                                { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
-                                { extend: 'excel', title: 'ExampleFile', className: 'btn-sm' },
-                            ],
-                            'order': [1, 'asc'],
-                            'rowCallback': function (row, data, dataIndex) {
-                                // Get row ID
-                                var rowId = dataIndex;
-                                // Get row Shipment
-                            }
-                        });
-                        
-                    }
-                });
-            });
-
         }); //end btnSerarch click
+
+        //#Region 4.5 Ajax Click menu
+        var table = $('#approveTenderedTable').DataTable();
+
+        $('thead input[name="select_all"]', table.table().container()).on('click', function (e) {
+            if (this.checked) {
+                $('#approveTenderedTable tbody input[type="checkbox"]:not(:checked)').trigger('click');
+            } else {
+                $('#approveTenderedTable tbody input[type="checkbox"]:checked').trigger('click');
+            }
+            //ดัก event ที่ส่งไป Parent class
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
+
+        $('#approveTenderedTable tbody').on('click', 'input[type="checkbox"]', function (e) {
+            //Get current tr
+            var $row = $(this).closest('tr');
+            //Get row index
+            var rowId = $(this).closest("tr").index();
+            // Determine whether row ID is in the list of selected row IDs
+            var index = $.inArray(rowId, rows_selected);
+            // If checkbox is checked and row ID is not in list of selected row IDs
+            if (this.checked && index === -1) {
+                rows_selected.push(rowId);
+                // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
+            } else if (!this.checked && index !== -1) {
+                rows_selected.splice(index, 1);
+            }
+            //tr class select to hightlight.
+            if (this.checked) {
+                $row.addClass('selected');
+            } else {
+                $row.removeClass('selected');
+            }
+            // Prevent click event from propagating to parent
+            e.stopPropagation();
+        });
 
         //#region 5 Bind normal buttons
 
@@ -414,12 +241,114 @@
                 l.ladda('stop');
             }, 5000)
         });
+        //#endregion
 
-        //
-        // Updates "Select all" control in a data table
-        //
+        $('form').on('submit', function (e) {
+            //clear indexes
+            var txtApprove = document.getElementsByName("txtApprove");
+            if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
+                $('input[name="txtApprove"]').remove();
+            }
+            var form = this;
+
+            // Iterate over all selected checkboxes
+            $.each(rows_selected, function (index, rowId) {
+                // Create a hidden element
+                if (rowId != null) {
+                    $(form).append(
+                        $('<input>')
+                           .attr('type', 'hidden')
+                           .attr('name', 'txtApprove')
+                           .val(rowId)
+                    );
+                }
+            });
+            e.preventDefault();
+            $.ajax({
+                type: 'post',
+                url: '/ApproveTendered/UpdateTenderApprove/',
+                data: $('form').serialize(),
+                success: function (results) {
+                    //Start load table
+                    //alert('ทำการอนุมัติค่า KPI เรียบร้อย');
+                    alert(results)
+                    //reset row indexes
+                    loadDataTable();
+                }
+            });
+
+        });
+
+        function loadDataTable() {
+            rows_selected = [];
+
+            // on-time tender monthly dataTable
+            var departmentId = $('#DepartmentId').val();
+            var sectionId = $('#SectionId').val();
+            var matNameId = $('#MatNameId').val();
+            var yearId = $('#YearId').val();
+            var monthId = $('#MonthId').val();
+            var adjustApproveTender = $('#approveTenderedTable').dataTable();
+
+            adjustApproveTender.fnDestroy();
+            adjustApproveTender.DataTable({
+                dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "ajax": {
+                    "type": "POST",
+                    "url": '@(Url.RouteUrl("JsonApproveTenderTable"))',
+                    "data": function (d) {
+                        d.segmentId = segmentId
+                        d.YearId = yearId;
+                        d.MonthId = monthId;
+                    },
+                    "dataSrc": ""
+                },
+                columns: [
+                    { data: "Shipment" },
+                    { data: "RegionName" },
+                    { data: "SoldtoName" },
+                    { data: "ShiptoName" },
+                    { data: "Reason" },
+                    {
+                        data: "Approve",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<input id="Approve" name="Approve" type="checkbox" class="ckb" />';
+                            }
+                            return data;
+                        },
+                        className: "dt-body-center"
+                    }
+                ],
+                'columnDefs': [{
+                    "targets": 6,
+                    "data": function (row, type, val, meta) {
+                        return '<input type="text" name="txtRemark" />\n\
+                                <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\
+                                <input type="hidden" name="txtSM" value="' + row.Shipment + '" />\n\
+                                <input type="hidden" name="monthId" value="' + monthId + '" />\n\
+                                <input type="hidden" name="yearId" value="' + yearId + '" />\n\
+                                <input type="hidden" name="segmentId" value="' + segmentId + '" />\n';
+
+                    },
+                }],
+                select: true,
+                buttons: [
+                    { extend: 'copy', className: 'btn-sm' },
+                    { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
+                    { extend: 'excel', title: 'ExampleFile', className: 'btn-sm' },
+                ],
+                'order': [1, 'asc'],
+                'rowCallback': function (row, data, dataIndex) {
+                    // Get row ID
+                    var rowId = dataIndex;
+
+                }
+            });
+        }
 
         //#endregion
-        
+
     </script>
 }

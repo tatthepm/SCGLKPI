@@ -1,218 +1,334 @@
 ﻿@model SCGLKPIUI.Models.Outbounded.AdjustOutboundedViewModels
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<style type="text/css">
-    .chart-legend li span {
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        margin-right: 5px;
-        list-style: none;
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
     }
+    <style type="text/css">
+        .chart-legend li span {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-right: 5px;
+            list-style: none;
+        }
 
-    .chart-legend ul {
-        list-style-type: none;
-    }
-</style>
-<h4>
-    <i class="fa fa-truck"></i> Outbound approve | Monthly
-</h4>
+        .chart-legend ul {
+            list-style-type: none;
+        }
+    </style>
+    <h4>
+        <i class="fa fa-truck"></i> Outbound approve | Monthly
+    </h4>
 
-@*filter by month*@
-@Html.Partial("pv_ApproveFilterByMonth")
+    @*filter by month*@
+    @Html.Partial("pv_ApproveFilterByMonth")
 
-@Html.Partial("pv_ApproveOutbounded")
+    @Html.Partial("pv_ApproveOutbounded")
 
-@if (TempData["Msg"] != null)
-{
-    if (TempData["Msg"].ToString().Contains("Successfully"))
+    @if (TempData["Msg"] != null)
     {
-        <div class="alert alert-dismissable alert-info">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <span style="font-size:small"> @TempData["Msg"].ToString()</span>
-        </div>
+        if (TempData["Msg"].ToString().Contains("Successfully"))
+        {
+            <div class="alert alert-dismissable alert-info">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <span style="font-size:small"> @TempData["Msg"].ToString()</span>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-dismissable alert-danger">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <span style="font-size:small"> @TempData["Msg"].ToString()</span>
+            </div>
+        }
     }
-    else
-    {
-        <div class="alert alert-dismissable alert-danger">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <span style="font-size:small"> @TempData["Msg"].ToString()</span>
-        </div>
-    }
-}
 
-<div>
-    <div id="loading" class="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Loading...</h4>
-                </div>
-                <div class="modal-body">
-                    @*<div class="progress progress-success">
-                            <div class="progress-bar" style="width:100%"></div>
-                        </div>*@
-                    <div class="progress m-t-xs full progress-small">
-                        <div style="width:100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-striped active">
+    <div>
+        <div id="loading" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Loading...</h4>
+                    </div>
+                    <div class="modal-body">
+                        @*<div class="progress progress-success">
+                                <div class="progress-bar" style="width:100%"></div>
+                            </div>*@
+                        <div class="progress m-t-xs full progress-small">
+                            <div style="width:100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-striped active">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-@section Styles {
-    @Styles.Render("~/bundles/datatables/css")
-    @Styles.Render("~/bundles/xeditable/css")
-    @Styles.Render("~/bundles/select2/css")
-    @Styles.Render("~/bundles/touchspin/css")
-    @Styles.Render("~/bundles/datepicker/css")
-    @Styles.Render("~/bundles/bootstrapCheckbox/css")
-    @Styles.Render("~/bundles/datetimepicker/css")
-    @Styles.Render("~/bundles/clockpicker/css")
-    @Styles.Render("~/bundles/sweetAlert/css")
-    @Styles.Render("~/bundles/toastr/css")
-    @Styles.Render("~/bundles/ladda/css")
-    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-}
+    @section Styles {
+        @Styles.Render("~/bundles/datatables/css")
+        @Styles.Render("~/bundles/xeditable/css")
+        @Styles.Render("~/bundles/select2/css")
+        @Styles.Render("~/bundles/touchspin/css")
+        @Styles.Render("~/bundles/datepicker/css")
+        @Styles.Render("~/bundles/bootstrapCheckbox/css")
+        @Styles.Render("~/bundles/datetimepicker/css")
+        @Styles.Render("~/bundles/clockpicker/css")
+        @Styles.Render("~/bundles/sweetAlert/css")
+        @Styles.Render("~/bundles/toastr/css")
+        @Styles.Render("~/bundles/ladda/css")
+        <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+    }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/moment/js")
-    @Scripts.Render("~/bundles/xeditable/js")
-    @Scripts.Render("~/bundles/select2/js")
-    @Scripts.Render("~/bundles/touchspin/js")
-    @Scripts.Render("~/bundles/clockpicker/js")
-    @Scripts.Render("~/bundles/chartjs/js")
-    @Scripts.Render("~/bundles/datatables/js")
-    @Scripts.Render("~/bundles/datatablesBootstrap/js")
-    @Scripts.Render("~/bundles/datatablesPlugins/js")
-    @Scripts.Render("~/bundles/sweetAlert/js")
-    @Scripts.Render("~/bundles/toastr/js")
-    @Scripts.Render("~/bundles/ladda/js")
-    <script src="~/Scripts/jquery.datetimepicker.js"></script>
-    <script src="~/Scripts/fnReloadAjax.js"></script>
+    @section Scripts {
+        @Scripts.Render("~/bundles/moment/js")
+        @Scripts.Render("~/bundles/xeditable/js")
+        @Scripts.Render("~/bundles/select2/js")
+        @Scripts.Render("~/bundles/touchspin/js")
+        @Scripts.Render("~/bundles/clockpicker/js")
+        @Scripts.Render("~/bundles/chartjs/js")
+        @Scripts.Render("~/bundles/datatables/js")
+        @Scripts.Render("~/bundles/datatablesBootstrap/js")
+        @Scripts.Render("~/bundles/datatablesPlugins/js")
+        @Scripts.Render("~/bundles/sweetAlert/js")
+        @Scripts.Render("~/bundles/toastr/js")
+        @Scripts.Render("~/bundles/ladda/js")
+        <script src="~/Scripts/jquery.datetimepicker.js"></script>
+        <script src="~/Scripts/fnReloadAjax.js"></script>
 
-    <script>
+        <script>
 
-        //created global object Then just before initializing the chart i destroyed
-        var chartOntime;
-        var chartOntimeAdj;
-        var chartShipment;
-        var pieChartOntime;
-        var reasonString;
-        //
-        // show progress
-        $(document).ajaxStart(function () {
-            $("#loading").show();
-        });
-
-        $(document).ajaxStop(function () {
-            $("#loading").hide();
-        });
-
-
-        //#region 1 autocomplete dropdownlist
-        $(".js-source-states").select2();
-        //#endregion
-
-        //#region 2 filter section
-        //#endregion
-
-        //#region 3 filter matname
-        //#endregion
-
-        //#region 4 getJson Section
-        $("#DepartmentId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            $.getJSON('/ApproveOutbounded/SectionFilter?departmentId=' + departmentId, function (data) {
-                var ddl = $("#SectionId");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddl.html(string);
-                ddl.select2('val', '');
-            });
-            $.getJSON('/ApproveOutbounded/ReasonFilter', function (data) {
-                var ddlR = $("#ReasonId");
-                // ddl.removeAttrs('disabled style');
-                ddlR.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddlR.html(string);
-                ddlR.select2('val', '');
-            });
-        });
-        //#endregion
-
-        //#region  5 getJson MatName
-        $("#SectionId").change(function (res) {
-            departmentId = $("#DepartmentId").val();
-            sectionId = $("#SectionId").val();
-            $.getJSON('/ApproveOutbounded/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
-                var ddl = $("#MatNameId");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddl.html(string);
-                ddl.select2('val', '');
-            });
-        });
-        //#endregion
-        $("#btnSearch").click(function () {
-
+            //created global object Then just before initializing the chart i destroyed
             var rows_selected = [];
-            //#region table
-            // on-time tender monthly dataTable
-            var departmentId = $('#DepartmentId').val();
-            var sectionId = $('#SectionId').val();
-            var matNameId = $('#MatNameId').val();
-            var yearId = $('#YearId').val();
-            var monthId = $('#MonthId').val();
-            var adjustApproveOutbound = $('#approveOutboundedTable').dataTable();
+            var chartOntime;
+            var chartOntimeAdj;
+            var chartShipment;
+            var pieChartOntime;
+            var reasonString;
+            //
+            // show progress
+            $(document).ajaxStart(function () {
+                $("#loading").show();
+            });
 
-            if ($('#DepartmentId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, Department is not selected ",
-                    type: "warning"
+            $(document).ajaxStop(function () {
+                $("#loading").hide();
+            });
+
+
+            //#region 1 autocomplete dropdownlist
+            $(".js-source-states").select2();
+            //#endregion
+
+            //#region 2 filter section
+            //#endregion
+
+            //#region 3 filter matname
+            //#endregion
+
+            //#region 4 getJson Section
+            $("#DepartmentId").change(function (res) {
+                departmentId = $("#DepartmentId").val();
+                $.getJSON('/ApproveOutbounded/SectionFilter?departmentId=' + departmentId, function (data) {
+                    var ddl = $("#SectionId");
+                    // ddl.removeAttrs('disabled style');
+                    ddl.addClass('js-source-states');
+                    var string = '<option value="">ALL</option>';
+                    $.each(data, function (i, S) {
+                        string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                    });
+                    ddl.html(string);
+                    ddl.select2('val', '');
                 });
-            } else if ($('#SectionId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, Section is not selected ",
-                    type: "warning"
+                $.getJSON('/ApproveOutbounded/ReasonFilter', function (data) {
+                    var ddlR = $("#ReasonId");
+                    // ddl.removeAttrs('disabled style');
+                    ddlR.addClass('js-source-states');
+                    var string = '<option value="">ALL</option>';
+                    $.each(data, function (i, S) {
+                        string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                    });
+                    ddlR.html(string);
+                    ddlR.select2('val', '');
                 });
-            } else if ($('#MatNameId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, MatName is not selected ",
-                    type: "warning"
+            });
+            //#endregion
+
+            //#region  5 getJson MatName
+            $("#SectionId").change(function (res) {
+                departmentId = $("#DepartmentId").val();
+                sectionId = $("#SectionId").val();
+                $.getJSON('/ApproveOutbounded/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
+                    var ddl = $("#MatNameId");
+                    // ddl.removeAttrs('disabled style');
+                    ddl.addClass('js-source-states');
+                    var string = '<option value="">ALL</option>';
+                    $.each(data, function (i, S) {
+                        string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                    });
+                    ddl.html(string);
+                    ddl.select2('val', '');
                 });
-            } else if ($('#YearId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, Year is not selected ",
-                    type: "warning"
+            });
+            //#endregion
+            $("#btnSearch").click(function () {
+
+                //#region table
+
+                if ($('#DepartmentId').val() == "") {
+                    swal({
+                        title: "Warning!",
+                        text: "Sorry!, Department is not selected ",
+                        type: "warning"
+                    });
+                } else if ($('#SectionId').val() == "") {
+                    swal({
+                        title: "Warning!",
+                        text: "Sorry!, Section is not selected ",
+                        type: "warning"
+                    });
+                } else if ($('#MatNameId').val() == "") {
+                    swal({
+                        title: "Warning!",
+                        text: "Sorry!, MatName is not selected ",
+                        type: "warning"
+                    });
+                } else if ($('#YearId').val() == "") {
+                    swal({
+                        title: "Warning!",
+                        text: "Sorry!, Year is not selected ",
+                        type: "warning"
+                    });
+                } else if ($('#MonthId').val() == "") {
+                    swal({
+                        title: "Warning!",
+                        text: "Sorry!, Month is not selected ",
+                        type: "warning"
+                    });
+                }
+                else {
+                    loadDataTable();
+                } //end if else
+
+            }); //end btnSerarch click
+
+            //#Region 4.5 Ajax Click menu
+            var table = $('#approveOutboundedTable').DataTable();
+
+            $('thead input[name="select_all"]', table.table().container()).on('click', function (e) {
+                if (this.checked) {
+                    $('#approveOutboundedTable tbody input[type="checkbox"]:not(:checked)').trigger('click');
+                } else {
+                    $('#approveOutboundedTable tbody input[type="checkbox"]:checked').trigger('click');
+                }
+                //ดัก event ที่ส่งไป Parent class
+                // Prevent click event from propagating to parent
+                e.stopPropagation();
+            });
+
+            $('#approveOutboundedTable tbody').on('click', 'input[type="checkbox"]', function (e) {
+                //Get current tr
+                var $row = $(this).closest('tr');
+                //Get row index
+                var rowId = $(this).closest("tr").index();
+                // Determine whether row ID is in the list of selected row IDs
+                var index = $.inArray(rowId, rows_selected);
+                // If checkbox is checked and row ID is not in list of selected row IDs
+                if (this.checked && index === -1) {
+                    rows_selected.push(rowId);
+                    // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
+                } else if (!this.checked && index !== -1) {
+                    rows_selected.splice(index, 1);
+                }
+                //tr class select to hightlight.
+                if (this.checked) {
+                    $row.addClass('selected');
+                } else {
+                    $row.removeClass('selected');
+                }
+                // Prevent click event from propagating to parent
+                e.stopPropagation();
+            });
+
+            //#region 5 Bind normal buttons
+
+            $('.ladda-button').ladda('bind', { timeout: 2000 });
+
+            // Bind progress buttons and simulate loading progress
+            Ladda.bind('.progress-demo .ladda-button', {
+                callback: function (instance) {
+                    var progress = 0;
+                    var interval = setInterval(function () {
+                        progress = Math.min(progress + Math.random() * 0.1, 1);
+                        instance.setProgress(progress);
+
+                        if (progress === 1) {
+                            instance.stop();
+                            clearInterval(interval);
+                        }
+                    }, 200);
+                }
+            });
+
+            var l = $('.ladda-button-demo').ladda();
+            l.click(function () {
+                // Start loading
+                l.ladda('start');
+
+                // Timeout example
+                // Do something in backend and then stop ladda
+                setTimeout(function () {
+                    l.ladda('stop');
+                }, 5000)
+            });
+            //#endregion
+
+            $('form').on('submit', function (e) {
+                //clear indexes
+                var txtApprove = document.getElementsByName("txtApprove");
+                if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
+                    $('input[name="txtApprove"]').remove();
+                }
+                var form = this;
+
+                // Iterate over all selected checkboxes
+                $.each(rows_selected, function (index, rowId) {
+                    // Create a hidden element
+                    if (rowId != null) {
+                        $(form).append(
+                            $('<input>')
+                               .attr('type', 'hidden')
+                               .attr('name', 'txtApprove')
+                               .val(rowId)
+                        );
+                    }
                 });
-            } else if ($('#MonthId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, Month is not selected ",
-                    type: "warning"
+                e.preventDefault();
+                $.ajax({
+                    type: 'post',
+                    url: '/ApproveOutbounded/UpdateOutboundApprove/',
+                    data: $('form').serialize(),
+                    success: function (results) {
+                        //Start load table
+                        //alert('ทำการอนุมัติค่า KPI เรียบร้อย');
+                        alert(results)
+                        //reset row indexes
+                        loadDataTable();
+                    }
                 });
-            }
-            else {
+
+            });
+
+            function loadDataTable() {
+                rows_selected = [];
+
+                // on-time tender monthly dataTable
+                var departmentId = $('#DepartmentId').val();
+                var sectionId = $('#SectionId').val();
+                var matNameId = $('#MatNameId').val();
+                var yearId = $('#YearId').val();
+                var monthId = $('#MonthId').val();
+                var adjustApproveOutbound = $('#approveOutboundedTable').dataTable();
+
                 adjustApproveOutbound.fnDestroy();
                 adjustApproveOutbound.DataTable({
                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
@@ -267,200 +383,15 @@
                         { extend: 'excel', title: 'ExampleFile', className: 'btn-sm' },
                     ],
                     'order': [1, 'asc'],
-                    'rowCallback': function(row, data, dataIndex){
+                    'rowCallback': function (row, data, dataIndex) {
                         // Get row ID
                         var rowId = dataIndex;
-                        
-                    }
-                });
-                //#endregion table
-                rows_selected = [];
-            } //end if else
-            var table = $('#approveOutboundedTable').DataTable();
-
-            $('thead input[name="select_all"]', table.table().container()).on('click', function (e) {
-                if (this.checked) {
-                    $('#approveOutboundedTable tbody input[type="checkbox"]:not(:checked)').trigger('click');
-                } else {
-                    $('#approveOutboundedTable tbody input[type="checkbox"]:checked').trigger('click');
-                }
-                //ดัก event ที่ส่งไป Parent class
-                // Prevent click event from propagating to parent
-                e.stopPropagation();
-            });
-
-            $('#approveOutboundedTable tbody').on('click', 'input[type="checkbox"]', function (e) {
-                //Get current tr
-                var $row = $(this).closest('tr');
-                //Get row index
-                //var rowId = table.row($row).index();
-
-                var rowId = $(this).closest("tr").index();
-
-                //Get shipment
-                //var rowShipment = (table.row($row).data());
-                //var rowShipmentString = rowShipment.toString();
-                //var rowId = rowShipmentString.substr(0, rowShipmentString.indexOf(','));
-
-                // Determine whether row ID is in the list of selected row IDs
-                var index = $.inArray(rowId, rows_selected);
-
-                // If checkbox is checked and row ID is not in list of selected row IDs
-                if (this.checked && index === -1) {
-                    rows_selected.push(rowId);
-
-                    // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
-                } else if (!this.checked && index !== -1) {
-                    rows_selected.splice(index, 1);
-                }
-                //tr class select to hightlight.
-                if (this.checked) {
-                    $row.addClass('selected');
-                } else {
-                    $row.removeClass('selected');
-                }
-
-                // Prevent click event from propagating to parent
-                e.stopPropagation();
-            });
-
-            $('#frm').on('submit', function (e) {
-
-                var txtApprove = document.getElementsByName("txtApprove");
-                if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
-                    $('input[name="txtApprove"]').remove();
-                }
-
-                var form = this;
-
-                // Iterate over all selected checkboxes
-                $.each(rows_selected, function (index, rowId) {
-                    // Create a hidden element
-                    if (rowId != null) {
-                        $(form).append(
-                            $('<input>')
-                               .attr('type', 'hidden')
-                               .attr('name', 'txtApprove')
-                               .val(rowId)
-                        );
-                    }
-                });
-
-                e.preventDefault();
-
-                $.ajax({
-                    type: 'post',
-                    url: '/ApproveOutbounded/UpdateOutboundApprove/',
-                    data: $('form').serialize(),
-                    success: function (results) {
-                        //Start load table
-                        //alert('ทำการอนุมัติค่า KPI เรียบร้อย');
-                        alert(results)
-                        //reset row indexes
-                        rows_selected = [];
-                        adjustApproveOutbound.fnDestroy();
-                        adjustApproveOutbound.DataTable({
-                            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                            "ajax": {
-                                "type": "POST",
-                                "url": '@(Url.RouteUrl("JsonApproveOutboundTable"))',
-                                "data": function (d) {
-                                    d.departmentId = departmentId;
-                                    d.sectionId = sectionId;
-                                    d.matNameId = matNameId;
-                                    d.YearId = yearId;
-                                    d.MonthId = monthId;
-                                },
-                                "dataSrc": ""
-                            },
-                            columns: [
-                                { data: "Dn" },
-                                { data: "RegionName" },
-                                { data: "SoldtoName" },
-                                { data: "ShiptoName" },
-                                { data: "Reason" },
-                                {
-                                    data: "Approve",
-                                    render: function (data, type, row) {
-                                        if (type === 'display') {
-                                            return '<input id="Approve" name="Approve" type="checkbox" class="ckb" />';
-                                        }
-                                        return data;
-                                    },
-                                    className: "dt-body-center"
-                                }
-                            ],
-                            'columnDefs': [{
-                                "targets": 6,
-                                "data": function (row, type, val, meta) {
-                                    return '<input type="text" name="txtRemark" />\n\
-                                <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\
-                                <input type="hidden" name="txtDN" value="' + row.Dn + '" />\n\
-                                <input type="hidden" name="monthId" value="' + monthId + '" />\n\
-                                <input type="hidden" name="yearId" value="' + yearId + '" />\n\
-                                <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
-                                <input type="hidden" name="sectionId" value="' + sectionId + '" />\n\
-                                <input type="hidden" name="matNameId" value="' + matNameId + '" />\n';
-
-                                },
-                            }],
-                            select: true,
-                            buttons: [
-                                { extend: 'copy', className: 'btn-sm' },
-                                { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
-                                { extend: 'excel', title: 'ExampleFile', className: 'btn-sm' },
-                            ],
-                            'order': [1, 'asc'],
-                            'rowCallback': function (row, data, dataIndex) {
-                                // Get row ID
-                                var rowId = dataIndex;
-                            }
-                        });
 
                     }
                 });
-            });
-
-        }); //end btnSerarch click
-
-        //#region 5 Bind normal buttons
-
-        $('.ladda-button').ladda('bind', { timeout: 2000 });
-
-        // Bind progress buttons and simulate loading progress
-        Ladda.bind('.progress-demo .ladda-button', {
-            callback: function (instance) {
-                var progress = 0;
-                var interval = setInterval(function () {
-                    progress = Math.min(progress + Math.random() * 0.1, 1);
-                    instance.setProgress(progress);
-
-                    if (progress === 1) {
-                        instance.stop();
-                        clearInterval(interval);
-                    }
-                }, 200);
             }
-        });
 
-        var l = $('.ladda-button-demo').ladda();
-        l.click(function () {
-            // Start loading
-            l.ladda('start');
+            //#endregion
 
-            // Timeout example
-            // Do something in backend and then stop ladda
-            setTimeout(function () {
-                l.ladda('stop');
-            }, 5000)
-        });
-
-        //
-        // Updates "Select all" control in a data table
-        //
-
-        //#endregion
-        
-    </script>
-}
+        </script>
+    }
