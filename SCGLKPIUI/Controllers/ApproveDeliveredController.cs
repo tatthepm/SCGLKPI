@@ -32,7 +32,7 @@ namespace SCGLKPIUI.Controllers
                 ViewBag.SectionId = new SelectList(ddlSec.ToList(), "Id", "Name");
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
-                ViewBag.MatNameId = new SelectList(ddlMonth.ToList(), "Id", "Name");
+                ViewBag.MatNameId = new SelectList(ddlMatName.ToList(), "Id", "Name");
 
                 var ddlReason = (from m in objBs.reasonOntimeBs.GetAll()
                                  select new

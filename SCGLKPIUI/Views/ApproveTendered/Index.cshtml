@@ -235,7 +235,11 @@
                     }
                 });
                 //#endregion table
-
+                rows_selected = [];
+                var txtApprove = document.getElementsByName("txtApprove");
+                if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
+                    $('input[name="txtApprove"]').remove();
+                }
             } //end if else
 
             var table = $('#approveTenderedTable').DataTable();

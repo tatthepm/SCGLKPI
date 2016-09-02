@@ -274,7 +274,11 @@
                     }
                 });
                 //#endregion table
-
+                rows_selected = [];
+                var txtApprove = document.getElementsByName("txtApprove");
+                if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
+                    $('input[name="txtApprove"]').remove();
+                }
             } //end if else
 
             var table = $('#approveDeliveredTable').DataTable();
@@ -294,22 +298,12 @@
                 //Get current tr
                 var $row = $(this).closest('tr');
                 //Get row index
-                //var rowId = table.row($row).index();
-
                 var rowId = $(this).closest("tr").index();
-
-                //Get shipment
-                //var rowShipment = (table.row($row).data());
-                //var rowShipmentString = rowShipment.toString();
-                //var rowId = rowShipmentString.substr(0, rowShipmentString.indexOf(','));
-
                 // Determine whether row ID is in the list of selected row IDs
                 var index = $.inArray(rowId, rows_selected);
-
                 // If checkbox is checked and row ID is not in list of selected row IDs
                 if (this.checked && index === -1) {
                     rows_selected.push(rowId);
-
                     // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
                 } else if (!this.checked && index !== -1) {
                     rows_selected.splice(index, 1);
@@ -320,7 +314,6 @@
                 } else {
                     $row.removeClass('selected');
                 }
-
                 // Prevent click event from propagating to parent
                 e.stopPropagation();
             });
@@ -340,9 +333,7 @@
                         );
                     }
                 });
-
                 e.preventDefault();
-
                 $.ajax({
                     type: 'post',
                     url: '/ApproveDelivered/UpdateOntimeApprove/',
@@ -454,10 +445,6 @@
                 l.ladda('stop');
             }, 5000)
         });
-
-        //
-        // Updates "Select all" control in a data table
-        //
 
         //#endregion
         

@@ -274,19 +274,7 @@
                     }
                 });
                 //#endregion table
-
             } //end if else
-            //$("#select_all").click(function (event) {  //on click 
-            //    if (this.checked) { // check select status 
-            //        $('.ckb').each(function () { //loop through each checkbox 
-            //            this.checked = true;  //select all checkboxes with class "checkbox1" 
-            //        });
-            //    } else {
-            //        $('.ckb').each(function () { //loop through each checkbox 
-            //            this.checked = false; //deselect all checkboxes with class "checkbox1" 
-            //        });
-            //    }
-            //});
             var table = $('#approveOutboundedTable').DataTable();
 
             $('thead input[name="select_all"]', table.table().container()).on('click', function (e) {

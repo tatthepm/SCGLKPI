@@ -138,7 +138,8 @@ namespace SCGLKPIUI.Controllers {
 
                             objBs.dWH_ONTIME_DNBs.Update(ontimeDn);
 
-                            OutboundDelay tmp_adjusted = objBs.outboundDelayBs.GetByID(dn);
+                            OutboundDelay tmp_adjusted = new OutboundDelay();
+                            tmp_adjusted = objBs.outboundDelayBs.GetByID(dn);
                             OutboundAdjusted tmp_toInsert = new OutboundAdjusted
                             {
                                 CARRIER_ID = tmp_adjusted.CARRIER_ID,
