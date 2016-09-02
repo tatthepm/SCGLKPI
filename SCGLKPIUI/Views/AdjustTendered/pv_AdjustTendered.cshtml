@@ -7,13 +7,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        @using (Html.BeginForm("UpdateTenderReason", "AdjustTendered", FormMethod.Post))
-                        {
-                            @*<input type="hidden" name="DepartmentId" value="@ViewBag.DepartmentId" />
-                                <input type="hidden" name="SectionId" value="@ViewBag.SectionId" />
-                                <input type="hidden" name="MatNameId" value="@ViewBag.MatNameId" />
-                                <input type="hidden" name="YearId" value="@ViewBag.YearId" />
-                                <input type="hidden" name="MonthId" value="@ViewBag.MonthId" />*@
+                        <form action="" id="frm" method="post" name="frm">
                             <table id="adjustTenderedTable" class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -46,7 +40,7 @@
                                     </tr>
                                 </tfoot>
                             </table>
-                        }
+                        </form>
                     </div>
                 </div>
             </div>

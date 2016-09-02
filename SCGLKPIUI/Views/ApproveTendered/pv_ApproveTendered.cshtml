@@ -7,8 +7,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        @using (Html.BeginForm("UpdateTenderApprove", "ApproveTendered", FormMethod.Post, new { name = "frm", id = "frm" }))
-                        {
+                        <form action="" id="frm" method="post" name="frm">                  
                             <table id="approveTenderedTable" class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -47,7 +46,7 @@
                                     </tr>
                                 </tfoot>
                             </table>
-                        }
+                        </form>
                     </div>
                 </div>
             </div>

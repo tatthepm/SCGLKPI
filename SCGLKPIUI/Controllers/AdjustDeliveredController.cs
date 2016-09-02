@@ -163,6 +163,8 @@ namespace SCGLKPIUI.Controllers {
                                 PLNONTIMEDATE_D = tmp_adjusted.PLNONTIMEDATE_D,
                                 ACDLVDATE = tmp_adjusted.ACDLVDATE,
                                 ACDLVDATE_D = tmp_adjusted.ACDLVDATE_D,
+                                ACTGIDATE = tmp_adjusted.ACTGIDATE,
+                                ACTGIDATE_D = tmp_adjusted.ACTGIDATE_D,
                                 DELVNO = tmp_adjusted.DELVNO,
                                 LOADED_DATE = DateTime.Now,
                                 ON_TIME_ADJUST = isadjust ? 1 : 0,
