@@ -103,6 +103,7 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
                 model.PlanDocReturn = Convert.ToDateTime(item.PLNDOCRETDATE_SCGL);
                 model.ActualDocReturn = Convert.ToDateTime(item.DOCRETDATE_SCGL);
+                model.ActualGI = Convert.ToDateTime(item.ACTGIDATE);
                 model.Approve = Convert.ToBoolean(item.SCGL_DOCRET_ADJUST);
                 model.AdjustBy = item.SCGL_DOCRET_ADJUST_BY;
                 model.Remark = item.SCGL_DOCRET_REMARK;

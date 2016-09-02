@@ -32,6 +32,7 @@ namespace SCGLKPIUI.Controllers.Master
                 if (!string.IsNullOrEmpty(reasonName)) {
                     ReasonTendered reasonTendered = new ReasonTendered();
                     reasonTendered.Name = reasonName;
+                    reasonTendered.IsDeleted = false;
                     if (isAdjust == "True") reasonTendered.IsAdjust = true;
                     if (ModelState.IsValid) {
                         objBs.reasonTenderedBs.Insert(reasonTendered);

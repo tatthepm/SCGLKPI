@@ -29,6 +29,7 @@ namespace SCGLKPIUI.Controllers.Master {
 
                     ReasonAccepted reasonAccepted = new ReasonAccepted();
                     reasonAccepted.Name = reasonName;
+                    reasonAccepted.IsDeleted = false;
                     if (isAdjust == "True") reasonAccepted.IsAdjust = true;
                     if (ModelState.IsValid) {
                         objBs.reasonAcceptedBs.Insert(reasonAccepted);

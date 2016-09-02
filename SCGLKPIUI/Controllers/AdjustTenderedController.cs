@@ -26,7 +26,7 @@ namespace SCGLKPIUI.Controllers {
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
-                var ddlReason = (from r in objBs.reasonTenderedBs.GetAll()
+                var ddlReason = (from r in objBs.reasonTenderedBs.GetAll().Where(x=>x.IsDeleted == false)
                                  select new
                                  {
                                      Id = r.Id,
@@ -44,7 +44,7 @@ namespace SCGLKPIUI.Controllers {
 
         public JsonResult ReasonFilter()
         {
-            var result = (from r in objBs.reasonTenderedBs.GetAll()
+            var result = (from r in objBs.reasonTenderedBs.GetAll().Where(x => x.IsDeleted == false)
                           select new
                           {
                               Id = r.Id,

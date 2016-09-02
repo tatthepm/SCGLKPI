@@ -64,6 +64,12 @@ namespace BOL {
         public string TO_SHPG_LOC_NAME { get; set; }
 
         [Column(TypeName = "datetime2")]
+        public DateTime? ACTGIDATE { get; set; }
+
+        [Column(TypeName = "datetime2")]
+        public DateTime? ACTGIDATE_D { get; set; }
+
+        [Column(TypeName = "datetime2")]
         public DateTime? PLNOUTBDATE { get; set; }
 
         [Column(TypeName = "datetime2")]

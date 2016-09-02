@@ -238,6 +238,14 @@
     <Compile Include="Migrations\201607220159556_homekpi1.Designer.cs">
       <DependentUpon>201607220159556_homekpi1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609020336058_Update-Reasons.cs" />
+    <Compile Include="Migrations\201609020336058_Update-Reasons.Designer.cs">
+      <DependentUpon>201609020336058_Update-Reasons.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609020408217_Update-ActGI.cs" />
+    <Compile Include="Migrations\201609020408217_Update-ActGI.Designer.cs">
+      <DependentUpon>201609020408217_Update-ActGI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OntimeAccept.cs" />
     <Compile Include="DWH_ONTIME_DN.cs" />
@@ -412,6 +420,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607220159556_homekpi1.resx">
       <DependentUpon>201607220159556_homekpi1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609020336058_Update-Reasons.resx">
+      <DependentUpon>201609020336058_Update-Reasons.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609020408217_Update-ActGI.resx">
+      <DependentUpon>201609020408217_Update-ActGI.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

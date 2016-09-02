@@ -15,6 +15,7 @@ namespace SCGLKPIUI.Models {
         public string ShiptoName { get; set; }
         public DateTime? PlanOutbound { get; set; } //PLNOUTDATE
         public DateTime? ActualOutbound { get; set; } //ACDLVDATE
+        public DateTime? ActualGI { get; set; } //ACTGIDATE
         public string thisReasonId { get; set; }
         public bool Approve { get; set; }
         public string Reason { get; set; } //addded

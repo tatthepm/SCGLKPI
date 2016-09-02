@@ -39,7 +39,8 @@ namespace DAL {
         //Delete
         public void Delete(int Id) {
             ReasonInbound reasonInbound = db.ReasonInbounds.Find(Id);
-            db.ReasonInbounds.Remove(reasonInbound);
+            reasonInbound.IsDeleted = true;
+            db.Entry(reasonInbound).State = EntityState.Modified;
             Save();
         }
 

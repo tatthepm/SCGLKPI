@@ -37,7 +37,8 @@ namespace DAL {
         //Delete
         public void Delete(int Id) {
             ReasonTendered reasonTendered = db.ReasonTendereds.Find(Id);
-            db.ReasonTendereds.Remove(reasonTendered);
+            reasonTendered.IsDeleted = true;
+            db.Entry(reasonTendered).State = EntityState.Modified;
             Save();
         }
 

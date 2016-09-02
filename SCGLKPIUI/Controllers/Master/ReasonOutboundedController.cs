@@ -27,6 +27,7 @@ namespace SCGLKPIUI.Controllers.Master {
                 if (!string.IsNullOrEmpty(reasonName)) {
                     ReasonOutbound reasonOutbound = new ReasonOutbound();
                     reasonOutbound.Name = reasonName;
+                    reasonOutbound.IsDeleted = false;
                     if (isAdjust == "True") reasonOutbound.IsAdjust = true;
                     if (ModelState.IsValid) {
                         objBs.reasonOutboundBs.Insert(reasonOutbound);

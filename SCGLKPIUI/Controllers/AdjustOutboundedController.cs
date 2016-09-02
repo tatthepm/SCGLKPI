@@ -49,7 +49,7 @@ namespace SCGLKPIUI.Controllers {
 
         public JsonResult ReasonFilter()
         {
-            var result = (from r in objBs.reasonOutboundBs.GetAll()
+            var result = (from r in objBs.reasonOutboundBs.GetAll().Where(x => x.IsDeleted == false)
                           select new
                           {
                               Id = r.Id,
@@ -96,6 +96,7 @@ namespace SCGLKPIUI.Controllers {
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
                 model.PlanOutbound = Convert.ToDateTime(item.PLNOUTBDATE);
                 model.ActualOutbound = Convert.ToDateTime(item.ACDLVDATE);
+                model.ActualGI = Convert.ToDateTime(item.ACTGIDATE);
                 viewModel.Add(model);
             }
 

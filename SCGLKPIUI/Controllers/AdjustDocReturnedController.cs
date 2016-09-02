@@ -54,7 +54,7 @@ namespace SCGLKPIUI.Controllers
 
         public JsonResult ReasonFilter()
         {
-            var result = (from r in objBs.reasonDocReturnBs.GetAll()
+            var result = (from r in objBs.reasonDocReturnBs.GetAll().Where(x => x.IsDeleted == false)
                           select new
                           {
                               Id = r.Id,
@@ -101,6 +101,7 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
                 model.PlanDocReturn = Convert.ToDateTime(item.PLNDOCRETDATE_SCGL);
                 model.ActualDocReturn = Convert.ToDateTime(item.DOCRETDATE_SCGL);
+                model.ActualGI = Convert.ToDateTime(item.ACTGIDATE);
                 viewModel.Add(model);
             }
 

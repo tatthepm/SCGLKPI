@@ -38,7 +38,8 @@ namespace DAL {
         //Delete
         public void Delete(int Id) {
             ReasonDocReturn reasonDocReturn = db.ReasonDocReturns.Find(Id);
-            db.ReasonDocReturns.Remove(reasonDocReturn);
+            reasonDocReturn.IsDeleted = true;
+            db.Entry(reasonDocReturn).State = EntityState.Modified;
             Save();
         }
 

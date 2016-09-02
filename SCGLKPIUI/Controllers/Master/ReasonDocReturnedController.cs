@@ -27,6 +27,7 @@ namespace SCGLKPIUI.Controllers.Master {
                 if (!string.IsNullOrEmpty(reasonName)) {
                     ReasonDocReturn reasonDocReturn = new ReasonDocReturn();
                     reasonDocReturn.Name = reasonName;
+                    reasonDocReturn.IsDeleted = false;
                     if (isAdjust == "True") reasonDocReturn.IsAdjust = true;
                     if (ModelState.IsValid) {
                         objBs.reasonDocReturnBs.Insert(reasonDocReturn);

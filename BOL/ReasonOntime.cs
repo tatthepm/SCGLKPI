@@ -16,5 +16,6 @@ namespace BOL {
         public string Name { get; set; }
 
         public bool IsAdjust { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

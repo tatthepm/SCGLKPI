@@ -15,7 +15,7 @@ namespace SCGLKPIUI.Models.Delivered {
         public string ShiptoName { get; set; }
         public DateTime? PlanDelivery { get; set; } //PLNONTIMEDATE
         public DateTime? ActualDelivery { get; set; } //ACDLVDATE
-
+        public DateTime? ActualGI { get; set; } //ACTGIDATE
         public string ReasonId { get; set; }
     }
 }

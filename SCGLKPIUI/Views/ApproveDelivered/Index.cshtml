@@ -275,10 +275,6 @@
                 });
                 //#endregion table
                 rows_selected = [];
-                var txtApprove = document.getElementsByName("txtApprove");
-                if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
-                    $('input[name="txtApprove"]').remove();
-                }
             } //end if else
 
             var table = $('#approveDeliveredTable').DataTable();
@@ -319,6 +315,11 @@
             });
 
             $('#frm').on('submit', function (e) {
+                //clear indexes
+                var txtApprove = document.getElementsByName("txtApprove");
+                if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
+                    $('input[name="txtApprove"]').remove();
+                }
                 var form = this;
 
                 // Iterate over all selected checkboxes
@@ -338,9 +339,11 @@
                     type: 'post',
                     url: '/ApproveDelivered/UpdateOntimeApprove/',
                     data: $('form').serialize(),
-                    success: function () {
+                    success: function (results) {
                         //Start load table
-                        alert('ทำการอนุมัติค่า KPI เรียบร้อย');
+                        //alert('ทำการอนุมัติค่า KPI เรียบร้อย');
+                        alert(results)
+                        rows_selected = [];
                         adjustApproveDeliver.fnDestroy();
                         adjustApproveDeliver.DataTable({
                             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
@@ -402,11 +405,6 @@
                             }
                         });
                         //reset row indexes
-                        rows_selected = [];
-                        var txtApprove = document.getElementsByName("txtApprove");
-                        if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
-                            $('input[name="txtApprove"]').remove();
-                        }
                     }
                 });
 

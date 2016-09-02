@@ -48,7 +48,7 @@ namespace SCGLKPIUI.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", new { sms = "Operation Delivery failed " + ex.InnerException.InnerException.Message.ToString() });
+                return RedirectToAction("Index", new { sms = "Operation Delivery failed " + ex.ToString() });
             }
         }
 
@@ -103,6 +103,7 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
                 model.PlanDelivery = Convert.ToDateTime(item.PLNONTIMEDATE);
                 model.ActualDelivery = Convert.ToDateTime(item.ACDLVDATE);
+                model.ActualGI = Convert.ToDateTime(item.ACTGIDATE);
                 model.Approve = Convert.ToBoolean(item.ON_TIME_ADJUST);
                 model.AdjustBy = item.ON_TIME_ADJUST_BY;
                 model.Remark = item.ON_TIME_REMARK;
@@ -202,11 +203,11 @@ namespace SCGLKPIUI.Controllers
 
 
                     Trans.Complete();
-                    return RedirectToAction("Index", new { sms = countDN + "-Shipment is adjusted Successfully!" });
+                    return Content(countDN + " - Shipment is adjusted Successfully!");
                 }
                 catch (Exception ex)
                 {
-                    return RedirectToAction("Index", new { sms = "Operation update reason ontimed failed !" + ex.ToString() });
+                    return Content("Operation update reason ontimed failed !" + ex.ToString());
                 }
                 //  return View();
 

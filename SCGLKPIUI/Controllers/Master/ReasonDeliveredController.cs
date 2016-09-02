@@ -28,6 +28,7 @@ namespace SCGLKPIUI.Controllers.Master {
                 if (!string.IsNullOrEmpty(reasonName)) {
                     ReasonOntime reasonOntime = new ReasonOntime();
                     reasonOntime.Name = reasonName;
+                    reasonOntime.IsDeleted = false;
                     if (isAdjust == "True") reasonOntime.IsAdjust = true;
                     if (ModelState.IsValid) {
                         objBs.reasonOntimeBs.Insert(reasonOntime);

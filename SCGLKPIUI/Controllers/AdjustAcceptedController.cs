@@ -55,8 +55,8 @@ namespace SCGLKPIUI.Controllers
 
         public JsonResult ReasonFilter()
         {
-            var result = (from r in objBs.reasonAcceptedBs.GetAll()
-                            select new
+            var result = (from r in objBs.reasonAcceptedBs.GetAll().Where(x => x.IsDeleted == false)
+                          select new
                             {
                                 Id = r.Id,
                                 Name = r.Name
