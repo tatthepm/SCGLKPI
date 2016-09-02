@@ -274,6 +274,7 @@
                     }
                 });
                 //#endregion table
+                rows_selected = [];
             } //end if else
             var table = $('#approveOutboundedTable').DataTable();
 
@@ -324,6 +325,12 @@
             });
 
             $('#frm').on('submit', function (e) {
+
+                var txtApprove = document.getElementsByName("txtApprove");
+                if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
+                    $('input[name="txtApprove"]').remove();
+                }
+
                 var form = this;
 
                 // Iterate over all selected checkboxes
@@ -345,9 +352,12 @@
                     type: 'post',
                     url: '/ApproveOutbounded/UpdateOutboundApprove/',
                     data: $('form').serialize(),
-                    success: function () {
+                    success: function (results) {
                         //Start load table
-                        alert('ทำการอนุมัติค่า KPI เรียบร้อย');
+                        //alert('ทำการอนุมัติค่า KPI เรียบร้อย');
+                        alert(results)
+                        //reset row indexes
+                        rows_selected = [];
                         adjustApproveOutbound.fnDestroy();
                         adjustApproveOutbound.DataTable({
                             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
@@ -407,12 +417,7 @@
                                 var rowId = dataIndex;
                             }
                         });
-                        //reset row indexes
-                        rows_selected = [];
-                        var txtApprove = document.getElementsByName("txtApprove");
-                        if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
-                            $('input[name="txtApprove"]').remove();
-                        }
+
                     }
                 });
             });

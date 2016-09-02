@@ -275,10 +275,6 @@
                 });
                 //#endregion table
                 rows_selected = [];
-                var txtApprove = document.getElementsByName("txtApprove");
-                if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
-                    $('input[name="txtApprove"]').remove();
-                }
             } 
             var table = $('#approveInboundedTable').DataTable();
 
@@ -329,6 +325,12 @@
             });
 
             $('#frm').on('submit', function (e) {
+
+                var txtApprove = document.getElementsByName("txtApprove");
+                if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
+                    $('input[name="txtApprove"]').remove();
+                }
+
                 var form = this;
 
                 // Iterate over all selected checkboxes
@@ -350,9 +352,12 @@
                     type: 'post',
                     url: '/ApproveInbounded/UpdateInboundApprove/',
                     data: $('form').serialize(),
-                    success: function () {
+                    success: function (results) {
                         //Start load table
-                        alert('ทำการอนุมัติค่า KPI เรียบร้อย');
+                        //alert('ทำการอนุมัติค่า KPI เรียบร้อย');
+                        alert(results)
+                        //remove checkbox indexes
+                        rows_selected = [];
                         adjustApproveInbound.fnDestroy();
                         adjustApproveInbound.DataTable({
                             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
@@ -412,12 +417,7 @@
                                 var rowId = dataIndex;
                             }
                         });
-                        //remove checkbox indexes
-                        rows_selected = [];
-                        var txtApprove = document.getElementsByName("txtApprove");
-                        if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
-                            $('input[name="txtApprove"]').remove();
-                        }
+
                     }
                 });
             });

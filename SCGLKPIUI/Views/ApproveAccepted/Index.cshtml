@@ -287,10 +287,6 @@
                 });
                 //#endregion table
                 rows_selected = [];
-                var txtApprove = document.getElementsByName("txtApprove");
-                if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
-                    $('input[name="txtApprove"]').remove();
-                }
             } //end if else
             //$("#select_all").click(function (event) {  //on click 
             //    if (this.checked) { // check select status 
@@ -346,6 +342,11 @@
             });
 
             $('#frm').on('submit', function (e) {
+                var txtApprove = document.getElementsByName("txtApprove");
+                if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
+                    $('input[name="txtApprove"]').remove();
+                }
+
                 var form = this;
 
                 // Iterate over all selected checkboxes
@@ -367,9 +368,12 @@
                     type: 'post',
                     url: '/ApproveAccepted/UpdateAcceptApprove/',
                     data: $('form').serialize(),
-                    success: function () {
+                    success: function (results) {
                         //Start load table
-                        alert('ทำการอนุมัติค่า KPI เรียบร้อย');
+                        //alert('ทำการอนุมัติค่า KPI เรียบร้อย');
+                        alert(results)
+                        //remove checkbox indexes
+                        rows_selected = [];
                         adjustApproveAccept.fnDestroy();
                         adjustApproveAccept.DataTable({
                             dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
@@ -437,12 +441,7 @@
                                 //}
                             }
                         });
-                        //remove checkbox indexes
-                        rows_selected = [];
-                        var txtApprove = document.getElementsByName("txtApprove");
-                        if (typeof (txtApprove) != 'undefined' && txtApprove != null) {
-                            $('input[name="txtApprove"]').remove();
-                        }
+
                     }
                 });
                 

@@ -203,7 +203,7 @@ namespace SCGLKPIUI.Controllers
 
 
                     Trans.Complete();
-                    return Content(countDN + " - Shipment is adjusted Successfully!");
+                    return Content(countDN + " - Delivery note is adjusted Successfully!");
                 }
                 catch (Exception ex)
                 {

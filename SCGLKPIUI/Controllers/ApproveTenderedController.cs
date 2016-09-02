@@ -43,7 +43,7 @@ namespace SCGLKPIUI.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Index", new { sms = "Operation Accept failed " + ex.InnerException.InnerException.Message.ToString() });
+                return RedirectToAction("Index", new { sms = "Operation Delivery failed " + ex.ToString() });
             }
         }
 
@@ -163,11 +163,11 @@ namespace SCGLKPIUI.Controllers
                     }
 
                     Trans.Complete();
-                    return RedirectToAction("Index", new { sms = countSM + "-Shipment is adjusted Successfully!" });
+                    return Content(countSM + " - Shipment is adjusted Successfully!");
                 }
                 catch (Exception ex)
                 {
-                    return RedirectToAction("Index", new { sms = "Operation update reason tendered failed !" + ex.ToString() });
+                    return Content("Operation update reason ontimed failed !" + ex.ToString());
                 }
                 //  return View();
             }
