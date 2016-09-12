@@ -127,12 +127,16 @@ namespace SCGLKPIUI.Controllers
 
                         //update sum of adjust daily
                         DateTime FTNRDDate = Convert.ToDateTime(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).FTNRDDATE_D);
+                        string section_id = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).SECTION_ID;
+                        string department_id = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).DEPARTMENT_ID;
 
                         if (isadjust)
                         {
                             int id = objBs.ontimeTenderBs.GetAll()
                                 .Where(x => x.FirstTenderDate == FTNRDDate
-                                       && x.Segment == segmentId).FirstOrDefault().Id;
+                                       && x.Segment == segmentId
+                                       && x.SectionId == section_id
+                                       && x.DepartmentId == department_id).FirstOrDefault().Id;
                             OntimeTender ontimeTender = objBs.ontimeTenderBs.GetByID(id);
                             int adjACPD = ontimeTender.AdjustTender + 1;
                             ontimeTender.AdjustTender = adjACPD;
@@ -143,7 +147,9 @@ namespace SCGLKPIUI.Controllers
                             int idM = objBs.ontimeTenderMonthBs.GetAll()
                                       .Where(x => x.Year == yearId
                                       && x.Month == monthId
-                                      && x.Segment == segmentId).FirstOrDefault().Id;
+                                      && x.Segment == segmentId
+                                      && x.SectionId == section_id
+                                      && x.DepartmentId == department_id).FirstOrDefault().Id;
                             OntimeTenderMonth ontimeTenderMonth = objBs.ontimeTenderMonthBs.GetByID(idM);
                             int adjTNRDMonth = ontimeTenderMonth.AdjustTender + 1;
                             ontimeTenderMonth.AdjustTender = adjTNRDMonth;
@@ -153,13 +159,16 @@ namespace SCGLKPIUI.Controllers
                             // update sum of adjust yearly
                             int idY = objBs.ontimeTenderYearBs.GetAll()
                                       .Where(x => x.Year == yearId
-                                      && x.Segment == segmentId).FirstOrDefault().Id;
+                                      && x.Segment == segmentId
+                                      && x.SectionId == section_id
+                                      && x.DepartmentId == department_id).FirstOrDefault().Id;
                             OntimeTenderYear ontimeTenderYear = objBs.ontimeTenderYearBs.GetByID(idY);
                             int adjTNRDYear = ontimeTenderYear.AdjustTender + 1;
                             ontimeTenderYear.AdjustTender = adjTNRDYear;
                             ontimeTenderYear.SumOfAdjustTender = ontimeTenderYear.OnTime + adjTNRDYear;
                             objBs.ontimeTenderYearBs.Update(ontimeTenderYear);
                         }
+                        countSM++;
                     }
 
                     Trans.Complete();

@@ -268,7 +268,7 @@
 
                 $.ajax({
                     type: 'post',
-                    url: '/AdjustTendered/UpdateTenderReason/',
+                    url: '@Url.Action("UpdateTenderReason")',
                     data: $('form').serialize(),
                     success: function () {
                         //Start load table

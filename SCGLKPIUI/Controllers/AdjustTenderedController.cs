@@ -171,7 +171,7 @@ namespace SCGLKPIUI.Controllers {
                 }
                 catch (Exception ex)
                 {
-                    return RedirectToAction("Index", new { sms = "Operation update reason accepted failed !" + ex.InnerException.InnerException.Message.ToString() });
+                    return RedirectToAction("Index", new { sms = "Operation update reason accepted failed !" + ex.ToString() });
                 }
                 //  return View();
             }

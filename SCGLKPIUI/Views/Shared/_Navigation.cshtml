@@ -26,36 +26,7 @@
             </div>
         </div>
         <ul class="nav metismenu" id="side-menu">
-            @*Master*@
-            <li>
-                <a href="#"><span class="nav-label">Master</span> <span class="label label-success pull-right">v.1</span> </a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="#"><span class="nav-label">Reason</span><span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li class="@Html.IsSelected(controller:"ReasonDelivered")">
-                                <a href="@Url.Action("Index","ReasonDelivered")"><span class="nav-label">Ontime delivery reason</span></a>
-                            </li>
-                            <li class="@Html.IsSelected(controller:"ReasonTendered")">
-                                <a href="@Url.Action("Index","ReasonTendered")"><span class="nav-label"> Tendered reason</span></a>
-                            </li>
-                            <li class="@Html.IsSelected(controller:"ReasonAccepted")">
-                                <a href="@Url.Action("Index","ReasonAccepted")"><span class="nav-label"> Accepted reason</span></a>
-                            </li>
-                            <li class="@Html.IsSelected(controller:"ReasonInbounded")">
-                                <a href="@Url.Action("Index","ReasonInbounded")"><span class="nav-label"> Inbounded reason</span></a>
-                            </li>
-                            <li class="@Html.IsSelected(controller:"ReasonOutbounded")">
-                                <a href="@Url.Action("Index","ReasonOutbounded")"><span class="nav-label"> Outbounded reason</span></a>
-                            </li>
-                            <li class="@Html.IsSelected(controller:"ReasonDocReturned")">
-                                <a href="@Url.Action("Index","ReasonDocReturned")"><span class="nav-label"> DocReturned reason</span></a>
-                            </li>
-                        </ul>
-                    </li>
 
-                </ul>
-            </li>
             <li>
                 <a href="#"><span class="nav-label">KPI Performance</span></a>
                 <ul class="nav nav-second-level">
@@ -204,7 +175,7 @@
             </li>
 
             @*Approve*@
-            @if (User.IsInRole("ADMIN"))
+            @if (User.IsInRole("ADMIN")|| User.IsInRole("MANAGER"))
             {
                 <li>
                     <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> Approve Adjusted</span> <span class="label label-success pull-right">v.1</span> </a>
@@ -227,6 +198,36 @@
                         <li class="@Html.IsSelected(controller: "ApproveDocReturned")">
                             <a href="@Url.Action("Index", "ApproveDocReturned")"><span class="nav-label"> Approve on-time document returned</span></a>
                         </li>
+                    </ul>
+                </li>
+                @*Master*@
+                <li>
+                    <a href="#"><span class="nav-label">Master</span> <span class="label label-success pull-right">v.1</span> </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="#"><span class="nav-label">Reason</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li class="@Html.IsSelected(controller:"ReasonDelivered")">
+                                    <a href="@Url.Action("Index","ReasonDelivered")"><span class="nav-label">Ontime delivery reason</span></a>
+                                </li>
+                                <li class="@Html.IsSelected(controller:"ReasonTendered")">
+                                    <a href="@Url.Action("Index","ReasonTendered")"><span class="nav-label"> Tendered reason</span></a>
+                                </li>
+                                <li class="@Html.IsSelected(controller:"ReasonAccepted")">
+                                    <a href="@Url.Action("Index","ReasonAccepted")"><span class="nav-label"> Accepted reason</span></a>
+                                </li>
+                                <li class="@Html.IsSelected(controller:"ReasonInbounded")">
+                                    <a href="@Url.Action("Index","ReasonInbounded")"><span class="nav-label"> Inbounded reason</span></a>
+                                </li>
+                                <li class="@Html.IsSelected(controller:"ReasonOutbounded")">
+                                    <a href="@Url.Action("Index","ReasonOutbounded")"><span class="nav-label"> Outbounded reason</span></a>
+                                </li>
+                                <li class="@Html.IsSelected(controller:"ReasonDocReturned")">
+                                    <a href="@Url.Action("Index","ReasonDocReturned")"><span class="nav-label"> DocReturned reason</span></a>
+                                </li>
+                            </ul>
+                        </li>
+
                     </ul>
                 </li>
             }
