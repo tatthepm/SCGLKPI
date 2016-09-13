@@ -101,9 +101,11 @@ namespace SCGLKPIUI.Controllers
                 model.SoldtoName = item.SOLDTO_NAME;
                 model.Shipto = item.SHIPTO;
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
-                model.PlanInbound = Convert.ToDateTime(item.PLNINBDATE);
-                model.ActualInbound = Convert.ToDateTime(item.ACTGIDATE);
-                model.ActualGI = Convert.ToDateTime(item.ACTGIDATE);
+                model.ShippingPoint = item.SHPPOINT;
+                model.TruckType = item.TRUCK_TYPE;
+                model.PlanInbound = item.PLNINBDATE.ToString();
+                model.ActualInbound = item.ACTGIDATE.ToString();
+                model.ActualGI = item.ACTGIDATE.ToString();
                 model.Approve = Convert.ToBoolean(item.INB_ADJUST);
                 model.AdjustBy = item.INB_ADJUST_BY;
                 model.Remark = item.INB_REMARK;

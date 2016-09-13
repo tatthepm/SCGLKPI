@@ -476,6 +476,7 @@
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\jquery.datetimepicker.js" />
     <Content Include="Scripts\nprogress.js" />
+    <Content Include="Scripts\Vk1-0.1.0.js" />
     <Content Include="Vendor\animate.css\animate.css" />
     <Content Include="Vendor\animate.css\animate.min.css" />
     <Content Include="Vendor\animate.css\Gruntfile.js" />

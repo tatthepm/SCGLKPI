@@ -246,6 +246,14 @@
     <Compile Include="Migrations\201609020408217_Update-ActGI.Designer.cs">
       <DependentUpon>201609020408217_Update-ActGI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609120210376_sh-truck-type.cs" />
+    <Compile Include="Migrations\201609120210376_sh-truck-type.Designer.cs">
+      <DependentUpon>201609120210376_sh-truck-type.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609120959506_update-bol.cs" />
+    <Compile Include="Migrations\201609120959506_update-bol.Designer.cs">
+      <DependentUpon>201609120959506_update-bol.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OntimeAccept.cs" />
     <Compile Include="DWH_ONTIME_DN.cs" />
@@ -426,6 +434,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609020408217_Update-ActGI.resx">
       <DependentUpon>201609020408217_Update-ActGI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609120210376_sh-truck-type.resx">
+      <DependentUpon>201609120210376_sh-truck-type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609120959506_update-bol.resx">
+      <DependentUpon>201609120959506_update-bol.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -79,8 +79,10 @@ namespace SCGLKPIUI.Controllers {
                 model.SoldtoName = item.SOLDTO_NAME;
                 model.Shipto = item.SHIPTO;
                 model.ShiptoName = item.LAST_SHPG_LOC_NAME;
-                model.PlanTender = Convert.ToDateTime(item.PLNTNRDDATE);
-                model.FirstTender = Convert.ToDateTime(item.FTNRDDATE);
+                model.ShippingPoint = item.SHPPOINT;
+                model.TruckType = item.TRUCK_TYPE;
+                model.PlanTender = item.PLNTNRDDATE.ToString();
+                model.FirstTender = item.FTNRDDATE.ToString();
                 viewModel.Add(model);
             }
 
@@ -148,6 +150,8 @@ namespace SCGLKPIUI.Controllers {
                                 PLNTNRDDATE_D = tmp_adjusted.PLNTNRDDATE_D,
                                 FTNRDDATE = tmp_adjusted.FTNRDDATE,
                                 FTNRDDATE_D = tmp_adjusted.FTNRDDATE_D,
+                                SHPPOINT = tmp_adjusted.SHPPOINT,
+                                TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                 SHPMNTNO = tmp_adjusted.SHPMNTNO,
                                 LOADED_DATE = DateTime.Now,
                                 TNRD_ADJUST = isadjust ? 1 : 0,

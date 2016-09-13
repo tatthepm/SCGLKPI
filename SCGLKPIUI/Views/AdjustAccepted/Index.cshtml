@@ -236,28 +236,32 @@
                         "dataSrc": ""
                     },
                     columns: [
-                   { data: "Shipment" },
-                   { data: "RegionName" },
-                   { data: "SoldtoName" },
-                   { data: "ShiptoName" },
+                            { data: "Shipment" },
+                            { data: "RegionName" },
+                            { data: "SoldtoName" },
+                            { data: "ShiptoName" },
+                            { data: "LastAccept" },
+                            { data: "ShippingPoint" },
+                            { data: "CarrierId" },
+                            { data: "TruckType" },
                     ],
                     "columnDefs": [
                                 {
                                     "mRender": function (data, type, full) {
                                         return reasonString;
                                     },
-                                    "targets": 4
+                                    "targets": 8
                                 },
                                 {
-                                    "targets": 5,
+                                    "targets": 9,
                                     "data": function (row, type, val, meta) {
                                         return '<input type="text" name="txtRemark" />\n\
-                                            <input type="hidden" id="txtSM" name="txtSM" value="' + row.Shipment + '">\n\
-                                            <input type="hidden" name="monthId" value="' + monthId + '" />\n\
-                                            <input type="hidden" name="yearId" value="' + yearId + '" />\n\
-                                            <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
-                                            <input type="hidden" name="sectionId" value="' + sectionId + '" />\n\
-                                            <input type="hidden" name="matNameId" value="' + matNameId + '" />\n';
+                            <input type="hidden" id="txtSM" name="txtSM" value="' + row.Shipment + '">\n\
+                            <input type="hidden" name="monthId" value="' + monthId + '" />\n\
+                            <input type="hidden" name="yearId" value="' + yearId + '" />\n\
+                            <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
+                            <input type="hidden" name="sectionId" value="' + sectionId + '" />\n\
+                            <input type="hidden" name="matNameId" value="' + matNameId + '" />\n';
                                     }
                                 }
 
@@ -310,7 +314,7 @@
         $(function () {
 
             $('form').on('submit', function (e) {
-
+                //block posting.
                 e.preventDefault();
 
                 $.ajax({
@@ -359,16 +363,20 @@
                            { data: "RegionName" },
                            { data: "SoldtoName" },
                            { data: "ShiptoName" },
+                           { data: "LastAccept" },
+                           { data: "ShippingPoint" },
+                           { data: "CarrierId" },
+                           { data: "TruckType" },
                             ],
                             "columnDefs": [
                                         {
                                             "mRender": function (data, type, full) {
                                                 return reasonString;
                                             },
-                                            "targets": 4
+                                            "targets": 8
                                         },
                                         {
-                                            "targets": 5,
+                                            "targets": 9,
                                             "data": function (row, type, val, meta) {
                                                 return '<input type="text" name="txtRemark" />\n\
                                             <input type="hidden" id="txtSM" name="txtSM" value="' + row.Shipment + '">\n\

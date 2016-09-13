@@ -78,6 +78,10 @@ namespace BOL {
 
         [Column(TypeName = "datetime2")]
         public DateTime? LOADED_DATE { get; set; }
+        [StringLength(4)]
+        public string SHPPOINT { get; set; }
+        [StringLength(20)]
+        public string TRUCK_TYPE { get; set; }
 
     }
 }

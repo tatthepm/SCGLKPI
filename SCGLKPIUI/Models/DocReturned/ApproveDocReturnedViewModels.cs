@@ -13,9 +13,11 @@ namespace SCGLKPIUI.Models {
         public string SoldtoName { get; set; }
         public string Shipto { get; set; }
         public string ShiptoName { get; set; }
-        public DateTime? PlanDocReturn { get; set; } //PLNDOCRETDATE_SCGL
-        public DateTime? ActualDocReturn { get; set; } //DOCRETDATE_SCGL
-        public DateTime? ActualGI { get; set; } //ACTGIDATE
+        public string ShippingPoint { get; set; }
+        public string TruckType { get; set; }
+        public string PlanDocReturn { get; set; } //PLNDOCRETDATE_SCGL
+        public string ActualDocReturn { get; set; } //DOCRETDATE_SCGL
+        public string ActualGI { get; set; } //ACTGIDATE
         public string thisReasonId { get; set; }
         public bool Approve { get; set; }
         public string Reason { get; set; } //addded

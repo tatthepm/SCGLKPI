@@ -96,5 +96,9 @@ namespace BOL {
         public DateTime? TNRD_ADJUST_DATE { get; set; }
 
         public string TNRD_ONTIME_REMARK { get; set; }
+        [StringLength(4)]
+        public string SHPPOINT { get; set; }
+        [StringLength(20)]
+        public string TRUCK_TYPE { get; set; }
     }
 }

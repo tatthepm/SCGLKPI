@@ -92,5 +92,9 @@ namespace BOL {
         public DateTime? INB_ADJUST_DATE { get; set; } //added
 
         public string INB_REMARK { get; set; } //added
+        [StringLength(4)]
+        public string SHPPOINT { get; set; }
+        [StringLength(20)]
+        public string TRUCK_TYPE { get; set; }
     }
 }

@@ -98,5 +98,9 @@ namespace BOL {
         public DateTime? ON_TIME_ADJUST_DATE { get; set; } //added
 
         public string ON_TIME_REMARK { get; set; } //added
+        [StringLength(4)]
+        public string SHPPOINT { get; set; }
+        [StringLength(20)]
+        public string TRUCK_TYPE { get; set; }
     }
 }

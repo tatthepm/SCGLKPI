@@ -191,26 +191,30 @@
                         "dataSrc": ""
                     },
                     columns: [
-                   { data: "Shipment" },
-                   { data: "RegionName" },
-                   { data: "SoldtoName" },
-                   { data: "ShiptoName" },
+                            { data: "Shipment" },
+                            { data: "RegionName" },
+                            { data: "SoldtoName" },
+                            { data: "ShiptoName" },
+                            { data: "FirstTender" },
+                            { data: "ShippingPoint" },
+                            { data: "CarrierId" },
+                            { data: "TruckType" },
                     ],
                     "columnDefs": [
                                 {
                                     "mRender": function (data, type, full) {
                                         return reasonString;
                                     },
-                                    "targets": 4
+                                    "targets": 8
                                 },
                                 {
-                                    "targets": 5,
+                                    "targets": 9,
                                     "data": function (row, type, val, meta) {
                                         return '<input type="text" name="txtRemark" />\n\
-                                            <input type="hidden" id="txtSM" name="txtSM" value="' + row.Shipment + '">\n\
-                                            <input type="hidden" name="monthId" value="' + monthId + '" />\n\
-                                            <input type="hidden" name="yearId" value="' + yearId + '" />\n\
-                                            <input type="hidden" name="segmentId" value="' + segmentId + '" />\n';
+                            <input type="hidden" id="txtSM" name="txtSM" value="' + row.Shipment + '">\n\
+                            <input type="hidden" name="monthId" value="' + monthId + '" />\n\
+                            <input type="hidden" name="yearId" value="' + yearId + '" />\n\
+                            <input type="hidden" name="segmentId" value="' + segmentId + '" />\n';
                                     }
                                 }
 
@@ -311,16 +315,20 @@
                            { data: "RegionName" },
                            { data: "SoldtoName" },
                            { data: "ShiptoName" },
+                           { data: "FirstTender" },
+                           { data: "ShippingPoint" },
+                           { data: "CarrierId" },
+                           { data: "TruckType" },
                             ],
                             "columnDefs": [
                                         {
                                             "mRender": function (data, type, full) {
                                                 return reasonString;
                                             },
-                                            "targets": 4
+                                            "targets": 8
                                         },
                                         {
-                                            "targets": 5,
+                                            "targets": 9,
                                             "data": function (row, type, val, meta) {
                                                 return '<input type="text" name="txtRemark" />\n\
                                             <input type="hidden" id="txtSM" name="txtSM" value="' + row.Shipment + '">\n\

@@ -99,8 +99,10 @@ namespace SCGLKPIUI.Controllers
                 model.SoldtoName = item.SOLDTO_NAME;
                 model.Shipto = item.SHIPTO;
                 model.ShiptoName = item.LAST_SHPG_LOC_NAME;
-                model.PlanAccept = Convert.ToDateTime(item.PLNACPDDATE);
-                model.LastAccept = Convert.ToDateTime(item.LACPDDATE);
+                model.ShippingPoint = item.SHPPOINT;
+                model.TruckType = item.TRUCK_TYPE;
+                model.PlanAccept = item.PLNACPDDATE.ToString();
+                model.LastAccept = item.LACPDDATE.ToString();
                 viewModel.Add(model);
             }
 
@@ -167,6 +169,8 @@ namespace SCGLKPIUI.Controllers
                                 PLNACPDDATE_D = tmp_adjusted.PLNACPDDATE_D,
                                 LACPDDATE = tmp_adjusted.LACPDDATE,
                                 LACPDDATE_D = tmp_adjusted.LACPDDATE_D,
+                                SHPPOINT = tmp_adjusted.SHPPOINT,
+                                TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                 SHPMNTNO = tmp_adjusted.SHPMNTNO,
                                 LOADED_DATE = DateTime.Now,
                                 ACPD_ADJUST = isadjust ? 1 : 0,

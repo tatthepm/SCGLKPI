@@ -344,10 +344,14 @@
                     "dataSrc": ""
                 },
                 columns: [
-                    { data: "Shipment" },
+                   { data: "Shipment" },
                     { data: "RegionName" },
                     { data: "SoldtoName" },
                     { data: "ShiptoName" },
+                    { data: "FirstTender" },
+                    { data: "ShippingPoint" },
+                    { data: "CarrierId" },
+                    { data: "TruckType" },
                     { data: "Reason" },
                     {
                         data: "Approve",
@@ -361,7 +365,7 @@
                     }
                 ],
                 'columnDefs': [{
-                    "targets": 6,
+                    "targets": 10,
                     "data": function (row, type, val, meta) {
                         return '<input type="text" name="txtRemark" />\n\
                                 <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\

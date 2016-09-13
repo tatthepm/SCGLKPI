@@ -92,5 +92,9 @@ namespace BOL {
         public DateTime? ACPD_ADJUST_DATE { get; set; } //added
 
         public string ACPD_REMARK { get; set; }
+        [StringLength(4)]
+        public string SHPPOINT { get; set; }
+        [StringLength(20)]
+        public string TRUCK_TYPE { get; set; }
     }
 }

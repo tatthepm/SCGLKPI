@@ -91,9 +91,11 @@ namespace SCGLKPIUI.Controllers {
                 model.SoldtoName = item.SOLDTO_NAME;
                 model.Shipto = item.SHIPTO;
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
-                model.PlanInbound = Convert.ToDateTime(item.PLNINBDATE);
-                model.ActualInbound = Convert.ToDateTime(item.ACTGIDATE);
-                model.ActualGI = Convert.ToDateTime(item.ACTGIDATE);
+                model.ShippingPoint = item.SHPPOINT;
+                model.TruckType = item.TRUCK_TYPE;
+                model.PlanInbound = item.PLNINBDATE.ToString();
+                model.ActualInbound = item.ACTGIDATE.ToString();
+                model.ActualGI = item.ACTGIDATE.ToString();
                 viewModel.Add(model);
             }
 
@@ -159,6 +161,8 @@ namespace SCGLKPIUI.Controllers {
                                 PLNINBDATE_D = tmp_adjusted.PLNINBDATE_D,
                                 ACTGIDATE = tmp_adjusted.ACTGIDATE,
                                 ACTGIDATE_D = tmp_adjusted.ACTGIDATE_D,
+                                SHPPOINT = tmp_adjusted.SHPPOINT,
+                                TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                 DELVNO = tmp_adjusted.DELVNO,
                                 LOADED_DATE = DateTime.Now,
                                 INB_ADJUST = isadjust ? 1 : 0,

@@ -235,20 +235,24 @@
                         "dataSrc": ""
                     },
                     columns: [
-                   { data: "DeliveryNote" },
-                   { data: "RegionName" },
-                   { data: "SoldtoName" },
-                   { data: "ShiptoName" },
+                            { data: "DeliveryNote" },
+                            { data: "RegionName" },
+                            { data: "SoldtoName" },
+                            { data: "ShiptoName" },
+                            { data: "ActualGI" },
+                            { data: "ShippingPoint" },
+                            { data: "CarrierId" },
+                            { data: "TruckType" },
                     ],
                     "columnDefs": [
                                 {
                                     "mRender": function (data, type, full) {
                                         return reasonString;
                                     },
-                                    "targets": 4
+                                    "targets": 8
                                 },
                                 {
-                                    "targets": 5,
+                                    "targets": 9,
                                     "data": function (row, type, val, meta) {
                                         return '<input type="text" name="txtRemark" />\n\
                                             <input type="hidden" id="txtDN" name="txtDN" value="' + row.DeliveryNote + '">\n\
@@ -355,20 +359,24 @@
                                 "dataSrc": ""
                             },
                             columns: [
-                           { data: "DeliveryNote" },
-                           { data: "RegionName" },
-                           { data: "SoldtoName" },
-                           { data: "ShiptoName" },
+                            { data: "DeliveryNote" },
+                            { data: "RegionName" },
+                            { data: "SoldtoName" },
+                            { data: "ShiptoName" },
+                            { data: "ActualGI" },
+                            { data: "ShippingPoint" },
+                            { data: "CarrierId" },
+                            { data: "TruckType" },
                             ],
                             "columnDefs": [
                                         {
                                             "mRender": function (data, type, full) {
                                                 return reasonString;
                                             },
-                                            "targets": 4
+                                            "targets": 8
                                         },
                                         {
-                                            "targets": 5,
+                                            "targets": 9,
                                             "data": function (row, type, val, meta) {
                                                 return '<input type="text" name="txtRemark" />\n\
                                             <input type="hidden" id="txtDN" name="txtDN" value="' + row.DeliveryNote + '">\n\

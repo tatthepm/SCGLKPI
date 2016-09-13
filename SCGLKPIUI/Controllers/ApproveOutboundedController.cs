@@ -101,6 +101,8 @@ namespace SCGLKPIUI.Controllers
                 model.SoldtoName = item.SOLDTO_NAME;
                 model.Shipto = item.SHIPTO;
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
+                model.ShippingPoint = item.SHPPOINT;
+                model.TruckType = item.TRUCK_TYPE;
                 model.PlanOutbound = Convert.ToDateTime(item.PLNOUTBDATE);
                 model.ActualOutbound = Convert.ToDateTime(item.ACDLVDATE);
                 model.ActualGI = Convert.ToDateTime(item.ACTGIDATE);

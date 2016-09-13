@@ -99,9 +99,11 @@ namespace SCGLKPIUI.Controllers
                 model.SoldtoName = item.SOLDTO_NAME;
                 model.Shipto = item.SHIPTO;
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
-                model.PlanDocReturn = Convert.ToDateTime(item.PLNDOCRETDATE_SCGL);
-                model.ActualDocReturn = Convert.ToDateTime(item.DOCRETDATE_SCGL);
-                model.ActualGI = Convert.ToDateTime(item.ACTGIDATE);
+                model.ShippingPoint = item.SHPPOINT;
+                model.TruckType = item.TRUCK_TYPE;
+                model.PlanDocReturn = item.PLNDOCRETDATE_SCGL.ToString();
+                model.ActualDocReturn = item.DOCRETDATE_SCGL.ToString();
+                model.ActualGI = item.ACTGIDATE.ToString();
                 viewModel.Add(model);
             }
 
@@ -171,6 +173,8 @@ namespace SCGLKPIUI.Controllers
                                 DOCRETDATE_SCGL_D = tmp_adjusted.DOCRETDATE_SCGL_D,
                                 ACTGIDATE = tmp_adjusted.ACTGIDATE,
                                 ACTGIDATE_D = tmp_adjusted.ACTGIDATE_D,
+                                SHPPOINT = tmp_adjusted.SHPPOINT,
+                                TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                 DELVNO = tmp_adjusted.DELVNO,
                                 LOADED_DATE = DateTime.Now,
                                 SCGL_DOCRET_ADJUST = isadjust ? 1 : 0,
