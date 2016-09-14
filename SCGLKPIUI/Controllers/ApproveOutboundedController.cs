@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Globalization;
 using BLL;
 using BOL;
 using SCGLKPIUI.Models;
@@ -103,9 +104,9 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
-                model.PlanOutbound = Convert.ToDateTime(item.PLNOUTBDATE);
-                model.ActualOutbound = Convert.ToDateTime(item.ACDLVDATE);
-                model.ActualGI = Convert.ToDateTime(item.ACTGIDATE);
+                model.PlanOutbound = item.PLNOUTBDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
+                model.ActualOutbound = item.ACDLVDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
+                model.ActualGI = item.ACTGIDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
                 model.Approve = Convert.ToBoolean(item.OUTB_ADJUST);
                 model.AdjustBy = item.OUTB_ADJUST_BY;
                 model.Remark = item.OUTB_REMARK;
@@ -119,7 +120,7 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateOutboundApprove(List<string> thisReasonId, List<string> txtDN, List<string> txtApprove, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
+        public ActionResult UpdateOutboundApprove(List<string> thisReasonId, List<string> txtDN, List<string> txtApprove, List<string> txtRemark, string yearId, string monthId)
         {
             using (TransactionScope Trans = new TransactionScope())
             {
@@ -152,6 +153,9 @@ namespace SCGLKPIUI.Controllers
 
                         //update sum of adjust daily
                         DateTime ONTIMEDate = Convert.ToDateTime(objBs.dWH_ONTIME_DNBs.GetByID(dn).ACTGIDATE_D);
+                        string matNameId = Convert.ToString(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(dn).MATFRIGRP);
+                        string sectionId = Convert.ToString(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(dn).SECTION_ID);
+                        string departmentId = Convert.ToString(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(dn).DEPARTMENT_ID);
 
                         if (isadjust)
                         {

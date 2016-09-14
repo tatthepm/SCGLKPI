@@ -272,12 +272,12 @@
     @Scripts.Render("~/bundles/toastr/js")
     @Scripts.Render("~/bundles/flot/js")
     @*<script src="~/Scripts/jquery-2.2.3.min.js"></script>*@
+    <script src="~/Scripts/Vk1-0.1.0.js"></script>
     <script type="text/javascript">
         $(function () {
             /**
              * Flot charts data and options
              */
-
             //var data1 = [[0, 55], [1, 48], [2, 40], [3, 36], [4, 40], [5, 60], [6, 50], [7, 51], [8, 60], [9, 40], [10, 31], [11, 31]];
             //var data2 = [[0, 56], [1, 49], [2, 41], [3, 38], [4, 46], [5, 67], [6, 57], [7, 59], [8, 68], [9, 50], [10, 41], [11, 61]];
             var data1 = [[0, @Model.DN01], [1, @Model.DN02], [2, @Model.DN03], [3, @Model.DN04], [4, @Model.DN05], [5, @Model.DN06], [6, @Model.DN07], [7, @Model.DN08], [8, @Model.DN09], [9, @Model.DN10], [10, @Model.DN11], [11, @Model.DN12]];
@@ -306,5 +306,6 @@
             $.plot($("#flot-line-chart"), [data1, data2], chartUsersOptions);
 
         });
+        
     </script>
 }

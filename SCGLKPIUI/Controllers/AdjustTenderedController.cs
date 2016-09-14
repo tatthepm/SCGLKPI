@@ -81,8 +81,8 @@ namespace SCGLKPIUI.Controllers {
                 model.ShiptoName = item.LAST_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
-                model.PlanTender = item.PLNTNRDDATE.ToString();
-                model.FirstTender = item.FTNRDDATE.ToString();
+                model.PlanTender = item.PLNTNRDDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
+                model.FirstTender = item.FTNRDDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
                 viewModel.Add(model);
             }
 

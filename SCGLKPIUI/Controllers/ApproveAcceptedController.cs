@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Globalization;
 using BLL;
 using BOL;
 using SCGLKPIUI.Models;
@@ -103,8 +104,8 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.LAST_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
-                model.PlanAccept = item.PLNACPDDATE.ToString();
-                model.LastAccept = item.LACPDDATE.ToString();
+                model.PlanAccept = item.PLNACPDDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
+                model.LastAccept = item.LACPDDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
                 model.Approve = Convert.ToBoolean(item.ACPD_ADJUST);
                 model.AdjustBy = item.ACPD_ADJUST_BY;
                 model.Remark = item.ACPD_REMARK;
@@ -118,7 +119,7 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateAcceptApprove(List<string> thisReasonId, List<string> txtSM, List<string> txtApprove, List<string> txtRemark, string departmentId, string sectionId, string matNameId, string yearId, string monthId)
+        public ActionResult UpdateAcceptApprove(List<string> thisReasonId, List<string> txtSM, List<string> txtApprove, List<string> txtRemark, string yearId, string monthId)
         {
             using (TransactionScope Trans = new TransactionScope())
             {
@@ -151,6 +152,9 @@ namespace SCGLKPIUI.Controllers
 
                         //update sum of adjust daily
                         DateTime LACPDDate = Convert.ToDateTime(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).LACPDDATE_D);
+                        string matNameId = Convert.ToString(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).MATFRIGRP);
+                        string sectionId = Convert.ToString(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).SECTION_ID);
+                        string departmentId = Convert.ToString(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).DEPARTMENT_ID);
 
                         if (isadjust)
                         {

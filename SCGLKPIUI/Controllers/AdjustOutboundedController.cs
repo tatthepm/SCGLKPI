@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Globalization;
 using SCGLKPIUI.Models;
 using SCGLKPIUI.Models.Outbounded;
 using System.Transactions;
@@ -96,8 +97,8 @@ namespace SCGLKPIUI.Controllers {
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
-                model.PlanOutbound = item.PLNOUTBDATE.ToString();
-                model.ActualOutbound = item.ACDLVDATE.ToString();
+                model.PlanOutbound = item.PLNOUTBDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
+                model.ActualOutbound = item.ACDLVDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
                 model.ActualGI = item.ACTGIDATE.ToString();
                 viewModel.Add(model);
             }
