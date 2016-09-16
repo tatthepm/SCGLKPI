@@ -346,15 +346,15 @@
                         "dataSrc": ""
                     },
                     columns: [
-                        { data: "Dn" },
-                        { data: "RegionName" },
-                        { data: "SoldtoName" },
-                        { data: "ShiptoName" },
-                        { data: "ActualGI" },
-                        { data: "ShippingPoint" },
-                        { data: "CarrierId" },
-                        { data: "TruckType" },
-                        { data: "Reason" },
+                    { data: "Dn" },
+                    { data: "RegionName" },
+                    { data: "SoldtoName" },
+                    { data: "ShiptoName" },
+                    { data: "ActualGI" },
+                    { data: "ShippingPoint" },
+                    { data: "CarrierId" },
+                    { data: "TruckType" },
+                    { data: "Reason" },
                         {
                             data: "Approve",
                             render: function (data, type, row) {
@@ -367,7 +367,7 @@
                         }
                     ],
                     'columnDefs': [{
-                        "targets": 6,
+                        "targets": 10,
                         "data": function (row, type, val, meta) {
                             return '<input type="text" name="txtRemark" />\n\
                                 <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\

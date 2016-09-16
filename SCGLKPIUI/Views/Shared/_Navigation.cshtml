@@ -230,7 +230,10 @@
 
                     </ul>
                 </li>
-
+            }
+            @*Approve*@
+            @if (User.IsInRole("ADMIN"))
+            {
                 <li>
                     <a href="#"><span class="nav-label">User</span></a>
                     <ul class="nav nav-second-level">
@@ -245,8 +248,8 @@
                         </li>
                     </ul>
                 </li>
-
             }
+
         </ul>
 
     }
