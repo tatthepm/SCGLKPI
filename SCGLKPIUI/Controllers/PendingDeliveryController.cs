@@ -32,7 +32,7 @@ namespace SCGLKPIUI.Controllers
                 ViewBag.SectionId = new SelectList(ddlSec.ToList(), "Id", "Name");
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
-                ViewBag.MatNameId = new SelectList(ddlMonth.ToList(), "Id", "Name");
+                ViewBag.MatNameId = new SelectList(ddlMatName.ToList(), "Id", "Name");
                 //1 DropdownList 
                 //ViewBag.MatNameId = new SelectList(objBs.ontimePendingBs.GetByMatName(), "Id", "Name");
 
@@ -83,8 +83,10 @@ namespace SCGLKPIUI.Controllers
                 model.DeliveryNote = item.DELVNO;
                 model.RegionName = item.REGION_NAME_TH;
                 model.SoldtoName = item.SOLDTO_NAME;
-                model.ShiptoName = item.SHIPTO;
-                model.PlanDelivery = item.PLNONTIMEDATE_D.Value.ToString();
+                model.ShiptoName = item.TO_SHPG_LOC_NAME;
+                model.ShippingPoint = item.SHPPOINT;
+                model.TruckType = item.TRUCK_TYPE;
+                model.PlanDelivery = item.PLNONTIMEDATE_D.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 viewSummaryModel.Add(model);
             }
 

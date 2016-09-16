@@ -102,9 +102,9 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
-                model.PlanDocReturn = item.PLNDOCRETDATE_SCGL.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
-                model.ActualDocReturn = item.DOCRETDATE_SCGL.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
-                model.ActualGI = item.ACTGIDATE.ToString();
+                model.PlanDocReturn = item.PLNDOCRETDATE_SCGL.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                model.ActualDocReturn = item.DOCRETDATE_SCGL.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                model.ActualGI = item.ACTGIDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 viewModel.Add(model);
             }
 

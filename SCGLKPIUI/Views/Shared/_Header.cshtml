@@ -21,30 +21,49 @@
         </button>
         <div class="collapse mobile-navbar" id="mobile-collapse">
             <ul class="nav navbar-nav">
-                <li>
-                    @*<a class="" href="@Url.Action("Login", "CommonViews")">Login</a>*@
-                    @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-                </li>
-                <li>
-                    @*<a class="" href="@Url.Action("Register", "CommonViews")">Logout</a>*@
-                    @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
-                </li>
-                <li>
-                    @*<a class="" href="@Url.Action("ProfilePage", "AppViews")">Profile</a>*@
-                    @Html.ActionLink("Hello " + User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        <a href="~/Login/SignOut">
+                            <i class="fa fa-lock small"></i><span style="font-size:medium"> Logout</span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="~/Login">
+                            <i class="fa fa-lock small"></i><span style="font-size:medium"> Login</span>
+                        </a>
+                    </li>
+                }
             </ul>
         </div>
     </div>
     <div class="navbar-right">
         <ul class="nav navbar-nav no-borders">
             @if (User.Identity.IsAuthenticated) {
-                <li>
-                    <a href="~/Login/SignOut">
-                        <i class="fa fa-lock small"></i><span style="font-size:medium"> Logout</span>
+                <li class="dropdown">
+                    <a class="dropdown-toggle label-menu-corner" href="#" data-toggle="dropdown">
+                        <i class="pe-7s-speaker"></i>
+                        <span class="label label-success">Manage</span>
                     </a>
+                    <ul class="dropdown-menu hdropdown notification animated flipInX">
+                        <li>
+                            <a href="~/Login/ChangePassword">
+                                <i class="fa fa-lock small"></i><span style="font-size:medium"> Change Password</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="~/Login/SignOut">
+                                <i class="fa fa-lock small"></i><span style="font-size:medium"> Logout</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-            } else {
+            }
+            else
+            {
                 <li>
                     <a href="~/Login">
                         <i class="fa fa-lock small"></i><span style="font-size:medium"> Login</span>
@@ -52,7 +71,7 @@
                 </li>
             }
 
-            <li class="dropdown">
+            @*<li class="dropdown">
                 <a class="dropdown-toggle label-menu-corner" href="#" data-toggle="dropdown">
                     <i class="pe-7s-speaker"></i>
                     <span class="label label-success">3</span>
@@ -74,7 +93,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li>*@
             <li>
                 <a href="#">
                     <span style="font-size:small"><b>Call Us: </b>+6625863719</span>

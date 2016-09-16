@@ -42,6 +42,8 @@ namespace SCGLKPIUI.Models
         public string Year { get; set; }
         public string shipmentLastMonthCount { get; set; }
         public string DNLastMonthCount { get; set; }
+        public string shipmentThisMonthCount { get; set; }
+        public string DNThisMonthCount { get; set; }
         public string TenderLastMonthCount { get; set; }
         public string AcceptLastMonthCount { get; set; }
         public string InboundLastMonthCount { get; set; }
@@ -114,6 +116,8 @@ namespace SCGLKPIUI.Models
             Year = DateTime.Now.Year.ToString();
             DNLastMonthCount = objBs.HomeKPIBs.GetLastMonth().Select(x => x.DNLastMonthCount).Sum().ToString();
             shipmentLastMonthCount = objBs.HomeKPIBs.GetLastMonth().Select(x => x.shipmentLastMonthCount).Sum().ToString();
+            DNThisMonthCount = objBs.HomeKPIBs.GetMonth(DateTime.Now.Month).Select(x => x.DNLastMonthCount).Sum().ToString();
+            shipmentThisMonthCount = objBs.HomeKPIBs.GetMonth(DateTime.Now.Month).Select(x => x.shipmentLastMonthCount).Sum().ToString();
 
             AcceptLastMonthCount = objBs.HomeKPIBs.GetLastMonth().Select(x => x.AcceptLastMonthCount).Sum().ToString();
             AcceptLastMonthPending = objBs.HomeKPIBs.GetLastMonth().Select(x => x.AcceptPendingCount).Sum().ToString();

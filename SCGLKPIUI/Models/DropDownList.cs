@@ -22,7 +22,6 @@ namespace SCGLKPIUI.Models
             List<DropdownlistViewModels> viewModel = new List<DropdownlistViewModels>();
             switch (filtername)
             {
-
                 case "Department":
                     var ddlDept = (from d in objBs.menuTableBs.GetAll()
                                    select new

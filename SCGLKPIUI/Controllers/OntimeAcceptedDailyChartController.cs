@@ -103,7 +103,7 @@ namespace SCGLKPIUI.Controllers {
                 string dd = item.AcceptedDate.Value.Day.ToString();
                 string mm = item.AcceptedDate.Value.Month.ToString();
                 string yyyy = item.AcceptedDate.Value.Year.ToString();
-                model.AcceptedDate = mm + "/" + dd + "/" + yyyy;
+                model.AcceptedDate = item.AcceptedDate.Value.ToString("dd/MM/yyyy");
                 model.Plan = item.Plan;
                 model.Actual = Math.Round(item.Actual, 2);
                 model.Adjust = Math.Round(item.Adjust, 2);
@@ -221,7 +221,7 @@ namespace SCGLKPIUI.Controllers {
                 string dd = item.AcceptDate.Value.Day.ToString();
                 string mm = item.AcceptDate.Value.Month.ToString();
                 string yyyy = item.AcceptDate.Value.Year.ToString();
-                model.AcceptDate = dd + "/" + mm + "/" + yyyy;
+                model.AcceptDate = item.AcceptDate.Value.ToString("dd/MM/yyyy");
                 model.DepartmentName = item.DepartmentName;
                 model.SectionName = item.SectionName;
                 model.MatName = item.MatName;

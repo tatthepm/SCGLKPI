@@ -70,7 +70,7 @@ namespace SCGLKPIUI.Controllers {
                 string dd = item.FirstTenderDate.Value.Day.ToString();
                 string mm = item.FirstTenderDate.Value.Month.ToString();
                 string yyyy = item.FirstTenderDate.Value.Year.ToString();
-                model.FirstTenderDate = mm + "/" + dd + "/" + yyyy;
+                model.FirstTenderDate = item.FirstTenderDate.Value.ToString("dd/MM/yyyy");
                 model.Plan = item.Plan;
                 model.Actual = Math.Round(item.Actual, 2);
                 model.Adjust = Math.Round(item.Adjust, 2);
@@ -173,7 +173,7 @@ namespace SCGLKPIUI.Controllers {
                 string dd = item.FirstTenderDate.Value.Day.ToString();
                 string mm = item.FirstTenderDate.Value.Month.ToString();
                 string yyyy = item.FirstTenderDate.Value.Year.ToString();
-                model.FirstTenderDate = dd + "/" + mm + "/" + yyyy;
+                model.FirstTenderDate = item.FirstTenderDate.Value.ToString("dd/MM/yyyy");
                 model.SegmentName = item.Segment;
                 model.SectionName = item.SectionName;
                 model.MatName = item.MatName;

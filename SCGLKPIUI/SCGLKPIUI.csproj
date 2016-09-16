@@ -3080,6 +3080,9 @@
     <Content Include="Views\ApproveOutbounded\pv_ApproveOutbounded.cshtml" />
     <Content Include="Views\ApproveTendered\Index.cshtml" />
     <Content Include="Views\ApproveTendered\pv_ApproveTendered.cshtml" />
+    <Content Include="Views\Login\ResetPassword.cshtml" />
+    <Content Include="Views\Login\Register.cshtml" />
+    <Content Include="Views\Login\DeleteUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\UploadFiles\" />

@@ -104,7 +104,7 @@ namespace SCGLKPIUI.Controllers {
                 string dd = item.ActualGiDate.Value.Day.ToString();
                 string mm = item.ActualGiDate.Value.Month.ToString();
                 string yyyy = item.ActualGiDate.Value.Year.ToString();
-                model.ActualGiDate = mm + "/" + dd + "/" + yyyy;
+                model.ActualGiDate = item.ActualGiDate.Value.ToString("dd/mm/yyyy");
                 model.Plan = item.Plan;
                 model.Actual = Math.Round(item.Actual, 2);
                 model.Adjust = Math.Round(item.Adjust, 2);
@@ -222,7 +222,7 @@ namespace SCGLKPIUI.Controllers {
                 string dd = item.ActualGiDate.Value.Day.ToString();
                 string mm = item.ActualGiDate.Value.Month.ToString();
                 string yyyy = item.ActualGiDate.Value.Year.ToString();
-                model.ActualGiDate = dd + "/" + mm + "/" + yyyy;
+                model.ActualGiDate = item.ActualGiDate.Value.ToString("dd/mm/yyyy");
                 model.DepartmentName = item.DepartmentName;
                 model.SectionName = item.SectionName;
                 model.MatName = item.MatName;

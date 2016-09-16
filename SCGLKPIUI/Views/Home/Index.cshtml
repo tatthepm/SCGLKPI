@@ -30,9 +30,9 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-3 text-center">
-                            <div class="small">
+                            @*<div class="small">
                                 <i class="fa fa-bolt"></i> Shipments
-                            </div>
+                            </div>*@
                             <div>
                                 <h1 class="font-extra-bold m-t-xl m-b-xs">
                                     @Model.shipmentLastMonthCount
@@ -45,8 +45,9 @@
                                 </h1>
                                 <small>DN in last month</small>
                             </div>
+                            <hr />
                             <div class="small m-t-xl">
-                                <i class="fa fa-clock-o"></i> Data from @Model.LastMonth @Model.Year
+                                <i class="fa fa-clock-o"></i> @DateTime.Now.AddMonths(-1).ToString("MMMM yyyy")
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -58,17 +59,21 @@
                             </div>
                         </div>
                         <div class="col-md-3 text-center">
-                            <div class="small">
-                                <i class="fa fa-clock-o"></i> Active duration
+                            <div>
+                                <h1 class="font-extra-bold m-t-xl m-b-xs">
+                                    @Model.shipmentThisMonthCount
+                                </h1>
+                                <small>Shipment in this month   </small>
                             </div>
                             <div>
                                 <h1 class="font-extra-bold m-t-xl m-b-xs">
-                                    @Model.daysDIff Days
+                                    @Model.DNThisMonthCount
                                 </h1>
-                                @*<small>And four weeks</small>*@
+                                <small>DN in this month</small>
                             </div>
+                            <hr />
                             <div class="small m-t-xl">
-                                <i class="fa fa-clock-o"></i> Data since January 1, 2016
+                                <i class="fa fa-bolt"></i> @DateTime.Now.ToLongDateString()
                             </div>
                         </div>
                     </div>

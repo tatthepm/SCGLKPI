@@ -104,8 +104,8 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.LAST_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
-                model.PlanAccept = item.PLNACPDDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
-                model.LastAccept = item.LACPDDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
+                model.PlanAccept = item.PLNACPDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                model.LastAccept = item.LACPDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.Approve = Convert.ToBoolean(item.ACPD_ADJUST);
                 model.AdjustBy = item.ACPD_ADJUST_BY;
                 model.Remark = item.ACPD_REMARK;
@@ -127,24 +127,14 @@ namespace SCGLKPIUI.Controllers
                 {
                     // List<string> listSM = new List<string>();
                     int countSM = 0;
-                    List<string> indexes = new List<string>(txtApprove.Distinct());
-                    foreach (string index in indexes)
+                    List<string> SMs = new List<string>(txtApprove.Distinct());
+                    foreach (string sm in SMs)
                     {
-                        int i = Convert.ToInt16(index);
-
-                        string sm = txtSM[i];
-                        string reasonId = thisReasonId[i];
-                        string remark = txtRemark[i];
-                        string reasonName = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).Name;
+                        var reasonId = objBs.acceptedAdjustedBs.GetByID(sm).ACPD_REASON_ID;
                         bool isadjust = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
                         DWH_ONTIME_SHIPMENT ontimeShipment = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm);
                         //Change adjustable here
                         ontimeShipment.ACPD_ADJUST = isadjust ? 1 : 0;
-                        ontimeShipment.ACPD_ADJUST_BY = User.Identity.Name;
-                        ontimeShipment.ACPD_ADJUST_DATE = DateTime.Now;
-                        ontimeShipment.ACPD_REASON = reasonName;
-                        ontimeShipment.ACPD_REASON_ID = Convert.ToInt32(reasonId);
-                        ontimeShipment.ACPD_REMARK = remark;
                         objBs.dWH_ONTIME_SHIPMENTBs.Update(ontimeShipment);
 
                         //delete AcceptedDelays

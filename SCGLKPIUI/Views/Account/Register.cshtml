@@ -13,20 +13,25 @@
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        <div class="col-md-3">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-3">
+            @Html.DropDownListFor(m => m.RoleId, Model.ddlRoles, "Select user role")
         </div>
     </div>
     <div class="form-group">
@@ -36,6 +41,34 @@
     </div>
 }
 
+@section Styles {
+    @Styles.Render("~/bundles/datatables/css")
+    @Styles.Render("~/bundles/xeditable/css")
+    @Styles.Render("~/bundles/select2/css")
+    @Styles.Render("~/bundles/touchspin/css")
+    @Styles.Render("~/bundles/datepicker/css")
+    @Styles.Render("~/bundles/bootstrapCheckbox/css")
+    @Styles.Render("~/bundles/datetimepicker/css")
+    @Styles.Render("~/bundles/clockpicker/css")
+    @Styles.Render("~/bundles/sweetAlert/css")
+    @Styles.Render("~/bundles/toastr/css")
+    @Styles.Render("~/bundles/ladda/css")
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+}
+
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/moment/js")
+    @Scripts.Render("~/bundles/xeditable/js")
+    @Scripts.Render("~/bundles/select2/js")
+    @Scripts.Render("~/bundles/touchspin/js")
+    @Scripts.Render("~/bundles/clockpicker/js")
+    @Scripts.Render("~/bundles/chartjs/js")
+    @Scripts.Render("~/bundles/datatables/js")
+    @Scripts.Render("~/bundles/datatablesBootstrap/js")
+    @Scripts.Render("~/bundles/datatablesPlugins/js")
+    @Scripts.Render("~/bundles/sweetAlert/js")
+    @Scripts.Render("~/bundles/toastr/js")
+    @Scripts.Render("~/bundles/ladda/js")
+    <script src="~/Scripts/jquery.datetimepicker.js"></script>
+    <script src="~/Scripts/fnReloadAjax.js"></script>
 }

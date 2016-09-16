@@ -13,11 +13,11 @@ using SCGLKPIUI.Models;
 namespace SCGLKPIUI.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        
         public AccountController()
         {
         }
@@ -136,36 +136,48 @@ namespace SCGLKPIUI.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            RegisterViewModel model = new RegisterViewModel();
+            var Roles = from d in objBs.roleBs.GetAll()
+                        select d;
+            model.RoleList = Roles.ToList();
+            model.ddlRoles = new SelectList(Roles,"RoleId","RoleDesc");
+            return View(model);
         }
 
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                
+                using (System.Transactions.TransactionScope Trans = new System.Transactions.TransactionScope())
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    try
+                    {
+                        BOL.TUser userIdentity = new BOL.TUser();
+                        userIdentity.UserEmail = model.Email;
+                        userIdentity.Password = model.Password;
+                        userIdentity.ConfirmPassword = model.ConfirmPassword;
+                        userIdentity.RoleId = model.RoleId;
+                        objBs.tuserBs.Insert(userIdentity);
 
-                    return RedirectToAction("Index", "Home");
+                        Trans.Complete();
+                        return RedirectToAction("Index", "Home");
+                    }
+                    catch(Exception e)
+                    {
+                        return Content("Error :: " + e.ToString());
+                    }
                 }
-                AddErrors(result);
+                
             }
 
             // If we got this far, something failed, redisplay form
@@ -231,36 +243,44 @@ namespace SCGLKPIUI.Controllers
 
         //
         // GET: /Account/ResetPassword
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
-            return code == null ? View("Error") : View();
+            return View();
         }
 
         //
         // POST: /Account/ResetPassword
         [HttpPost]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        public ActionResult ResetPassword(ResetPasswordViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(model);
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                using (System.Transactions.TransactionScope Trans = new System.Transactions.TransactionScope())
+                {
+                    try
+                    {
+                        BOL.TUser userIdentity = objBs.tuserBs.GetByEmail(model.Email);
+                        userIdentity.Password = model.Password;
+                        userIdentity.ConfirmPassword = model.ConfirmPassword;
+                        objBs.tuserBs.Update(userIdentity);
+
+                        Trans.Complete();
+                        return RedirectToAction("Index", "Home");
+                    }
+                    catch (Exception e)
+                    {
+                        return Content("Error :: " + e.ToString());
+                    }
+                }
+
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
-            if (user == null)
-            {
-                // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            AddErrors(result);
-            return View();
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
 
         //

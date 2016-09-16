@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using BOL;
 
 namespace SCGLKPIUI.Models
 {
@@ -79,6 +80,12 @@ namespace SCGLKPIUI.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string RoleId { get; set; }
+
+        public List<Role> RoleList;
+
+        public System.Web.Mvc.SelectList ddlRoles { get; set; }
     }
 
     public class ResetPasswordViewModel

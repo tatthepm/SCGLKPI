@@ -59,8 +59,10 @@ namespace SCGLKPIUI.Controllers
                 model.Shipment = item.SHPMNTNO;
                 model.RegionName = item.REGION_NAME_TH;
                 model.SoldtoName = item.SOLDTO_NAME;
-                model.ShiptoName = item.SHIPTO;
-                model.PlanTender = item.PLNTNRDDATE_D.Value.ToString();
+                model.ShiptoName = item.LAST_SHPG_LOC_NAME;
+                model.ShippingPoint = item.SHPPOINT;
+                model.TruckType = item.TRUCK_TYPE;
+                model.PlanTender = item.PLNTNRDDATE_D.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 viewSummaryModel.Add(model);
             }
 

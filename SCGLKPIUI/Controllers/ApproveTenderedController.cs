@@ -83,8 +83,8 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.LAST_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
-                model.PlanTender = item.PLNTNRDDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
-                model.FirstTender = item.FTNRDDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
+                model.PlanTender = item.PLNTNRDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                model.FirstTender = item.FTNRDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.Approve = Convert.ToBoolean(item.TNRD_ADJUST);
                 model.AdjustBy = item.TNRD_ADJUST_BY;
                 model.Remark = item.TNRD_ONTIME_REMARK;
@@ -104,25 +104,16 @@ namespace SCGLKPIUI.Controllers
             {
                 try
                 {
+                    // List<string> listSM = new List<string>();
                     int countSM = 0;
-                    List<string> indexes = new List<string>(txtApprove.Distinct());
-                    foreach (string index in indexes)
+                    List<string> SMs = new List<string>(txtApprove.Distinct());
+                    foreach (string sm in SMs)
                     {
-                        int i = Convert.ToInt16(index);
-
-                        string sm = txtSM[i];
-                        string reasonId = thisReasonId[i];
-                        string remark = txtRemark[i];
-                        string reasonName = objBs.reasonTenderedBs.GetByID(Convert.ToInt32(reasonId)).Name;
+                        var reasonId = objBs.tenderedAdjustedBs.GetByID(sm).TNRD_ONTIME_REASON_ID;
                         bool isadjust = objBs.reasonTenderedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
                         DWH_ONTIME_SHIPMENT ontimeShipment = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm);
                         //Change adjustable here
                         ontimeShipment.TNRD_ADJUST = isadjust ? 1 : 0;
-                        ontimeShipment.TNRD_ADJUST_BY = User.Identity.Name;
-                        ontimeShipment.TNRD_ADJUST_DATE = DateTime.Now;
-                        ontimeShipment.TNRD_ONTIME_REASON = reasonName;
-                        ontimeShipment.TNRD_ONTIME_REASON_ID = Convert.ToInt32(reasonId);
-                        ontimeShipment.TNRD_ONTIME_REMARK = remark;
                         objBs.dWH_ONTIME_SHIPMENTBs.Update(ontimeShipment);
 
                         //delete TenderedDelays

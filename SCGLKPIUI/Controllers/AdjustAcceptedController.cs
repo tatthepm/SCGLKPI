@@ -101,8 +101,8 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.LAST_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
-                model.PlanAccept = item.PLNACPDDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
-                model.LastAccept = item.LACPDDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
+                model.PlanAccept = item.PLNACPDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                model.LastAccept = item.LACPDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 viewModel.Add(model);
             }
 

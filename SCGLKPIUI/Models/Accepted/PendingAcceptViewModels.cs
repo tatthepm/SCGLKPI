@@ -12,6 +12,8 @@ namespace SCGLKPIUI.Models {
         public string SoldtoName { get; set; }
         public string Shipto { get; set; }
         public string ShiptoName { get; set; }
+        public string ShippingPoint { get; set; }
+        public string TruckType { get; set; }
         public string PlanAccept { get; set; }
     }
 }

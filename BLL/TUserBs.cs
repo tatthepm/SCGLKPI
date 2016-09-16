@@ -23,6 +23,12 @@ namespace BLL {
             return objDb.GetByID(Id);
             }
 
+        //GetByEmail
+        public TUser GetByEmail(string Email)
+        {
+            return objDb.GetByEmail(Email);
+        }
+
         //Insert
         public void Insert(TUser tuser) {
             objDb.Insert(tuser);

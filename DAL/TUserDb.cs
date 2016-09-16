@@ -19,6 +19,10 @@ namespace DAL {
         public TUser GetByID(int Id) {
             return db.Tusers.Find(Id);
             }
+        public TUser GetByEmail(string Email)
+        {
+            return db.Tusers.Where(x => x.UserEmail == Email).FirstOrDefault();
+        }
         public void Insert(TUser tuser) {
             db.Tusers.Add(tuser);
             Save();

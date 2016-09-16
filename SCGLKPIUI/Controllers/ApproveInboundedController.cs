@@ -104,9 +104,9 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
-                model.PlanInbound = item.PLNINBDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
-                model.ActualInbound = item.ACTGIDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
-                model.ActualGI = item.ACTGIDATE.Value.ToString("yyyy MMMM-dd HH:mm", new CultureInfo("th-TH"));
+                model.PlanInbound = item.PLNINBDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                model.ActualInbound = item.ACTGIDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                model.ActualGI = item.ACTGIDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.Approve = Convert.ToBoolean(item.INB_ADJUST);
                 model.AdjustBy = item.INB_ADJUST_BY;
                 model.Remark = item.INB_REMARK;
@@ -128,23 +128,13 @@ namespace SCGLKPIUI.Controllers
                 {
                     // List<string> listSM = new List<string>();
                     int countDN = 0;
-                    List<string> indexes = new List<string>(txtApprove.Distinct());
-                    foreach (string index in indexes)
+                    List<string> DNs = new List<string>(txtApprove.Distinct());
+                    foreach (string dn in DNs)
                     {
-                        int i = Convert.ToInt16(index);
-
-                        string dn = txtDN[i];
-                        string reasonId = thisReasonId[i];
-                        string remark = txtRemark[i];
-                        string reasonName = objBs.reasonInboundBs.GetByID(Convert.ToInt32(reasonId)).Name;
-                        bool isadjust = objBs.reasonInboundBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
+                        var reasonId = objBs.inboundAdjustedBs.GetByID(dn).INB_REASON_ID;
+                        bool isadjust = objBs.reasonOntimeBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
                         DWH_ONTIME_DN ontimeDn = objBs.dWH_ONTIME_DNBs.GetByID(dn);
                         ontimeDn.INB_ADJUST = isadjust ? 1 : 0;
-                        ontimeDn.INB_ADJUST_BY = User.Identity.Name;
-                        ontimeDn.INB_ADJUST_DATE = DateTime.Now;
-                        ontimeDn.INB_REASON = reasonName;
-                        ontimeDn.INB_REASON_ID = Convert.ToInt32(reasonId);
-                        ontimeDn.INB_REMARK = remark;
 
                         objBs.dWH_ONTIME_DNBs.Update(ontimeDn);
 
@@ -153,9 +143,9 @@ namespace SCGLKPIUI.Controllers
 
                         //update sum of adjust daily
                         DateTime ONTIMEDate = Convert.ToDateTime(objBs.dWH_ONTIME_DNBs.GetByID(dn).ACTGIDATE_D);
-                        string matNameId = Convert.ToString(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(dn).MATFRIGRP);
-                        string sectionId = Convert.ToString(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(dn).SECTION_ID);
-                        string departmentId = Convert.ToString(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(dn).DEPARTMENT_ID);
+                        string matNameId = Convert.ToString(objBs.dWH_ONTIME_DNBs.GetByID(dn).MATFRIGRP);
+                        string sectionId = Convert.ToString(objBs.dWH_ONTIME_DNBs.GetByID(dn).SECTION_ID);
+                        string departmentId = Convert.ToString(objBs.dWH_ONTIME_DNBs.GetByID(dn).DEPARTMENT_ID);
 
                         if (isadjust)
                         {
