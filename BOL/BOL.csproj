@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OntimeFiles.cs" />
+    <Compile Include="DocReturnFiles.cs" />
+    <Compile Include="OutboundedFiles.cs" />
+    <Compile Include="InboundedFiles.cs" />
+    <Compile Include="TenderedFiles.cs" />
+    <Compile Include="AcceptedFiles.cs" />
     <Compile Include="AcceptedAdjusted.cs" />
     <Compile Include="AcceptPending.cs" />
     <Compile Include="AcceptedDelay.cs" />

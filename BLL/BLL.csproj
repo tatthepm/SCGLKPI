@@ -54,7 +54,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OntimeFilesBs.cs" />
+    <Compile Include="DocReturnFilesBs.cs" />
+    <Compile Include="OutboundedFilesBs.cs" />
+    <Compile Include="InboundedFilesBs.cs" />
+    <Compile Include="TenderedFilesBs.cs" />
     <Compile Include="AcceptedAdjestedBs.cs" />
+    <Compile Include="AccectedFilesBs.cs" />
     <Compile Include="AcceptPendingBs.cs" />
     <Compile Include="AcceptedDelayBs.cs" />
     <Compile Include="BaseBs.cs" />

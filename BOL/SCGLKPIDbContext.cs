@@ -27,6 +27,7 @@ namespace BOL {
         public DbSet<TenderedDelay> TenderedDelays { get; set; }
         public DbSet<TenderPending> TenderPendings { get; set; }
         public DbSet<TenderedAdjusted> TenderedAdjusted { get; set; }
+        public DbSet<TenderedFiles> TenderedFiles { get; set; }
         //accepted
         public DbSet<OntimeAccept> OntimeAccepts { get; set; }
         public DbSet<OntimeAcceptMonth> OntimeAcceptMonths { get; set; }
@@ -35,6 +36,7 @@ namespace BOL {
         public DbSet<ReasonAccepted> ReasonAccepteds { get; set; }
         public DbSet<AcceptPending> AcceptPendings { get; set; }
         public DbSet<AcceptedAdjusted> AcceptedAdjusted { get; set; }
+        public DbSet<AcceptedFiles> AcceptedFiles { get; set; }
         //inbounded
         public DbSet<OntimeInbound> OntimeInbounds { get; set; }
         public DbSet<OntimeInboundMonth> OntimeInboundMonths { get; set; }
@@ -43,6 +45,7 @@ namespace BOL {
         public DbSet<ReasonInbound> ReasonInbounds { get; set; }
         public DbSet<InboundPending> InboundPendings { get; set; }
         public DbSet<InboundAdjusted> InboundAdjusted { get; set; }
+        public DbSet<InboundedFiles> InboundedFiles { get; set; }
         //outbound
         public DbSet<OntimeOutbound> OntimeOutbounds { get; set; }
         public DbSet<OntimeOutboundMonth> OntimeOutboundMonths { get; set; }
@@ -51,6 +54,7 @@ namespace BOL {
         public DbSet<ReasonOutbound> ReasonOutbounds { get; set; }
         public DbSet<OutboundPending> OutboundPendings { get; set; }
         public DbSet<OutboundAdjusted> OutboundAdjusted { get; set; }
+        public DbSet<OutboundedFiles> OutboundedFiles { get; set; }
         //doc return
         public DbSet<OntimeDocReturn> OntimeDocReturns { get; set; }
         public DbSet<OntimeDocReturnMonth> OntimeDocReturnMonths { get; set; }
@@ -59,6 +63,7 @@ namespace BOL {
         public DbSet<ReasonDocReturn> ReasonDocReturns { get; set; }
         public DbSet<DocReturnPending> DocReturnPendings { get; set; }
         public DbSet<DocReturnAdjusted> DocReturnAdjusted { get; set; }
+        public DbSet<DocReturnFiles> DocReturnFiles { get; set; }
         //delivery
         public DbSet<OntimeDelivery> OntimeDeliveries { get; set; }
         public DbSet<OntimeDeliveryMonth> OntimeDeliveryMonths { get; set; }
@@ -67,6 +72,6 @@ namespace BOL {
         public DbSet<ReasonOntime> ReasonOntimes { get; set; }
         public DbSet<OntimePending> OntimePendings { get; set; }
         public DbSet<OntimeAdjusted> OntimeAdjusted { get; set; }
-
+        public DbSet<OntimeFiles> OntimeFiles { get; set; }
     }
 }
