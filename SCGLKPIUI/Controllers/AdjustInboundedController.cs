@@ -211,7 +211,7 @@ namespace SCGLKPIUI.Controllers {
                     }
                     InboundedFiles inbdFiles = new InboundedFiles();
                     inbdFiles.DELVNO = reference;
-                    inbdFiles.FILEPATH = Server.MapPath("~/Icons/INBD/") + reference + "_" + fileName;
+                    inbdFiles.FILEPATH = "~/Icons/INBD/" + reference + "_" + fileName;
                     inbdFiles.LOADED_DATE = DateTime.Now;
                     inbdFiles.LOADED_BY = User.Identity.Name;
                     objBs.inboundFilesBs.Insert(inbdFiles);

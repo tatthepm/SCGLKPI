@@ -112,7 +112,7 @@ namespace SCGLKPIUI.Controllers
                 model.Remark = item.INB_REMARK;
                 model.Reason = item.INB_REASON;
                 model.thisReasonId = Convert.ToString(item.INB_REASON_ID);
-
+                model.FilePath = objBs.inboundFilesBs.GetByShipment(item.DELVNO).FirstOrDefault().FILEPATH;
                 viewModel.Add(model);
             }
 

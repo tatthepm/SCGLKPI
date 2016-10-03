@@ -217,7 +217,7 @@ namespace SCGLKPIUI.Controllers {
                     }
                     OntimeFiles delvFiles = new OntimeFiles();
                     delvFiles.DELVNO = reference;
-                    delvFiles.FILEPATH = Server.MapPath("~/Icons/DELV/") + reference + "_" + fileName;
+                    delvFiles.FILEPATH = "~/Icons/DELV/" + reference + "_" + fileName;
                     delvFiles.LOADED_DATE = DateTime.Now;
                     delvFiles.LOADED_BY = User.Identity.Name;
                     objBs.ontimeFilesBs.Insert(delvFiles);

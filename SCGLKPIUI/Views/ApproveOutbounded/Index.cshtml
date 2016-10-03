@@ -379,6 +379,12 @@
                                 <input type="hidden" name="matNameId" value="' + matNameId + '" />\n';
 
                         },
+                    },
+                    {
+                        "targets": 11,
+                        "data": function (row, type, val, meta) {
+                            return '<a href="' + row.FilePath + '">Download File</a>';
+                        },
                     }],
                     select: true,
                     buttons: [

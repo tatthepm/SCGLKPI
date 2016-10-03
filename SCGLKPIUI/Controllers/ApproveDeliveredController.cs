@@ -112,7 +112,7 @@ namespace SCGLKPIUI.Controllers
                 model.Remark = item.ON_TIME_REMARK;
                 model.Reason = item.ON_TIME_REASON;
                 model.thisReasonId = Convert.ToString(item.ON_TIME_REASON_ID);
-
+                model.FilePath = objBs.ontimeFilesBs.GetByShipment(item.DELVNO).FirstOrDefault().FILEPATH;
                 viewModel.Add(model);
             }
 

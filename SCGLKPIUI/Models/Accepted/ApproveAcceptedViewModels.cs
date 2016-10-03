@@ -23,5 +23,6 @@ namespace SCGLKPIUI.Models {
         public int Adjust { get; set; } //added
         public string AdjustBy { get; set; } //added
         public string Remark { get; set; }
+        public string FilePath { get; set; }
     }
 }

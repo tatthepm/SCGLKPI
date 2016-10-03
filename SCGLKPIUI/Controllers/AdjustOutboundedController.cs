@@ -218,7 +218,7 @@ namespace SCGLKPIUI.Controllers {
                     }
                     OutboundedFiles outbFiles = new OutboundedFiles();
                     outbFiles.DELVNO = reference;
-                    outbFiles.FILEPATH = Server.MapPath("~/Icons/OUTB/") + reference + "_" + fileName;
+                    outbFiles.FILEPATH = "~/Icons/OUTB/" + reference + "_" + fileName;
                     outbFiles.LOADED_DATE = DateTime.Now;
                     outbFiles.LOADED_BY = User.Identity.Name;
                     objBs.outboundFilesBs.Insert(outbFiles);
