@@ -213,6 +213,12 @@ namespace SCGLKPIUI.Controllers {
                 {
                     return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
                 }
+                OntimeFiles delvFiles = new OntimeFiles();
+                delvFiles.DELVNO = reference;
+                delvFiles.FILEPATH = Server.MapPath("~/Icons/DELV/") + reference + "_" + fileName;
+                delvFiles.LOADED_DATE = DateTime.Now;
+                delvFiles.LOADED_BY = User.Identity.Name;
+                objBs.ontimeFilesBs.Insert(delvFiles);
                 file.SaveAs(Server.MapPath("~/Icons/DELV/") + reference + "_" + fileName); //File will be saved in application root
             }
             return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");

@@ -7,9 +7,9 @@ using BOL;
 using DAL;
 
 namespace BLL {
-    public class OutboundedFilesBs {
+    public class OutboundFilesBs {
         private OutboundedFilesDb objDb;
-        public OutboundedFilesBs() {
+        public OutboundFilesBs() {
             objDb = new OutboundedFilesDb();
         }
         //GetAll

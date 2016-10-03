@@ -56,8 +56,8 @@
   <ItemGroup>
     <Compile Include="OntimeFilesBs.cs" />
     <Compile Include="DocReturnFilesBs.cs" />
-    <Compile Include="OutboundedFilesBs.cs" />
-    <Compile Include="InboundedFilesBs.cs" />
+    <Compile Include="OutboundFilesBs.cs" />
+    <Compile Include="InboundFilesBs.cs" />
     <Compile Include="TenderedFilesBs.cs" />
     <Compile Include="AcceptedAdjestedBs.cs" />
     <Compile Include="AccectedFilesBs.cs" />

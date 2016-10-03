@@ -214,6 +214,12 @@ namespace SCGLKPIUI.Controllers {
                 {
                     return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
                 }
+                OutboundedFiles outbFiles = new OutboundedFiles();
+                outbFiles.DELVNO = reference;
+                outbFiles.FILEPATH = Server.MapPath("~/Icons/OUTB/") + reference + "_" + fileName;
+                outbFiles.LOADED_DATE = DateTime.Now;
+                outbFiles.LOADED_BY = User.Identity.Name;
+                objBs.outboundFilesBs.Insert(outbFiles);
                 file.SaveAs(Server.MapPath("~/Icons/OUTB/") + reference + "_" + fileName); //File will be saved in application root
             }
             return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");

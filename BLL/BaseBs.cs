@@ -28,6 +28,7 @@ namespace BLL {
         public AcceptedDelayBs acceptedDelayBs { get; set; }
         public AcceptPendingBs acceptPendingBs { get; set; }
         public AcceptedAdjustedBs acceptedAdjustedBs { get; set; }
+        public AcceptedFilesBs AcceptedFilesBs { get; set; }
         //tendered
         public OntimeTenderBs ontimeTenderBs { get; set; }
         public OntimeTenderMonthBs ontimeTenderMonthBs { get; set; }
@@ -36,6 +37,7 @@ namespace BLL {
         public OntimeTenderYearBs ontimeTenderYearBs { get; set; }
         public TenderedPendingBs tenderedPendingBs { get; set; }
         public TenderedAdjustedBs tenderedAdjustedBs { get; set; }
+        public TenderedFilesBs tenderedFilesBs { get; set; }
         //inbounded
         public OntimeInboundBs ontimeInboundBs { get; set; }
         public OntimeInboundMonthBs ontimeInboundMonthBs { get; set; }
@@ -44,6 +46,7 @@ namespace BLL {
         public ReasonInboundBs reasonInboundBs { get; set; }
         public InboundPendingBs inboundPendingBs { get; set; }
         public InboundAdjustedBs inboundAdjustedBs { get; set; }
+        public InboundFilesBs inboundFilesBs { get; set; }
         //outbound
         public OntimeOutboundBs ontimeOutboundBs { get; set; }
         public OntimeOutboundMonthBs ontimeOutboundMonthBs { get; set; }
@@ -52,6 +55,7 @@ namespace BLL {
         public ReasonOutboundBs reasonOutboundBs { get; set; }
         public OutboundPendingBs outboundPendingBs { get; set; }
         public OutboundAdjustedBs outboundAdjustedBs { get; set; }
+        public OutboundFilesBs outboundFilesBs { get; set; }
         //doc return
         public OntimeDocReturnBs ontimeDocReturnBs { get; set; }
         public OntimeDocReturnMonthBs ontimeDocReturnMonthBs { get; set; }
@@ -60,6 +64,7 @@ namespace BLL {
         public ReasonDocReturnBs reasonDocReturnBs { get; set; }
         public DocReturnPendingBs docReturnPendingBs { get; set; }
         public DocReturnAdjustedBs docReturnAdjustedBs { get; set; }
+        public DocReturnFilesBs docReturnFilesBs { get; set; }
         //delivery
         public OntimeDeliveryBs ontimeDeliveryBs { get; set; }
         public OntimeDeliveryMonthBs ontimeDeliveryMonthBs { get; set; }
@@ -68,6 +73,7 @@ namespace BLL {
         public ReasonOntimeBs reasonOntimeBs { get; set; }
         public OntimePendingBs ontimePendingBs { get; set; }
         public OntimeAdjustedBs ontimeAdjustedBs { get; set; }
+        public OntimeFilesBs ontimeFilesBs { get; set; }
 
         public BaseBs() {
             roleBs = new RoleBs();

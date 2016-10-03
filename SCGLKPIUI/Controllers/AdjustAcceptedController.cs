@@ -215,6 +215,12 @@ namespace SCGLKPIUI.Controllers
                 {
                     return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
                 }
+                AcceptedFiles acpdFiles = new AcceptedFiles();
+                acpdFiles.SHPMNTNO = reference;
+                acpdFiles.FILEPATH = Server.MapPath("~/Icons/ACPD/") + reference + "_" + fileName;
+                acpdFiles.LOADED_DATE = DateTime.Now;
+                acpdFiles.LOADED_BY = User.Identity.Name;
+                objBs.AcceptedFilesBs.Insert(acpdFiles);
                 file.SaveAs(Server.MapPath("~/Icons/ACPD/") + reference + "_" + fileName); //File will be saved in application root
             }
             return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");

@@ -220,6 +220,12 @@ namespace SCGLKPIUI.Controllers
                 {
                     return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
                 }
+                DocReturnFiles drtnFiles = new DocReturnFiles();
+                drtnFiles.DELVNO = reference;
+                drtnFiles.FILEPATH = Server.MapPath("~/Icons/DRTN/") + reference + "_" + fileName;
+                drtnFiles.LOADED_DATE = DateTime.Now;
+                drtnFiles.LOADED_BY = User.Identity.Name;
+                objBs.docReturnFilesBs.Insert(drtnFiles);
                 file.SaveAs(Server.MapPath("~/Icons/DRTN/") + reference + "_" + fileName); //File will be saved in application root
             }
             return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");

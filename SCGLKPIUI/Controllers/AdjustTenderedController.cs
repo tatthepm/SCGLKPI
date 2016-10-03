@@ -197,6 +197,12 @@ namespace SCGLKPIUI.Controllers {
                 {
                     return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
                 }
+                TenderedFiles tnrdFiles = new TenderedFiles();
+                tnrdFiles.SHPMNTNO = reference;
+                tnrdFiles.FILEPATH = Server.MapPath("~/Icons/TNRD/") + reference + "_" + fileName;
+                tnrdFiles.LOADED_DATE = DateTime.Now;
+                tnrdFiles.LOADED_BY = User.Identity.Name;
+                objBs.tenderedFilesBs.Insert(tnrdFiles);
                 file.SaveAs(Server.MapPath("~/Icons/TNRD/") + reference + "_" + fileName); //File will be saved in application root
             }
             return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");

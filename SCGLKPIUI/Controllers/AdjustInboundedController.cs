@@ -207,6 +207,12 @@ namespace SCGLKPIUI.Controllers {
                 {
                     return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
                 }
+                InboundedFiles inbdFiles = new InboundedFiles();
+                inbdFiles.DELVNO = reference;
+                inbdFiles.FILEPATH = Server.MapPath("~/Icons/INBD/") + reference + "_" + fileName;
+                inbdFiles.LOADED_DATE = DateTime.Now;
+                inbdFiles.LOADED_BY = User.Identity.Name;
+                objBs.inboundFilesBs.Insert(inbdFiles);
                 file.SaveAs(Server.MapPath("~/Icons/INBD/") + reference + "_" + fileName); //File will be saved in application root
             }
             return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
