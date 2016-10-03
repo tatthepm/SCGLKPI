@@ -383,7 +383,12 @@
                 {
                     "targets": 11,
                     "data": function (row, type, val, meta) {
-                        return '<a href="' + row.FilePath + '">Download File</a>';
+                        if (row.FilePath != "#") {
+                            return '<a href="' + row.FilePath + '">Download File</a>';
+                        }
+                        else {
+                            return 'No support File';
+                        }
                     },
                 }],
                 select: true,

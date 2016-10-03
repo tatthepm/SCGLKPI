@@ -111,7 +111,14 @@ namespace SCGLKPIUI.Controllers
                 model.Remark = item.ACPD_REMARK;
                 model.Reason = item.ACPD_REASON;
                 model.thisReasonId = Convert.ToString(item.ACPD_REASON_ID);
-                model.FilePath = objBs.acceptedFilesBs.GetByShipment(item.SHPMNTNO).FirstOrDefault().FILEPATH;
+                try
+                {
+                    model.FilePath = objBs.acceptedFilesBs.GetByShipment(item.SHPMNTNO).FirstOrDefault().FILEPATH;
+                }
+                catch(Exception)
+                {
+                    model.FilePath = "#";
+                }
                 viewModel.Add(model);
             }
 

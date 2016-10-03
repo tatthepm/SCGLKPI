@@ -112,7 +112,14 @@ namespace SCGLKPIUI.Controllers
                 model.Remark = item.SCGL_DOCRET_REMARK;
                 model.Reason = item.SCGL_DOCRET_REASON;
                 model.thisReasonId = Convert.ToString(item.SCGL_DOCRET_REASON_ID);
-                model.FilePath = objBs.docReturnFilesBs.GetByShipment(item.DELVNO).FirstOrDefault().FILEPATH;
+                try
+                {
+                    model.FilePath = objBs.docReturnFilesBs.GetByShipment(item.DELVNO).FirstOrDefault().FILEPATH;
+                }
+                catch(Exception)
+                {
+                    model.FilePath = "#";
+                }
                 viewModel.Add(model);
             }
 

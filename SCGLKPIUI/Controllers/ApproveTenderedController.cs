@@ -90,7 +90,15 @@ namespace SCGLKPIUI.Controllers
                 model.Remark = item.TNRD_ONTIME_REMARK;
                 model.Reason = item.TNRD_ONTIME_REASON;
                 model.thisReasonId = Convert.ToString(item.TNRD_ONTIME_REASON_ID);
-                model.FilePath = objBs.tenderedFilesBs.GetByShipment(item.SHPMNTNO).FirstOrDefault().FILEPATH;
+                string downloadPath = objBs.tenderedFilesBs.GetByShipment(item.SHPMNTNO).FirstOrDefault().FILEPATH;
+                if (!String.IsNullOrEmpty(downloadPath))
+                {
+                    model.FilePath = downloadPath;
+                }
+                else
+                {
+                    model.FilePath = "#";
+                }
                 viewModel.Add(model);
             }
 

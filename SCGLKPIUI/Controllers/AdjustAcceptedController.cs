@@ -219,7 +219,7 @@ namespace SCGLKPIUI.Controllers
                     }
                     AcceptedFiles acpdFiles = new AcceptedFiles();
                     acpdFiles.SHPMNTNO = reference;
-                    acpdFiles.FILEPATH = "~/Icons/ACPD/" + reference + "_" + fileName;
+                    acpdFiles.FILEPATH = "Icons/ACPD/" + reference + "_" + fileName;
                     acpdFiles.LOADED_DATE = DateTime.Now;
                     acpdFiles.LOADED_BY = User.Identity.Name;
                     objBs.acceptedFilesBs.Insert(acpdFiles);

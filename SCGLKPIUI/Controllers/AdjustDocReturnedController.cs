@@ -224,7 +224,7 @@ namespace SCGLKPIUI.Controllers
                     }
                     DocReturnFiles drtnFiles = new DocReturnFiles();
                     drtnFiles.DELVNO = reference;
-                    drtnFiles.FILEPATH = "~/Icons/DRTN/" + reference + "_" + fileName;
+                    drtnFiles.FILEPATH = "Icons/DRTN/" + reference + "_" + fileName;
                     drtnFiles.LOADED_DATE = DateTime.Now;
                     drtnFiles.LOADED_BY = User.Identity.Name;
                     objBs.docReturnFilesBs.Insert(drtnFiles);

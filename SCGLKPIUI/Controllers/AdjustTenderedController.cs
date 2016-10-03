@@ -206,7 +206,7 @@ namespace SCGLKPIUI.Controllers
                     }
                     TenderedFiles tnrdFiles = new TenderedFiles();
                     tnrdFiles.SHPMNTNO = reference;
-                    tnrdFiles.FILEPATH = "~/Icons/TNRD/" + reference + "_" + fileName;
+                    tnrdFiles.FILEPATH = "Icons/TNRD/" + reference + "_" + fileName;
                     tnrdFiles.LOADED_DATE = DateTime.Now;
                     tnrdFiles.LOADED_BY = User.Identity.Name;
                     objBs.tenderedFilesBs.Insert(tnrdFiles);
