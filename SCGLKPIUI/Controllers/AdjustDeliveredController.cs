@@ -199,29 +199,33 @@ namespace SCGLKPIUI.Controllers {
         }
         public JsonResult Upload()
         {
-            for (int i = 0; i < Request.Files.Count; i++)
+            using (TransactionScope Trans = new TransactionScope())
             {
-                string reference = Request.Files.AllKeys[i];
-                HttpPostedFileBase file = Request.Files[i]; //Uploaded file
-                                                            //Use the following properties to get file's name, size and MIMEType
-                int fileSize = file.ContentLength;
-                string fileName = file.FileName;
-                string mimeType = file.ContentType;
-                System.IO.Stream fileContent = file.InputStream;
-                //To save file, use SaveAs method
-                if (System.IO.File.Exists(Server.MapPath("~/Icons/DELV/") + reference + fileName))
+                for (int i = 0; i < Request.Files.Count; i++)
                 {
-                    return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
+                    string reference = Request.Files.AllKeys[i];
+                    HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                                                                //Use the following properties to get file's name, size and MIMEType
+                    int fileSize = file.ContentLength;
+                    string fileName = file.FileName;
+                    string mimeType = file.ContentType;
+                    System.IO.Stream fileContent = file.InputStream;
+                    //To save file, use SaveAs method
+                    if (System.IO.File.Exists(Server.MapPath("~/Icons/DELV/") + reference + fileName))
+                    {
+                        return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
+                    }
+                    OntimeFiles delvFiles = new OntimeFiles();
+                    delvFiles.DELVNO = reference;
+                    delvFiles.FILEPATH = Server.MapPath("~/Icons/DELV/") + reference + "_" + fileName;
+                    delvFiles.LOADED_DATE = DateTime.Now;
+                    delvFiles.LOADED_BY = User.Identity.Name;
+                    objBs.ontimeFilesBs.Insert(delvFiles);
+                    file.SaveAs(Server.MapPath("~/Icons/DELV/") + reference + "_" + fileName); //File will be saved in application root
                 }
-                OntimeFiles delvFiles = new OntimeFiles();
-                delvFiles.DELVNO = reference;
-                delvFiles.FILEPATH = Server.MapPath("~/Icons/DELV/") + reference + "_" + fileName;
-                delvFiles.LOADED_DATE = DateTime.Now;
-                delvFiles.LOADED_BY = User.Identity.Name;
-                objBs.ontimeFilesBs.Insert(delvFiles);
-                file.SaveAs(Server.MapPath("~/Icons/DELV/") + reference + "_" + fileName); //File will be saved in application root
+                Trans.Complete();
+                return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
             }
-            return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
         }
     }
 }

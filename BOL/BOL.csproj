@@ -49,6 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201610031113499_Init.cs" />
+    <Compile Include="Migrations\201610031113499_Init.Designer.cs">
+      <DependentUpon>201610031113499_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610031207546_Test.cs" />
+    <Compile Include="Migrations\201610031207546_Test.Designer.cs">
+      <DependentUpon>201610031207546_Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610031248043_update-2.cs" />
+    <Compile Include="Migrations\201610031248043_update-2.Designer.cs">
+      <DependentUpon>201610031248043_update-2.cs</DependentUpon>
+    </Compile>
     <Compile Include="OntimeFiles.cs" />
     <Compile Include="DocReturnFiles.cs" />
     <Compile Include="OutboundedFiles.cs" />
@@ -446,6 +458,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609120959506_update-bol.resx">
       <DependentUpon>201609120959506_update-bol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610031113499_Init.resx">
+      <DependentUpon>201610031113499_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610031207546_Test.resx">
+      <DependentUpon>201610031207546_Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610031248043_update-2.resx">
+      <DependentUpon>201610031248043_update-2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

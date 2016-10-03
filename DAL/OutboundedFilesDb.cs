@@ -18,7 +18,7 @@ namespace DAL {
             return db.OutboundedFiles.ToList();
         }
         //GetById
-        public OutboundedFiles GetByID(string ID)
+        public OutboundedFiles GetByID(int ID)
         {
             return db.OutboundedFiles.Find(ID);
         }
@@ -48,7 +48,7 @@ namespace DAL {
         /// Delete file record by ID
         /// </summary>
         /// <param name="ID">Record ID</param>
-        public void Delete(string ID) {
+        public void Delete(int ID) {
             OutboundedFiles OutboundedFiles = db.OutboundedFiles.Find(ID);
             db.OutboundedFiles.Remove(OutboundedFiles);
             Save();

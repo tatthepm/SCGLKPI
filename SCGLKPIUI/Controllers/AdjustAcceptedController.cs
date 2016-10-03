@@ -201,29 +201,33 @@ namespace SCGLKPIUI.Controllers
         }
         public JsonResult Upload()
         {
-            for (int i = 0; i < Request.Files.Count; i++)
+            using (TransactionScope Trans = new TransactionScope())
             {
-                string reference = Request.Files.AllKeys[i];
-                HttpPostedFileBase file = Request.Files[i]; //Uploaded file
-                                                            //Use the following properties to get file's name, size and MIMEType
-                int fileSize = file.ContentLength;
-                string fileName = file.FileName;
-                string mimeType = file.ContentType;
-                System.IO.Stream fileContent = file.InputStream;
-                //To save file, use SaveAs method
-                if (System.IO.File.Exists(Server.MapPath("~/Icons/ACPD/") + reference + fileName))
+                for (int i = 0; i < Request.Files.Count; i++)
                 {
-                    return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
+                    string reference = Request.Files.AllKeys[i];
+                    HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                                                                //Use the following properties to get file's name, size and MIMEType
+                    int fileSize = file.ContentLength;
+                    string fileName = file.FileName;
+                    string mimeType = file.ContentType;
+                    System.IO.Stream fileContent = file.InputStream;
+                    //To save file, use SaveAs method
+                    if (System.IO.File.Exists(Server.MapPath("~/Icons/ACPD/") + reference + fileName))
+                    {
+                        return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
+                    }
+                    AcceptedFiles acpdFiles = new AcceptedFiles();
+                    acpdFiles.SHPMNTNO = reference;
+                    acpdFiles.FILEPATH = Server.MapPath("~/Icons/ACPD/") + reference + "_" + fileName;
+                    acpdFiles.LOADED_DATE = DateTime.Now;
+                    acpdFiles.LOADED_BY = User.Identity.Name;
+                    objBs.acceptedFilesBs.Insert(acpdFiles);
+                    file.SaveAs(Server.MapPath("~/Icons/ACPD/") + reference + "_" + fileName); //File will be saved in application root
                 }
-                AcceptedFiles acpdFiles = new AcceptedFiles();
-                acpdFiles.SHPMNTNO = reference;
-                acpdFiles.FILEPATH = Server.MapPath("~/Icons/ACPD/") + reference + "_" + fileName;
-                acpdFiles.LOADED_DATE = DateTime.Now;
-                acpdFiles.LOADED_BY = User.Identity.Name;
-                objBs.AcceptedFilesBs.Insert(acpdFiles);
-                file.SaveAs(Server.MapPath("~/Icons/ACPD/") + reference + "_" + fileName); //File will be saved in application root
+                Trans.Complete();
+                return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
             }
-            return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
         }
     }
 }

@@ -10,11 +10,15 @@ using SCGLKPIUI.Models;
 using SCGLKPIUI.Models.Tendered;
 using System.Transactions;
 
-namespace SCGLKPIUI.Controllers {
-    public class AdjustTenderedController : BaseController {
+namespace SCGLKPIUI.Controllers
+{
+    public class AdjustTenderedController : BaseController
+    {
         // GET: AdjustTendered
-        public ActionResult Index(string sms, string SegmentId, string YearId, string MonthId) {
-            try {
+        public ActionResult Index(string sms, string SegmentId, string YearId, string MonthId)
+        {
+            try
+            {
 
                 TempData["Msg"] = sms;
 
@@ -26,7 +30,7 @@ namespace SCGLKPIUI.Controllers {
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
-                var ddlReason = (from r in objBs.reasonTenderedBs.GetAll().Where(x=>x.IsDeleted == false)
+                var ddlReason = (from r in objBs.reasonTenderedBs.GetAll().Where(x => x.IsDeleted == false)
                                  select new
                                  {
                                      Id = r.Id,
@@ -37,7 +41,8 @@ namespace SCGLKPIUI.Controllers {
                 return View();
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index", new { sms = "Operation Accept failed " + ex.InnerException.InnerException.Message.ToString() });
             }
         }
@@ -99,7 +104,7 @@ namespace SCGLKPIUI.Controllers {
 
         [HttpPost]
         public ActionResult UpdateTenderReason(List<String> dynamic_select, List<string> txtSM, List<string> txtRemark, string segmentId, string yearId, string monthId)
-        { 
+        {
             using (TransactionScope Trans = new TransactionScope())
             {
 
@@ -183,29 +188,33 @@ namespace SCGLKPIUI.Controllers {
 
         public JsonResult Upload()
         {
-            for (int i = 0; i < Request.Files.Count; i++)
+            using (TransactionScope Trans = new TransactionScope())
             {
-                string reference = Request.Files.AllKeys[i];
-                HttpPostedFileBase file = Request.Files[i]; //Uploaded file
-                                                            //Use the following properties to get file's name, size and MIMEType
-                int fileSize = file.ContentLength;
-                string fileName = file.FileName;
-                string mimeType = file.ContentType;
-                System.IO.Stream fileContent = file.InputStream;
-                //To save file, use SaveAs method
-                if(System.IO.File.Exists(Server.MapPath("~/Icons/TNRD/") + reference + fileName))
+                for (int i = 0; i < Request.Files.Count; i++)
                 {
-                    return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
+                    string reference = Request.Files.AllKeys[i];
+                    HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                                                                //Use the following properties to get file's name, size and MIMEType
+                    int fileSize = file.ContentLength;
+                    string fileName = file.FileName;
+                    string mimeType = file.ContentType;
+                    System.IO.Stream fileContent = file.InputStream;
+                    //To save file, use SaveAs method
+                    if (System.IO.File.Exists(Server.MapPath("~/Icons/TNRD/") + reference + fileName))
+                    {
+                        return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
+                    }
+                    TenderedFiles tnrdFiles = new TenderedFiles();
+                    tnrdFiles.SHPMNTNO = reference;
+                    tnrdFiles.FILEPATH = Server.MapPath("~/Icons/TNRD/") + reference + "_" + fileName;
+                    tnrdFiles.LOADED_DATE = DateTime.Now;
+                    tnrdFiles.LOADED_BY = User.Identity.Name;
+                    objBs.tenderedFilesBs.Insert(tnrdFiles);
+                    file.SaveAs(Server.MapPath("~/Icons/TNRD/") + reference + "_" + fileName); //File will be saved in application root
                 }
-                TenderedFiles tnrdFiles = new TenderedFiles();
-                tnrdFiles.SHPMNTNO = reference;
-                tnrdFiles.FILEPATH = Server.MapPath("~/Icons/TNRD/") + reference + "_" + fileName;
-                tnrdFiles.LOADED_DATE = DateTime.Now;
-                tnrdFiles.LOADED_BY = User.Identity.Name;
-                objBs.tenderedFilesBs.Insert(tnrdFiles);
-                file.SaveAs(Server.MapPath("~/Icons/TNRD/") + reference + "_" + fileName); //File will be saved in application root
+                Trans.Complete();
+                return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
             }
-            return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
         }
     }
 }

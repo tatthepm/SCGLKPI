@@ -11,8 +11,7 @@ namespace BOL
     public class AcceptedFiles
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [StringLength(10)]
-        public string ID { get; set; }
+        public int ID { get; set; }
         [StringLength(10)]
         [Index(IsUnique = false)]
         public string SHPMNTNO { get; set; }

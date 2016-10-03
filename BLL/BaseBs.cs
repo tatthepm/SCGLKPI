@@ -28,7 +28,7 @@ namespace BLL {
         public AcceptedDelayBs acceptedDelayBs { get; set; }
         public AcceptPendingBs acceptPendingBs { get; set; }
         public AcceptedAdjustedBs acceptedAdjustedBs { get; set; }
-        public AcceptedFilesBs AcceptedFilesBs { get; set; }
+        public AcceptedFilesBs acceptedFilesBs { get; set; }
         //tendered
         public OntimeTenderBs ontimeTenderBs { get; set; }
         public OntimeTenderMonthBs ontimeTenderMonthBs { get; set; }
@@ -94,6 +94,7 @@ namespace BLL {
             tenderedDelayBs = new TenderedDelayBs();
             tenderedPendingBs = new TenderedPendingBs();
             tenderedAdjustedBs = new TenderedAdjustedBs();
+            tenderedFilesBs = new TenderedFilesBs();
 
             //accepted
             ontimeAcceptBs = new OntimeAcceptBs();
@@ -103,6 +104,7 @@ namespace BLL {
             acceptedDelayBs = new AcceptedDelayBs();
             acceptPendingBs = new AcceptPendingBs();
             acceptedAdjustedBs = new AcceptedAdjustedBs();
+            acceptedFilesBs = new AcceptedFilesBs();
 
             //inbounded
             ontimeInboundBs = new OntimeInboundBs();
@@ -112,6 +114,7 @@ namespace BLL {
             reasonInboundBs = new ReasonInboundBs();
             inboundPendingBs = new InboundPendingBs();
             inboundAdjustedBs = new InboundAdjustedBs();
+            inboundFilesBs = new InboundFilesBs();
 
             //outbound
             ontimeOutboundBs = new OntimeOutboundBs();
@@ -121,6 +124,7 @@ namespace BLL {
             reasonOutboundBs = new ReasonOutboundBs();
             outboundPendingBs = new OutboundPendingBs();
             outboundAdjustedBs = new OutboundAdjustedBs();
+            outboundFilesBs = new OutboundFilesBs();
 
             //doc returnt
             ontimeDocReturnBs = new OntimeDocReturnBs();
@@ -130,6 +134,7 @@ namespace BLL {
             reasonDocReturnBs = new ReasonDocReturnBs();
             docReturnPendingBs = new DocReturnPendingBs();
             docReturnAdjustedBs = new DocReturnAdjustedBs();
+            docReturnFilesBs = new DocReturnFilesBs();
 
             //delivery
             ontimeDeliveryBs = new OntimeDeliveryBs();
@@ -139,6 +144,7 @@ namespace BLL {
             reasonOntimeBs = new ReasonOntimeBs();
             ontimePendingBs = new OntimePendingBs();
             ontimeAdjustedBs = new OntimeAdjustedBs();
+            ontimeFilesBs = new OntimeFilesBs();
         }
     }
 

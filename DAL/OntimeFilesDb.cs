@@ -18,7 +18,7 @@ namespace DAL {
             return db.OntimeFiles.ToList();
         }
         //GetById
-        public OntimeFiles GetByID(string ID)
+        public OntimeFiles GetByID(int ID)
         {
             return db.OntimeFiles.Find(ID);
         }
@@ -48,7 +48,7 @@ namespace DAL {
         /// Delete file record by ID
         /// </summary>
         /// <param name="ID">Record ID</param>
-        public void Delete(string ID) {
+        public void Delete(int ID) {
             OntimeFiles OntimeFiles = db.OntimeFiles.Find(ID);
             db.OntimeFiles.Remove(OntimeFiles);
             Save();

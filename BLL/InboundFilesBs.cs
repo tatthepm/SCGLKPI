@@ -21,7 +21,7 @@ namespace BLL {
         {
             return objDb.GetByShipment(DeliveryNo);
         }
-        public InboundedFiles GetByID(string ID) {
+        public InboundedFiles GetByID(int ID) {
             return objDb.GetByID(ID);
         }
 
@@ -36,8 +36,8 @@ namespace BLL {
         }
 
         //Delete
-        public void Delete(string shipmentNo) {
-            objDb.Delete(shipmentNo);
+        public void Delete(int ID) {
+            objDb.Delete(ID);
         }
     }
 }

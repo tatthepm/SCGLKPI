@@ -9,7 +9,7 @@ namespace BOL.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(BOL.SCGLKPIDbContext context)
