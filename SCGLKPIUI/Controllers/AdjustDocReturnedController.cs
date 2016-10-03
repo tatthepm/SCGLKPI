@@ -204,6 +204,25 @@ namespace SCGLKPIUI.Controllers
                 }
             }
         }
-
+        public JsonResult Upload()
+        {
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+                string reference = Request.Files.AllKeys[i];
+                HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                                                            //Use the following properties to get file's name, size and MIMEType
+                int fileSize = file.ContentLength;
+                string fileName = file.FileName;
+                string mimeType = file.ContentType;
+                System.IO.Stream fileContent = file.InputStream;
+                //To save file, use SaveAs method
+                if (System.IO.File.Exists(Server.MapPath("~/Icons/DRTN/") + reference + fileName))
+                {
+                    return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
+                }
+                file.SaveAs(Server.MapPath("~/Icons/DRTN/") + reference + "_" + fileName); //File will be saved in application root
+            }
+            return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
+        }
     }
 }

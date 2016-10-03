@@ -3086,7 +3086,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\UploadFiles\" />
-    <Folder Include="Icons\" />
+    <Folder Include="Icons\ACPD\" />
+    <Folder Include="Icons\DELV\" />
+    <Folder Include="Icons\DRTN\" />
+    <Folder Include="Icons\INBD\" />
+    <Folder Include="Icons\OUTB\" />
+    <Folder Include="Icons\TNRD\" />
     <Folder Include="Vendor\moment\src\lib\create\" />
     <Folder Include="Vendor\moment\src\lib\duration\" />
     <Folder Include="Vendor\moment\src\lib\format\" />

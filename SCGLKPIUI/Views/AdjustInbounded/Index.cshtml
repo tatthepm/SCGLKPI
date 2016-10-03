@@ -199,85 +199,35 @@
                 });
             }
             else {
-
-                $.getJSON('/AdjustInbounded/ReasonFilter', function (data) {
-                    reasonString = '<td><select id="dynamic_select" name="dynamic_select">\n'
-                    reasonString += '<option value="">--SELECT--</option>\n';
-                    $.each(data, function (i, S) {
-                        reasonString += '<option value="' + S.Id + '">' + S.Name + '</option>\n'
-                    });
-                    reasonString += '</select></td>'
-                });
-
-                //#region table
-                // on-time tender monthly dataTable
-                var departmentId = $('#DepartmentId').val();
-                var sectionId = $('#SectionId').val();
-                var matNameId = $('#MatNameId').val();
-                var yearId = $('#YearId').val();
-                var monthId = $('#MonthId').val();
-
-                var adjustInbound = $('#adjustInboundedTable').dataTable();
-                adjustInbound.fnDestroy();
-                adjustInbound.dataTable({
-                    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                    "ajax": {
-                        "type": "POST",
-                        "url": '@(Url.RouteUrl("JsonAdjustInboundTable"))',
-                        "data": function (d) {
-                            d.departmentId = departmentId;
-                            d.sectionId = sectionId;
-                            d.matNameId = matNameId;
-                            d.YearId = yearId;
-                            d.MonthId = monthId;
-                        },
-                        "dataSrc": ""
-                    },
-                    columns: [
-                            { data: "DeliveryNote" },
-                            { data: "RegionName" },
-                            { data: "SoldtoName" },
-                            { data: "ShiptoName" },
-                            { data: "ActualGI" },
-                            { data: "ShippingPoint" },
-                            { data: "CarrierId" },
-                            { data: "TruckType" },
-                    ],
-                    "columnDefs": [
-                                {
-                                    "mRender": function (data, type, full) {
-                                        return reasonString;
-                                    },
-                                    "targets": 8
-                                },
-                                {
-                                    "targets": 9,
-                                    "data": function (row, type, val, meta) {
-                                        return '<input type="text" name="txtRemark" />\n\
-                                            <input type="hidden" id="txtDN" name="txtDN" value="' + row.DeliveryNote + '">\n\
-                                            <input type="hidden" name="monthId" value="' + monthId + '" />\n\
-                                            <input type="hidden" name="yearId" value="' + yearId + '" />\n\
-                                            <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
-                                            <input type="hidden" name="sectionId" value="' + sectionId + '" />\n\
-                                            <input type="hidden" name="matNameId" value="' + matNameId + '" />\n';
-                                    }
-                                }
-
-                    ],
-                    select: true,
-                    buttons: [
-                        { extend: 'copy', className: 'btn-sm' },
-                        { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
-                        { extend: 'excel', title: 'ExampleFile', className: 'btn-sm' },
-                    ]
-                });
-                //#endregion table
-
+                loadDataTable();
             } //end if else
 
         }); //end btnSerarch click
 
+        $('#adjustInboundedTable tbody').on('change', 'input[type="file"]', function (e) {
+            files = event.target.files;
+            var formdata = new FormData(); //FormData object
+            var fileName = $(this).parent().find("input[name='fileName']").val();
+            var r = confirm("กด OK เพื่อยืนยันการอัพโหลด");
+            if (r == true) {
+                for (i = 0; i < files.length; i++) {
+                    //Appending each file to FormData object
+                    formdata.append(fileName, files[i]);
+                }
+                //Creating an XMLHttpRequest and sending
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/AdjustInbounded/Upload/');
+                xhr.send(formdata);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        alert(xhr.responseText);
+                    }
+                }
+            }
+            else {
+                alert("ยกเลิกการอัพโหลด");
+            }
+        });
         //#region 5 Bind normal buttons
 
         $('.ladda-button').ladda('bind', { timeout: 2000 });
@@ -323,83 +273,95 @@
                     success: function () {
                         //Start load table
                         alert('ทำการแก้ไขค่า KPI เรียบร้อย โปรดรอผู้จัดการอนุมัติ');
-                        $.getJSON('/AdjustInbounded/ReasonFilter', function (data) {
-                            reasonString = '<td><select id="dynamic_select" name="dynamic_select">\n'
-                            reasonString += '<option value="">--SELECT--</option>\n';
-                            $.each(data, function (i, S) {
-                                reasonString += '<option value="' + S.Id + '">' + S.Name + '</option>\n'
-                            });
-                            reasonString += '</select></td>'
-                        });
-
-                        //#region table
-                        // on-time tender monthly dataTable
-                        var departmentId = $('#DepartmentId').val();
-                        var sectionId = $('#SectionId').val();
-                        var matNameId = $('#MatNameId').val();
-                        var yearId = $('#YearId').val();
-                        var monthId = $('#MonthId').val();
-
-                        var adjustInbound = $('#adjustInboundedTable').dataTable();
-                        adjustInbound.fnDestroy();
-                        adjustInbound.dataTable({
-                            dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
-                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                            "ajax": {
-                                "type": "POST",
-                                "url": '@(Url.RouteUrl("JsonAdjustInboundTable"))',
-                                "data": function (d) {
-                                    d.departmentId = departmentId;
-                                    d.sectionId = sectionId;
-                                    d.matNameId = matNameId;
-                                    d.YearId = yearId;
-                                    d.MonthId = monthId;
-                                },
-                                "dataSrc": ""
-                            },
-                            columns: [
-                           { data: "DeliveryNote" },
-                           { data: "RegionName" },
-                           { data: "SoldtoName" },
-                           { data: "ShiptoName" },
-                           { data: "ActualGI" },
-                           { data: "ShippingPoint" },
-                           { data: "CarrierId" },
-                           { data: "TruckType" },
-                            ],
-                            "columnDefs": [
-                                        {
-                                            "mRender": function (data, type, full) {
-                                                return reasonString;
-                                            },
-                                            "targets": 8
-                                        },
-                                        {
-                                            "targets": 9,
-                                            "data": function (row, type, val, meta) {
-                                                return '<input type="text" name="txtRemark" />\n\
-                                            <input type="hidden" id="txtDN" name="txtDN" value="' + row.DeliveryNote + '">\n\
-                                            <input type="hidden" name="monthId" value="' + monthId + '" />\n\
-                                            <input type="hidden" name="yearId" value="' + yearId + '" />\n\
-                                            <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
-                                            <input type="hidden" name="sectionId" value="' + sectionId + '" />\n\
-                                            <input type="hidden" name="matNameId" value="' + matNameId + '" />\n';
-                                            }
-                                        }
-
-                            ],
-                            select: true,
-                            buttons: [
-                                { extend: 'copy', className: 'btn-sm' },
-                                { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
-                                { extend: 'excel', title: 'ExampleFile', className: 'btn-sm' },
-                            ]
-                        });
+                        loadDataTable();
                     }
                 });
 
             });
 
         });
+        function loadDataTable() {
+            $.getJSON('/AdjustInbounded/ReasonFilter', function (data) {
+                reasonString = '<td><select id="dynamic_select" name="dynamic_select">\n'
+                reasonString += '<option value="">--SELECT--</option>\n';
+                $.each(data, function (i, S) {
+                    reasonString += '<option value="' + S.Id + '">' + S.Name + '</option>\n'
+                });
+                reasonString += '</select></td>'
+            });
+
+            //#region table
+            // on-time tender monthly dataTable
+            var departmentId = $('#DepartmentId').val();
+            var sectionId = $('#SectionId').val();
+            var matNameId = $('#MatNameId').val();
+            var yearId = $('#YearId').val();
+            var monthId = $('#MonthId').val();
+
+            var adjustInbound = $('#adjustInboundedTable').dataTable();
+            adjustInbound.fnDestroy();
+            adjustInbound.dataTable({
+                dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "ajax": {
+                    "type": "POST",
+                    "url": '@(Url.RouteUrl("JsonAdjustInboundTable"))',
+                    "data": function (d) {
+                        d.departmentId = departmentId;
+                        d.sectionId = sectionId;
+                        d.matNameId = matNameId;
+                        d.YearId = yearId;
+                        d.MonthId = monthId;
+                    },
+                    "dataSrc": ""
+                },
+                columns: [
+               { data: "DeliveryNote" },
+               { data: "RegionName" },
+               { data: "SoldtoName" },
+               { data: "ShiptoName" },
+               { data: "ActualGI" },
+               { data: "ShippingPoint" },
+               { data: "CarrierId" },
+               { data: "TruckType" },
+                ],
+                "columnDefs": [
+                            {
+                                "mRender": function (data, type, full) {
+                                    return reasonString;
+                                },
+                                "targets": 8
+                            },
+                            {
+                                "targets": 9,
+                                "data": function (row, type, val, meta) {
+                                    return '<input name="fileInput" type="file" multiple>\n\
+                                            <input type="button" name="uploader" value="Upload file" />\n\
+                                            <input type="hidden" name="fileName" value="' + row.DeliveryNote + '">';
+                                }
+                            },
+                            {
+                                "targets": 10,
+                                "data": function (row, type, val, meta) {
+                                    return '<input type="text" name="txtRemark" />\n\
+                                            <input type="hidden" name="txtDN" value="' + row.DeliveryNote + '">\n\
+                                            <input type="hidden" name="monthId" value="' + monthId + '" />\n\
+                                            <input type="hidden" name="yearId" value="' + yearId + '" />\n\
+                                            <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
+                                            <input type="hidden" name="sectionId" value="' + sectionId + '" />\n\
+                                            <input type="hidden" name="matNameId" value="' + matNameId + '" />\n';
+                                }
+                            }
+
+                ],
+                select: true,
+                buttons: [
+                    { extend: 'copy', className: 'btn-sm' },
+                    { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
+                    { extend: 'excel', title: 'ExampleFile', className: 'btn-sm' },
+                ]
+            });
+        }
+        
     </script>
 }
