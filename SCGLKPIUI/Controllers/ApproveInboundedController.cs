@@ -165,7 +165,6 @@ namespace SCGLKPIUI.Controllers
 
                             OntimeInbound ontimeInbound = objBs.ontimeInboundBs.GetByID(id);
 
-                            countDN++;
                             int adjOntime = ontimeInbound.AdjustInbound + 1;
                             ontimeInbound.AdjustInbound = adjOntime;
                             ontimeInbound.SumOfAdjustInbound = ontimeInbound.OnTime + adjOntime;
