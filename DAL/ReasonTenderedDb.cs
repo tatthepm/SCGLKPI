@@ -23,22 +23,22 @@ namespace DAL {
         }
 
         //Insert
-        public void Insert(ReasonTendered reasonTendered) {
-            db.ReasonTendereds.Add(reasonTendered);
+        public void Insert(ReasonTendered ReasonTendereds) {
+            db.ReasonTendereds.Add(ReasonTendereds);
             Save();
         }
 
         //Update
-        public void Update(ReasonTendered reasonTendered) {
-            db.Entry(reasonTendered).State = EntityState.Modified;
+        public void Update(ReasonTendered ReasonTendereds) {
+            db.Entry(ReasonTendereds).State = EntityState.Modified;
             Save();
         }
 
         //Delete
         public void Delete(int Id) {
-            ReasonTendered reasonTendered = db.ReasonTendereds.Find(Id);
-            reasonTendered.IsDeleted = true;
-            db.Entry(reasonTendered).State = EntityState.Modified;
+            ReasonTendered ReasonTendereds = db.ReasonTendereds.Find(Id);
+            ReasonTendereds.IsDeleted = true;
+            db.Entry(ReasonTendereds).State = EntityState.Modified;
             Save();
         }
 

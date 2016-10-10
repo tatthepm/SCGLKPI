@@ -20,6 +20,8 @@ namespace BLL {
         public HomeKPIBs HomeKPIBs { get; set; }
         public KPIBs kPIBs { get; set; }
         public MenuTableBs menuTableBs { get; set; }
+
+        public EquipmentTypesBs EquipmentTypesBs { get; set; }
         //accepted
         public OntimeAcceptBs ontimeAcceptBs { get; set; }
         public OntimeAcceptMonthBs ontimeAcceptMonthBs { get; set; }
@@ -32,7 +34,7 @@ namespace BLL {
         //tendered
         public OntimeTenderBs ontimeTenderBs { get; set; }
         public OntimeTenderMonthBs ontimeTenderMonthBs { get; set; }
-        public ReasonTenderedBs reasonTenderedBs { get; set; }
+        public ReasonTenderedBs ReasonTenderedBs { get; set; }
         public TenderedDelayBs tenderedDelayBs { get; set; }
         public OntimeTenderYearBs ontimeTenderYearBs { get; set; }
         public TenderedPendingBs tenderedPendingBs { get; set; }
@@ -85,12 +87,13 @@ namespace BLL {
             dWH_ONTIME_SHIPMENTBs = new DWH_ONTIME_SHIPMENTBs();
             menuTableBs = new MenuTableBs();
             HomeKPIBs = new HomeKPIBs();
+            EquipmentTypesBs = new EquipmentTypesBs();
 
             //tendered
             ontimeTenderBs = new OntimeTenderBs();
             ontimeTenderMonthBs = new OntimeTenderMonthBs();
             ontimeTenderYearBs = new OntimeTenderYearBs();
-            reasonTenderedBs = new ReasonTenderedBs();
+            ReasonTenderedBs = new ReasonTenderedBs();
             tenderedDelayBs = new TenderedDelayBs();
             tenderedPendingBs = new TenderedPendingBs();
             tenderedAdjustedBs = new TenderedAdjustedBs();

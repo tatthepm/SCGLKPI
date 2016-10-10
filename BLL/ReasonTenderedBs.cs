@@ -24,13 +24,13 @@ namespace BLL {
         }
 
         //Insert
-        public void Insert(ReasonTendered reasonTendered) {
-            objDb.Insert(reasonTendered);
+        public void Insert(ReasonTendered ReasonTendered) {
+            objDb.Insert(ReasonTendered);
         }
 
         //Update
-        public void Update(ReasonTendered reasonTendered) {
-            objDb.Update(reasonTendered);
+        public void Update(ReasonTendered ReasonTendered) {
+            objDb.Update(ReasonTendered);
         }
 
         //Delete

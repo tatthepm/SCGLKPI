@@ -61,6 +61,10 @@
     <Compile Include="Migrations\201610031248043_update-2.Designer.cs">
       <DependentUpon>201610031248043_update-2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610100255450_update-equipmentTypes.cs" />
+    <Compile Include="Migrations\201610100255450_update-equipmentTypes.Designer.cs">
+      <DependentUpon>201610100255450_update-equipmentTypes.cs</DependentUpon>
+    </Compile>
     <Compile Include="OntimeFiles.cs" />
     <Compile Include="DocReturnFiles.cs" />
     <Compile Include="OutboundedFiles.cs" />
@@ -468,6 +472,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610031248043_update-2.resx">
       <DependentUpon>201610031248043_update-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610100255450_update-equipmentTypes.resx">
+      <DependentUpon>201610100255450_update-equipmentTypes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

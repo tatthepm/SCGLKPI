@@ -30,7 +30,7 @@ namespace SCGLKPIUI.Controllers
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
-                var ddlReason = (from r in objBs.reasonTenderedBs.GetAll().Where(x => x.IsDeleted == false)
+                var ddlReason = (from r in objBs.ReasonTenderedBs.GetAll().Where(x => x.IsDeleted == false)
                                  select new
                                  {
                                      Id = r.Id,
@@ -49,7 +49,7 @@ namespace SCGLKPIUI.Controllers
 
         public JsonResult ReasonFilter()
         {
-            var result = (from r in objBs.reasonTenderedBs.GetAll().Where(x => x.IsDeleted == false)
+            var result = (from r in objBs.ReasonTenderedBs.GetAll().Where(x => x.IsDeleted == false)
                           select new
                           {
                               Id = r.Id,
@@ -119,8 +119,8 @@ namespace SCGLKPIUI.Controllers
                             string sm = txtSM[i];
                             string reasonId = dynamic_select[i];
                             string remark = txtRemark[i];
-                            string reasonName = objBs.reasonTenderedBs.GetByID(Convert.ToInt32(reasonId)).Name;
-                            bool isadjust = objBs.reasonTenderedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
+                            string reasonName = objBs.ReasonTenderedBs.GetByID(Convert.ToInt32(reasonId)).Name;
+                            bool isadjust = objBs.ReasonTenderedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
                             DWH_ONTIME_SHIPMENT ontimeShipment = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm);
                             //Change adjustable here
                             ontimeShipment.TNRD_ADJUST = 0;

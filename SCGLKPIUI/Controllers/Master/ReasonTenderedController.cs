@@ -16,7 +16,7 @@ namespace SCGLKPIUI.Controllers.Master
         {
             try {
                 TempData["Msg"] = sms;
-                var q = objBs.reasonTenderedBs.GetAll();
+                var q = objBs.ReasonTenderedBs.GetAll().Where(x => x.IsDeleted == false);
 
                 return View(q);
 
@@ -30,12 +30,12 @@ namespace SCGLKPIUI.Controllers.Master
         public ActionResult Create(string reasonName, string isAdjust) {
             try {
                 if (!string.IsNullOrEmpty(reasonName)) {
-                    ReasonTendered reasonTendered = new ReasonTendered();
-                    reasonTendered.Name = reasonName;
-                    reasonTendered.IsDeleted = false;
-                    if (isAdjust == "True") reasonTendered.IsAdjust = true;
+                    ReasonTendered ReasonTendered = new ReasonTendered();
+                    ReasonTendered.Name = reasonName;
+                    ReasonTendered.IsDeleted = false;
+                    if (isAdjust == "True") ReasonTendered.IsAdjust = true;
                     if (ModelState.IsValid) {
-                        objBs.reasonTenderedBs.Insert(reasonTendered);
+                        objBs.ReasonTenderedBs.Insert(ReasonTendered);
                     }
                     return RedirectToAction("Index", new { sms = "Created Successfully !" });
                 }
@@ -50,7 +50,7 @@ namespace SCGLKPIUI.Controllers.Master
 
         public ActionResult Delete(int Id) {
             try {
-                objBs.reasonTenderedBs.Delete(Id);
+                objBs.ReasonTenderedBs.Delete(Id);
                 return RedirectToAction("Index", new { sms = "Deleted Successfully !" });
 
             }

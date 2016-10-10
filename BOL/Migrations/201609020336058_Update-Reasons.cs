@@ -12,12 +12,12 @@ namespace BOL.Migrations
             AddColumn("dbo.ReasonInbounds", "IsDeleted", c => c.Boolean(nullable: false));
             AddColumn("dbo.ReasonOntimes", "IsDeleted", c => c.Boolean(nullable: false));
             AddColumn("dbo.ReasonOutbounds", "IsDeleted", c => c.Boolean(nullable: false));
-            AddColumn("dbo.ReasonTendereds", "IsDeleted", c => c.Boolean(nullable: false));
+            AddColumn("dbo.EquipmentTypess", "IsDeleted", c => c.Boolean(nullable: false));
         }
         
         public override void Down()
         {
-            DropColumn("dbo.ReasonTendereds", "IsDeleted");
+            DropColumn("dbo.EquipmentTypess", "IsDeleted");
             DropColumn("dbo.ReasonOutbounds", "IsDeleted");
             DropColumn("dbo.ReasonOntimes", "IsDeleted");
             DropColumn("dbo.ReasonInbounds", "IsDeleted");

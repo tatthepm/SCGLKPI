@@ -7,13 +7,13 @@ namespace BOL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class createReasonTendered : IMigrationMetadata
+    public sealed partial class createEquipmentTypes : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(createReasonTendered));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(createEquipmentTypes));
         
         string IMigrationMetadata.Id
         {
-            get { return "201606151550324_createReasonTendered"; }
+            get { return "201606151550324_createEquipmentTypes"; }
         }
         
         string IMigrationMetadata.Source

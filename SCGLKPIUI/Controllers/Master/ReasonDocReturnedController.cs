@@ -12,7 +12,7 @@ namespace SCGLKPIUI.Controllers.Master {
         public ActionResult Index(string sms) {
             try {
                 TempData["Msg"] = sms;
-                var q = objBs.reasonDocReturnBs.GetAll();
+                var q = objBs.reasonDocReturnBs.GetAll().Where(x => x.IsDeleted == false);
                 return View(q);
 
             }

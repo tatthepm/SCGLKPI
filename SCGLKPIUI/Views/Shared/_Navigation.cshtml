@@ -210,8 +210,8 @@
                                 <li class="@Html.IsSelected(controller: "ReasonDelivered")">
                                     <a href="@Url.Action("Index", "ReasonDelivered")"><span class="nav-label">Ontime delivery reason</span></a>
                                 </li>
-                                <li class="@Html.IsSelected(controller: "ReasonTendered")">
-                                    <a href="@Url.Action("Index", "ReasonTendered")"><span class="nav-label"> Tender reason</span></a>
+                                <li class="@Html.IsSelected(controller: "EquipmentTypes")">
+                                    <a href="@Url.Action("Index", "EquipmentTypes")"><span class="nav-label"> Tender reason</span></a>
                                 </li>
                                 <li class="@Html.IsSelected(controller: "ReasonAccepted")">
                                     <a href="@Url.Action("Index", "ReasonAccepted")"><span class="nav-label"> Accept reason</span></a>
@@ -226,6 +226,9 @@
                                     <a href="@Url.Action("Index", "ReasonDocReturned")"><span class="nav-label"> Document return reason</span></a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="@Html.IsSelected(controller: "EquipmentTypes")">
+                            <a href="@Url.Action("Index", "EquipmentTypes")"><span class="nav-label">Equipment Types</span></a>
                         </li>
 
                     </ul>

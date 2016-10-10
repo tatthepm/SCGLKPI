@@ -3,12 +3,12 @@ namespace BOL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class createReasonTendered : DbMigration
+    public partial class createEquipmentTypes : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.ReasonTendereds",
+                "dbo.EquipmentTypess",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -21,8 +21,8 @@ namespace BOL.Migrations
         
         public override void Down()
         {
-            DropIndex("dbo.ReasonTendereds", new[] { "Name" });
-            DropTable("dbo.ReasonTendereds");
+            DropIndex("dbo.EquipmentTypess", new[] { "Name" });
+            DropTable("dbo.EquipmentTypess");
         }
     }
 }

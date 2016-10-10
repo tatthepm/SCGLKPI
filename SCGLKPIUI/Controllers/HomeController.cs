@@ -10,6 +10,7 @@ using SCGLKPIUI.Models;
 
 namespace SCGLKPIUI.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : BaseController
     {
         public ActionResult Index()

@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<BOL.ReasonTendered>
+@model IEnumerable<BOL.EquipmentTypes>
 
 @{
     ViewBag.Title = "Index";
@@ -18,7 +18,7 @@
                     Add reason for tendered
                 </div>
                 <div class="panel-body">
-                    @using (Html.BeginForm("Create", "ReasonTendered", FormMethod.Post, new { @class = "form-horizontal" })) {
+                    @using (Html.BeginForm("Create", "EquipmentTypes", FormMethod.Post, new { @class = "form-horizontal" })) {
                         @Html.AntiForgeryToken()
                         <div class="row">
                             <div class="form-group">
@@ -94,7 +94,7 @@
                                         <td>@item.Name</td>
                                         <td>@item.IsAdjust</td>
                                         <td>
-                                            <a href="/ReasonTendered/Delete?Id=@item.Id" onclick="return ConfirmDelete()"><span class="btn btn-danger"><i class="fa fa-trash-o"></i> Delete</span></a>
+                                            <a href="/EquipmentTypes/Delete?Id=@item.Id" onclick="return ConfirmDelete()"><span class="btn btn-danger"><i class="fa fa-trash-o"></i> Delete</span></a>
                                         </td>
                                     </tr>
                                 }
