@@ -65,6 +65,7 @@
     <Compile Include="DocReturnFiles.cs" />
     <Compile Include="OutboundedFiles.cs" />
     <Compile Include="InboundedFiles.cs" />
+    <Compile Include="EquipmentTypes.cs" />
     <Compile Include="TenderedFiles.cs" />
     <Compile Include="AcceptedFiles.cs" />
     <Compile Include="AcceptedAdjusted.cs" />

@@ -139,7 +139,7 @@ namespace SCGLKPIUI.Controllers
                     foreach (string dn in DNs)
                     {
                         var reasonId = objBs.docReturnAdjustedBs.GetByID(dn).SCGL_DOCRET_REASON_ID;
-                        bool isadjust = objBs.reasonOntimeBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
+                        bool isadjust = objBs.reasonDocReturnBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
                         DWH_ONTIME_DN ontimeDn = objBs.dWH_ONTIME_DNBs.GetByID(dn);
                         ontimeDn.SCGL_DOCRET_ADJUST = isadjust ? 1 : 0;
 
