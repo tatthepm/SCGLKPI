@@ -230,7 +230,12 @@
                         <li class="@Html.IsSelected(controller: "EquipmentTypes")">
                             <a href="@Url.Action("Index", "EquipmentTypes")"><span class="nav-label">Equipment Types</span></a>
                         </li>
-
+                        <li class="@Html.IsSelected(controller: "ViewerDN")">
+                            <a href="@Url.Action("Index", "ViewerDN")"><span class="nav-label">View data by DN</span></a>
+                        </li>
+                        <li class="@Html.IsSelected(controller: "ViewerShipment")">
+                            <a href="@Url.Action("Index", "ViewerShipment")"><span class="nav-label">View data by Shipment</span></a>
+                        </li>
                     </ul>
                 </li>
             }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Linq.Expressions;
 using BOL;
 
 namespace DAL {
@@ -16,6 +17,17 @@ namespace DAL {
         public IEnumerable<DWH_ONTIME_DN> GetAll() {
             return db.DWH_ONTIME_DNs.ToList();
         }
+        //GetByFilter
+        /// <summary>
+        /// GetByFilter is Expression based method which take Lambda Expression as input
+        /// </summary>
+        /// <param name="exp">Lambda expressions</param>
+        /// <returns>List of queried DWH_ONTIME_DN as object</returns>
+        public IEnumerable<DWH_ONTIME_DN> GetByFilter(Expression<Func<DWH_ONTIME_DN, bool>> exp)
+        {
+            return db.DWH_ONTIME_DNs.Where(exp).Take(1000);
+        }
+
         //GetCount
         public int GetCount()
         {

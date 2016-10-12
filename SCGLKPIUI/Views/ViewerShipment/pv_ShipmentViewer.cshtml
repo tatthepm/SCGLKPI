@@ -1,0 +1,296 @@
+﻿@model BOL.DWH_ONTIME_SHIPMENT
+
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="panel-heading">
+                    <b>Shipment Viewer</b> |
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <b><u>Basic Information</u></b> |
+                        <br />
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Shipment No.
+                                    </th>
+                                    <th>
+                                        Delivery No.
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SHPMNTNO, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.DELVNO, new { @disabled = "disabled" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Department Id
+                                    </th>
+                                    <th>
+                                        Department Name
+                                    </th>
+                                    <th>
+                                        Section Id
+                                    </th>
+                                    <th>
+                                        Section Name
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.DEPARTMENT_ID, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.DEPARTMENT_Name, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SECTION_ID, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SECTION_NAME, new { @disabled = "disabled" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr />
+                        <b><u>Order Information</u></b> |
+                        <br />
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Mat. freight Grp.
+                                    </th>
+                                    <th>
+                                        Mat. Name
+                                    </th>
+                                    <th>
+                                        Work Type
+                                    </th>
+                                    <th>
+                                        Shipping Point
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.MATFRIGRP, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.MATNAME, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.WORK_TYPE, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SHPPOINT, new { @disabled = "disabled" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Region
+                                    </th>
+                                    <th>
+                                        Region SAP
+                                    </th>
+                                    <th>
+                                        Region Name EN
+                                    </th>
+                                    <th>
+                                        Region Name TH
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.REGION_ID, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.REGION_ID_SAP, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.REGION_NAME_EN, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.REGION_NAME_TH, new { @disabled = "disabled" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        SoldTo Id
+                                    </th>
+                                    <th>
+                                        SoldTo Name
+                                    </th>
+                                    <th>
+                                        ShipTo
+                                    </th>
+                                    <th>
+                                        ShipTo Code
+                                    </th>
+                                    <th>
+                                        ShipTo Name
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SOLDTO, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SOLDTO_NAME, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SHIPTO, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.LAST_SHPG_LOC_CD, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.LAST_SHPG_LOC_NAME, new { @disabled = "disabled" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr />
+                        <b><u>Segment Info</u></b> |
+                        <br />
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Truck Type.
+                                    </th>
+                                    <th>
+                                        Fleet
+                                    </th>
+                                    <th>
+                                        Carrier
+                                    </th>
+                                    <th>
+                                        Segment
+                                    </th>
+                                    <th>
+                                        Data Group
+                                    </th>
+                                    <th>
+                                        Data Sub Group
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.TRUCK_TYPE, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.FLEET_ID, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.CARRIER_ID, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SEGMENT_ID, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.DATA_GRP, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.DATA_SUBGRP, new { @disabled = "disabled" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <hr />
+                        <b><u>Time Register</u></b> |
+                        <br />
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Shipment Create Date
+                                    </th>
+                                    <th>
+                                        First Tender Date
+                                    </th>
+                                    <th>
+                                        Last Tender Date
+                                    </th>
+                                    <th>
+                                        Last Accept Date
+                                    </th>
+                                    <th>
+                                        Actual GI Date
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.SHCRDATE, new { @disabled = "disabled" })
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.Label("Plan")
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.PLNTNRDDATE, new { @disabled = "disabled" })
+                                    </td>    
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.PLNACPDDATE, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.Label("Actual")
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.FTNRDDATE, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.LTNRDDATE, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.LACPDDATE, new { @disabled = "disabled" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.ACTGIDATE, new { @disabled = "disabled" })
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

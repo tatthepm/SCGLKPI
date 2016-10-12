@@ -16,6 +16,16 @@ namespace SCGLKPIUI {
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
+            #region 0 on - Overview page Dn&Shipment viewer
+            routes.MapRoute("OverviewDnTableSummary", "OverviewDn/OverviewDnTableSummary/",
+                new { controller = "OverviewDn", action = "OverviewDnTableSummary" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
+            routes.MapRoute("OverviewShipmentTableSummary", "OverviewShipment/OverviewShipmentTableSummary/",
+                new { controller = "OverviewShipment", action = "OverviewShipmentTableSummary" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+            #endregion
+
             #region 1 on-time accepted tendered
             // accepted daily
             routes.MapRoute("OntimeAcceptDaily", "OntimeAcceptedDailyChart/OntimeAcceptTableDaily/",

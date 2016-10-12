@@ -217,6 +217,8 @@
     <Compile Include="Controllers\AdjustDocReturnedController.cs" />
     <Compile Include="Controllers\AdjustInboundedController.cs" />
     <Compile Include="Controllers\AdjustOutboundedController.cs" />
+    <Compile Include="Controllers\ViewerDNController.cs" />
+    <Compile Include="Controllers\ViewerShipmentController.cs" />
     <Compile Include="Controllers\Master\EquipmentTypesController.cs" />
     <Compile Include="Controllers\PendingDocReturnController.cs" />
     <Compile Include="Controllers\PendingDeliveryController.cs" />
@@ -3085,6 +3087,11 @@
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Login\DeleteUser.cshtml" />
     <Content Include="Views\EquipmentTypes\Index.cshtml" />
+    <Content Include="Views\Shared\pv_FilterForOverview.cshtml" />
+    <Content Include="Views\ViewerDN\Index.cshtml" />
+    <Content Include="Views\ViewerDN\pv_DNViewer.cshtml" />
+    <Content Include="Views\ViewerShipment\Index.cshtml" />
+    <Content Include="Views\ViewerShipment\pv_ShipmentViewer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\UploadFiles\" />
