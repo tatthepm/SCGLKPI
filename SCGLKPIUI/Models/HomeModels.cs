@@ -87,55 +87,55 @@ namespace SCGLKPIUI.Models
         {
             BaseBs objBs = new BaseBs();
             daysDIff = Convert.ToInt32((DateTime.Now - Convert.ToDateTime("01/01/2016")).TotalDays).ToString();
-            DN01 = objBs.HomeKPIBs.GetMonth(1).Select(x => x.DNLastMonthCount).Sum();
-            DN02 = objBs.HomeKPIBs.GetMonth(2).Select(x => x.DNLastMonthCount).Sum();
-            DN03 = objBs.HomeKPIBs.GetMonth(3).Select(x => x.DNLastMonthCount).Sum();
-            DN04 = objBs.HomeKPIBs.GetMonth(4).Select(x => x.DNLastMonthCount).Sum();
-            DN05 = objBs.HomeKPIBs.GetMonth(5).Select(x => x.DNLastMonthCount).Sum();
-            DN06 = objBs.HomeKPIBs.GetMonth(6).Select(x => x.DNLastMonthCount).Sum();
-            DN07 = objBs.HomeKPIBs.GetMonth(7).Select(x => x.DNLastMonthCount).Sum();
-            DN08 = objBs.HomeKPIBs.GetMonth(8).Select(x => x.DNLastMonthCount).Sum();
-            DN09 = objBs.HomeKPIBs.GetMonth(9).Select(x => x.DNLastMonthCount).Sum();
-            DN10 = objBs.HomeKPIBs.GetMonth(10).Select(x => x.DNLastMonthCount).Sum();
-            DN11 = objBs.HomeKPIBs.GetMonth(11).Select(x => x.DNLastMonthCount).Sum();
-            DN12 = objBs.HomeKPIBs.GetMonth(12).Select(x => x.DNLastMonthCount).Sum();
+            DN01 = objBs.HomeKPIBs.GetMonth(1).ToList().Select(x => x.DNLastMonthCount).Sum();
+            DN02 = objBs.HomeKPIBs.GetMonth(2).ToList().Select(x => x.DNLastMonthCount).Sum();
+            DN03 = objBs.HomeKPIBs.GetMonth(3).ToList().Select(x => x.DNLastMonthCount).Sum();
+            DN04 = objBs.HomeKPIBs.GetMonth(4).ToList().Select(x => x.DNLastMonthCount).Sum();
+            DN05 = objBs.HomeKPIBs.GetMonth(5).ToList().Select(x => x.DNLastMonthCount).Sum();
+            DN06 = objBs.HomeKPIBs.GetMonth(6).ToList().Select(x => x.DNLastMonthCount).Sum();
+            DN07 = objBs.HomeKPIBs.GetMonth(7).ToList().Select(x => x.DNLastMonthCount).Sum();
+            DN08 = objBs.HomeKPIBs.GetMonth(8).ToList().Select(x => x.DNLastMonthCount).Sum();
+            DN09 = objBs.HomeKPIBs.GetMonth(9).ToList().Select(x => x.DNLastMonthCount).Sum();
+            DN10 = objBs.HomeKPIBs.GetMonth(10).ToList().Select(x => x.DNLastMonthCount).Sum();
+            DN11 = objBs.HomeKPIBs.GetMonth(11).ToList().Select(x => x.DNLastMonthCount).Sum();
+            DN12 = objBs.HomeKPIBs.GetMonth(12).ToList().Select(x => x.DNLastMonthCount).Sum();
 
-            SH01 = objBs.HomeKPIBs.GetMonth(1).Select(x => x.shipmentLastMonthCount).Sum();
-            SH02 = objBs.HomeKPIBs.GetMonth(2).Select(x => x.shipmentLastMonthCount).Sum();
-            SH03 = objBs.HomeKPIBs.GetMonth(3).Select(x => x.shipmentLastMonthCount).Sum();
-            SH04 = objBs.HomeKPIBs.GetMonth(4).Select(x => x.shipmentLastMonthCount).Sum();
-            SH05 = objBs.HomeKPIBs.GetMonth(5).Select(x => x.shipmentLastMonthCount).Sum();
-            SH06 = objBs.HomeKPIBs.GetMonth(6).Select(x => x.shipmentLastMonthCount).Sum();
-            SH07 = objBs.HomeKPIBs.GetMonth(7).Select(x => x.shipmentLastMonthCount).Sum();
-            SH08 = objBs.HomeKPIBs.GetMonth(8).Select(x => x.shipmentLastMonthCount).Sum();
-            SH09 = objBs.HomeKPIBs.GetMonth(9).Select(x => x.shipmentLastMonthCount).Sum();
-            SH10 = objBs.HomeKPIBs.GetMonth(10).Select(x => x.shipmentLastMonthCount).Sum();
-            SH11 = objBs.HomeKPIBs.GetMonth(11).Select(x => x.shipmentLastMonthCount).Sum();
-            SH12 = objBs.HomeKPIBs.GetMonth(12).Select(x => x.shipmentLastMonthCount).Sum();
+            SH01 = objBs.HomeKPIBs.GetMonth(1).ToList().Select(x => x.shipmentLastMonthCount).Sum();
+            SH02 = objBs.HomeKPIBs.GetMonth(2).ToList().Select(x => x.shipmentLastMonthCount).Sum();
+            SH03 = objBs.HomeKPIBs.GetMonth(3).ToList().Select(x => x.shipmentLastMonthCount).Sum();
+            SH04 = objBs.HomeKPIBs.GetMonth(4).ToList().Select(x => x.shipmentLastMonthCount).Sum();
+            SH05 = objBs.HomeKPIBs.GetMonth(5).ToList().Select(x => x.shipmentLastMonthCount).Sum();
+            SH06 = objBs.HomeKPIBs.GetMonth(6).ToList().Select(x => x.shipmentLastMonthCount).Sum();
+            SH07 = objBs.HomeKPIBs.GetMonth(7).ToList().Select(x => x.shipmentLastMonthCount).Sum();
+            SH08 = objBs.HomeKPIBs.GetMonth(8).ToList().Select(x => x.shipmentLastMonthCount).Sum();
+            SH09 = objBs.HomeKPIBs.GetMonth(9).ToList().Select(x => x.shipmentLastMonthCount).Sum();
+            SH10 = objBs.HomeKPIBs.GetMonth(10).ToList().Select(x => x.shipmentLastMonthCount).Sum();
+            SH11 = objBs.HomeKPIBs.GetMonth(11).ToList().Select(x => x.shipmentLastMonthCount).Sum();
+            SH12 = objBs.HomeKPIBs.GetMonth(12).ToList().Select(x => x.shipmentLastMonthCount).Sum();
 
             Year = DateTime.Now.Year.ToString();
-            DNLastMonthCount = objBs.HomeKPIBs.GetLastMonth().Select(x => x.DNLastMonthCount).Sum().ToString();
-            shipmentLastMonthCount = objBs.HomeKPIBs.GetLastMonth().Select(x => x.shipmentLastMonthCount).Sum().ToString();
-            DNThisMonthCount = objBs.HomeKPIBs.GetMonth(DateTime.Now.Month).Select(x => x.DNLastMonthCount).Sum().ToString();
-            shipmentThisMonthCount = objBs.HomeKPIBs.GetMonth(DateTime.Now.Month).Select(x => x.shipmentLastMonthCount).Sum().ToString();
+            DNLastMonthCount = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.DNLastMonthCount).Sum().ToString();
+            shipmentLastMonthCount = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.shipmentLastMonthCount).Sum().ToString();
+            DNThisMonthCount = objBs.HomeKPIBs.GetMonth(DateTime.Now.Month).ToList().Select(x => x.DNLastMonthCount).Sum().ToString();
+            shipmentThisMonthCount = objBs.HomeKPIBs.GetMonth(DateTime.Now.Month).ToList().Select(x => x.shipmentLastMonthCount).Sum().ToString();
 
-            AcceptLastMonthCount = objBs.HomeKPIBs.GetLastMonth().Select(x => x.AcceptLastMonthCount).Sum().ToString();
-            AcceptLastMonthPending = objBs.HomeKPIBs.GetLastMonth().Select(x => x.AcceptPendingCount).Sum().ToString();
-            AcceptLastMonthOntime = objBs.HomeKPIBs.GetLastMonth().Select(x => x.AcceptOntimeCount).Sum().ToString();
-            AcceptLastMonthDelay = objBs.HomeKPIBs.GetLastMonth().Select(x => x.AcceptDelayCount).Sum().ToString();
-            AcceptLastMonthPercent = ((Convert.ToDouble(objBs.HomeKPIBs.GetLastMonth().Select(x => x.AcceptOntimeCount).Sum()) / Convert.ToDouble(objBs.HomeKPIBs.GetLastMonth().Select(x => x.AcceptLastMonthCount).Sum())) * 100).ToString();
+            AcceptLastMonthCount = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.AcceptLastMonthCount).Sum().ToString();
+            AcceptLastMonthPending = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.AcceptPendingCount).Sum().ToString();
+            AcceptLastMonthOntime = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.AcceptOntimeCount).Sum().ToString();
+            AcceptLastMonthDelay = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.AcceptDelayCount).Sum().ToString();
+            AcceptLastMonthPercent = ((Convert.ToDouble(objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.AcceptOntimeCount).Sum()) / Convert.ToDouble(objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.AcceptLastMonthCount).Sum())) * 100).ToString();
 
-            TenderLastMonthCount = objBs.HomeKPIBs.GetLastMonth().Select(x => x.TenderLastMonthCount).Sum().ToString();
-            TenderLastMonthPending = objBs.HomeKPIBs.GetLastMonth().Select(x => x.TenderPendingCount).Sum().ToString();
-            TenderLastMonthOntime = objBs.HomeKPIBs.GetLastMonth().Select(x => x.TenderOntimeCount).Sum().ToString();
-            TenderLastMonthDelay = objBs.HomeKPIBs.GetLastMonth().Select(x => x.TenderDelayCount).Sum().ToString();
-            TenderLastMonthPercent = ((Convert.ToDouble(objBs.HomeKPIBs.GetLastMonth().Select(x => x.TenderOntimeCount).Sum()) / Convert.ToDouble(objBs.HomeKPIBs.GetLastMonth().Select(x => x.TenderLastMonthCount).Sum())) * 100).ToString();
+            TenderLastMonthCount = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.TenderLastMonthCount).Sum().ToString();
+            TenderLastMonthPending = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.TenderPendingCount).Sum().ToString();
+            TenderLastMonthOntime = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.TenderOntimeCount).Sum().ToString();
+            TenderLastMonthDelay = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.TenderDelayCount).Sum().ToString();
+            TenderLastMonthPercent = ((Convert.ToDouble(objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.TenderOntimeCount).Sum()) / Convert.ToDouble(objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.TenderLastMonthCount).Sum())) * 100).ToString();
 
-            DeliveryLastMonthCount = objBs.HomeKPIBs.GetLastMonth().Select(x => x.DeliveryLastMonthCount).Sum().ToString();
-            DeliveryLastMonthPending = objBs.HomeKPIBs.GetLastMonth().Select(x => x.DeliveryPendingCount).Sum().ToString();
-            DeliveryLastMonthOntime = objBs.HomeKPIBs.GetLastMonth().Select(x => x.DeliveryOntimeCount).Sum().ToString();
-            DeliveryLastMonthDelay = objBs.HomeKPIBs.GetLastMonth().Select(x => x.DeliveryDelayCount).Sum().ToString();
-            DeliveryLastMonthPercent = ((Convert.ToDouble(objBs.HomeKPIBs.GetLastMonth().Select(x => x.DeliveryOntimeCount).Sum()) / Convert.ToDouble(objBs.HomeKPIBs.GetLastMonth().Select(x => x.DeliveryLastMonthCount).Sum())) * 100).ToString();
+            DeliveryLastMonthCount = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.DeliveryLastMonthCount).Sum().ToString();
+            DeliveryLastMonthPending = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.DeliveryPendingCount).Sum().ToString();
+            DeliveryLastMonthOntime = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.DeliveryOntimeCount).Sum().ToString();
+            DeliveryLastMonthDelay = objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.DeliveryDelayCount).Sum().ToString();
+            DeliveryLastMonthPercent = ((Convert.ToDouble(objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.DeliveryOntimeCount).Sum()) / Convert.ToDouble(objBs.HomeKPIBs.GetLastMonth().ToList().Select(x => x.DeliveryLastMonthCount).Sum())) * 100).ToString();
         }
 
     }

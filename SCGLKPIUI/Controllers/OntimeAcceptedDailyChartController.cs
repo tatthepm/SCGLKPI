@@ -74,17 +74,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.AcceptDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) >= FromDateSearch.Value.Date && Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.AcceptDate >= FromDateSearch && x.AcceptDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.AcceptDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.AcceptDate == ToDateSearch);
             }
 
             var results = (from c in q
@@ -98,7 +98,7 @@ namespace SCGLKPIUI.Controllers {
                                SumOfAccept = g.Sum(x => x.SumOfAccept)
                            }).OrderBy(x => x.AcceptedDate);
 
-            foreach (var item in results.OrderBy(x => x.AcceptedDate)) {
+            foreach (var item in results) {
                 AcceptOntimeChartDailyViewModels model = new AcceptOntimeChartDailyViewModels();
                 string dd = item.AcceptedDate.Value.Day.ToString();
                 string mm = item.AcceptedDate.Value.Month.ToString();
@@ -137,17 +137,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.AcceptDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) >= FromDateSearch.Value.Date && Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.AcceptDate >= FromDateSearch && x.AcceptDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.AcceptDate.Value.Date == FromDateSearch.Value.Date);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.AcceptDate.Value.Date == ToDateSearch.Value.Date);
             }
             int TotalAccept = q.Sum(x => x.SumOfAccept);
             var results = (from c in q
@@ -203,17 +203,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.AcceptDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) >= FromDateSearch.Value.Date && Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.AcceptDate >= FromDateSearch && x.AcceptDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.AcceptDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.AcceptDate == ToDateSearch);
             }
 
             foreach (var item in q.OrderBy(x => x.AcceptDate)) {
@@ -266,17 +266,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.AcceptDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) >= FromDateSearch.Value.Date && Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.AcceptDate >= FromDateSearch && x.AcceptDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.AcceptDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => Convert.ToDateTime(x.AcceptDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.AcceptDate == ToDateSearch);
             }
 
             var results = (from c in q

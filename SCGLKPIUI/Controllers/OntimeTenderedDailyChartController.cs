@@ -41,17 +41,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.FirstTenderDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) >= FromDateSearch.Value.Date && Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.FirstTenderDate >= FromDateSearch && x.FirstTenderDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.FirstTenderDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.FirstTenderDate == ToDateSearch);
             }
 
             var results = (from c in q
@@ -98,17 +98,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.FirstTenderDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) >= FromDateSearch.Value.Date && Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.FirstTenderDate >= FromDateSearch && x.FirstTenderDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.FirstTenderDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.FirstTenderDate == ToDateSearch);
             }
             int TotalTender = q.Sum(x => x.SumOfTender);
             var results = (from c in q
@@ -155,17 +155,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.FirstTenderDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) >= FromDateSearch.Value.Date && Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.FirstTenderDate >= FromDateSearch && x.FirstTenderDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.FirstTenderDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.FirstTenderDate == ToDateSearch);
             }
 
             foreach (var item in q.OrderBy(x => x.FirstTenderDate)) {
@@ -206,17 +206,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.FirstTenderDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) >= FromDateSearch.Value.Date && Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.FirstTenderDate >= FromDateSearch && x.FirstTenderDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.FirstTenderDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => Convert.ToDateTime(x.FirstTenderDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.FirstTenderDate == ToDateSearch);
             }
 
             var results = (from c in q

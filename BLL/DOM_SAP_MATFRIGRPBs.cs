@@ -15,7 +15,7 @@ namespace BLL {
         }
 
         //GetAll
-        public IEnumerable<DOM_SAP_MATFRIGRP> GetAll() {
+        public IQueryable<DOM_SAP_MATFRIGRP> GetAll() {
             return objDb.GetAll();
         }
 

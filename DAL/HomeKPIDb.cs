@@ -13,12 +13,12 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<HomeKPI> GetAll() {
-            return db.HomeKPIs.ToList();
+        public IQueryable<HomeKPI> GetAll() {
+            return db.HomeKPIs;
         }
 
         //GetByFilter
-        public IEnumerable<HomeKPI> GetByFilter(string department_id, string section_id, string segment, int month, int year)
+        public IQueryable<HomeKPI> GetByFilter(string department_id, string section_id, string segment, int month, int year)
         {
             return db.HomeKPIs.Where(x => x.DepartmentId == department_id 
             && x.SectionId == section_id 
@@ -28,20 +28,20 @@ namespace DAL {
         }
 
         //GetLastMonth
-        public IEnumerable<HomeKPI> GetLastMonth()
+        public IQueryable<HomeKPI> GetLastMonth()
         {
             DateTime LastMonth = DateTime.Now.AddMonths(-1);
             int Year = LastMonth.Year;
             int Month = LastMonth.Month;
-            return db.HomeKPIs.Where(x=> x.Year == Year && x.LastMonth == Month).ToList();
+            return db.HomeKPIs.Where(x=> x.Year == Year && x.LastMonth == Month);
         }
 
         //GetMonth
-        public IEnumerable<HomeKPI> GetMonth(int monthAdjust)
+        public IQueryable<HomeKPI> GetMonth(int monthAdjust)
         {
             int Year = DateTime.Now.Year;
             int Month = monthAdjust;
-            return db.HomeKPIs.Where(x => x.Year == Year && x.LastMonth == Month).ToList();
+            return db.HomeKPIs.Where(x => x.Year == Year && x.LastMonth == Month);
         }
 
         //Insert

@@ -13,11 +13,11 @@ namespace BLL {
             objDb = new OntimeFilesDb();
         }
         //GetAll
-        public IEnumerable<OntimeFiles> GetAll() {
+        public IQueryable<OntimeFiles> GetAll() {
             return objDb.GetAll();
         }
         //GetByFilter
-        public IEnumerable<OntimeFiles> GetByShipment(string DeliveryNo)
+        public IQueryable<OntimeFiles> GetByShipment(string DeliveryNo)
         {
             return objDb.GetByShipment(DeliveryNo);
         }

@@ -13,8 +13,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<KPI> GetAll() {
-            return db.KPIs.ToList();
+        public IQueryable<KPI> GetAll() {
+            return db.KPIs;
         }
 
         //GetById

@@ -75,17 +75,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) >= FromDateSearch.Value.Date && Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.ActualGiDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.ActualGiDate == ToDateSearch);
             }
 
             var results = (from c in q
@@ -99,12 +99,12 @@ namespace SCGLKPIUI.Controllers {
                                SumOfDelivery = g.Sum(x => x.SumOfDelivery)
                            }).OrderBy(x => x.ActualGiDate);
 
-            foreach (var item in results.OrderBy(x => x.ActualGiDate)) {
+            foreach (var item in results) {
                 DeliveredOntimeChartDailyViewModels model = new DeliveredOntimeChartDailyViewModels();
                 string dd = item.ActualGiDate.Value.Day.ToString();
                 string mm = item.ActualGiDate.Value.Month.ToString();
                 string yyyy = item.ActualGiDate.Value.Year.ToString();
-                model.ActualGiDate = item.ActualGiDate.Value.ToString("dd/mm/yyyy");
+                model.ActualGiDate = item.ActualGiDate.Value.ToString("dd/MM/yyyy");
                 model.Plan = item.Plan;
                 model.Actual = Math.Round(item.Actual, 2);
                 model.Adjust = Math.Round(item.Adjust, 2);
@@ -138,17 +138,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) >= FromDateSearch.Value.Date && Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.ActualGiDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.ActualGiDate == ToDateSearch);
             }
             int TotalDelivery = q.Sum(x => x.SumOfDelivery);
             var results = (from c in q
@@ -204,17 +204,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) >= FromDateSearch.Value.Date && Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate<= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.ActualGiDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.ActualGiDate == ToDateSearch);
             }
 
             foreach (var item in q.OrderBy(x => x.ActualGiDate)) {
@@ -222,7 +222,7 @@ namespace SCGLKPIUI.Controllers {
                 string dd = item.ActualGiDate.Value.Day.ToString();
                 string mm = item.ActualGiDate.Value.Month.ToString();
                 string yyyy = item.ActualGiDate.Value.Year.ToString();
-                model.ActualGiDate = item.ActualGiDate.Value.ToString("dd/mm/yyyy");
+                model.ActualGiDate = item.ActualGiDate.Value.ToString("dd/MM/yyyy");
                 model.DepartmentName = item.DepartmentName;
                 model.SectionName = item.SectionName;
                 model.MatName = item.MatName;
@@ -268,17 +268,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) >= FromDateSearch.Value.Date && Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) <= Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(FromDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.ActualGiDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => Convert.ToDateTime(x.ActualGiDate.Value.Date.ToShortDateString()) == Convert.ToDateTime(ToDateSearch.Value.Date.ToShortDateString()));
+                q = q.Where(x => x.ActualGiDate == ToDateSearch);
             }
 
             var results = (from c in q

@@ -14,7 +14,7 @@ namespace BLL {
             objDb = new ReasonTenderedDb();
         }
         //GetAll
-        public IEnumerable<ReasonTendered> GetAll() {
+        public IQueryable<ReasonTendered> GetAll() {
             return objDb.GetAll();
         }
 

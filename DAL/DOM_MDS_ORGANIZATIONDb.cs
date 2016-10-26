@@ -13,8 +13,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<DOM_MDS_ORGANIZATION> GetAll() {
-            return db.DOM_MDS_ORGANIZATIONs.ToList();
+        public IQueryable<DOM_MDS_ORGANIZATION> GetAll() {
+            return db.DOM_MDS_ORGANIZATIONs;
         }
 
         //GetById

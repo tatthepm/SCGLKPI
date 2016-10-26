@@ -13,11 +13,11 @@ namespace BLL {
             objDb = new TenderedFilesDb();
         }
         //GetAll
-        public IEnumerable<TenderedFiles> GetAll() {
+        public IQueryable<TenderedFiles> GetAll() {
             return objDb.GetAll();
         }
         //GetByFilter
-        public IEnumerable<TenderedFiles> GetByShipment(string shipment)
+        public IQueryable<TenderedFiles> GetByShipment(string shipment)
         {
             return objDb.GetByShipment(shipment);
         }

@@ -15,8 +15,8 @@ namespace DAL {
         }
 
         //GetAll
-        public IEnumerable<ReasonInbound> GetAll() {
-            return db.ReasonInbounds.ToList();
+        public IQueryable<ReasonInbound> GetAll() {
+            return db.ReasonInbounds;
         }
 
         //GetById

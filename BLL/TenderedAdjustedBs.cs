@@ -13,11 +13,11 @@ namespace BLL {
             objDb = new TenderedAdjustedDb();
         }
         //GetAll
-        public IEnumerable<TenderedAdjusted> GetAll() {
+        public IQueryable<TenderedAdjusted> GetAll() {
             return objDb.GetAll();
         }
         //GetByFilter
-        public IEnumerable<TenderedAdjusted> GetByFilter(string segment_id, int month, int year)
+        public IQueryable<TenderedAdjusted> GetByFilter(string segment_id, int month, int year)
         {
             return objDb.GetByFilter(segment_id, month, year);
         }

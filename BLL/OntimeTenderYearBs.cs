@@ -13,7 +13,7 @@ namespace BLL {
             objDb = new OntimeTenderYearDb();
         }
         //GetAll
-        public IEnumerable<OntimeTenderYear> GetAll() {
+        public IQueryable<OntimeTenderYear> GetAll() {
             return objDb.GetAll();
         }
 

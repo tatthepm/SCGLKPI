@@ -13,8 +13,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<OntimeDocReturnMonth> GetAll() {
-            return db.OntimeDocReturnMonths.ToList();
+        public IQueryable<OntimeDocReturnMonth> GetAll() {
+            return db.OntimeDocReturnMonths;
         }
 
         //GetById

@@ -14,7 +14,7 @@ namespace BLL {
         }
 
         //GetAll
-        public IEnumerable<OntimeInbound> GetAll() {
+        public IQueryable<OntimeInbound> GetAll() {
             return objDb.GetAll();
         }
 

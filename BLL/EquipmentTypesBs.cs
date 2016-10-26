@@ -14,7 +14,7 @@ namespace BLL {
             objDb = new EquipmentTypesDb();
         }
         //GetAll
-        public IEnumerable<EquipmentTypes> GetAll() {
+        public IQueryable<EquipmentTypes> GetAll() {
             return objDb.GetAll();
         }
 
@@ -30,7 +30,7 @@ namespace BLL {
         }
 
         //GetById
-        public IEnumerable<EquipmentTypes> GetActive()
+        public IQueryable<EquipmentTypes> GetActive()
         {
             return objDb.GetActive();
         }

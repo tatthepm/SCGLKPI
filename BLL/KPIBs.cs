@@ -15,7 +15,7 @@ namespace BLL {
         }
 
         //GetAll
-        public IEnumerable<KPI> GetAll() {
+        public IQueryable<KPI> GetAll() {
             return objDb.GetAll();
         }
 

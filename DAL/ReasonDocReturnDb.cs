@@ -14,8 +14,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<ReasonDocReturn> GetAll() {
-            return db.ReasonDocReturns.ToList();
+        public IQueryable<ReasonDocReturn> GetAll() {
+            return db.ReasonDocReturns;
         }
 
         //GetById

@@ -13,7 +13,7 @@ namespace BLL {
             objDb = new ReasonDocReturnDb();
         }
         //GetAll
-        public IEnumerable<ReasonDocReturn> GetAll() {
+        public IQueryable<ReasonDocReturn> GetAll() {
             return objDb.GetAll();
         }
 

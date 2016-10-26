@@ -13,11 +13,11 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<TenderedDelay> GetAll() {
-            return db.TenderedDelays.ToList();
+        public IQueryable<TenderedDelay> GetAll() {
+            return db.TenderedDelays;
         }
         //GetByFilter
-        public IEnumerable<TenderedDelay> GetByFilter(string segment_id, int month, int year)
+        public IQueryable<TenderedDelay> GetByFilter(string segment_id, int month, int year)
         {
             return db.TenderedDelays.Where(x => x.SEGMENT == segment_id && x.FTNRDDATE_D.Value.Year == year && x.FTNRDDATE_D.Value.Month == month).Take(1000);
         }

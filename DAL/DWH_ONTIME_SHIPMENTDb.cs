@@ -14,11 +14,11 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<DWH_ONTIME_SHIPMENT> GetAll() {
-            return db.DWH_ONTIME_SHIPMENTs.ToList();
+        public IQueryable<DWH_ONTIME_SHIPMENT> GetAll() {
+            return db.DWH_ONTIME_SHIPMENTs;
         }
         //GetByFilter
-        public IEnumerable<DWH_ONTIME_SHIPMENT> GetByFilter(Expression<Func<DWH_ONTIME_SHIPMENT, bool>> exp)
+        public IQueryable<DWH_ONTIME_SHIPMENT> GetByFilter(Expression<Func<DWH_ONTIME_SHIPMENT, bool>> exp)
         {
             //var param = Expression.Parameter(typeof(DWH_ONTIME_SHIPMENT), "p"); //it is the text, in this case, (p => p.{expression}) <-- p = DWH_ONTIME_DN
             //var exp = Expression.Lambda<Func<DWH_ONTIME_SHIPMENT, bool>>(
@@ -28,7 +28,7 @@ namespace DAL {
             //    ),
             //    param
             //);
-            return db.DWH_ONTIME_SHIPMENTs.Where(exp).ToList();
+            return db.DWH_ONTIME_SHIPMENTs.Where(exp);
         }
         //GetCount
         public int GetCount()

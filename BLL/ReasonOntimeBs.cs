@@ -14,7 +14,7 @@ namespace BLL {
             objDb = new ReasonOntimeDb();
         }
         //GetAll
-        public IEnumerable<ReasonOntime> GetAll() {
+        public IQueryable<ReasonOntime> GetAll() {
             return objDb.GetAll();
         }
 

@@ -13,7 +13,7 @@ namespace BLL {
             objDb = new OntimeDeliveryMonthDb();
         }
         //GetAll
-        public IEnumerable<OntimeDeliveryMonth> GetAll() {
+        public IQueryable<OntimeDeliveryMonth> GetAll() {
             return objDb.GetAll();
         }
 

@@ -13,11 +13,11 @@ namespace BLL {
             objDb = new OutboundedFilesDb();
         }
         //GetAll
-        public IEnumerable<OutboundedFiles> GetAll() {
+        public IQueryable<OutboundedFiles> GetAll() {
             return objDb.GetAll();
         }
         //GetByFilter
-        public IEnumerable<OutboundedFiles> GetByShipment(string DeliveryNo)
+        public IQueryable<OutboundedFiles> GetByShipment(string DeliveryNo)
         {
             return objDb.GetByShipment(DeliveryNo);
         }

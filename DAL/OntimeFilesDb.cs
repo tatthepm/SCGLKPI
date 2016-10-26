@@ -13,8 +13,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<OntimeFiles> GetAll() {
-            return db.OntimeFiles.ToList();
+        public IQueryable<OntimeFiles> GetAll() {
+            return db.OntimeFiles;
         }
         //GetById
         public OntimeFiles GetByID(int ID)
@@ -25,8 +25,8 @@ namespace DAL {
         /// Get records by shipment number
         /// </summary>
         /// <param name="DeliveryNo">DN number</param>
-        /// <returns>IEnumerable of OntimeFiles</returns>
-        public IEnumerable<OntimeFiles> GetByShipment(string DeliveryNo)
+        /// <returns>IQueryable of OntimeFiles</returns>
+        public IQueryable<OntimeFiles> GetByShipment(string DeliveryNo)
         {
             return db.OntimeFiles.Where(x => x.DELVNO == DeliveryNo).Take(1000);
         }

@@ -14,8 +14,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
             }
         //GetAll
-        public IEnumerable<Role> GetAll() {
-            return db.Roles.ToList();
+        public IQueryable<Role> GetAll() {
+            return db.Roles;
             }
 
         //GetById

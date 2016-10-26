@@ -18,11 +18,11 @@ namespace BLL
         }
 
         //GetAll
-        public IEnumerable<DWH_ONTIME_DN> GetAll()
+        public IQueryable<DWH_ONTIME_DN> GetAll()
         {
             return objDb.GetAll();
         }
-        public IEnumerable<DWH_ONTIME_DN> GetByFilter(List<Tuple<string, string>> expression, List<string> logic)
+        public IQueryable<DWH_ONTIME_DN> GetByFilter(List<Tuple<string, string>> expression, List<string> logic)
         {
             if (expression != null)
             {

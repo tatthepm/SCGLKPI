@@ -13,12 +13,12 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<TenderedAdjusted> GetAll() {
-            return db.TenderedAdjusted.ToList();
+        public IQueryable<TenderedAdjusted> GetAll() {
+            return db.TenderedAdjusted;
         }
 
         //GetByFilter
-        public IEnumerable<TenderedAdjusted> GetByFilter(string segment_id, int month, int year)
+        public IQueryable<TenderedAdjusted> GetByFilter(string segment_id, int month, int year)
         {
             return db.TenderedAdjusted.Where(x => x.SEGMENT == segment_id && x.FTNRDDATE_D.Value.Year == year && x.FTNRDDATE_D.Value.Month == month).Take(1000);
         }

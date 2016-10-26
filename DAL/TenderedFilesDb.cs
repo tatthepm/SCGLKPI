@@ -16,9 +16,9 @@ namespace DAL
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<TenderedFiles> GetAll()
+        public IQueryable<TenderedFiles> GetAll()
         {
-            return db.TenderedFiles.ToList();
+            return db.TenderedFiles;
         }
         //GetById
         public TenderedFiles GetByID(int ID)
@@ -29,8 +29,8 @@ namespace DAL
         /// Get records by shipment number
         /// </summary>
         /// <param name="shipmentNo">shipment number</param>
-        /// <returns>IEnumerable of TenderedFiles</returns>
-        public IEnumerable<TenderedFiles> GetByShipment(string shipmentNo)
+        /// <returns>IQueryable of TenderedFiles</returns>
+        public IQueryable<TenderedFiles> GetByShipment(string shipmentNo)
         {
             return db.TenderedFiles.Where(x => x.SHPMNTNO == shipmentNo).Take(1000);
         }

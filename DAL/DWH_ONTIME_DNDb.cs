@@ -14,8 +14,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<DWH_ONTIME_DN> GetAll() {
-            return db.DWH_ONTIME_DNs.ToList();
+        public IQueryable<DWH_ONTIME_DN> GetAll() {
+            return db.DWH_ONTIME_DNs;
         }
         //GetByFilter
         /// <summary>
@@ -23,7 +23,7 @@ namespace DAL {
         /// </summary>
         /// <param name="exp">Lambda expressions</param>
         /// <returns>List of queried DWH_ONTIME_DN as object</returns>
-        public IEnumerable<DWH_ONTIME_DN> GetByFilter(Expression<Func<DWH_ONTIME_DN, bool>> exp)
+        public IQueryable<DWH_ONTIME_DN> GetByFilter(Expression<Func<DWH_ONTIME_DN, bool>> exp)
         {
             return db.DWH_ONTIME_DNs.Where(exp).Take(1000);
         }

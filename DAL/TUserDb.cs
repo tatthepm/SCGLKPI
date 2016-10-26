@@ -13,8 +13,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
 
-        public IEnumerable<TUser> GetAll() {
-            return db.Tusers.ToList();
+        public IQueryable<TUser> GetAll() {
+            return db.Tusers;
             }
         public TUser GetByID(int Id) {
             return db.Tusers.Find(Id);

@@ -14,7 +14,7 @@ namespace BLL {
         }
 
         //GetAll
-        public IEnumerable<DOM_MDS_ORGANIZATION> GetAll() {
+        public IQueryable<DOM_MDS_ORGANIZATION> GetAll() {
             return objDb.GetAll();
         }
 

@@ -15,7 +15,7 @@ namespace BLL {
         }
 
         //GetAll
-        public IEnumerable<MenuTable> GetAll() {
+        public IQueryable<MenuTable> GetAll() {
             return objDb.GetAll();
         }
 

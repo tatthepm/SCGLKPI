@@ -15,7 +15,7 @@ namespace BLL {
         }
 
         //GetAll
-        public IEnumerable<KPIFrequency> GetAll() {
+        public IQueryable<KPIFrequency> GetAll() {
             return objDb.GetAll();
         }
 

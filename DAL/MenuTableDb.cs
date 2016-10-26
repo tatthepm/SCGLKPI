@@ -13,8 +13,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<MenuTable> GetAll() {
-            return db.MenuTables.ToList();
+        public IQueryable<MenuTable> GetAll() {
+            return db.MenuTables;
         }
 
         //GetById

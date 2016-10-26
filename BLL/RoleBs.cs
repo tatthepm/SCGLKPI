@@ -14,7 +14,7 @@ namespace BLL {
            }
 
        //GetAll
-       public IEnumerable<Role> GetAll() {
+       public IQueryable<Role> GetAll() {
            return objDb.GetAll();
            }
 

@@ -13,8 +13,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<DOM_CMD_VENDOR> GetAll() {
-            return db.DOM_CMD_VENDORs.ToList();
+        public IQueryable<DOM_CMD_VENDOR> GetAll() {
+            return db.DOM_CMD_VENDORs;
         }
 
         //GetById

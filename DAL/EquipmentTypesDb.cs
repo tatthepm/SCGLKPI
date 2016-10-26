@@ -13,8 +13,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<EquipmentTypes> GetAll() {
-            return db.EquipmentTypes.ToList();
+        public IQueryable<EquipmentTypes> GetAll() {
+            return db.EquipmentTypes;
         }
 
         //GetById
@@ -29,9 +29,9 @@ namespace DAL {
         }
 
         //GetByCode
-        public IEnumerable<EquipmentTypes> GetActive()
+        public IQueryable<EquipmentTypes> GetActive()
         {
-            return db.EquipmentTypes.Where(x => x.IsActive == true).ToList();
+            return db.EquipmentTypes.Where(x => x.IsActive == true);
         }
 
         //Insert

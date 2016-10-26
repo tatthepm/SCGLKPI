@@ -15,23 +15,23 @@ namespace BLL {
         }
 
         //GetAll
-        public IEnumerable<HomeKPI> GetAll() {
+        public IQueryable<HomeKPI> GetAll() {
             return objDb.GetAll();
         }
 
         //GetByFilter
-        public IEnumerable<HomeKPI> GetByFilter(string department_id, string section_id, string segment, int month, int year)
+        public IQueryable<HomeKPI> GetByFilter(string department_id, string section_id, string segment, int month, int year)
         {
             return objDb.GetByFilter(department_id, section_id, segment, month, year);
         }
 
         //GetLastMonth
-        public IEnumerable<HomeKPI> GetLastMonth() {
+        public IQueryable<HomeKPI> GetLastMonth() {
             return objDb.GetLastMonth();
         }
 
         //GetMonth
-        public IEnumerable<HomeKPI> GetMonth(int monthAdjust)
+        public IQueryable<HomeKPI> GetMonth(int monthAdjust)
         {
             return objDb.GetMonth(monthAdjust);
         }

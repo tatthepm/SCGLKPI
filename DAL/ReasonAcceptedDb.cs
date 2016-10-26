@@ -13,8 +13,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<ReasonAccepted> GetAll() {
-            return db.ReasonAccepteds.ToList();
+        public IQueryable<ReasonAccepted> GetAll() {
+            return db.ReasonAccepteds;
         }
 
         //GetById

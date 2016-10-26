@@ -14,7 +14,7 @@ namespace BLL {
             objDb = new OntimeTenderMonthDb();
         }
         //GetAll
-        public IEnumerable<OntimeTenderMonth> GetAll() {
+        public IQueryable<OntimeTenderMonth> GetAll() {
             return objDb.GetAll();
         }
 

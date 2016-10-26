@@ -13,7 +13,7 @@ namespace BLL {
             objDb = new ReasonAcceptedDb();
         }
         //GetAll
-        public IEnumerable<ReasonAccepted> GetAll() {
+        public IQueryable<ReasonAccepted> GetAll() {
             return objDb.GetAll();
         }
 

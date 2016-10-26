@@ -18,6 +18,18 @@
     <!-- Add local styles, mostly for plugins css file -->
     @if (IsSectionDefined("Styles")) {@RenderSection("Styles", required: false)}
 
+    <style>
+        img {
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+        }
+
+        html {
+            -webkit-filter: grayscale(100%);
+        }
+    </style>
+
+
     <!-- Primary HOMER style -->
     @Styles.Render("~/bundles/homer/css")
 </head>

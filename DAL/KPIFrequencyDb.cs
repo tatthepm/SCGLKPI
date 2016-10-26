@@ -13,8 +13,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<KPIFrequency> GetAll() {
-            return db.KPIFrequencies.ToList();
+        public IQueryable<KPIFrequency> GetAll() {
+            return db.KPIFrequencies;
         }
 
         //GetById

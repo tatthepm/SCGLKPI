@@ -14,7 +14,7 @@ namespace BLL {
             objDb = new OntimeDeliveryYearDb();
         }
         //GetAll
-        public IEnumerable<OntimeDeliveryYear> GetAll() {
+        public IQueryable<OntimeDeliveryYear> GetAll() {
             return objDb.GetAll();
         }
 

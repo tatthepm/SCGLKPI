@@ -13,11 +13,11 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<TenderPending> GetAll() {
-            return db.TenderPendings.ToList();
+        public IQueryable<TenderPending> GetAll() {
+            return db.TenderPendings;
         }
         //GetByFilter
-        public IEnumerable<TenderPending> GetByFilter(string segment_id, int month, int year)
+        public IQueryable<TenderPending> GetByFilter(string segment_id, int month, int year)
         {
             return db.TenderPendings.Where(x => x.SEGMENT == segment_id && x.PLNTNRDDATE_D.Value.Year == year && x.PLNTNRDDATE_D.Value.Month == month).Take(1000);
         }

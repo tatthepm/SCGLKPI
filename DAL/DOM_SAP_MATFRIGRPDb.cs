@@ -13,8 +13,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<DOM_SAP_MATFRIGRP> GetAll() {
-            return db.DOM_SAP_MATFRIGRPs.ToList();
+        public IQueryable<DOM_SAP_MATFRIGRP> GetAll() {
+            return db.DOM_SAP_MATFRIGRPs;
         }
 
         //GetById

@@ -15,10 +15,10 @@ namespace BLL {
         }
 
         //GetAll
-        public IEnumerable<DWH_ONTIME_SHIPMENT> GetAll() {
+        public IQueryable<DWH_ONTIME_SHIPMENT> GetAll() {
             return objDb.GetAll();
         }
-        public IEnumerable<DWH_ONTIME_SHIPMENT> GetByFilter(List<Tuple<string,string>> expression,List<string> logic)
+        public IQueryable<DWH_ONTIME_SHIPMENT> GetByFilter(List<Tuple<string,string>> expression,List<string> logic)
         {
             if (expression != null)
             {

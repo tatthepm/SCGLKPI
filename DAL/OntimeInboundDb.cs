@@ -13,8 +13,8 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<OntimeInbound> GetAll() {
-            return db.OntimeInbounds.ToList();
+        public IQueryable<OntimeInbound> GetAll() {
+            return db.OntimeInbounds;
         }
 
         //GetById

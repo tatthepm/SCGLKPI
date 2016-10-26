@@ -14,7 +14,7 @@ namespace BLL {
         }
 
         //GetAll
-        public IEnumerable<DOM_CMD_VENDOR> GetAll() {
+        public IQueryable<DOM_CMD_VENDOR> GetAll() {
             return objDb.GetAll();
         }
 

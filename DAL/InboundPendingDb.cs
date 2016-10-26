@@ -13,12 +13,12 @@ namespace DAL {
             db = new SCGLKPIDbContext();
         }
         //GetAll
-        public IEnumerable<InboundPending> GetAll() {
-            return db.InboundPendings.ToList();
+        public IQueryable<InboundPending> GetAll() {
+            return db.InboundPendings;
         }
 
         //GetByFilter
-        public IEnumerable<InboundPending> GetByFilter(string department_id, string section_id, int month, int year)
+        public IQueryable<InboundPending> GetByFilter(string department_id, string section_id, int month, int year)
         {
             return db.InboundPendings.Where(x => x.DEPARTMENT_ID == department_id && x.SECTION_ID == section_id && x.PLNINBDATE_D.Value.Year == year && x.PLNINBDATE_D.Value.Month == month).Take(1000);
         }
@@ -29,19 +29,19 @@ namespace DAL {
             return db.InboundPendings.Find(deliveryNote);
         }
         //GetByMatName
-        public IEnumerable<BOLDropdownLists> GetByMatName()
+        public IQueryable<BOLDropdownLists> GetByMatName()
         {
             var Queryable = (from m in db.InboundPendings
                              select new BOLDropdownLists
                              {
                                  Id = m.MATFRIGRP,
                                  Name = m.MATNAME,
-                             }).Distinct().ToList();
+                             }).Distinct();
             return Queryable;
         }
 
         //GetByMatName (Overload)
-        public IEnumerable<BOLDropdownLists> GetByMatName(string departmentId, string sectionId)
+        public IQueryable<BOLDropdownLists> GetByMatName(string departmentId, string sectionId)
         {
             var Queryable = (from m in db.InboundPendings
                              where m.DEPARTMENT_ID == departmentId && m.SECTION_ID == sectionId
@@ -49,23 +49,23 @@ namespace DAL {
                              {
                                  Id = m.MATFRIGRP,
                                  Name = m.MATNAME,
-                             }).Distinct().ToList();
+                             }).Distinct();
             return Queryable;
         }
 
         //GetBySection
-        public IEnumerable<BOLDropdownLists> GetBySection()
+        public IQueryable<BOLDropdownLists> GetBySection()
         {
             var Queryable = (from m in db.InboundPendings
                              select new BOLDropdownLists
                              {
                                  Id = m.SECTION_ID,
                                  Name = m.SECTION_NAME,
-                             }).Distinct().ToList();
+                             }).Distinct();
             return Queryable;
         }
         //GetBySection (Overload)
-        public IEnumerable<BOLDropdownLists> GetBySection(string departmentId)
+        public IQueryable<BOLDropdownLists> GetBySection(string departmentId)
         {
             var Queryable = (from m in db.InboundPendings
                              where m.DEPARTMENT_ID == departmentId
@@ -73,7 +73,7 @@ namespace DAL {
                              {
                                  Id = m.SECTION_ID,
                                  Name = m.SECTION_NAME,
-                             }).Distinct().ToList();
+                             }).Distinct();
             return Queryable;
         }
 

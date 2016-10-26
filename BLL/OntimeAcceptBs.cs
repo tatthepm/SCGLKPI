@@ -13,7 +13,7 @@ namespace BLL {
             objDb = new OntimeAcceptDb();
         }
         //GetAll
-        public IEnumerable<OntimeAccept> GetAll() {
+        public IQueryable<OntimeAccept> GetAll() {
             return objDb.GetAll();
         }
 

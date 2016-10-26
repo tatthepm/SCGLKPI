@@ -13,11 +13,11 @@ namespace BLL {
             objDb = new TenderedPendingDb();
         }
         //GetAll
-        public IEnumerable<TenderPending> GetAll() {
+        public IQueryable<TenderPending> GetAll() {
             return objDb.GetAll();
         }
         //GetByFilter
-        public IEnumerable<TenderPending> GetByFilter(string segment_id, int month, int year)
+        public IQueryable<TenderPending> GetByFilter(string segment_id, int month, int year)
         {
             return objDb.GetByFilter(segment_id, month, year);
         }
