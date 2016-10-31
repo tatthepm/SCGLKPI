@@ -25,7 +25,7 @@ namespace DAL {
         /// <returns>List of queried DWH_ONTIME_DN as object</returns>
         public IQueryable<DWH_ONTIME_DN> GetByFilter(Expression<Func<DWH_ONTIME_DN, bool>> exp)
         {
-            return db.DWH_ONTIME_DNs.Where(exp).Take(1000);
+            return db.DWH_ONTIME_DNs.Where(exp);
         }
 
         //GetCount

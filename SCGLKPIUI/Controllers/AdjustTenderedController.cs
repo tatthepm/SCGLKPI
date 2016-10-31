@@ -86,6 +86,7 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.LAST_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
+                model.ShcrDate = item.SHCRDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.PlanTender = item.PLNTNRDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.FirstTender = item.FTNRDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 viewModel.Add(model);
@@ -148,9 +149,12 @@ namespace SCGLKPIUI.Controllers
                                 SOLDTO_NAME = tmp_adjusted.SOLDTO_NAME,
                                 SHIPTO = tmp_adjusted.SHIPTO,
                                 SEGMENT = tmp_adjusted.SEGMENT,
+                                SUBSEGMENT = tmp_adjusted.SUBSEGMENT,
                                 LAST_SHPG_LOC_NAME = tmp_adjusted.LAST_SHPG_LOC_NAME,
                                 VENDOR_CODE = tmp_adjusted.VENDOR_CODE,
                                 VENDOR_NAME = tmp_adjusted.VENDOR_NAME,
+                                SHCRDATE = tmp_adjusted.SHCRDATE,
+                                SHCRDATE_D = tmp_adjusted.SHCRDATE_D,
                                 PLNTNRDDATE = tmp_adjusted.PLNTNRDDATE,
                                 PLNTNRDDATE_D = tmp_adjusted.PLNTNRDDATE_D,
                                 FTNRDDATE = tmp_adjusted.FTNRDDATE,

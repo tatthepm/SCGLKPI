@@ -321,6 +321,8 @@
                 { data: "SoldtoName" },
                 { data: "ShiptoName" },
                 { data: "ActualGI" },
+                { data: "PlanOutbound" },
+                { data: "ActualOutbound" },
                 { data: "ShippingPoint" },
                 { data: "CarrierId" },
                 { data: "TruckType" },
@@ -330,17 +332,17 @@
                                 "mRender": function (data, type, full) {
                                     return reasonString;
                                 },
-                                "targets": 8
+                                "targets": 10
                             },
                             {
-                                "targets": 9,
+                                "targets": 11,
                                 "data": function (row, type, val, meta) {
                                     return '<input name="fileInput" type="file" multiple>\n\
                                             <input type="hidden" name="fileName" value="' + row.DeliveryNote + '">';
                                 }
                             },
                             {
-                                "targets": 10,
+                                "targets": 12,
                                 "data": function (row, type, val, meta) {
                                     return '<input type="text" name="txtRemark" />\n\
                                 <input type="hidden" name="txtDN" value="' + row.DeliveryNote + '">\n\

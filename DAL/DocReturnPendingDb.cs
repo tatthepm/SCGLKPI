@@ -19,7 +19,7 @@ namespace DAL {
         //GetByFilter
         public IQueryable<DocReturnPending> GetByFilter(string department_id, string section_id, int month, int year)
         {
-            return db.DocReturnPendings.Where(x => x.DEPARTMENT_ID == department_id && x.SECTION_ID == section_id && x.PLNDOCRETDATE_SCGL_D.Value.Year == year && x.PLNDOCRETDATE_SCGL_D.Value.Month == month).Take(1000);
+            return db.DocReturnPendings.Where(x => x.DEPARTMENT_ID == department_id && x.SECTION_ID == section_id && x.PLNDOCRETDATE_SCGL_D.Value.Year == year && x.PLNDOCRETDATE_SCGL_D.Value.Month == month);
         }
         //GetById
         public DocReturnPending GetByID(string deliveryNote)

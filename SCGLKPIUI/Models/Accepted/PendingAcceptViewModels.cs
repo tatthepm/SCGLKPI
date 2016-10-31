@@ -14,6 +14,7 @@ namespace SCGLKPIUI.Models {
         public string ShiptoName { get; set; }
         public string ShippingPoint { get; set; }
         public string TruckType { get; set; }
+        public string TenderDate { get; set; }
         public string PlanAccept { get; set; }
     }
 }

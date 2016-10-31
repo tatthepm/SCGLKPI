@@ -101,6 +101,7 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.LAST_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
+                model.LastTender = item.LTNRDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.PlanAccept = item.PLNACPDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.LastAccept = item.LACPDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 viewModel.Add(model);
@@ -154,6 +155,8 @@ namespace SCGLKPIUI.Controllers
                                 DEPARTMENT_Name = tmp_adjusted.DEPARTMENT_Name,
                                 SECTION_ID = tmp_adjusted.SECTION_ID,
                                 SECTION_NAME = tmp_adjusted.SECTION_NAME,
+                                SEGMENT = tmp_adjusted.SEGMENT,
+                                SUBSEGMENT = tmp_adjusted.SUBSEGMENT,
                                 MATFRIGRP = tmp_adjusted.MATFRIGRP,
                                 MATNAME = tmp_adjusted.MATNAME,
                                 REGION_ID = tmp_adjusted.REGION_ID,
@@ -165,6 +168,8 @@ namespace SCGLKPIUI.Controllers
                                 LAST_SHPG_LOC_NAME = tmp_adjusted.LAST_SHPG_LOC_NAME,
                                 VENDOR_CODE = tmp_adjusted.VENDOR_CODE,
                                 VENDOR_NAME = tmp_adjusted.VENDOR_NAME,
+                                LTNRDDATE = tmp_adjusted.LTNRDDATE,
+                                LTNRDDATE_D = tmp_adjusted.LTNRDDATE_D,
                                 PLNACPDDATE = tmp_adjusted.PLNACPDDATE,
                                 PLNACPDDATE_D = tmp_adjusted.PLNACPDDATE_D,
                                 LACPDDATE = tmp_adjusted.LACPDDATE,

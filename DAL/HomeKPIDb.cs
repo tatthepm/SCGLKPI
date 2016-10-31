@@ -24,7 +24,7 @@ namespace DAL {
             && x.SectionId == section_id 
             && x.Segment == segment
             && x.Year == year 
-            && x.LastMonth == month).Take(1000);
+            && x.LastMonth == month);
         }
 
         //GetLastMonth

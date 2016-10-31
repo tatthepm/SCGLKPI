@@ -19,7 +19,7 @@ namespace DAL {
         //GetByFilter
         public IQueryable<TenderedDelay> GetByFilter(string segment_id, int month, int year)
         {
-            return db.TenderedDelays.Where(x => x.SEGMENT == segment_id && x.FTNRDDATE_D.Value.Year == year && x.FTNRDDATE_D.Value.Month == month).Take(1000);
+            return db.TenderedDelays.Where(x => x.SEGMENT == segment_id && x.FTNRDDATE_D.Value.Year == year && x.FTNRDDATE_D.Value.Month == month);
         }
         //GetById
         public TenderedDelay GetByID(string shipmentNo) {

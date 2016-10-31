@@ -11,10 +11,13 @@ namespace SCGLKPIUI.Models.Accepted {
         public string RegionName { get; set; }
         public string Soldto { get; set; }
         public string SoldtoName { get; set; }
+        public string Segment { get; set; }
+        public string SubSegment { get; set; }
         public string Shipto { get; set; }
         public string ShiptoName { get; set; }
         public string ShippingPoint { get; set; }
         public string TruckType { get; set; }
+        public string LastTender { get; set; }
         public string PlanAccept { get; set; }
         public string LastAccept { get; set; }
         public string ReasonId { get; set; }

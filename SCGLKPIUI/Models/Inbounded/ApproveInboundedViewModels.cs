@@ -16,7 +16,7 @@ namespace SCGLKPIUI.Models {
         public string ShippingPoint { get; set; }
         public string TruckType { get; set; }
         public string PlanInbound { get; set; } //PLNINBDATE
-        public string ActualInbound { get; set; } //ACTGIDATE
+        public string LastTender { get; set; }
         public string ActualGI { get; set; } //ACTGIDATE
         public string thisReasonId { get; set; }
         public bool Approve { get; set; }

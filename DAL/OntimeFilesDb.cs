@@ -28,7 +28,7 @@ namespace DAL {
         /// <returns>IQueryable of OntimeFiles</returns>
         public IQueryable<OntimeFiles> GetByShipment(string DeliveryNo)
         {
-            return db.OntimeFiles.Where(x => x.DELVNO == DeliveryNo).Take(1000);
+            return db.OntimeFiles.Where(x => x.DELVNO == DeliveryNo);
         }
 
         //Insert

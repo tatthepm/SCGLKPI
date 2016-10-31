@@ -69,14 +69,14 @@ namespace SCGLKPIUI.Models
             return viewModel;
         }
 
-        public List<DropdownlistViewModels> GetDropDownListAcceptedMonth(string filtername)
+        public List<DropdownlistViewModels> GetDropDownListTenderedMonth(string filtername)
         {
 
             List<DropdownlistViewModels> viewModel = new List<DropdownlistViewModels>();
             switch (filtername)
             {
                 case "Matname":
-                    var ddlMatName = (from m in objBs.ontimeAcceptMonthBs.GetAll()
+                    var ddlMatName = (from m in objBs.ontimeTenderMonthBs.GetAll()
                                       where !String.IsNullOrEmpty(m.MatName)
                                       select new
                                       {
@@ -93,7 +93,7 @@ namespace SCGLKPIUI.Models
                     return viewModel;
 
                 case "Year":
-                    var ddlYear = (from y in objBs.ontimeAcceptMonthBs.GetAll()
+                    var ddlYear = (from y in objBs.ontimeTenderMonthBs.GetAll()
                                    select new
                                    {
                                        Id = y.Year,
@@ -127,72 +127,14 @@ namespace SCGLKPIUI.Models
             return viewModel;
         }
 
-        public List<DropdownlistViewModels> GetDropDownListMatNameDaily(string filtername)
-        {
-
-            List<DropdownlistViewModels> viewModel = new List<DropdownlistViewModels>();
-            switch (filtername)
-            {
-
-                case "ontime-tendered":
-                    return viewModel;
-
-                case "ontime-accepted":
-                    var ddlMatName = (from m in objBs.ontimeAcceptBs.GetAll()
-                                      where !String.IsNullOrEmpty(m.MatName)
-                                      select new
-                                      {
-                                          Id = m.MatFriGrp,
-                                          Name = m.MatName,
-                                      }).Distinct();
-                    foreach (var item in ddlMatName)
-                    {
-                        DropdownlistViewModels model = new DropdownlistViewModels();
-                        model.Id = item.Id;
-                        model.Name = item.Name;
-                        viewModel.Add(model);
-                    }
-                    return viewModel;
-
-                case "ontime-inbound":
-                    return viewModel;
-
-                case "ontime-outbound":
-                    return viewModel;
-
-                case "ontime-docreturn":
-                    return viewModel;
-                case "ontime-delivery":
-                    var ddlMatNameDelivery = (from m in objBs.ontimeDeliveryBs.GetAll()
-                                              where !String.IsNullOrEmpty(m.MatName)
-                                              select new
-                                              {
-                                                  Id = m.MatFriGrp,
-                                                  Name = m.MatName,
-                                              }).Distinct();
-                    foreach (var item in ddlMatNameDelivery)
-                    {
-                        DropdownlistViewModels model = new DropdownlistViewModels();
-                        model.Id = item.Id;
-                        model.Name = item.Name;
-                        viewModel.Add(model);
-                    }
-                    return viewModel;
-
-                default:
-                    break;
-            }
-            return viewModel;
-        }
-
-        public List<DropdownlistViewModels> GetDropDownListTenderedMonth(string filtername)
+        public List<DropdownlistViewModels> GetDropDownListAcceptedMonth(string filtername)
         {
 
             List<DropdownlistViewModels> viewModel = new List<DropdownlistViewModels>();
             switch (filtername)
             {
                 case "Matname":
-                    var ddlMatName = (from m in objBs.ontimeTenderMonthBs.GetAll()
+                    var ddlMatName = (from m in objBs.ontimeAcceptMonthBs.GetAll()
                                       where !String.IsNullOrEmpty(m.MatName)
                                       select new
                                       {
@@ -209,7 +151,7 @@ namespace SCGLKPIUI.Models
                     return viewModel;
 
                 case "Year":
-                    var ddlYear = (from y in objBs.ontimeTenderMonthBs.GetAll()
+                    var ddlYear = (from y in objBs.ontimeAcceptMonthBs.GetAll()
                                    select new
                                    {
                                        Id = y.Year,

@@ -7,13 +7,13 @@ namespace BOL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class updateequipmentTypes : IMigrationMetadata
+    public sealed partial class chg_28102016 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(updateequipmentTypes));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(chg_28102016));
         
         string IMigrationMetadata.Id
         {
-            get { return "201610100255450_update-equipmentTypes"; }
+            get { return "201610280655060_chg_28102016"; }
         }
         
         string IMigrationMetadata.Source

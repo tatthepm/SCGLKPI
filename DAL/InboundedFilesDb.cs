@@ -28,7 +28,7 @@ namespace DAL {
         /// <returns>IQueryable of InboundedFiles</returns>
         public IQueryable<InboundedFiles> GetByShipment(string DeliveryNo)
         {
-            return db.InboundedFiles.Where(x => x.DELVNO == DeliveryNo).Take(1000);
+            return db.InboundedFiles.Where(x => x.DELVNO == DeliveryNo);
         }
 
         //Insert

@@ -32,7 +32,7 @@ namespace DAL
         /// <returns>IQueryable of TenderedFiles</returns>
         public IQueryable<TenderedFiles> GetByShipment(string shipmentNo)
         {
-            return db.TenderedFiles.Where(x => x.SHPMNTNO == shipmentNo).Take(1000);
+            return db.TenderedFiles.Where(x => x.SHPMNTNO == shipmentNo);
         }
 
         //Insert

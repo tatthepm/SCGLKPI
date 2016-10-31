@@ -12,6 +12,9 @@ namespace BOL {
         [StringLength(10)]
         public string SHPMNTNO { get; set; }
 
+        [StringLength(10)]
+        public string DELVNO { get; set; }
+
         [StringLength(32)]
         public string CARRIER_ID { get; set; }
 
@@ -55,6 +58,9 @@ namespace BOL {
         [Index(IsUnique = false)]
         public string SEGMENT { get; set; }
 
+        [StringLength(20)]
+        public string SUBSEGMENT { get; set; }
+
         [StringLength(10)]
         public string SOLDTO { get; set; }
 
@@ -66,6 +72,11 @@ namespace BOL {
 
         [StringLength(280)]
         public string LAST_SHPG_LOC_NAME { get; set; }
+
+        public DateTime? SHCRDATE { get; set; }
+
+        [Column(TypeName = "datetime2")]
+        public DateTime? SHCRDATE_D { get; set; } //added
 
         [Column(TypeName = "datetime2")]
         public DateTime? PLNTNRDDATE { get; set; }

@@ -83,6 +83,7 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.LAST_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
+                model.ShcrDate = item.SHCRDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.PlanTender = item.PLNTNRDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.FirstTender = item.FTNRDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.Approve = Convert.ToBoolean(item.TNRD_ADJUST);
@@ -129,7 +130,7 @@ namespace SCGLKPIUI.Controllers
                         //update sum of adjust daily
                         DateTime FTNRDDate = Convert.ToDateTime(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).FTNRDDATE_D);
                         string matName = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).MATFRIGRP;
-                        string segmentId = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).SEGMENT_ID;
+                        string segmentId = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).DATA_GRP;
                         string sectionId = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).SECTION_ID;
                         string departmentId = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).DEPARTMENT_ID;
 
@@ -142,9 +143,9 @@ namespace SCGLKPIUI.Controllers
                                        && x.SectionId == sectionId
                                        && x.DepartmentId == departmentId).FirstOrDefault().Id;
                             OntimeTender ontimeTender = objBs.ontimeTenderBs.GetByID(id);
-                            int adjACPD = ontimeTender.AdjustTender + 1;
-                            ontimeTender.AdjustTender = adjACPD;
-                            ontimeTender.SumOfAdjustTender = ontimeTender.OnTime + adjACPD;
+                            int adjTNRD = ontimeTender.AdjustTender + 1;
+                            ontimeTender.AdjustTender = adjTNRD;
+                            ontimeTender.SumOfAdjustTender = ontimeTender.OnTime + adjTNRD;
                             objBs.ontimeTenderBs.Update(ontimeTender);
 
                             // update sum of adjust monthly

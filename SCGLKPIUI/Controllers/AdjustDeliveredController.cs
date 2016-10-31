@@ -96,6 +96,9 @@ namespace SCGLKPIUI.Controllers {
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
+                model.OrderCompDate = item.ORDCMPDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                model.RequestedDate = item.REQUESTED_DATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                model.ShcrDate = item.SHCRDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.PlanDelivery = item.PLNONTIMEDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.ActualDelivery = item.ACDLVDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.ActualGI = item.ACTGIDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
@@ -159,9 +162,14 @@ namespace SCGLKPIUI.Controllers {
                                 SOLDTO = tmp_adjusted.SOLDTO,
                                 SOLDTO_NAME = tmp_adjusted.SOLDTO_NAME,
                                 SHIPTO = tmp_adjusted.SHIPTO,
+                                SEGMENT = tmp_adjusted.SEGMENT,
+                                SUBSEGMENT = tmp_adjusted.SUBSEGMENT,
                                 TO_SHPG_LOC_NAME = tmp_adjusted.TO_SHPG_LOC_NAME,
                                 VENDOR_CODE = tmp_adjusted.VENDOR_CODE,
                                 VENDOR_NAME = tmp_adjusted.VENDOR_NAME,
+                                ORDCMPDATE = tmp_adjusted.ORDCMPDATE,
+                                REQUESTED_DATE = tmp_adjusted.REQUESTED_DATE,
+                                SHCRDATE = tmp_adjusted.SHCRDATE,
                                 PLNONTIMEDATE = tmp_adjusted.PLNONTIMEDATE,
                                 PLNONTIMEDATE_D = tmp_adjusted.PLNONTIMEDATE_D,
                                 ACDLVDATE = tmp_adjusted.ACDLVDATE,

@@ -20,7 +20,7 @@ namespace DAL {
         //GetByFilter
         public IQueryable<OntimePending> GetByFilter(string department_id, string section_id, int month, int year)
         {
-            return db.OntimePendings.Where(x => x.DEPARTMENT_ID == department_id && x.SECTION_ID == section_id && x.PLNONTIMEDATE_D.Value.Year == year && x.PLNONTIMEDATE_D.Value.Month == month).Take(1000);
+            return db.OntimePendings.Where(x => x.DEPARTMENT_ID == department_id && x.SECTION_ID == section_id && x.PLNONTIMEDATE_D.Value.Year == year && x.PLNONTIMEDATE_D.Value.Month == month);
         }
 
         //GetById

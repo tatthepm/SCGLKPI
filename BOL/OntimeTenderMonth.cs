@@ -28,6 +28,8 @@ namespace BOL {
 
         [StringLength(20)]
         public string Segment { get; set; }
+        [StringLength(20)]
+        public string SubSegment { get; set; }
 
         public string MatFriGrp { get; set; }
 

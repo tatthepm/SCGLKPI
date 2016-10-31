@@ -17,7 +17,7 @@ namespace SCGLKPIUI.Controllers {
                 DropDownList ddl = new DropDownList();
                 var ddlDept = ddl.GetDropDownList("Department");
                 var ddlSec = ddl.GetDropDownList("Section");
-                var ddlMatName = ddl.GetDropDownListMatNameDaily("ontime-accepted");
+                var ddlMatName = ddl.GetDropDownListDocReturnMonth("Matname");
                 ViewBag.DepartmentId = new SelectList(ddlDept.ToList(), "Id", "Name");
                 ViewBag.SectionId = new SelectList(ddlSec.ToList(), "Id", "Name");
                 ViewBag.MatNameId = new SelectList(ddlMatName.ToList(), "Id", "Name");
@@ -78,7 +78,7 @@ namespace SCGLKPIUI.Controllers {
                     q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => x.ActualGiDate >= FromDateSearch.Value.Date && x.ActualGiDate <= ToDateSearch);
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
@@ -141,7 +141,7 @@ namespace SCGLKPIUI.Controllers {
                     q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => x.ActualGiDate >= FromDateSearch.Value.Date && x.ActualGiDate <= ToDateSearch);
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
@@ -207,7 +207,7 @@ namespace SCGLKPIUI.Controllers {
                     q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => x.ActualGiDate >= FromDateSearch.Value.Date && x.ActualGiDate <= ToDateSearch);
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
@@ -271,7 +271,7 @@ namespace SCGLKPIUI.Controllers {
                     q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => x.ActualGiDate >= FromDateSearch.Value.Date && x.ActualGiDate <= ToDateSearch);
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {

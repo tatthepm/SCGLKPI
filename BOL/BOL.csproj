@@ -61,9 +61,25 @@
     <Compile Include="Migrations\201610031248043_update-2.Designer.cs">
       <DependentUpon>201610031248043_update-2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201610100255450_update-equipmentTypes.cs" />
-    <Compile Include="Migrations\201610100255450_update-equipmentTypes.Designer.cs">
-      <DependentUpon>201610100255450_update-equipmentTypes.cs</DependentUpon>
+    <Compile Include="Migrations\201610270334198_Update-date.cs" />
+    <Compile Include="Migrations\201610270334198_Update-date.Designer.cs">
+      <DependentUpon>201610270334198_Update-date.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610280235165_updateDB-date.cs" />
+    <Compile Include="Migrations\201610280235165_updateDB-date.Designer.cs">
+      <DependentUpon>201610280235165_updateDB-date.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610280655060_chg_28102016.cs" />
+    <Compile Include="Migrations\201610280655060_chg_28102016.Designer.cs">
+      <DependentUpon>201610280655060_chg_28102016.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610280756551_Add-SHPMNTNO.cs" />
+    <Compile Include="Migrations\201610280756551_Add-SHPMNTNO.Designer.cs">
+      <DependentUpon>201610280756551_Add-SHPMNTNO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610280806266_Add-missingDB.cs" />
+    <Compile Include="Migrations\201610280806266_Add-missingDB.Designer.cs">
+      <DependentUpon>201610280806266_Add-missingDB.cs</DependentUpon>
     </Compile>
     <Compile Include="OntimeFiles.cs" />
     <Compile Include="DocReturnFiles.cs" />
@@ -473,8 +489,20 @@
     <EmbeddedResource Include="Migrations\201610031248043_update-2.resx">
       <DependentUpon>201610031248043_update-2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610100255450_update-equipmentTypes.resx">
-      <DependentUpon>201610100255450_update-equipmentTypes.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610270334198_Update-date.resx">
+      <DependentUpon>201610270334198_Update-date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610280235165_updateDB-date.resx">
+      <DependentUpon>201610280235165_updateDB-date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610280655060_chg_28102016.resx">
+      <DependentUpon>201610280655060_chg_28102016.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610280756551_Add-SHPMNTNO.resx">
+      <DependentUpon>201610280756551_Add-SHPMNTNO.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610280806266_Add-missingDB.resx">
+      <DependentUpon>201610280806266_Add-missingDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

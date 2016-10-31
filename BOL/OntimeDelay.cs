@@ -12,6 +12,12 @@ namespace BOL {
         [StringLength(10)]
         public string DELVNO { get; set; }
 
+        [StringLength(10)]
+        public string SALEORDNO { get; set; }
+
+        [StringLength(10)]
+        public string SHPMNTNO { get; set; }
+
         [StringLength(32)]
         public string CARRIER_ID { get; set; }
 
@@ -50,6 +56,12 @@ namespace BOL {
 
         [StringLength(100)]
         public string SECTION_NAME { get; set; }
+        [StringLength(20)]
+        [Index(IsUnique = false)]
+        public string SEGMENT { get; set; }
+
+        [StringLength(20)]
+        public string SUBSEGMENT { get; set; }
 
         [StringLength(10)]
         public string SOLDTO { get; set; }
@@ -64,10 +76,18 @@ namespace BOL {
         public string TO_SHPG_LOC_NAME { get; set; }
 
         [Column(TypeName = "datetime2")]
+        public DateTime? SHCRDATE { get; set; }
+
+        [Column(TypeName = "datetime2")]
         public DateTime? ACTGIDATE { get; set; }
 
         [Column(TypeName = "datetime2")]
         public DateTime? ACTGIDATE_D { get; set; }
+
+        [Column(TypeName = "datetime2")]
+        public DateTime? ORDCMPDATE { get; set; }
+        [Column(TypeName = "datetime2")]
+        public DateTime? REQUESTED_DATE { get; set; }
 
         [Column(TypeName = "datetime2")]
         public DateTime? PLNONTIMEDATE { get; set; }

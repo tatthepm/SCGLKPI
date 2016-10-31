@@ -279,6 +279,8 @@
                { data: "RegionName" },
                { data: "SoldtoName" },
                { data: "ShiptoName" },
+               { data: "ShcrDate" },
+               { data: "PlanTender" },
                { data: "FirstTender" },
                { data: "ShippingPoint" },
                { data: "CarrierId" },
@@ -289,17 +291,17 @@
                                 "mRender": function (data, type, full) {
                                     return reasonString;
                                 },
-                                "targets": 8
+                                "targets": 10
                             },
                             {
-                                "targets": 9,
+                                "targets": 11,
                                 "data": function (row, type, val, meta) {
                                     return '<input name="fileInput" type="file" multiple>\n\
                                             <input type="hidden" name="fileName" value="' + row.Shipment + '">';
                                 }
                             },
                             {
-                                "targets": 10,
+                                "targets": 12,
                                 "data": function (row, type, val, meta) {
                                     return '<input type="text" name="txtRemark" />\n\
                                             <input type="hidden" name="txtSM" value="' + row.Shipment + '">\n\

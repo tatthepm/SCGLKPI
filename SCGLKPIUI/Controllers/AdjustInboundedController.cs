@@ -94,8 +94,8 @@ namespace SCGLKPIUI.Controllers {
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
+                model.LastTender = item.LTNRDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.PlanInbound = item.PLNINBDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
-                model.ActualInbound = item.ACTGIDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.ActualGI = item.ACTGIDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 viewModel.Add(model);
             }
@@ -155,9 +155,13 @@ namespace SCGLKPIUI.Controllers {
                                 SOLDTO = tmp_adjusted.SOLDTO,
                                 SOLDTO_NAME = tmp_adjusted.SOLDTO_NAME,
                                 SHIPTO = tmp_adjusted.SHIPTO,
+                                SEGMENT = tmp_adjusted.SEGMENT,
+                                SUBSEGMENT = tmp_adjusted.SUBSEGMENT,
                                 TO_SHPG_LOC_NAME = tmp_adjusted.TO_SHPG_LOC_NAME,
                                 VENDOR_CODE = tmp_adjusted.VENDOR_CODE,
                                 VENDOR_NAME = tmp_adjusted.VENDOR_NAME,
+                                LTNRDDATE = tmp_adjusted.LTNRDDATE,
+                                LTNRDDATE_D = tmp_adjusted.LTNRDDATE_D,
                                 PLNINBDATE = tmp_adjusted.PLNINBDATE,
                                 PLNINBDATE_D = tmp_adjusted.PLNINBDATE_D,
                                 ACTGIDATE = tmp_adjusted.ACTGIDATE,

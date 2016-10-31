@@ -15,6 +15,9 @@ namespace SCGLKPIUI.Models.Delivered {
         public string ShiptoName { get; set; }
         public string ShippingPoint { get; set; }
         public string TruckType { get; set; }
+        public string OrderCompDate { get; set; }
+        public string RequestedDate { get; set; }
+        public string ShcrDate { get; set; }
         public string PlanDelivery { get; set; } //PLNONTIMEDATE
         public string ActualDelivery { get; set; } //ACDLVDATE
         public string ActualGI { get; set; } //ACTGIDATE
