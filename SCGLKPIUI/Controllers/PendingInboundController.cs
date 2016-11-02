@@ -78,6 +78,7 @@ namespace SCGLKPIUI.Controllers
             foreach (var item in q)
             {
                 PendingInboundViewModels model = new PendingInboundViewModels();
+                model.Shipment = item.SHPMNTNO;
                 model.DeliveryNote = item.DELVNO;
                 model.RegionName = item.REGION_NAME_TH;
                 model.SoldtoName = item.SOLDTO_NAME;

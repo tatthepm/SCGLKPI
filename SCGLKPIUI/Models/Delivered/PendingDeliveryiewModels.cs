@@ -5,6 +5,7 @@ using System.Web;
 
 namespace SCGLKPIUI.Models.Delivered {
     public class PendingDeliveryViewModels {
+        public string Shipment { get; set; }
         public string DeliveryNote { get; set; }
         public string RegionId { get; set; }
         public string RegionName { get; set; }
