@@ -76,12 +76,12 @@ namespace SCGLKPIUI.Models
             switch (filtername)
             {
                 case "Matname":
-                    var ddlMatName = (from m in objBs.ontimeTenderMonthBs.GetAll()
-                                      where !String.IsNullOrEmpty(m.MatName)
+                    var ddlMatName = (from m in objBs.dWH_ONTIME_DNBs.GetAll()
+                                      where !String.IsNullOrEmpty(m.MATNAME)
                                       select new
                                       {
-                                          Id = m.MatFriGrp,
-                                          Name = m.MatName
+                                          Id = m.MATFRIGRP,
+                                          Name = m.MATNAME
                                       }).Distinct();
                     foreach (var item in ddlMatName)
                     {
@@ -117,6 +117,57 @@ namespace SCGLKPIUI.Models
                         DropdownlistViewModels model = new DropdownlistViewModels();
                         model.Id = Convert.ToString(i + 1);
                         model.Name = months[i];
+                        viewModel.Add(model);
+                    }
+                    return viewModel;
+
+                case "ShippingPoint":
+                    var ddlShpPnt = (from m in objBs.dWH_ONTIME_DNBs.GetAll()
+                                      where !String.IsNullOrEmpty(m.SHPPOINT)
+                                      select new
+                                      {
+                                          Id = m.SHPPOINT,
+                                          Name = m.SHPPOINT
+                                      }).Distinct();
+                    foreach (var item in ddlShpPnt)
+                    {
+                        DropdownlistViewModels model = new DropdownlistViewModels();
+                        model.Id = item.Id;
+                        model.Name = item.Name;
+                        viewModel.Add(model);
+                    }
+                    return viewModel;
+
+                case "ShipTo":
+                    var ddlShpTo = (from m in objBs.dWH_ONTIME_SHIPMENTBs.GetAll()
+                                     where !String.IsNullOrEmpty(m.LAST_SHPG_LOC_NAME)
+                                     select new
+                                     {
+                                         Id = m.LAST_SHPG_LOC_NAME,
+                                         Name = m.LAST_SHPG_LOC_NAME
+                                     }).Distinct();
+                    foreach (var item in ddlShpTo)
+                    {
+                        DropdownlistViewModels model = new DropdownlistViewModels();
+                        model.Id = item.Id;
+                        model.Name = item.Name;
+                        viewModel.Add(model);
+                    }
+                    return viewModel;
+
+                case "TruckType":
+                    var ddlTruckType = (from m in objBs.dWH_ONTIME_SHIPMENTBs.GetAll()
+                                    where !String.IsNullOrEmpty(m.TRUCK_TYPE)
+                                    select new
+                                    {
+                                        Id = m.TRUCK_TYPE,
+                                        Name = m.TRUCK_TYPE
+                                    }).Distinct();
+                    foreach (var item in ddlTruckType)
+                    {
+                        DropdownlistViewModels model = new DropdownlistViewModels();
+                        model.Id = item.Id;
+                        model.Name = item.Name;
                         viewModel.Add(model);
                     }
                     return viewModel;

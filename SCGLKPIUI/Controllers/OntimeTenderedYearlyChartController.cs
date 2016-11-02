@@ -16,6 +16,13 @@ namespace SCGLKPIUI.Controllers {
                 DropDownList ddl = new DropDownList();
                 var ddlSeg = ddl.GetDropDownListSegment();
                 ViewBag.SegmentId = new SelectList(ddlSeg.ToList(), "Id", "Name");
+                var ddlShipPoint = ddl.GetDropDownListTenderedMonth("ShippingPoint");
+                var ddlShipTo = ddl.GetDropDownListTenderedMonth("ShipTo");
+                var ddlTruckType = ddl.GetDropDownListTenderedMonth("TruckType");
+
+                ViewBag.ShipPoint = new SelectList(ddlShipPoint.ToList(), "Id", "Name");
+                ViewBag.ShipTo = new SelectList(ddlShipTo.ToList(), "Id", "Name");
+                ViewBag.TruckType = new SelectList(ddlTruckType.ToList(), "Id", "Name");
             }
             catch (Exception ex)
             {
@@ -24,7 +31,7 @@ namespace SCGLKPIUI.Controllers {
             return View();
         }
 
-        public JsonResult jsonData(string SegmentId) {
+        public JsonResult jsonData(string SegmentId, string ShipPoint, string ShipTo, string TruckType) {
 
             //add summary data
             List<TenderedOntimeChartYearlyViewModels> viewSummaryModel = new List<TenderedOntimeChartYearlyViewModels>();
@@ -37,6 +44,18 @@ namespace SCGLKPIUI.Controllers {
             //filter Segment
             if (!String.IsNullOrEmpty(SegmentId))
                 q = q.Where(x => x.Segment == SegmentId);
+
+            //filter Shipping Point
+            if (!String.IsNullOrEmpty(ShipPoint))
+                q = q.Where(x => x.SHPPOINT == ShipPoint);
+
+            //filter Shipping To
+            if (!String.IsNullOrEmpty(ShipTo))
+                q = q.Where(x => x.SHIPTO == ShipTo);
+
+            //filter Truck Type
+            if (!String.IsNullOrEmpty(TruckType))
+                q = q.Where(x => x.TRUCK_TYPE == TruckType);
 
             var results = (from c in q
                            group c by new { c.Year } into g
@@ -63,7 +82,7 @@ namespace SCGLKPIUI.Controllers {
             return Json(viewSummaryModel, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult jsonPieData(string SegmentId) {
+        public JsonResult jsonPieData(string SegmentId, string ShipPoint, string ShipTo, string TruckType) {
 
             //add summary data
             List<TenderedOntimePieChartYearlyViewModels> viewSummaryModel = new List<TenderedOntimePieChartYearlyViewModels>();
@@ -77,6 +96,18 @@ namespace SCGLKPIUI.Controllers {
             //filter Segment
             if (!String.IsNullOrEmpty(SegmentId))
                 q = q.Where(x => x.Segment == SegmentId);
+
+            //filter Shipping Point
+            if (!String.IsNullOrEmpty(ShipPoint))
+                q = q.Where(x => x.SHPPOINT == ShipPoint);
+
+            //filter Shipping To
+            if (!String.IsNullOrEmpty(ShipTo))
+                q = q.Where(x => x.SHIPTO == ShipTo);
+
+            //filter Truck Type
+            if (!String.IsNullOrEmpty(TruckType))
+                q = q.Where(x => x.TRUCK_TYPE == TruckType);
 
             int TotalTender = q.Sum(x => x.SumOfTender);
             var results = (from c in q
@@ -104,7 +135,7 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public JsonResult OntimeTenderedTableYearly(string SegmentId) {
+        public JsonResult OntimeTenderedTableYearly(string SegmentId, string ShipPoint, string ShipTo, string TruckType) {
 
             // add IEnumerable<AcceptOntimeMonthlyViewModels>
             List<TenderedOntimeYearlyViewModels> viewModel = new List<TenderedOntimeYearlyViewModels>();
@@ -116,6 +147,18 @@ namespace SCGLKPIUI.Controllers {
             //filter Segment
             if (!String.IsNullOrEmpty(SegmentId))
                 q = q.Where(x => x.Segment == SegmentId);
+
+            //filter Shipping Point
+            if (!String.IsNullOrEmpty(ShipPoint))
+                q = q.Where(x => x.SHPPOINT == ShipPoint);
+
+            //filter Shipping To
+            if (!String.IsNullOrEmpty(ShipTo))
+                q = q.Where(x => x.SHIPTO == ShipTo);
+
+            //filter Truck Type
+            if (!String.IsNullOrEmpty(TruckType))
+                q = q.Where(x => x.TRUCK_TYPE == TruckType);
 
             foreach (var item in q.OrderBy(x => x.Year).ThenBy(x => x.DepartmentName)) {
                 TenderedOntimeYearlyViewModels model = new TenderedOntimeYearlyViewModels();
@@ -138,7 +181,7 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public JsonResult OntimeTenderedTableSummaryYearly(string SegmentId) {
+        public JsonResult OntimeTenderedTableSummaryYearly(string SegmentId, string ShipPoint, string ShipTo, string TruckType) {
 
             // add IEnumerable<AcceptOntimeSummaryViewModels>
             List<TenderedOntimeSummaryYearlyViewModels> viewSummaryModel = new List<TenderedOntimeSummaryYearlyViewModels>();
@@ -152,7 +195,19 @@ namespace SCGLKPIUI.Controllers {
             if (!String.IsNullOrEmpty(SegmentId))
                 q = q.Where(x => x.Segment == SegmentId);
 
-           var results = (from c in q
+            //filter Shipping Point
+            if (!String.IsNullOrEmpty(ShipPoint))
+                q = q.Where(x => x.SHPPOINT == ShipPoint);
+
+            //filter Shipping To
+            if (!String.IsNullOrEmpty(ShipTo))
+                q = q.Where(x => x.SHIPTO == ShipTo);
+
+            //filter Truck Type
+            if (!String.IsNullOrEmpty(TruckType))
+                q = q.Where(x => x.TRUCK_TYPE == TruckType);
+
+            var results = (from c in q
                            group c by new { c.Segment, c.SectionName } into g
                            select new {
                                SegmentId = g.Key.Segment,

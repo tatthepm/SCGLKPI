@@ -64,6 +64,22 @@
     </div>
 </div>
 
+<div>
+    <div id="massAdjust" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Upload CSV files.</h4>
+                </div>
+                <div class="modal-body">
+                    <input name="massFiles" type="file" multiple>
+                    <input type="hidden" name="massUpload" value="fileUploaded">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Styles {
     @Styles.Render("~/bundles/datatables/css")
     @Styles.Render("~/bundles/xeditable/css")
@@ -120,7 +136,31 @@
 
         //#region 2 filter section
         //#endregion
-
+        $('#massAdjust ').on('change', 'input[type="file"]', function (e) {
+            files = event.target.files;
+            var formdata = new FormData(); //FormData object
+            //var fileName = $(this).parent().find("input[name='massUpload']").val();
+            var r = confirm("กด OK เพื่อยืนยันการอัพโหลด");
+            if (r == true) {
+                for (i = 0; i < files.length; i++) {
+                    //Appending each file to FormData object
+                    formdata.append('massUpload.csv', files[i]);
+                }
+                //Creating an XMLHttpRequest and sending
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/AdjustAccepted/MassAdjust/');
+                xhr.send(formdata);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        alert(xhr.responseText);
+                    }
+                }
+            }
+            else {
+                alert("ยกเลิกการอัพโหลด");
+            }
+            $("#massAdjust").hide();
+        });
         //#region 3 filter matname
         //#endregion
 
@@ -158,6 +198,10 @@
             });
         });
         //#endregion
+
+        $("#btnMassUpload").click(function () {
+            $("#massAdjust").show();
+        });
 
         $("#btnSearch").click(function () {
             //if ($('#DepartmentId').val() == "") {
@@ -205,6 +249,7 @@
 
         }); //end btnSerarch click
 
+        // Reason support upload
         $('#adjustAcceptedTable tbody').on('change', 'input[type="file"]', function (e) {
             files = event.target.files;
             var formdata = new FormData(); //FormData object
@@ -331,12 +376,14 @@
                 ],
                 "columnDefs": [
                             {
+                                "title":"Reason",
                                 "mRender": function (data, type, full) {
                                     return reasonString;
                                 },
                                 "targets": 10
                             },
                             {
+                                "title":"Remark",
                                 "targets": 11,
                                 "data": function (row, type, val, meta) {
                                     return '<input name="fileInput" type="file" multiple>\n\

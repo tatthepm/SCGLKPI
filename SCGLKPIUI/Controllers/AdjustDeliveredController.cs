@@ -86,6 +86,7 @@ namespace SCGLKPIUI.Controllers {
             foreach (var item in q)
             {
                 AdjustDeliveredViewModels model = new AdjustDeliveredViewModels();
+                model.Shipment = item.SHPMNTNO;
                 model.DeliveryNote = item.DELVNO;
                 model.CarrierId = item.CARRIER_ID;
                 model.RegionId = item.REGION_ID;
@@ -96,9 +97,30 @@ namespace SCGLKPIUI.Controllers {
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
-                model.OrderCompDate = item.ORDCMPDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
-                model.RequestedDate = item.REQUESTED_DATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
-                model.ShcrDate = item.SHCRDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                if (item.REQUESTED_DATE != null)
+                {
+                    model.RequestedDate = item.REQUESTED_DATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                }
+                else
+                {
+                    model.RequestedDate = "";
+                }
+                if (item.ORDCMPDATE != null)
+                {
+                    model.OrderCompDate = item.ORDCMPDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                }
+                else
+                {
+                    model.OrderCompDate = "";
+                }
+                if (item.SHCRDATE != null)
+                {
+                    model.ShcrDate = item.SHCRDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                }
+                else
+                {
+                    model.ShcrDate = "";
+                }
                 model.PlanDelivery = item.PLNONTIMEDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.ActualDelivery = item.ACDLVDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.ActualGI = item.ACTGIDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));

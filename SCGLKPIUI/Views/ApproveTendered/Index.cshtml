@@ -287,6 +287,11 @@
             var segmentId = $('#SegmentId').val();
             var yearId = $('#YearId').val();
             var monthId = $('#MonthId').val();
+
+            var ShipPoint = $('#ShipPoint').val();
+            var ShipTo = $('#ShipTo').val();
+            var TruckType = $('#TruckType').val();
+
             var adjustApproveTender = $('#approveTenderedTable').dataTable();
 
             adjustApproveTender.fnDestroy();
@@ -300,6 +305,9 @@
                         d.segmentId = segmentId
                         d.YearId = yearId;
                         d.MonthId = monthId;
+                        d.ShipPoint = ShipPoint;
+                        d.ShipTo = ShipTo;
+                        d.TruckType = TruckType;
                     },
                     "dataSrc": ""
                 },

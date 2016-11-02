@@ -347,11 +347,16 @@
                     "dataSrc": ""
                 },
                 columns: [
-                    { data: "Dn" },
+                    { data: "Shipment" },
+                    { data: "DeliveryNote" },
                     { data: "RegionName" },
                     { data: "SoldtoName" },
                     { data: "ShiptoName" },
-                    { data: "ActualGI" },
+                    { data: "OrderCompDate" },
+                    { data: "RequestedDate" },
+                    { data: "ShcrDate" },
+                    { data: "PlanDelivery" },
+                    { data: "ActualDelivery" },
                     { data: "ShippingPoint" },
                     { data: "CarrierId" },
                     { data: "TruckType" },
@@ -368,7 +373,7 @@
                     }
                 ],
                 'columnDefs': [{
-                    "targets": 10,
+                    "targets": 15,
                     "data": function (row, type, val, meta) {
                         return '<input type="text" name="txtRemark" />\n\
                                 <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\
@@ -382,7 +387,7 @@
                     },
                 },
                 {
-                    "targets": 11,
+                    "targets": 16,
                     "data": function (row, type, val, meta) {
                         if (row.FilePath != "#") {
                             return '<a href="' + row.FilePath + '">Download File</a>';

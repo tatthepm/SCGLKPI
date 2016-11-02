@@ -9,6 +9,9 @@ using BOL;
 using SCGLKPIUI.Models;
 using SCGLKPIUI.Models.Accepted;
 using System.Transactions;
+using System.Data;
+using System.IO;
+using OfficeOpenXml;
 
 namespace SCGLKPIUI.Controllers
 {
@@ -57,10 +60,10 @@ namespace SCGLKPIUI.Controllers
         {
             var result = (from r in objBs.reasonAcceptedBs.GetAll().Where(x => x.IsDeleted == false)
                           select new
-                            {
-                                Id = r.Id,
-                                Name = r.Name
-                            }).Distinct().OrderBy(x => x.Name);
+                          {
+                              Id = r.Id,
+                              Name = r.Name
+                          }).Distinct().OrderBy(x => x.Name);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -234,5 +237,122 @@ namespace SCGLKPIUI.Controllers
                 return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
             }
         }
+
+        public JsonResult MassAdjust()
+        {
+            using (TransactionScope Trans = new TransactionScope())
+            {
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    string reference = Request.Files.AllKeys[i];
+                    HttpPostedFileBase FileUpload = Request.Files[i]; //Uploaded file
+                                                                      //Use the following properties to get file's name, size and MIMEType
+                    string fileName = reference;
+                    string targetpath = Server.MapPath("~/Icons/Docs/");
+                    FileUpload.SaveAs(targetpath + fileName);
+                    string pathToExcelFile = targetpath + fileName;
+                    var ext = Path.GetExtension(pathToExcelFile);
+
+                    int countSM = 0;
+
+                    //if (FileUpload.ContentType == "application/vnd.ms-excel" || FileUpload.ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    if(ext == ".csv")
+                    {
+                        using (var stream = System.IO.File.OpenRead(pathToExcelFile))
+                        using (var reader = new StreamReader(stream))
+                        {
+                            var csvData = CsvParserModels.ParseHeadAndTail(reader, ',', '"');
+
+                            var header = csvData.Item1;
+                            var lines = csvData.Item2;
+
+                            foreach (var line in lines)
+                            {
+                                try
+                                {
+
+                                    //Do record adjust data - send to approval
+                                    if (!String.IsNullOrEmpty(line[0]))
+                                    {
+                                        string sm = line[0];
+                                        string reasonName = line[10];
+                                        int reasonId = objBs.reasonAcceptedBs.GetAll().Where(x => x.Name == reasonName).FirstOrDefault().Id;
+                                        string remark = line[11];
+                                        bool isadjust = objBs.reasonAcceptedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
+                                        DWH_ONTIME_SHIPMENT ontimeShipment = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm);
+                                        //Change adjustable here
+                                        ontimeShipment.ACPD_ADJUST = 0;
+                                        ontimeShipment.ACPD_ADJUST_BY = User.Identity.Name;
+                                        ontimeShipment.ACPD_ADJUST_DATE = DateTime.Now;
+                                        ontimeShipment.ACPD_REASON = reasonName;
+                                        ontimeShipment.ACPD_REASON_ID = Convert.ToInt32(reasonId);
+                                        ontimeShipment.ACPD_REMARK = remark;
+                                        objBs.dWH_ONTIME_SHIPMENTBs.Update(ontimeShipment);
+
+                                        AcceptedDelay tmp_adjusted = objBs.acceptedDelayBs.GetByID(sm);
+                                        AcceptedAdjusted tmp_toInsert = new AcceptedAdjusted
+                                        {
+                                            CARRIER_ID = tmp_adjusted.CARRIER_ID,
+                                            DEPARTMENT_ID = tmp_adjusted.DEPARTMENT_ID,
+                                            DEPARTMENT_Name = tmp_adjusted.DEPARTMENT_Name,
+                                            SECTION_ID = tmp_adjusted.SECTION_ID,
+                                            SECTION_NAME = tmp_adjusted.SECTION_NAME,
+                                            SEGMENT = tmp_adjusted.SEGMENT,
+                                            SUBSEGMENT = tmp_adjusted.SUBSEGMENT,
+                                            MATFRIGRP = tmp_adjusted.MATFRIGRP,
+                                            MATNAME = tmp_adjusted.MATNAME,
+                                            REGION_ID = tmp_adjusted.REGION_ID,
+                                            REGION_NAME_EN = tmp_adjusted.REGION_NAME_EN,
+                                            REGION_NAME_TH = tmp_adjusted.REGION_NAME_TH,
+                                            SOLDTO = tmp_adjusted.SOLDTO,
+                                            SOLDTO_NAME = tmp_adjusted.SOLDTO_NAME,
+                                            SHIPTO = tmp_adjusted.SHIPTO,
+                                            LAST_SHPG_LOC_NAME = tmp_adjusted.LAST_SHPG_LOC_NAME,
+                                            VENDOR_CODE = tmp_adjusted.VENDOR_CODE,
+                                            VENDOR_NAME = tmp_adjusted.VENDOR_NAME,
+                                            LTNRDDATE = tmp_adjusted.LTNRDDATE,
+                                            LTNRDDATE_D = tmp_adjusted.LTNRDDATE_D,
+                                            PLNACPDDATE = tmp_adjusted.PLNACPDDATE,
+                                            PLNACPDDATE_D = tmp_adjusted.PLNACPDDATE_D,
+                                            LACPDDATE = tmp_adjusted.LACPDDATE,
+                                            LACPDDATE_D = tmp_adjusted.LACPDDATE_D,
+                                            SHPPOINT = tmp_adjusted.SHPPOINT,
+                                            TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
+                                            SHPMNTNO = tmp_adjusted.SHPMNTNO,
+                                            LOADED_DATE = DateTime.Now,
+                                            ACPD_ADJUST = isadjust ? 1 : 0,
+                                            ACPD_ADJUST_BY = User.Identity.Name,
+                                            ACPD_ADJUST_DATE = DateTime.Now,
+                                            ACPD_REASON = reasonName,
+                                            ACPD_REASON_ID = Convert.ToInt32(reasonId),
+                                            ACPD_REMARK = remark
+                                        };
+                                        //insert waiting ofr approval
+                                        objBs.acceptedAdjustedBs.Insert(tmp_toInsert);
+                                        //delete AcceptedDelays
+                                        objBs.acceptedDelayBs.Delete(sm);
+
+                                        countSM++;
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    return Json("อัพโหลดไม่สำเร็จ เนื่องจากข้อมูลผิดในไฟล์ CSV code :: " + ex.ToString());
+                                }
+                            }
+                        }
+                        Trans.Complete();
+                        return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
+                    }
+                    //deleting excel file from folder  
+                    if ((System.IO.File.Exists(pathToExcelFile)))
+                    {
+                        System.IO.File.Delete(pathToExcelFile);
+                    }
+                }
+            }
+            return Json("อัพโหลดไม่สำเร็จ ประเภทไฟล์ไม่ถูกต้อง");
+        }
     }
 }
+

@@ -81,6 +81,10 @@
     <Compile Include="Migrations\201610280806266_Add-missingDB.Designer.cs">
       <DependentUpon>201610280806266_Add-missingDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611020320396_Update-KPITender.cs" />
+    <Compile Include="Migrations\201611020320396_Update-KPITender.Designer.cs">
+      <DependentUpon>201611020320396_Update-KPITender.cs</DependentUpon>
+    </Compile>
     <Compile Include="OntimeFiles.cs" />
     <Compile Include="DocReturnFiles.cs" />
     <Compile Include="OutboundedFiles.cs" />
@@ -503,6 +507,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610280806266_Add-missingDB.resx">
       <DependentUpon>201610280806266_Add-missingDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611020320396_Update-KPITender.resx">
+      <DependentUpon>201611020320396_Update-KPITender.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,7 +5,8 @@ using System.Web;
 
 namespace SCGLKPIUI.Models {
     public class ApproveDeliveredViewModels {
-        public string Dn { get; set; }
+        public string Shipment { get; set; }
+        public string DeliveryNote { get; set; }
         public string CarrierId { get; set; }
         public string RegionId { get; set; }
         public string RegionName { get; set; }

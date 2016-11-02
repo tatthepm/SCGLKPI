@@ -279,6 +279,7 @@
     <Compile Include="Models\Accepted\PendingAcceptViewModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Accepted\AdjustAcceptedViewModels.cs" />
+    <Compile Include="Models\CsvParserModels.cs" />
     <Compile Include="Models\Delivered\ApproveDeliveredViewModels.cs" />
     <Compile Include="Models\Delivered\PendingDeliveryiewModels.cs" />
     <Compile Include="Models\Delivered\AdjustDeliveredViewModels.cs" />
@@ -384,7 +385,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app_offline.htm" />
+    <Content Include="app_offline_ex.htm" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\green%402x.png" />
@@ -3016,8 +3017,8 @@
     <Content Include="Views\OntimeOutboundedMonthlyChart\pv_OutboundOntimeChartMonthly.cshtml" />
     <Content Include="Views\OntimeOutboundedMonthlyChart\pv_OutboundOntimeTableMonthly.cshtml" />
     <Content Include="Views\ReasonOutbounded\Index.cshtml" />
-    <Content Include="Views\AdjustOutbounded\Index.cshtml" />
-    <Content Include="Views\AdjustOutbounded\pv_AdjustOutbounded.cshtml" />
+    <Content Include="Views\AdjustInbounded\AdjustOutbounded\Index.cshtml" />
+    <Content Include="Views\AdjustInbounded\AdjustOutbounded\pv_AdjustOutbounded.cshtml" />
     <Content Include="Views\OntimeDocReturnedDailyChart\Index.cshtml" />
     <Content Include="Views\OntimeDocReturnedDailyChart\pv_DocReturnOntimeChartDaily.cshtml" />
     <Content Include="Views\OntimeDocReturnedDailyChart\pv_DocReturnOntimeTableDaily.cshtml" />
@@ -3098,6 +3099,7 @@
     <Folder Include="App_Data\UploadFiles\" />
     <Folder Include="Icons\ACPD\" />
     <Folder Include="Icons\DELV\" />
+    <Folder Include="Icons\Docs\" />
     <Folder Include="Icons\DRTN\" />
     <Folder Include="Icons\INBD\" />
     <Folder Include="Icons\OUTB\" />
@@ -3164,6 +3166,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />

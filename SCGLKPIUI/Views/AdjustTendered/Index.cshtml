@@ -256,6 +256,10 @@
             var yearId = $('#YearId').val();
             var monthId = $('#MonthId').val();
 
+            var ShipPoint = $('#ShipPoint').val();
+            var ShipTo = $('#ShipTo').val();
+            var TruckType = $('#TruckType').val();
+
             var adjustTender = $('#adjustTenderedTable').dataTable();
             adjustTender.fnDestroy();
             adjustTender.dataTable({
@@ -271,6 +275,9 @@
                         d.segmentId = segmentId;
                         d.YearId = yearId;
                         d.MonthId = monthId;
+                        d.ShipPoint = ShipPoint;
+                        d.ShipTo = ShipTo;
+                        d.TruckType = TruckType;
                     },
                     "dataSrc": ""
                 },
@@ -310,7 +317,6 @@
                                             <input type="hidden" name="segmentId" value="' + segmentId + '" />\n';
                                 }
                             }
-
                 ],
                 select: true,
                 buttons: [

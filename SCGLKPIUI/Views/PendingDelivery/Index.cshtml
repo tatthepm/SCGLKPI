@@ -150,12 +150,12 @@
                     text: "Sorry!, Section is not selected ",
                     type: "warning"
                 });
-            } else if ($('#MatNameId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, MatName is not selected ",
-                    type: "warning"
-                });
+            //} else if ($('#MatNameId').val() == "") {
+            //    swal({
+            //        title: "Warning!",
+            //        text: "Sorry!, MatName is not selected ",
+            //        type: "warning"
+            //    });
             } else if ($('#YearId').val() == "") {
                 swal({
                     title: "Warning!",
@@ -203,6 +203,9 @@
                    { data: "ShiptoName" },
                    { data: "ShippingPoint" },
                    { data: "TruckType" },
+                   { data: "OrderCompDate" },
+                   { data: "RequestedDate" },
+                   { data: "ShcrDate" },
                    { data: "PlanDelivery" },
                     ],
                     select: true,

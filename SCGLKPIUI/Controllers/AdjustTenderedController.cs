@@ -26,9 +26,19 @@ namespace SCGLKPIUI.Controllers
                 var ddlSeg = ddl.GetDropDownListSegment();
                 var ddlYear = ddl.GetDropDownListTenderedMonth("Year");
                 var ddlMonth = ddl.GetDropDownListTenderedMonth("Month");
+
                 ViewBag.SegmentId = new SelectList(ddlSeg.ToList(), "Id", "Name");
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
+
+
+                var ddlShipPoint = ddl.GetDropDownListTenderedMonth("ShippingPoint");
+                var ddlShipTo = ddl.GetDropDownListTenderedMonth("ShipTo");
+                var ddlTruckType = ddl.GetDropDownListTenderedMonth("TruckType");
+
+                ViewBag.ShipPoint = new SelectList(ddlShipPoint.ToList(), "Id", "Name");
+                ViewBag.ShipTo = new SelectList(ddlShipTo.ToList(), "Id", "Name");
+                ViewBag.TruckType = new SelectList(ddlTruckType.ToList(), "Id", "Name");
 
                 var ddlReason = (from r in objBs.ReasonTenderedBs.GetAll().Where(x => x.IsDeleted == false)
                                  select new
@@ -60,17 +70,33 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public JsonResult JsonAdjustTenderTable(string SegmentId, string YearId, string MonthId)
+        public JsonResult JsonAdjustTenderTable(string SegmentId, string YearId, string MonthId, string ShipPoint, string ShipTo, string TruckType)
         {
             ViewBag.SegmentId = SegmentId;
             ViewBag.YearId = YearId;
             ViewBag.MonthId = MonthId;
+            ViewBag.ShipPoint = ShipPoint;
+            ViewBag.ShipTo = ShipTo;
+            ViewBag.TruckType = TruckType;
+
             // add IEnumerable<AdjustAcceptedViewModels>
             List<AdjustTenderedViewModels> viewModel = new List<AdjustTenderedViewModels>();
 
             //filter department
             var q = from d in objBs.tenderedDelayBs.GetByFilter(SegmentId, Convert.ToInt32(MonthId), Convert.ToInt32(YearId))
                     select d;
+
+            //filter Shipping Point
+            if (!String.IsNullOrEmpty(ShipPoint))
+                q = q.Where(x => x.SHPPOINT == ShipPoint);
+
+            //filter Shipping To
+            if (!String.IsNullOrEmpty(ShipTo))
+                q = q.Where(x => x.SHIPTO == ShipTo);
+
+            //filter Truck Type
+            if (!String.IsNullOrEmpty(TruckType))
+                q = q.Where(x => x.TRUCK_TYPE == TruckType);
 
             //int c = q.Count();
             foreach (var item in q)

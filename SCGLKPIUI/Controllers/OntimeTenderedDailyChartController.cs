@@ -16,6 +16,13 @@ namespace SCGLKPIUI.Controllers {
                 DropDownList ddl = new DropDownList();
                 var ddlSeg = ddl.GetDropDownListSegment();
                 ViewBag.SegmentId = new SelectList(ddlSeg.ToList(), "Id", "Name");
+                var ddlShipPoint = ddl.GetDropDownListTenderedMonth("ShippingPoint");
+                var ddlShipTo = ddl.GetDropDownListTenderedMonth("ShipTo");
+                var ddlTruckType = ddl.GetDropDownListTenderedMonth("TruckType");
+
+                ViewBag.ShipPoint = new SelectList(ddlShipPoint.ToList(), "Id", "Name");
+                ViewBag.ShipTo = new SelectList(ddlShipTo.ToList(), "Id", "Name");
+                ViewBag.TruckType = new SelectList(ddlTruckType.ToList(), "Id", "Name");
 
                 return View();
             }
@@ -24,7 +31,7 @@ namespace SCGLKPIUI.Controllers {
             }
         }
 
-        public JsonResult jsonData(string SegmentId,  DateTime? FromDateSearch, DateTime? ToDateSearch) {
+        public JsonResult jsonData(string SegmentId,  DateTime? FromDateSearch, DateTime? ToDateSearch, string ShipPoint, string ShipTo, string TruckType) {
 
             //add summary data
             List<TenderedOntimeChartDailyViewModels> viewSummaryModel = new List<TenderedOntimeChartDailyViewModels>();
@@ -37,6 +44,18 @@ namespace SCGLKPIUI.Controllers {
             //filter segment
             if (!string.IsNullOrEmpty(SegmentId))
                 q = q.Where(x => x.Segment == SegmentId);
+
+            //filter Shipping Point
+            if (!String.IsNullOrEmpty(ShipPoint))
+                q = q.Where(x => x.SHPPOINT == ShipPoint);
+
+            //filter Shipping To
+            if (!String.IsNullOrEmpty(ShipTo))
+                q = q.Where(x => x.SHIPTO == ShipTo);
+
+            //filter Truck Type
+            if (!String.IsNullOrEmpty(TruckType))
+                q = q.Where(x => x.TRUCK_TYPE == TruckType);
 
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
@@ -82,7 +101,7 @@ namespace SCGLKPIUI.Controllers {
             return Json(viewSummaryModel, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult jsonPieData(string SegmentId, DateTime? FromDateSearch, DateTime? ToDateSearch) {
+        public JsonResult jsonPieData(string SegmentId, DateTime? FromDateSearch, DateTime? ToDateSearch, string ShipPoint, string ShipTo, string TruckType) {
 
             //add summary data
             List<TenderedOntimePieChartDailyViewModels> viewSummaryModel = new List<TenderedOntimePieChartDailyViewModels>();
@@ -94,6 +113,18 @@ namespace SCGLKPIUI.Controllers {
             //filter segment
             if (!String.IsNullOrEmpty(SegmentId))
                 q = q.Where(x => x.Segment == SegmentId);
+            //filter Shipping Point
+            if (!String.IsNullOrEmpty(ShipPoint))
+                q = q.Where(x => x.SHPPOINT == ShipPoint);
+
+            //filter Shipping To
+            if (!String.IsNullOrEmpty(ShipTo))
+                q = q.Where(x => x.SHIPTO == ShipTo);
+
+            //filter Truck Type
+            if (!String.IsNullOrEmpty(TruckType))
+                q = q.Where(x => x.TRUCK_TYPE == TruckType);
+
 
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
@@ -135,7 +166,7 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public JsonResult OntimeTenderedTableDaily(string SegmentId, DateTime? FromDateSearch, DateTime? ToDateSearch) {
+        public JsonResult OntimeTenderedTableDaily(string SegmentId, DateTime? FromDateSearch, DateTime? ToDateSearch, string ShipPoint, string ShipTo, string TruckType) {
 
             // add IEnumerable<OntimeAccept>
             List<TenderedOntimeViewModels> viewModel = new List<TenderedOntimeViewModels>();
@@ -151,6 +182,19 @@ namespace SCGLKPIUI.Controllers {
             //filter Segment
             if (!String.IsNullOrEmpty(SegmentId))
                 q = q.Where(x => x.Segment == SegmentId);
+
+            //filter Shipping Point
+            if (!String.IsNullOrEmpty(ShipPoint))
+                q = q.Where(x => x.SHPPOINT == ShipPoint);
+
+            //filter Shipping To
+            if (!String.IsNullOrEmpty(ShipTo))
+                q = q.Where(x => x.SHIPTO == ShipTo);
+
+            //filter Truck Type
+            if (!String.IsNullOrEmpty(TruckType))
+                q = q.Where(x => x.TRUCK_TYPE == TruckType);
+
 
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
@@ -190,7 +234,7 @@ namespace SCGLKPIUI.Controllers {
         }
 
         [HttpPost]
-        public JsonResult OntimeTenderedSummaryDaily(string SegmentId, DateTime? FromDateSearch, DateTime? ToDateSearch) {
+        public JsonResult OntimeTenderedSummaryDaily(string SegmentId, DateTime? FromDateSearch, DateTime? ToDateSearch, string ShipPoint, string ShipTo, string TruckType) {
 
             // add IEnumerable<AcceptOntimeSummaryViewModels>
             List<TenderedOntimeSummaryViewModels> viewSummaryModel = new List<TenderedOntimeSummaryViewModels>();
@@ -202,6 +246,18 @@ namespace SCGLKPIUI.Controllers {
             //filter Department
             if (!String.IsNullOrEmpty(SegmentId))
                 q = q.Where(x => x.Segment == SegmentId);
+
+            //filter Shipping Point
+            if (!String.IsNullOrEmpty(ShipPoint))
+                q = q.Where(x => x.SHPPOINT == ShipPoint);
+
+            //filter Shipping To
+            if (!String.IsNullOrEmpty(ShipTo))
+                q = q.Where(x => x.SHIPTO == ShipTo);
+
+            //filter Truck Type
+            if (!String.IsNullOrEmpty(TruckType))
+                q = q.Where(x => x.TRUCK_TYPE == TruckType);
 
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {

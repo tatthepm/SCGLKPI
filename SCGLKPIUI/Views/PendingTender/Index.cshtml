@@ -136,6 +136,10 @@
                 var yearId = $('#YearId').val();
                 var monthId = $('#MonthId').val();
 
+                var ShipPoint = $('#ShipPoint').val();
+                var ShipTo = $('#ShipTo').val();
+                var TruckType = $('#TruckType').val();
+
                 var tender = $('#PendingTenderSummary').dataTable();
                 tender.fnDestroy();
                 tender.dataTable({
@@ -148,6 +152,9 @@
                             d.SegmentId = segmentId;
                             d.YearId = yearId;
                             d.MonthId = monthId;
+                            d.ShipPoint = ShipPoint;
+                            d.ShipTo = ShipTo;
+                            d.TruckType = TruckType;
                         },
                         "dataSrc": ""
                     },
@@ -158,6 +165,7 @@
                    { data: "ShiptoName" },
                    { data: "ShippingPoint" },
                    { data: "TruckType" },
+                   { data: "ShcrDate" },
                    { data: "PlanTender" },
                     ],
                     select: true,
