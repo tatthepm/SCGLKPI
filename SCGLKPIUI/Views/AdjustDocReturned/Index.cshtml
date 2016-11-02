@@ -316,6 +316,7 @@
                     "dataSrc": ""
                 },
                 columns: [
+                        { data: "Shipment" },
                         { data: "DeliveryNote" },
                         { data: "RegionName" },
                         { data: "SoldtoName" },
@@ -332,17 +333,17 @@
                                 "mRender": function (data, type, full) {
                                     return reasonString;
                                 },
-                                "targets": 10
+                                "targets": 11
                             },
                             {
-                                "targets": 11,
+                                "targets": 12,
                                 "data": function (row, type, val, meta) {
                                     return '<input name="fileInput" type="file" multiple>\n\
                                             <input type="hidden" name="fileName" value="' + row.DeliveryNote + '">';
                                 }
                             },
                             {
-                                "targets": 12,
+                                "targets": 13,
                                 "data": function (row, type, val, meta) {
                                     return '<input type="text" name="txtRemark" />\n\
                                     <input type="hidden" name="txtDN" value="' + row.DeliveryNote + '">\n\

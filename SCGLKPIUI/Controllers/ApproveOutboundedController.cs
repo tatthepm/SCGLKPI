@@ -94,7 +94,7 @@ namespace SCGLKPIUI.Controllers
             foreach (var item in q)
             {
                 ApproveOutboundedViewModels model = new ApproveOutboundedViewModels();
-                model.Dn = item.DELVNO;
+                model.DeliveryNote = item.DELVNO;
                 model.CarrierId = item.CARRIER_ID;
                 model.RegionId = item.REGION_ID;
                 model.RegionName = item.REGION_NAME_TH;

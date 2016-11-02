@@ -3017,8 +3017,8 @@
     <Content Include="Views\OntimeOutboundedMonthlyChart\pv_OutboundOntimeChartMonthly.cshtml" />
     <Content Include="Views\OntimeOutboundedMonthlyChart\pv_OutboundOntimeTableMonthly.cshtml" />
     <Content Include="Views\ReasonOutbounded\Index.cshtml" />
-    <Content Include="Views\AdjustInbounded\AdjustOutbounded\Index.cshtml" />
-    <Content Include="Views\AdjustInbounded\AdjustOutbounded\pv_AdjustOutbounded.cshtml" />
+    <Content Include="Views\AdjustOutbounded\Index.cshtml" />
+    <Content Include="Views\AdjustOutbounded\pv_AdjustOutbounded.cshtml" />
     <Content Include="Views\OntimeDocReturnedDailyChart\Index.cshtml" />
     <Content Include="Views\OntimeDocReturnedDailyChart\pv_DocReturnOntimeChartDaily.cshtml" />
     <Content Include="Views\OntimeDocReturnedDailyChart\pv_DocReturnOntimeTableDaily.cshtml" />

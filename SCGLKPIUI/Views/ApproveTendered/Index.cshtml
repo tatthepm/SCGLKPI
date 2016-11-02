@@ -316,6 +316,8 @@
                     { data: "RegionName" },
                     { data: "SoldtoName" },
                     { data: "ShiptoName" },
+                    { data: "ShcrDate" },
+                    { data: "PlanTender" },
                     { data: "FirstTender" },
                     { data: "ShippingPoint" },
                     { data: "CarrierId" },
@@ -333,7 +335,7 @@
                     }
                 ],
                 'columnDefs': [{
-                    "targets": 10,
+                    "targets": 12,
                     "data": function (row, type, val, meta) {
                         return '<input type="text" name="txtRemark" />\n\
                                 <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\
@@ -345,7 +347,7 @@
                     },
                 },
                 {
-                    "targets": 11,
+                    "targets": 13,
                     "data": function (row, type, val, meta) {
                         if (row.FilePath != "#") {
                             return '<a href="' + row.FilePath + '">Download File</a>';
