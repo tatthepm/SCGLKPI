@@ -24,6 +24,7 @@ namespace BOL
         [StringLength(20)]
         [Column(Order = 3), Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Segment { get; set; }
+        public string SubSegment { get; set; }
         public int daysDIff { get; set; }
         public int LastMonth { get; set; }
         public int Year { get; set; }

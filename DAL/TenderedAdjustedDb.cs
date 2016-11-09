@@ -12,15 +12,53 @@ namespace DAL {
         public TenderedAdjustedDb() {
             db = new SCGLKPIDbContext();
         }
+        
         //GetAll
         public IQueryable<TenderedAdjusted> GetAll() {
             return db.TenderedAdjusted;
         }
 
         //GetByFilter
-        public IQueryable<TenderedAdjusted> GetByFilter(string segment_id, int month, int year)
+        public IQueryable<TenderedAdjusted> GetByFilter(string segment_id, int year, int month)
         {
-            return db.TenderedAdjusted.Where(x => x.SEGMENT == segment_id && x.FTNRDDATE_D.Value.Year == year && x.FTNRDDATE_D.Value.Month == month);
+            return db.TenderedAdjusted.Where(x => x.SUBSEGMENT == segment_id && x.PLNTNRDDATE_D.Value.Year == year && x.PLNTNRDDATE_D.Value.Month == month);
+        }
+
+        //GetByShipto
+        public IQueryable<BOLDropdownLists> GetByShipto(string segment)
+        {
+            var Queryable = (from m in db.TenderedAdjusted
+                             where m.SUBSEGMENT == segment
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.SHIPTO,
+                                 Name = m.SHIPTO,
+                             }).Distinct();
+            return Queryable;
+        }
+        //GetByShipPoint
+        public IQueryable<BOLDropdownLists> GetByShipPoint(string segment)
+        {
+            var Queryable = (from m in db.TenderedAdjusted
+                             where m.SUBSEGMENT == segment
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.SHPPOINT,
+                                 Name = m.SHPPOINT,
+                             }).Distinct();
+            return Queryable;
+        }
+        //GetByTruckType
+        public IQueryable<BOLDropdownLists> GetByTruckType(string segment)
+        {
+            var Queryable = (from m in db.TenderedAdjusted
+                             where m.SUBSEGMENT == segment
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.TRUCK_TYPE,
+                                 Name = m.TRUCK_TYPE,
+                             }).Distinct();
+            return Queryable;
         }
 
         //GetById

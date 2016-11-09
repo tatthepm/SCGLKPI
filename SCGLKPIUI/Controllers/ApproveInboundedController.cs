@@ -94,6 +94,7 @@ namespace SCGLKPIUI.Controllers
             foreach (var item in q)
             {
                 ApproveInboundedViewModels model = new ApproveInboundedViewModels();
+                model.Shipment = item.SHPMNTNO;
                 model.DeliveryNote = item.DELVNO;
                 model.CarrierId = item.CARRIER_ID;
                 model.RegionId = item.REGION_ID;

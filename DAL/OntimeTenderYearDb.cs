@@ -17,7 +17,42 @@ namespace DAL {
         public IQueryable<OntimeTenderYear> GetAll() {
             return db.OntimeTenderYears;
         }
-
+        //GetByShipto
+        public IQueryable<BOLDropdownLists> GetByShipto(string segment)
+        {
+            var Queryable = (from m in db.OntimeTenderYears
+                             where m.SubSegment == segment
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.SHIPTO,
+                                 Name = m.SHIPTO,
+                             }).Distinct();
+            return Queryable;
+        }
+        //GetByShipPoint
+        public IQueryable<BOLDropdownLists> GetByShipPoint(string segment)
+        {
+            var Queryable = (from m in db.OntimeTenderYears
+                             where m.SubSegment == segment
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.SHPPOINT,
+                                 Name = m.SHPPOINT,
+                             }).Distinct();
+            return Queryable;
+        }
+        //GetByTruckType
+        public IQueryable<BOLDropdownLists> GetByTruckType(string segment)
+        {
+            var Queryable = (from m in db.OntimeTenderYears
+                             where m.SubSegment == segment
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.TRUCK_TYPE,
+                                 Name = m.TRUCK_TYPE,
+                             }).Distinct();
+            return Queryable;
+        }
         //GetById
         public OntimeTenderYear GetByID(int Id) {
             return db.OntimeTenderYears.Find(Id);

@@ -63,6 +63,50 @@
         </div>
     </div>
 </div>
+<div>
+    <div id="massAdjust" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Upload Excel files.</h4>
+                </div>
+                <div class="modal-body">
+                    <input id="massFiles" name="massFiles" type="file" multiple>
+                    <input type="hidden" name="massUpload" value="fileUploaded">
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="ladda-button btn btn-success" value="Close" onclick="jQuery('#massAdjust').hide();" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div id="excelModal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Export Excel file.</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="col-xs-1">
+                            <form action="/AdjustTendered/ExportExcel/" id="exportForm" method="post" name="exportForm">
+                                <p id="excelBody"></p>
+                                <input type="submit" class="ladda-button btn btn-success" value="Export" id="btnExcel" />
+                            </form>
+                        </div>
+                        <div class="col-xs-2">
+                            <p></p>
+                            <input type="button" class="ladda-button btn btn-success" value="Close" id="closeModal" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Styles {
     @Styles.Render("~/bundles/datatables/css")
@@ -121,10 +165,125 @@
 
         //#region 2 filter section
         //#endregion
+        $('#massAdjust ').on('change', 'input[type="file"]', function (e) {
+            files = event.target.files;
+            var formdata = new FormData(); //FormData object
+            //var fileName = $(this).parent().find("input[name='massUpload']").val();
+            var r = confirm("กด OK เพื่อยืนยันการอัพโหลด");
+            if (r == true) {
+                for (i = 0; i < files.length; i++) {
+                    //Appending each file to FormData object
+                    formdata.append('massUpload.xlsx', files[i]);
+                }
+                //Creating an XMLHttpRequest and sending
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/AdjustTendered/UploadReason/');
+                xhr.send(formdata);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        alert(xhr.responseText);
+                    }
+                }
+            }
+            else {
+                alert("ยกเลิกการอัพโหลด");
+            }
+            $("#massAdjust").hide();
+        });
 
-        //#region 3 filter matname
+        //#region 3 filter ShippingPoint,Shipto,TruckType
+        $("#SegmentId").change(function (res) {
+            segmentId = $("#SegmentId").val();
+            $.getJSON('/AdjustTendered/ShiptoFilter?SegmentId=' + segmentId, function (data) {
+                var ddl = $("#ShipTo");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                });
+                ddl.html(string);
+                ddl.select2('val', '');
+            });
+            $.getJSON('/AdjustTendered/ShippingPointFilter?SegmentId=' + segmentId, function (data) {
+                var ddl = $("#ShipPoint");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                });
+                ddl.html(string);
+                ddl.select2('val', '');
+            });
+            $.getJSON('/AdjustTendered/truckTypeFilter?SegmentId=' + segmentId, function (data) {
+                var ddl = $("#TruckType");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                });
+                ddl.html(string);
+                ddl.select2('val', '');
+            });
+        });
         //#endregion
 
+        $("#btnExcelModal").click(function () {
+            if ($('#SegmentId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Segments is not selected ",
+                    type: "warning"
+                });
+            }
+            else if ($('#ShipPoint').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Shipping Point is not selected ",
+                    type: "warning"
+                });
+            }
+            else if ($('#YearId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Year is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#MonthId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Month is not selected ",
+                    type: "warning"
+                });
+            }
+            else {
+                var segmentId = $('#SegmentId').val();
+                var ShipPoint = $('#ShipPoint').val();
+                var Shipto = $('#ShipTo').val();
+                var TruckType = $('#TruckType').val();
+                var yearId = $('#YearId').val();
+                var monthId = $('#MonthId').val();
+
+                $("#excelBody").append('<input type="hidden" name="monthId" value="' + monthId + '" />\n\
+                <input type="hidden" name="yearId" value="' + yearId + '" />\n\
+                <input type="hidden" name="segmentId" value="' + segmentId + '" />\n\
+                <input type="hidden" name="ShipPoint" value="' + ShipPoint + '" />\n\
+                <input type="hidden" name="ShipTo" value="' + ShipTo + '" />\n\
+                <input type="hidden" name="TruckType" value="' + TruckType + '" />\n');
+                $("#excelModal").show();
+            }
+        });
+
+        $("#closeModal").click(function () {
+            $("#excelModal").hide();
+        });
+
+        $("#btnMassUpload").click(function () {
+            $("#massFiles").val('');
+            $("#massAdjust").show();
+        });
         //#region 4 getJson Section
 
         //#endregion
@@ -143,7 +302,15 @@
                     text: "Sorry!, Segments is not selected ",
                     type: "warning"
                 });
-            } else if ($('#YearId').val() == "") {
+            }
+            else if ($('#ShipPoint').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Shipping Point is not selected ",
+                    type: "warning"
+                });
+            }
+            else if ($('#YearId').val() == "") {
                 swal({
                     title: "Warning!",
                     text: "Sorry!, Year is not selected ",
@@ -221,7 +388,7 @@
         //#endregion
         $(function () {
 
-            $('form').on('submit', function (e) {
+            $('#frm').on('submit', function (e) {
 
                 e.preventDefault();
 
@@ -245,7 +412,7 @@
                 reasonString = '<td><select id="dynamic_select" name="dynamic_select">\n'
                 reasonString += '<option value="">--SELECT--</option>\n';
                 $.each(data, function (i, S) {
-                    reasonString += '<option value="' + S.Id + '">' + S.Name + '</option>\n'
+                    reasonString += '<option value="' + S.Id + '">' + S.Id + ' : ' + S.Name + '</option>\n'
                 });
                 reasonString += '</select></td>'
             });
@@ -311,10 +478,7 @@
                                 "targets": 12,
                                 "data": function (row, type, val, meta) {
                                     return '<input type="text" name="txtRemark" />\n\
-                                            <input type="hidden" name="txtSM" value="' + row.Shipment + '">\n\
-                                            <input type="hidden" name="monthId" value="' + monthId + '" />\n\
-                                            <input type="hidden" name="yearId" value="' + yearId + '" />\n\
-                                            <input type="hidden" name="segmentId" value="' + segmentId + '" />\n';
+                                            <input type="hidden" name="txtSM" value="' + row.Shipment + '">';
                                 }
                             }
                 ],

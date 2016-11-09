@@ -11,24 +11,26 @@
             <div class="panel-body">
                 <div class="form-horizontal">
                     <div class="form-group">
-                        <div class="col-md-1">@Html.Label("Shipping Point")</div>
-                        <div class="col-md-2">
-                            @Html.DropDownList("ShipPoint", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
-                        </div>
-                        <div class="col-md-1">@Html.Label("Truck Type")</div>
-                        <div class="col-md-2">
-                            @Html.DropDownList("TruckType", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
-                        </div>
-                        <div class="col-md-1">@Html.Label("Ship To")</div>
-                        <div class="col-md-3">
-                            @Html.DropDownList("ShipTo", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <div class="col-md-1">@Html.Label("Segment")<span style="color:red">*</span></div>
                         <div class="col-md-2">
                             @Html.DropDownList("SegmentId", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
                         </div>
+                        <div class="col-md-1">@Html.Label("Shipping Point")</div>
+                        <div class="col-md-2">
+                            @Html.DropDownList("ShipPoint", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
+                        </div>
+
+                        @*<div class="col-md-1">@Html.Label("Ship To")</div>
+                        <div class="col-md-3">
+                            @Html.DropDownList("ShipTo", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
+                        </div>*@
+                        <div class="col-md-1">@Html.Label("Truck Type")</div>
+                        <div class="col-md-2">
+                            @Html.DropDownList("TruckType", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        
                         <div class="col-md-1">@Html.Label("YEAR ")<span style="color:red"> *</span></div>
                         <div class="col-md-2">
                             @Html.DropDownList("YearId", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })

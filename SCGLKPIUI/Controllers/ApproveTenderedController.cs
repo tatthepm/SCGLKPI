@@ -56,7 +56,18 @@ namespace SCGLKPIUI.Controllers
                 return RedirectToAction("Index", new { sms = "Operation Delivery failed " + ex.ToString() });
             }
         }
-
+        public JsonResult ShiptoFilter(string SegmentId)
+        {
+            return Json(objBs.tenderedAdjustedBs.GetByShipto(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ShippingPointFilter(string SegmentId)
+        {
+            return Json(objBs.tenderedAdjustedBs.GetByShipPoint(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult truckTypeFilter(string SegmentId)
+        {
+            return Json(objBs.tenderedAdjustedBs.GetByTruckType(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
         public JsonResult ReasonFilter()
         {
             var result = (from r in objBs.ReasonTenderedBs.GetAll()
@@ -160,7 +171,7 @@ namespace SCGLKPIUI.Controllers
                             int id = objBs.ontimeTenderBs.GetAll()
                                 .Where(x => x.FirstTenderDate == FTNRDDate
                                        && x.MatFriGrp == matName
-                                       && x.Segment == segmentId
+                                       && x.SubSegment == segmentId
                                        && x.SectionId == sectionId
                                        && x.DepartmentId == departmentId).FirstOrDefault().Id;
                             OntimeTender ontimeTender = objBs.ontimeTenderBs.GetByID(id);
@@ -174,7 +185,7 @@ namespace SCGLKPIUI.Controllers
                                       .Where(x => x.Year == yearId
                                       && x.MatFriGrp == matName
                                       && x.Month == monthId
-                                      && x.Segment == segmentId
+                                      && x.SubSegment == segmentId
                                       && x.SectionId == sectionId
                                       && x.DepartmentId == departmentId).FirstOrDefault().Id;
                             OntimeTenderMonth ontimeTenderMonth = objBs.ontimeTenderMonthBs.GetByID(idM);
@@ -187,7 +198,7 @@ namespace SCGLKPIUI.Controllers
                             int idY = objBs.ontimeTenderYearBs.GetAll()
                                       .Where(x => x.Year == yearId
                                       && x.MatFriGrp == matName
-                                      && x.Segment == segmentId
+                                      && x.SubSegment == segmentId
                                       && x.SectionId == sectionId
                                       && x.DepartmentId == departmentId).FirstOrDefault().Id;
                             OntimeTenderYear ontimeTenderYear = objBs.ontimeTenderYearBs.GetByID(idY);

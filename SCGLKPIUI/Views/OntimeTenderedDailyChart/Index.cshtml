@@ -118,7 +118,44 @@
         });
         //#endregion
 
-        //#region 4 getJson Section
+        //#region 3 filter ShippingPoint,Shipto,TruckType
+        $("#SegmentId").change(function (res) {
+            segmentId = $("#SegmentId").val();
+            $.getJSON('/OntimeTenderedDailyChart/ShiptoFilter?SegmentId=' + segmentId, function (data) {
+                var ddl = $("#ShipTo");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                });
+                ddl.html(string);
+                ddl.select2('val', '');
+            });
+            $.getJSON('/OntimeTenderedDailyChart/ShippingPointFilter?SegmentId=' + segmentId, function (data) {
+                var ddl = $("#ShipPoint");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                });
+                ddl.html(string);
+                ddl.select2('val', '');
+            });
+            $.getJSON('/OntimeTenderedDailyChart/truckTypeFilter?SegmentId=' + segmentId, function (data) {
+                var ddl = $("#TruckType");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                });
+                ddl.html(string);
+                ddl.select2('val', '');
+            });
+        });
+        //#endregion
         //#endregion
 
         //#region 5 getJson MatName
@@ -132,7 +169,21 @@
             var day_end = new Date(edate);
             var total_days = ((day_end - day_start) / (1000 * 60 * 60 * 24)) + 1;
 
-            if (sdate == "" && edate == "") {
+            if ($('#SegmentId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Segments is not selected ",
+                    type: "warning"
+                });
+            }
+            else if ($('#ShipPoint').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Shipping Point is not selected ",
+                    type: "warning"
+                });
+            }
+            else if (sdate == "" && edate == "") {
                 swal({
                     title: "Warning!",
                     text: "Sorry!, You must choose date in the calendar",

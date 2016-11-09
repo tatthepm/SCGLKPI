@@ -355,6 +355,7 @@
                     { data: "OrderCompDate" },
                     { data: "RequestedDate" },
                     { data: "ShcrDate" },
+                    { data: "ActualGI" },
                     { data: "PlanDelivery" },
                     { data: "ActualDelivery" },
                     { data: "ShippingPoint" },
@@ -377,7 +378,7 @@
                     "data": function (row, type, val, meta) {
                         return '<input type="text" name="txtRemark" />\n\
                                 <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\
-                                <input type="hidden" name="txtDN" value="' + row.Dn + '" />\n\
+                                <input type="hidden" name="txtDN" value="' + row.DeliveryNote + '" />\n\
                                 <input type="hidden" name="monthId" value="' + monthId + '" />\n\
                                 <input type="hidden" name="yearId" value="' + yearId + '" />\n\
                                 <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\

@@ -5,6 +5,7 @@ using System.Web;
 
 namespace SCGLKPIUI.Models {
     public class ApproveDocReturnedViewModels {
+        public string Shipment { get; set; }
         public string DeliveryNote { get; set; }
         public string CarrierId { get; set; }
         public string RegionId { get; set; }

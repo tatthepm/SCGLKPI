@@ -311,6 +311,7 @@
     <Compile Include="Models\DocReturned\DocReturnedOntimeYearlyViewModels.cs" />
     <Compile Include="Models\DropDownList.cs" />
     <Compile Include="Models\DropdownlistViewModels.cs" />
+    <Compile Include="Models\ExcelModels.cs" />
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\DocReturned\AdjustDocReturnedViewModels.cs" />
@@ -388,6 +389,12 @@
     <Content Include="app_offline_ex.htm" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Docs\acpd\dummy.html" />
+    <Content Include="Content\Docs\docrtn\dummy.html" />
+    <Content Include="Content\Docs\inb\dummy.html" />
+    <Content Include="Content\Docs\ontime\dummy.html" />
+    <Content Include="Content\Docs\outb\dummy.html" />
+    <Content Include="Content\Docs\tnrd\dummy.html" />
     <Content Include="Content\img\green%402x.png" />
     <Content Include="Content\img\green.ico" />
     <Content Include="Content\img\green.png" />

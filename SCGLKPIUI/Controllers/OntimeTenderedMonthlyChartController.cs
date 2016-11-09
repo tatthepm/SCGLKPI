@@ -36,7 +36,18 @@ namespace SCGLKPIUI.Controllers
             }
             return View();
         }
-
+        public JsonResult ShiptoFilter(string SegmentId)
+        {
+            return Json(objBs.ontimeTenderMonthBs.GetByShipto(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ShippingPointFilter(string SegmentId)
+        {
+            return Json(objBs.ontimeTenderMonthBs.GetByShipPoint(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult truckTypeFilter(string SegmentId)
+        {
+            return Json(objBs.ontimeTenderMonthBs.GetByTruckType(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
         public JsonResult jsonData(string SegmentId, string YearId, string MonthId, string ShipPoint, string ShipTo, string TruckType) {
 
             //add summary data
@@ -49,7 +60,7 @@ namespace SCGLKPIUI.Controllers
                                                && x.Year == YearId);
             //filter Segment
             if (!String.IsNullOrEmpty(SegmentId))
-                q = q.Where(x => x.Segment == SegmentId);
+                q = q.Where(x => x.SubSegment == SegmentId);
 
             //filter month
             if (!String.IsNullOrEmpty(MonthId))
@@ -106,7 +117,7 @@ namespace SCGLKPIUI.Controllers
 
             //filter Segment
             if (!String.IsNullOrEmpty(SegmentId))
-                q = q.Where(x => x.Segment == SegmentId);
+                q = q.Where(x => x.SubSegment == SegmentId);
 
             //filter month
             if (!String.IsNullOrEmpty(MonthId))
@@ -162,7 +173,7 @@ namespace SCGLKPIUI.Controllers
                                                && x.Year == YearId);
             //filter Segment
             if (!String.IsNullOrEmpty(SegmentId))
-                q = q.Where(x => x.Segment == SegmentId);
+                q = q.Where(x => x.SubSegment == SegmentId);
 
             //filter month
             if (!String.IsNullOrEmpty(MonthId))
@@ -180,7 +191,7 @@ namespace SCGLKPIUI.Controllers
             if (!String.IsNullOrEmpty(TruckType))
                 q = q.Where(x => x.TRUCK_TYPE == TruckType);
 
-            foreach (var item in q.OrderBy(x => x.Month).ThenBy(x => x.Segment)) {
+            foreach (var item in q.OrderBy(x => x.Month).ThenBy(x => x.SubSegment)) {
                 TenderedOntimeMonthlyViewModels model = new TenderedOntimeMonthlyViewModels();
                 model.Month = DateTimeFormatInfo.CurrentInfo.GetAbbreviatedMonthName(Convert.ToInt32(item.Month)).ToString();
                 model.SegmentName = item.Segment;
@@ -207,13 +218,13 @@ namespace SCGLKPIUI.Controllers
             List<TenderedOntimeSummaryMonthlyViewModels> viewSummaryModel = new List<TenderedOntimeSummaryMonthlyViewModels>();
 
             // filter by department
-            var q = objBs.ontimeTenderMonthBs.GetAll().Where(x => !String.IsNullOrEmpty(x.Segment)
+            var q = objBs.ontimeTenderMonthBs.GetAll().Where(x => !String.IsNullOrEmpty(x.SubSegment)
                                                && !String.IsNullOrEmpty(x.SectionName)
                                                && !String.IsNullOrEmpty(x.MatName)
                                                && x.Year == YearId);
             //filter segment
             if (!String.IsNullOrEmpty(SegmentId))
-                q = q.Where(x => x.Segment == SegmentId);
+                q = q.Where(x => x.SubSegment == SegmentId);
 
             //filter month
             if (!String.IsNullOrEmpty(MonthId))

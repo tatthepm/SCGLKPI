@@ -47,6 +47,18 @@ namespace SCGLKPIUI.Controllers
                 return RedirectToAction("Index", new { sms = "Operation Accept failed " + ex.InnerException.InnerException.Message.ToString() });
             }
         }
+        public JsonResult ShiptoFilter(string SegmentId)
+        {
+            return Json(objBs.tenderedPendingBs.GetByShipto(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ShippingPointFilter(string SegmentId)
+        {
+            return Json(objBs.tenderedPendingBs.GetByShipPoint(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult truckTypeFilter(string SegmentId)
+        {
+            return Json(objBs.tenderedPendingBs.GetByTruckType(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public JsonResult PendingTenderTableSummary(string SegmentId, string YearId, string MonthId, string ShipPoint, string ShipTo, string TruckType)

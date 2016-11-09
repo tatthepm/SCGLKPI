@@ -64,6 +64,51 @@
     </div>
 </div>
 
+<div>
+    <div id="massAdjust" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Upload Excel files.</h4>
+                </div>
+                <div class="modal-body">
+                    <input id="massFiles" name="massFiles" type="file" multiple>
+                    <input type="hidden" name="massUpload" value="fileUploaded">
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="ladda-button btn btn-success" value="Close" onclick="jQuery('#massAdjust').hide();" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div id="excelModal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Export Excel file.</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="col-xs-1">
+                            <form action="/AdjustDelivered/ExportExcel/" id="exportForm" method="post" name="exportForm">
+                                <p id="excelBody"></p>
+                                <input type="submit" class="ladda-button btn btn-success" value="Export" id="btnExcel" />
+                            </form>
+                        </div>
+                        <div class="col-xs-2">
+                            <p></p>
+                            <input type="button" class="ladda-button btn btn-success" value="Close" id="closeModal" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Styles {
     @Styles.Render("~/bundles/datatables/css")
     @Styles.Render("~/bundles/xeditable/css")
@@ -120,6 +165,31 @@
 
         //#region 2 filter section
         //#endregion
+        $('#massAdjust ').on('change', 'input[type="file"]', function (e) {
+            files = event.target.files;
+            var formdata = new FormData(); //FormData object
+            //var fileName = $(this).parent().find("input[name='massUpload']").val();
+            var r = confirm("กด OK เพื่อยืนยันการอัพโหลด");
+            if (r == true) {
+                for (i = 0; i < files.length; i++) {
+                    //Appending each file to FormData object
+                    formdata.append('massUpload.xlsx', files[i]);
+                }
+                //Creating an XMLHttpRequest and sending
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/AdjustDelivered/UploadReason/');
+                xhr.send(formdata);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        alert(xhr.responseText);
+                    }
+                }
+            }
+            else {
+                alert("ยกเลิกการอัพโหลด");
+            }
+            $("#massAdjust").hide();
+        });
 
         //#region 3 filter matname
         //#endregion
@@ -158,6 +228,58 @@
             });
         });
         //#endregion
+
+        $("#btnExcelModal").click(function () {
+            if ($('#DepartmentId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Department is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#SectionId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Section is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#YearId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Year is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#MonthId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Month is not selected ",
+                    type: "warning"
+                });
+            }
+            else {
+                var departmentId = $('#DepartmentId').val();
+                var sectionId = $('#SectionId').val();
+                var matNameId = $('#MatNameId').val();
+                var yearId = $('#YearId').val();
+                var monthId = $('#MonthId').val();
+
+                $("#excelBody").append('<input type="hidden" name="monthId" value="' + monthId + '" />\n\
+                <input type="hidden" name="yearId" value="' + yearId + '" />\n\
+                <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
+                <input type="hidden" name="sectionId" value="' + sectionId + '" />\n\
+                <input type="hidden" name="matNameId" value="' + matNameId + '" />\n');
+                $("#excelModal").show();
+            }
+        });
+
+        $("#closeModal").click(function () {
+            $("#excelModal").hide();
+        });
+
+        $("#btnMassUpload").click(function () {
+            $("#massFiles").val('');
+            $("#massAdjust").show();
+        });
+
         $("#btnSearch").click(function () {
             //if ($('#DepartmentId').val() == "") {
             //    swal({
@@ -263,7 +385,7 @@
 
         $(function () {
 
-            $('form').on('submit', function (e) {
+            $('#frm').on('submit', function (e) {
 
                 e.preventDefault();
 
@@ -287,7 +409,7 @@
                 reasonString = '<td><select id="dynamic_select" name="dynamic_select">\n'
                 reasonString += '<option value="">--SELECT--</option>\n';
                 $.each(data, function (i, S) {
-                    reasonString += '<option value="' + S.Id + '">' + S.Name + '</option>\n'
+                    reasonString += '<option value="' + S.Id + '">' + S.Id + ' : ' + S.Name + '</option>\n'
                 });
                 reasonString += '</select></td>'
             });
@@ -318,14 +440,15 @@
                     "dataSrc": ""
                 },
                 columns: [
-                { data: "Shipment" },
                 { data: "DeliveryNote" },
+                { data: "Shipment" },
                 { data: "RegionName" },
                 { data: "SoldtoName" },
                 { data: "ShiptoName" },
                 { data: "OrderCompDate" },
                 { data: "RequestedDate" },
                 { data: "ShcrDate" },
+                { data: "ActualGI" },
                 { data: "PlanDelivery" },
                 { data: "ActualDelivery" },
                 { data: "ShippingPoint" },
@@ -337,25 +460,20 @@
                                 "mRender": function (data, type, full) {
                                     return reasonString;
                                 },
-                                "targets": 13
+                                "targets": 14
                             },
                             {
-                                "targets": 14,
+                                "targets": 15,
                                 "data": function (row, type, val, meta) {
                                     return '<input name="fileInput" type="file" multiple>\n\
                                             <input type="hidden" name="fileName" value="' + row.DeliveryNote + '">';
                                 }
                             },
                             {
-                                "targets": 15,
+                                "targets": 16,
                                 "data": function (row, type, val, meta) {
                                     return '<input type="text" name="txtRemark" />\n\
-                                <input type="hidden" name="txtDN" value="' + row.DeliveryNote + '">\n\
-                                <input type="hidden" name="monthId" value="' + monthId + '" />\n\
-                                <input type="hidden" name="yearId" value="' + yearId + '" />\n\
-                                <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
-                                <input type="hidden" name="sectionId" value="' + sectionId + '" />\n\
-                                <input type="hidden" name="matNameId" value="' + matNameId + '" />\n';
+                                <input type="hidden" name="txtDN" value="' + row.DeliveryNote + '">';
                                 }
                             }
 

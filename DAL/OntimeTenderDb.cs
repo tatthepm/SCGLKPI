@@ -12,11 +12,47 @@ namespace DAL {
         public OntimeTenderDb() {
             db = new SCGLKPIDbContext();
         }
+
         //GetAll
         public IQueryable<OntimeTender> GetAll() {
             return db.OntimeTenders;
         }
-
+        //GetByShipto
+        public IQueryable<BOLDropdownLists> GetByShipto(string segment)
+        {
+            var Queryable = (from m in db.OntimeTenders
+                             where m.SubSegment == segment
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.SHIPTO,
+                                 Name = m.SHIPTO,
+                             }).Distinct();
+            return Queryable;
+        }
+        //GetByShipPoint
+        public IQueryable<BOLDropdownLists> GetByShipPoint(string segment)
+        {
+            var Queryable = (from m in db.OntimeTenders
+                             where m.SubSegment == segment
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.SHPPOINT,
+                                 Name = m.SHPPOINT,
+                             }).Distinct();
+            return Queryable;
+        }
+        //GetByTruckType
+        public IQueryable<BOLDropdownLists> GetByTruckType(string segment)
+        {
+            var Queryable = (from m in db.OntimeTenders
+                             where m.SubSegment == segment
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.TRUCK_TYPE,
+                                 Name = m.TRUCK_TYPE,
+                             }).Distinct();
+            return Queryable;
+        }
         //GetById
         public OntimeTender GetByID(int Id) {
             return db.OntimeTenders.Find(Id);

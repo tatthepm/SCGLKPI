@@ -16,10 +16,25 @@ namespace BLL {
         public IQueryable<TenderedDelay> GetAll() {
             return objDb.GetAll();
         }
-        //GetByFilter
-        public IQueryable<TenderedDelay> GetByFilter(string segment_id, int month, int year)
+        //GetBySegment
+        public IQueryable<BOLDropdownLists> GetByShipto(string segment)
         {
-            return objDb.GetByFilter(segment_id, month, year);
+            return objDb.GetByShipto(segment);
+        }
+        //GetByShipPoint
+        public IQueryable<BOLDropdownLists> GetByShipPoint(string segment)
+        {
+            return objDb.GetByShipPoint(segment);
+        }
+        //GetByTruckType
+        public IQueryable<BOLDropdownLists> GetByTruckType(string segment)
+        {
+            return objDb.GetByTruckType(segment);
+        }
+        //GetByFilter
+        public IQueryable<TenderedDelay> GetByFilter(string segment_id, int year, int month)
+        {
+            return objDb.GetByFilter(segment_id, year, month);
         }
         //GetById
         public TenderedDelay GetByID(string shipmentNo) {

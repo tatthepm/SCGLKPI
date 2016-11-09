@@ -30,7 +30,18 @@ namespace SCGLKPIUI.Controllers {
             }
             return View();
         }
-
+        public JsonResult ShiptoFilter(string SegmentId)
+        {
+            return Json(objBs.ontimeTenderYearBs.GetByShipto(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ShippingPointFilter(string SegmentId)
+        {
+            return Json(objBs.ontimeTenderYearBs.GetByShipPoint(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult truckTypeFilter(string SegmentId)
+        {
+            return Json(objBs.ontimeTenderYearBs.GetByTruckType(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
         public JsonResult jsonData(string SegmentId, string ShipPoint, string ShipTo, string TruckType) {
 
             //add summary data
@@ -43,7 +54,7 @@ namespace SCGLKPIUI.Controllers {
 
             //filter Segment
             if (!String.IsNullOrEmpty(SegmentId))
-                q = q.Where(x => x.Segment == SegmentId);
+                q = q.Where(x => x.SubSegment == SegmentId);
 
             //filter Shipping Point
             if (!String.IsNullOrEmpty(ShipPoint))
@@ -95,7 +106,7 @@ namespace SCGLKPIUI.Controllers {
 
             //filter Segment
             if (!String.IsNullOrEmpty(SegmentId))
-                q = q.Where(x => x.Segment == SegmentId);
+                q = q.Where(x => x.SubSegment == SegmentId);
 
             //filter Shipping Point
             if (!String.IsNullOrEmpty(ShipPoint))
@@ -146,7 +157,7 @@ namespace SCGLKPIUI.Controllers {
                                                && !String.IsNullOrEmpty(x.MatName));
             //filter Segment
             if (!String.IsNullOrEmpty(SegmentId))
-                q = q.Where(x => x.Segment == SegmentId);
+                q = q.Where(x => x.SubSegment == SegmentId);
 
             //filter Shipping Point
             if (!String.IsNullOrEmpty(ShipPoint))
@@ -193,7 +204,7 @@ namespace SCGLKPIUI.Controllers {
 
             //filter segment
             if (!String.IsNullOrEmpty(SegmentId))
-                q = q.Where(x => x.Segment == SegmentId);
+                q = q.Where(x => x.SubSegment == SegmentId);
 
             //filter Shipping Point
             if (!String.IsNullOrEmpty(ShipPoint))

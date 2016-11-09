@@ -18,17 +18,16 @@ namespace SCGLKPIUI.Models
 
         public List<DropdownlistViewModels> GetDropDownList(string filtername)
         {
-
             List<DropdownlistViewModels> viewModel = new List<DropdownlistViewModels>();
             switch (filtername)
             {
                 case "Department":
-                    var ddlDept = (from d in objBs.menuTableBs.GetAll()
+                    var ddlDept = (from d in objBs.dWH_ONTIME_SHIPMENTBs.GetAll()
                                    select new
                                    {
-                                       Id = d.DepartmentId,
-                                       Name = d.DepartmentName
-                                   }).Distinct().OrderBy(x => x.Name);
+                                       Id = d.DEPARTMENT_ID,
+                                       Name = d.DEPARTMENT_Name
+                                   }).Take(50000).Distinct().Where(x => !String.IsNullOrEmpty(x.Name)).OrderBy(x => x.Name);
                     foreach (var item in ddlDept)
                     {
                         DropdownlistViewModels model = new DropdownlistViewModels();
@@ -37,14 +36,14 @@ namespace SCGLKPIUI.Models
                         viewModel.Add(model);
                     }
                     return viewModel;
-
                 case "Section":
-                    var ddlSec = (from d in objBs.menuTableBs.GetAll()
+                    var ddlSec = (from d in objBs.dWH_ONTIME_SHIPMENTBs.GetAll()
+                                  //where !String.IsNullOrEmpty(d.SECTION_NAME)
                                   select new
                                   {
-                                      Id = d.SectionId,
-                                      Name = d.SectionName
-                                  }).Distinct().OrderBy(x => x.Name);
+                                      Id = d.SECTION_ID,
+                                      Name = d.SECTION_NAME
+                                  }).Take(50000).Distinct().Where(x => !String.IsNullOrEmpty(x.Name)).OrderBy(x => x.Name);
                     foreach (var item in ddlSec)
                     {
                         DropdownlistViewModels model = new DropdownlistViewModels();
@@ -53,7 +52,6 @@ namespace SCGLKPIUI.Models
                         viewModel.Add(model);
                     }
                     return viewModel;
-
                 default:
                     break;
             }
@@ -64,8 +62,13 @@ namespace SCGLKPIUI.Models
         {
             List<DropdownlistViewModels> viewModel = new List<DropdownlistViewModels>();
             viewModel.Add(new DropdownlistViewModels() { Id="FTL",Name="FTL"});
+            viewModel.Add(new DropdownlistViewModels() { Id = "FTL CE", Name = "FTL Ceramic" });
             viewModel.Add(new DropdownlistViewModels() { Id = "BULK", Name = "BULK" });
-            viewModel.Add(new DropdownlistViewModels() { Id = "CONSO", Name = "CONSO" });
+            viewModel.Add(new DropdownlistViewModels() { Id = "BULK RECYCLING", Name = "BULK Recycling" });
+            viewModel.Add(new DropdownlistViewModels() { Id = "CONSO EXT", Name = "CONSO External" });
+            viewModel.Add(new DropdownlistViewModels() { Id = "CONSO INT", Name = "CONSO Inside" });
+            viewModel.Add(new DropdownlistViewModels() { Id = "CONSO NE", Name = "CONSO Next Day" });
+            viewModel.Add(new DropdownlistViewModels() { Id = "CONSO WF", Name = "CONSO Ware & Fitting" });
             return viewModel;
         }
 
@@ -123,12 +126,12 @@ namespace SCGLKPIUI.Models
 
                 case "ShippingPoint":
                     var ddlShpPnt = (from m in objBs.dWH_ONTIME_DNBs.GetAll()
-                                      where !String.IsNullOrEmpty(m.SHPPOINT)
+                                     //where !String.IsNullOrEmpty(m.SHPPOINT)
                                       select new
                                       {
                                           Id = m.SHPPOINT,
                                           Name = m.SHPPOINT
-                                      }).Distinct();
+                                      }).Take(50000).Distinct().Where(x => !String.IsNullOrEmpty(x.Name)).OrderBy(x => x.Name);
                     foreach (var item in ddlShpPnt)
                     {
                         DropdownlistViewModels model = new DropdownlistViewModels();
@@ -140,12 +143,12 @@ namespace SCGLKPIUI.Models
 
                 case "ShipTo":
                     var ddlShpTo = (from m in objBs.dWH_ONTIME_SHIPMENTBs.GetAll()
-                                     where !String.IsNullOrEmpty(m.LAST_SHPG_LOC_NAME)
+                                    //where !String.IsNullOrEmpty(m.LAST_SHPG_LOC_NAME)
                                      select new
                                      {
                                          Id = m.LAST_SHPG_LOC_NAME,
                                          Name = m.LAST_SHPG_LOC_NAME
-                                     }).Distinct();
+                                     }).Take(50000).Distinct().Where(x => !String.IsNullOrEmpty(x.Name)).OrderBy(x => x.Name);
                     foreach (var item in ddlShpTo)
                     {
                         DropdownlistViewModels model = new DropdownlistViewModels();
@@ -157,12 +160,12 @@ namespace SCGLKPIUI.Models
 
                 case "TruckType":
                     var ddlTruckType = (from m in objBs.dWH_ONTIME_SHIPMENTBs.GetAll()
-                                    where !String.IsNullOrEmpty(m.TRUCK_TYPE)
+                                        //where !String.IsNullOrEmpty(m.TRUCK_TYPE)
                                     select new
                                     {
                                         Id = m.TRUCK_TYPE,
                                         Name = m.TRUCK_TYPE
-                                    }).Distinct();
+                                    }).Take(50000).Distinct().Where(x => !String.IsNullOrEmpty(x.Name)).OrderBy(x => x.Name);
                     foreach (var item in ddlTruckType)
                     {
                         DropdownlistViewModels model = new DropdownlistViewModels();

@@ -85,6 +85,10 @@
     <Compile Include="Migrations\201611020320396_Update-KPITender.Designer.cs">
       <DependentUpon>201611020320396_Update-KPITender.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611030928233_SubSegment.cs" />
+    <Compile Include="Migrations\201611030928233_SubSegment.Designer.cs">
+      <DependentUpon>201611030928233_SubSegment.cs</DependentUpon>
+    </Compile>
     <Compile Include="OntimeFiles.cs" />
     <Compile Include="DocReturnFiles.cs" />
     <Compile Include="OutboundedFiles.cs" />
@@ -510,6 +514,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611020320396_Update-KPITender.resx">
       <DependentUpon>201611020320396_Update-KPITender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611030928233_SubSegment.resx">
+      <DependentUpon>201611030928233_SubSegment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

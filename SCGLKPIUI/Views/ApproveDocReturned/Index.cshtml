@@ -21,6 +21,7 @@
 </h4>
 
 @*filter by month*@
+
 @Html.Partial("pv_ApproveFilterByMonth")
 
 @Html.Partial("pv_ApproveDocReturned")
@@ -169,6 +170,7 @@
                 ddl.select2('val', '');
             });
         });
+
         //#endregion
         $("#btnSearch").click(function () {
 
@@ -346,8 +348,8 @@
                     "dataSrc": ""
                 },
                 columns: [
-                    { data: "Shipment" },
                     { data: "DeliveryNote" },
+                    { data: "Shipment" },
                     { data: "RegionName" },
                     { data: "SoldtoName" },
                     { data: "ShiptoName" },
@@ -374,7 +376,7 @@
                     "data": function (row, type, val, meta) {
                         return '<input type="text" name="txtRemark" />\n\
                                 <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\
-                                <input type="hidden" name="txtDN" value="' + row.Dn + '" />\n\
+                                <input type="hidden" name="txtDN" value="' + row.DeliveryNote + '" />\n\
                                 <input type="hidden" name="monthId" value="' + monthId + '" />\n\
                                 <input type="hidden" name="yearId" value="' + yearId + '" />\n\
                                 <input type="hidden" name="departmentId" value="' + departmentId + '" />\n\
