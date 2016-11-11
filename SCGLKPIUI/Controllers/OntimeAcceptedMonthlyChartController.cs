@@ -90,9 +90,9 @@ namespace SCGLKPIUI.Controllers {
                                Adjust = (((double)g.Sum(x => x.OnTime) + (double)g.Sum(x => x.AdjustAccept))
                                         / (double)g.Sum(x => x.SumOfAccept)) * 100,
                                SumOfAccept = g.Sum(x => x.SumOfAccept)
-                           }).OrderBy(x => x.Month);
+                           }).ToList().OrderBy(x => int.Parse(x.Month)); ;
 
-            foreach (var item in results.OrderBy(x => x.Month)) {
+            foreach (var item in results) {
                 AcceptOntimeChartMonthlyViewModels model = new AcceptOntimeChartMonthlyViewModels();
                 model.Month = DateTimeFormatInfo.CurrentInfo.GetAbbreviatedMonthName(Convert.ToInt32(item.Month));
                 model.Plan = item.Plan;

@@ -347,8 +347,8 @@
                     "dataSrc": ""
                 },
                 columns: [
-                    { data: "Shipment" },
                     { data: "DeliveryNote" },
+                    { data: "Shipment" },
                     { data: "RegionName" },
                     { data: "SoldtoName" },
                     { data: "ShiptoName" },
@@ -374,7 +374,7 @@
                     }
                 ],
                 'columnDefs': [{
-                    "targets": 15,
+                    "targets": 16,
                     "data": function (row, type, val, meta) {
                         return '<input type="text" name="txtRemark" />\n\
                                 <input type="hidden" name="thisReasonId" value="' + row.thisReasonId + '" />\n\
@@ -388,7 +388,7 @@
                     },
                 },
                 {
-                    "targets": 16,
+                    "targets": 17,
                     "data": function (row, type, val, meta) {
                         if (row.FilePath != "#") {
                             return '<a href="' + row.FilePath + '">Download File</a>';

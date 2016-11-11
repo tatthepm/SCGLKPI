@@ -156,6 +156,10 @@ namespace SCGLKPIUI.Controllers
 
                             OutboundDelay tmp_adjusted = new OutboundDelay();
                             tmp_adjusted = objBs.outboundDelayBs.GetByID(dn);
+                            if (tmp_adjusted == null)
+                            {
+                                return Json("DN " + dn + " ได้ทำการ adjust ไปแล้ว");
+                            }
                             OutboundAdjusted tmp_toInsert = new OutboundAdjusted
                             {
                                 CARRIER_ID = tmp_adjusted.CARRIER_ID,
@@ -185,6 +189,7 @@ namespace SCGLKPIUI.Controllers
                                 SHPPOINT = tmp_adjusted.SHPPOINT,
                                 TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                 DELVNO = tmp_adjusted.DELVNO,
+                                SHPMNTNO = tmp_adjusted.SHPMNTNO,
                                 LOADED_DATE = DateTime.Now,
                                 OUTB_ADJUST = isadjust ? 1 : 0,
                                 OUTB_ADJUST_BY = User.Identity.Name,
@@ -254,7 +259,7 @@ namespace SCGLKPIUI.Controllers
                                                                       //Use the following properties to get file's name, size and MIMEType
                     string fileName = reference;
                     string targetpath = Server.MapPath("~/Content/Docs/outb/");
-                    FileUpload.SaveAs(targetpath + fileName);
+                    FileUpload.SaveAs(targetpath + DateTime.Now.ToString("yyyyMMddHHmm", new CultureInfo("th-TH")) + "_adjust.xlsx");
                     string pathToExcelFile = targetpath + DateTime.Now.ToString("yyyyMMddHHmm", new CultureInfo("th-TH")) + "_adjust.xlsx";
                     var ext = Path.GetExtension(pathToExcelFile);
 
@@ -273,10 +278,10 @@ namespace SCGLKPIUI.Controllers
                                 if (!String.IsNullOrEmpty(dr[0].ToString()))
                                 {
                                     string dn = dr[0].ToString();
-                                    string reasonId = dr[15].ToString();
+                                    int reasonId = Convert.ToInt32(dr[15].ToString());
                                     string remark = dr[16].ToString();
-                                    string reasonName = objBs.reasonInboundBs.GetByID(Convert.ToInt32(reasonId)).Name;
-                                    bool isadjust = objBs.reasonInboundBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
+                                    string reasonName = objBs.reasonOutboundBs.GetByID(reasonId).Name;
+                                    bool isadjust = objBs.reasonOutboundBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
 
                                     DWH_ONTIME_DN ontimeDn = objBs.dWH_ONTIME_DNBs.GetByID(dn);
                                     ontimeDn.INB_ADJUST = isadjust ? 0 : 0;
@@ -289,6 +294,10 @@ namespace SCGLKPIUI.Controllers
                                     objBs.dWH_ONTIME_DNBs.Update(ontimeDn);
 
                                     InboundDelay tmp_adjusted = objBs.inboundDelayBs.GetByID(dn);
+                                    if (tmp_adjusted == null)
+                                    {
+                                        return Json("DN " + dn + " ได้ทำการ adjust ไปแล้ว");
+                                    }
                                     InboundAdjusted tmp_toInsert = new InboundAdjusted
                                     {
                                         CARRIER_ID = tmp_adjusted.CARRIER_ID,
@@ -318,6 +327,7 @@ namespace SCGLKPIUI.Controllers
                                         SHPPOINT = tmp_adjusted.SHPPOINT,
                                         TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                         DELVNO = tmp_adjusted.DELVNO,
+                                        SHPMNTNO = tmp_adjusted.SHPMNTNO,
                                         LOADED_DATE = DateTime.Now,
                                         INB_ADJUST = isadjust ? 1 : 0,
                                         INB_ADJUST_BY = User.Identity.Name,
@@ -333,11 +343,9 @@ namespace SCGLKPIUI.Controllers
 
                                     countDN++;
                                 }
-
-                                Trans.Complete();
-                                return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
-
                             }
+                            Trans.Complete();
+                            return Json("อัพโหลดสำเร็จ " + countDN + " DN");
                         }
                         catch (Exception e)
                         {

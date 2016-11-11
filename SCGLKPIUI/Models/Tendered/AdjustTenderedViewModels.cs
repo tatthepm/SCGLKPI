@@ -11,6 +11,8 @@ namespace SCGLKPIUI.Models.Tendered {
         public string RegionName { get; set; }
         public string Soldto { get; set; }
         public string SoldtoName { get; set; }
+        public string Segment { get; set; }
+        public string SubSegment { get; set; }
         public string Shipto { get; set; }
         public string ShiptoName { get; set; }
         public string ShippingPoint { get; set; }

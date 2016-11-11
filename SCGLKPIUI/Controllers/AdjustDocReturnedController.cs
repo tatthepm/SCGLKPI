@@ -154,6 +154,10 @@ namespace SCGLKPIUI.Controllers
                             objBs.dWH_ONTIME_DNBs.Update(ontimeDn);
 
                             DocReturnDelay tmp_adjusted = objBs.docReturnDelayBs.GetByID(dn);
+                            if (tmp_adjusted == null)
+                            {
+                                return Json("DN " + dn + " ได้ทำการ adjust ไปแล้ว");
+                            }
                             DocReturnAdjusted tmp_toInsert = new DocReturnAdjusted
                             {
                                 CARRIER_ID = tmp_adjusted.CARRIER_ID,
@@ -181,6 +185,7 @@ namespace SCGLKPIUI.Controllers
                                 SHPPOINT = tmp_adjusted.SHPPOINT,
                                 TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                 DELVNO = tmp_adjusted.DELVNO,
+                                SHPMNTNO = tmp_adjusted.SHPMNTNO,
                                 LOADED_DATE = DateTime.Now,
                                 SCGL_DOCRET_ADJUST = isadjust ? 1 : 0,
                                 SCGL_DOCRET_ADJUST_BY = User.Identity.Name,
@@ -250,7 +255,7 @@ namespace SCGLKPIUI.Controllers
                                                                       //Use the following properties to get file's name, size and MIMEType
                     string fileName = reference;
                     string targetpath = Server.MapPath("~/Content/Docs/docrtn/");
-                    FileUpload.SaveAs(targetpath + fileName);
+                    FileUpload.SaveAs(targetpath + DateTime.Now.ToString("yyyyMMddHHmm", new CultureInfo("th-TH")) + "_adjust.xlsx");
                     string pathToExcelFile = targetpath + DateTime.Now.ToString("yyyyMMddHHmm", new CultureInfo("th-TH")) + "_adjust.xlsx";
                     var ext = Path.GetExtension(pathToExcelFile);
 
@@ -269,9 +274,9 @@ namespace SCGLKPIUI.Controllers
                                 if (!String.IsNullOrEmpty(dr[0].ToString()))
                                 {
                                     string dn = dr[0].ToString();
-                                    string reasonId = dr[15].ToString();
-                                    string remark = dr[16].ToString();
-                                    string reasonName = objBs.reasonDocReturnBs.GetByID(Convert.ToInt32(reasonId)).Name;
+                                    int reasonId = Convert.ToInt32(dr[14].ToString());
+                                    string remark = dr[15].ToString();
+                                    string reasonName = objBs.reasonDocReturnBs.GetByID(reasonId).Name;
                                     bool isadjust = objBs.reasonDocReturnBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
 
                                     DWH_ONTIME_DN ontimeDn = objBs.dWH_ONTIME_DNBs.GetByID(dn);
@@ -284,6 +289,10 @@ namespace SCGLKPIUI.Controllers
                                     objBs.dWH_ONTIME_DNBs.Update(ontimeDn);
 
                                     DocReturnDelay tmp_adjusted = objBs.docReturnDelayBs.GetByID(dn);
+                                    if (tmp_adjusted == null)
+                                    {
+                                        return Json("DN " + dn + " ได้ทำการ adjust ไปแล้ว");
+                                    }
                                     DocReturnAdjusted tmp_toInsert = new DocReturnAdjusted
                                     {
                                         CARRIER_ID = tmp_adjusted.CARRIER_ID,
@@ -311,6 +320,7 @@ namespace SCGLKPIUI.Controllers
                                         SHPPOINT = tmp_adjusted.SHPPOINT,
                                         TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                         DELVNO = tmp_adjusted.DELVNO,
+                                        SHPMNTNO = tmp_adjusted.SHPMNTNO,
                                         LOADED_DATE = DateTime.Now,
                                         SCGL_DOCRET_ADJUST = isadjust ? 1 : 0,
                                         SCGL_DOCRET_ADJUST_BY = User.Identity.Name,
@@ -326,11 +336,9 @@ namespace SCGLKPIUI.Controllers
 
                                     countDN++;
                                 }
-
-                                Trans.Complete();
-                                return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
-
                             }
+                            Trans.Complete();
+                            return Json("อัพโหลดสำเร็จ " + countDN + " DN");
                         }
                         catch (Exception e)
                         {

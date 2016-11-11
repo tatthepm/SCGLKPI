@@ -87,9 +87,9 @@ namespace SCGLKPIUI.Controllers
                                Adjust = (((double)g.Sum(x => x.OnTime) + (double)g.Sum(x => x.AdjustTender))
                                         / (double)g.Sum(x => x.SumOfTender)) * 100,
                                SumOfTender = g.Sum(x => x.SumOfTender)
-                           }).OrderBy(x => x.Month);
+                           }).ToList().OrderBy(x => int.Parse(x.Month)); ;
 
-            foreach (var item in results.OrderBy(x => x.Month)) {
+            foreach (var item in results) {
                 TenderedOntimeChartMonthlyViewModels model = new TenderedOntimeChartMonthlyViewModels();
                 model.Month = DateTimeFormatInfo.CurrentInfo.GetAbbreviatedMonthName(Convert.ToInt32(item.Month));
                 model.Plan = item.Plan;

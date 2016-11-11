@@ -171,6 +171,7 @@
             //var fileName = $(this).parent().find("input[name='massUpload']").val();
             var r = confirm("กด OK เพื่อยืนยันการอัพโหลด");
             if (r == true) {
+                $("#loading").show();
                 for (i = 0; i < files.length; i++) {
                     //Appending each file to FormData object
                     formdata.append('massUpload.xlsx', files[i]);
@@ -180,8 +181,20 @@
                 xhr.open('POST', '/AdjustDocReturned/UploadReason/');
                 xhr.send(formdata);
                 xhr.onreadystatechange = function () {
+                    $("#loading").hide();
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         alert(xhr.responseText);
+                        if ($('#DepartmentId').val() == "") {
+                        }
+                        else if ($('#SectionId').val() == "") {
+                        }
+                        else if ($('#YearId').val() == "") {
+                        }
+                        else if ($('#MonthId').val() == "") {
+                        }
+                        else {
+                            loadDataTable();
+                        }
                     }
                 }
             }

@@ -5,8 +5,8 @@ using System.Web;
 
 namespace SCGLKPIUI.Models.DocReturned {
     public class AdjustDocReturnedViewModels {
-        public string Shipment { get; set; }
         public string DeliveryNote { get; set; }
+        public string Shipment { get; set; }      
         public string CarrierId { get; set; }
         public string RegionId { get; set; }
         public string RegionName { get; set; }

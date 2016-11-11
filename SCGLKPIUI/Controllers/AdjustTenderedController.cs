@@ -123,6 +123,8 @@ namespace SCGLKPIUI.Controllers
                 model.Soldto = item.SOLDTO;
                 model.SoldtoName = item.SOLDTO_NAME;
                 model.Shipto = item.SHIPTO;
+                model.Segment = item.SEGMENT;
+                model.SubSegment = item.SUBSEGMENT;
                 model.ShiptoName = item.LAST_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
@@ -173,6 +175,10 @@ namespace SCGLKPIUI.Controllers
                             objBs.dWH_ONTIME_SHIPMENTBs.Update(ontimeShipment);
 
                             TenderedDelay tmp_adjusted = objBs.tenderedDelayBs.GetByID(sm);
+                            if (tmp_adjusted == null)
+                            {
+                                return Json("shipment " + sm + " ได้ทำการ adjust ไปแล้ว");
+                            }
                             TenderedAdjusted tmp_toInsert = new TenderedAdjusted
                             {
                                 CARRIER_ID = tmp_adjusted.CARRIER_ID,
@@ -271,7 +277,7 @@ namespace SCGLKPIUI.Controllers
                                                                       //Use the following properties to get file's name, size and MIMEType
                     string fileName = reference;
                     string targetpath = Server.MapPath("~/Content/Docs/tnrd/");
-                    FileUpload.SaveAs(targetpath + fileName);
+                    FileUpload.SaveAs(targetpath + DateTime.Now.ToString("yyyyMMddHHmm", new CultureInfo("th-TH")) + "_adjust.xlsx");
                     string pathToExcelFile = targetpath + DateTime.Now.ToString("yyyyMMddHHmm", new CultureInfo("th-TH")) + "_adjust.xlsx";
                     var ext = Path.GetExtension(pathToExcelFile);
 
@@ -290,9 +296,9 @@ namespace SCGLKPIUI.Controllers
                                 if (!String.IsNullOrEmpty(dr[0].ToString()))
                                 {
                                     string sm = dr[0].ToString();
-                                    string reasonId = dr[10].ToString();
-                                    string remark = dr[11].ToString();
-                                    string reasonName = objBs.ReasonTenderedBs.GetByID(Convert.ToInt32(reasonId)).Name;
+                                    int reasonId = Convert.ToInt32(dr[15].ToString());
+                                    string remark = dr[16].ToString();
+                                    string reasonName = objBs.ReasonTenderedBs.GetByID(reasonId).Name;
                                     bool isadjust = objBs.ReasonTenderedBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
                                     DWH_ONTIME_SHIPMENT ontimeShipment = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm);
                                     //Change adjustable here
@@ -305,6 +311,10 @@ namespace SCGLKPIUI.Controllers
                                     objBs.dWH_ONTIME_SHIPMENTBs.Update(ontimeShipment);
 
                                     TenderedDelay tmp_adjusted = objBs.tenderedDelayBs.GetByID(sm);
+                                    if (tmp_adjusted == null)
+                                    {
+                                        return Json("shipment " + sm + " ได้ทำการ adjust ไปแล้ว");
+                                    }
                                     TenderedAdjusted tmp_toInsert = new TenderedAdjusted
                                     {
                                         CARRIER_ID = tmp_adjusted.CARRIER_ID,
@@ -349,11 +359,9 @@ namespace SCGLKPIUI.Controllers
 
                                     countSM++;
                                 }
-
-                                Trans.Complete();
-                                return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
-
                             }
+                            Trans.Complete();
+                            return Json("อัพโหลดสำเร็จ " + countSM + " Shipment");
                         }
                         catch (Exception e)
                         {
@@ -414,6 +422,8 @@ namespace SCGLKPIUI.Controllers
                     model.Soldto = item.SOLDTO;
                     model.SoldtoName = item.SOLDTO_NAME;
                     model.Shipto = item.SHIPTO;
+                    model.Segment = item.SEGMENT;
+                    model.SubSegment = item.SUBSEGMENT;
                     model.ShiptoName = item.LAST_SHPG_LOC_NAME;
                     model.ShippingPoint = item.SHPPOINT;
                     model.TruckType = item.TRUCK_TYPE;

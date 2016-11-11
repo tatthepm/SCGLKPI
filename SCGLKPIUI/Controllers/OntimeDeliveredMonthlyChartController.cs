@@ -92,9 +92,9 @@ namespace SCGLKPIUI.Controllers {
                                Adjust = (((double)g.Sum(x => x.OnTime) + (double)g.Sum(x => x.AdjustDelivery))
                                         / (double)g.Sum(x => x.SumOfDelivery)) * 100,
                                SumOfDelivery = g.Sum(x => x.SumOfDelivery)
-                           }).OrderBy(x => x.Month);
+                           }).ToList().OrderBy(x => int.Parse(x.Month)); ;
 
-            foreach (var item in results.OrderBy(x => x.Month)) {
+            foreach (var item in results) {
                 DeliveredOntimeChartMonthlyViewModels model = new DeliveredOntimeChartMonthlyViewModels();
                 model.Month = DateTimeFormatInfo.CurrentInfo.GetAbbreviatedMonthName(Convert.ToInt32(item.Month));
                 model.Plan = item.Plan;

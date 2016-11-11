@@ -103,7 +103,10 @@ namespace SCGLKPIUI.Controllers
                 model.ShiptoName = item.TO_SHPG_LOC_NAME;
                 model.ShippingPoint = item.SHPPOINT;
                 model.TruckType = item.TRUCK_TYPE;
-                model.LastTender = item.LTNRDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                if (item.LTNRDDATE != null)
+                {
+                    model.LastTender = item.LTNRDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                }
                 model.PlanInbound = item.PLNINBDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.ActualGI = item.ACTGIDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 viewModel.Add(model);
@@ -152,6 +155,10 @@ namespace SCGLKPIUI.Controllers
                             objBs.dWH_ONTIME_DNBs.Update(ontimeDn);
 
                             InboundDelay tmp_adjusted = objBs.inboundDelayBs.GetByID(dn);
+                            if (tmp_adjusted == null)
+                            {
+                                return Json("DN " + dn + " ได้ทำการ adjust ไปแล้ว");
+                            }
                             InboundAdjusted tmp_toInsert = new InboundAdjusted
                             {
                                 CARRIER_ID = tmp_adjusted.CARRIER_ID,
@@ -181,6 +188,7 @@ namespace SCGLKPIUI.Controllers
                                 SHPPOINT = tmp_adjusted.SHPPOINT,
                                 TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                 DELVNO = tmp_adjusted.DELVNO,
+                                SHPMNTNO = tmp_adjusted.SHPMNTNO,
                                 LOADED_DATE = DateTime.Now,
                                 INB_ADJUST = isadjust ? 1 : 0,
                                 INB_ADJUST_BY = User.Identity.Name,
@@ -250,7 +258,7 @@ namespace SCGLKPIUI.Controllers
                                                                       //Use the following properties to get file's name, size and MIMEType
                     string fileName = reference;
                     string targetpath = Server.MapPath("~/Content/Docs/inb/");
-                    FileUpload.SaveAs(targetpath + fileName);
+                    FileUpload.SaveAs(targetpath + DateTime.Now.ToString("yyyyMMddHHmm", new CultureInfo("th-TH")) + "_adjust.xlsx");
                     string pathToExcelFile = targetpath + DateTime.Now.ToString("yyyyMMddHHmm", new CultureInfo("th-TH")) + "_adjust.xlsx";
                     var ext = Path.GetExtension(pathToExcelFile);
 
@@ -269,9 +277,9 @@ namespace SCGLKPIUI.Controllers
                                 if (!String.IsNullOrEmpty(dr[0].ToString()))
                                 {
                                     string dn = dr[0].ToString();
-                                    string reasonId = dr[15].ToString();
+                                    int reasonId = Convert.ToInt32(dr[15].ToString());
                                     string remark = dr[16].ToString();
-                                    string reasonName = objBs.reasonInboundBs.GetByID(Convert.ToInt32(reasonId)).Name;
+                                    string reasonName = objBs.reasonInboundBs.GetByID(reasonId).Name;
                                     bool isadjust = objBs.reasonInboundBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
 
                                     DWH_ONTIME_DN ontimeDn = objBs.dWH_ONTIME_DNBs.GetByID(dn);
@@ -285,6 +293,10 @@ namespace SCGLKPIUI.Controllers
                                     objBs.dWH_ONTIME_DNBs.Update(ontimeDn);
 
                                     InboundDelay tmp_adjusted = objBs.inboundDelayBs.GetByID(dn);
+                                    if (tmp_adjusted == null)
+                                    {
+                                        return Json("DN " + dn + " ได้ทำการ adjust ไปแล้ว");
+                                    }
                                     InboundAdjusted tmp_toInsert = new InboundAdjusted
                                     {
                                         CARRIER_ID = tmp_adjusted.CARRIER_ID,
@@ -314,6 +326,7 @@ namespace SCGLKPIUI.Controllers
                                         SHPPOINT = tmp_adjusted.SHPPOINT,
                                         TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                         DELVNO = tmp_adjusted.DELVNO,
+                                        SHPMNTNO = tmp_adjusted.SHPMNTNO,
                                         LOADED_DATE = DateTime.Now,
                                         INB_ADJUST = isadjust ? 1 : 0,
                                         INB_ADJUST_BY = User.Identity.Name,
@@ -329,11 +342,9 @@ namespace SCGLKPIUI.Controllers
 
                                     countDN++;
                                 }
-
-                                Trans.Complete();
-                                return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
-
                             }
+                            Trans.Complete();
+                            return Json("อัพโหลดสำเร็จ " + countDN + " DN");
                         }
                         catch (Exception e)
                         {
@@ -391,7 +402,10 @@ namespace SCGLKPIUI.Controllers
                     model.ShiptoName = item.TO_SHPG_LOC_NAME;
                     model.ShippingPoint = item.SHPPOINT;
                     model.TruckType = item.TRUCK_TYPE;
-                    model.LastTender = item.LTNRDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                    if (item.LTNRDDATE != null)
+                    {
+                        model.LastTender = item.LTNRDDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                    }
                     model.PlanInbound = item.PLNINBDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                     model.ActualGI = item.ACTGIDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                     viewModel.Add(model);

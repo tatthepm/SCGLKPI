@@ -179,6 +179,10 @@ namespace SCGLKPIUI.Controllers
                             objBs.dWH_ONTIME_DNBs.Update(ontimeDn);
 
                             OntimeDelay tmp_adjusted = objBs.ontimeDelayBs.GetByID(dn);
+                            if (tmp_adjusted == null)
+                            {
+                                return Json("DN " + dn + " ได้ทำการ adjust ไปแล้ว");
+                            }
                             OntimeAdjusted tmp_toInsert = new OntimeAdjusted
                             {
                                 CARRIER_ID = tmp_adjusted.CARRIER_ID,
@@ -211,6 +215,7 @@ namespace SCGLKPIUI.Controllers
                                 SHPPOINT = tmp_adjusted.SHPPOINT,
                                 TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                 DELVNO = tmp_adjusted.DELVNO,
+                                SHPMNTNO = tmp_adjusted.SHPMNTNO,
                                 LOADED_DATE = DateTime.Now,
                                 ON_TIME_ADJUST = isadjust ? 1 : 0,
                                 ON_TIME_ADJUST_BY = User.Identity.Name,
@@ -280,7 +285,7 @@ namespace SCGLKPIUI.Controllers
                                                                       //Use the following properties to get file's name, size and MIMEType
                     string fileName = reference;
                     string targetpath = Server.MapPath("~/Content/Docs/ontime/");
-                    FileUpload.SaveAs(targetpath + fileName);
+                    FileUpload.SaveAs(targetpath + DateTime.Now.ToString("yyyyMMddHHmm", new CultureInfo("th-TH")) + "_adjust.xlsx");
                     string pathToExcelFile = targetpath + DateTime.Now.ToString("yyyyMMddHHmm", new CultureInfo("th-TH")) + "_adjust.xlsx";
                     var ext = Path.GetExtension(pathToExcelFile);
 
@@ -299,9 +304,9 @@ namespace SCGLKPIUI.Controllers
                                 if (!String.IsNullOrEmpty(dr[0].ToString()))
                                 {
                                     string dn = dr[0].ToString();
-                                    string reasonId = dr[17].ToString();
+                                    int reasonId = Convert.ToInt32(dr[17].ToString());
                                     string remark = dr[18].ToString();
-                                    string reasonName = objBs.reasonOntimeBs.GetByID(Convert.ToInt32(reasonId)).Name;
+                                    string reasonName = objBs.reasonOntimeBs.GetByID(reasonId).Name;
                                     bool isadjust = objBs.reasonOntimeBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
 
                                     DWH_ONTIME_DN ontimeDn = objBs.dWH_ONTIME_DNBs.GetByID(dn);
@@ -315,6 +320,10 @@ namespace SCGLKPIUI.Controllers
                                     objBs.dWH_ONTIME_DNBs.Update(ontimeDn);
 
                                     OntimeDelay tmp_adjusted = objBs.ontimeDelayBs.GetByID(dn);
+                                    if (tmp_adjusted == null)
+                                    {
+                                        return Json("DN " + dn + " ได้ทำการ adjust ไปแล้ว");
+                                    }
                                     OntimeAdjusted tmp_toInsert = new OntimeAdjusted
                                     {
                                         CARRIER_ID = tmp_adjusted.CARRIER_ID,
@@ -347,6 +356,7 @@ namespace SCGLKPIUI.Controllers
                                         SHPPOINT = tmp_adjusted.SHPPOINT,
                                         TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                         DELVNO = tmp_adjusted.DELVNO,
+                                        SHPMNTNO = tmp_adjusted.SHPMNTNO,
                                         LOADED_DATE = DateTime.Now,
                                         ON_TIME_ADJUST = isadjust ? 1 : 0,
                                         ON_TIME_ADJUST_BY = User.Identity.Name,
@@ -362,11 +372,9 @@ namespace SCGLKPIUI.Controllers
 
                                     countDN++;
                                 }
-
-                                Trans.Complete();
-                                return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
-
                             }
+                            Trans.Complete();
+                            return Json("อัพโหลดสำเร็จ " + countDN + " DN");
                         }
                         catch (Exception e)
                         {
