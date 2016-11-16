@@ -162,7 +162,7 @@ namespace SCGLKPIUI.Controllers
                         //update sum of adjust daily
                         DateTime FTNRDDate = Convert.ToDateTime(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).FTNRDDATE_D);
                         string matName = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).MATFRIGRP;
-                        string segmentId = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).DATA_GRP;
+                        string segmentId = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).DATA_SUBGRP;
                         string sectionId = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).SECTION_ID;
                         string departmentId = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).DEPARTMENT_ID;
 

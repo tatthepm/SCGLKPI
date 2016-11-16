@@ -21,7 +21,7 @@ namespace DAL {
         //GetByFilter
         public IQueryable<TenderedAdjusted> GetByFilter(string segment_id, int year, int month)
         {
-            return db.TenderedAdjusted.Where(x => x.SUBSEGMENT == segment_id && x.PLNTNRDDATE_D.Value.Year == year && x.PLNTNRDDATE_D.Value.Month == month);
+            return db.TenderedAdjusted.Where(x => x.SUBSEGMENT == segment_id && x.FTNRDDATE_D.Value.Year == year && x.FTNRDDATE_D.Value.Month == month);
         }
 
         //GetByShipto
