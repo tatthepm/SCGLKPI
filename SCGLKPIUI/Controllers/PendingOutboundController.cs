@@ -88,6 +88,7 @@ namespace SCGLKPIUI.Controllers
                 model.TruckType = item.TRUCK_TYPE;
                 model.ActualGIDate = item.ACTGIDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.PlanOutbound = item.PLNOUTBDATE_D.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                model.Delays = item.DATEDIFF.ToString();
                 viewSummaryModel.Add(model);
             }
 

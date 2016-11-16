@@ -16,5 +16,6 @@ namespace SCGLKPIUI.Models.Tendered {
         public string TruckType { get; set; }
         public string ShcrDate { get; set; }
         public string PlanTender { get; set; }
+        public string Delays { get; set; }
     }
 }

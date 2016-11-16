@@ -89,6 +89,10 @@
     <Compile Include="Migrations\201611030928233_SubSegment.Designer.cs">
       <DependentUpon>201611030928233_SubSegment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611140316462_kimi.cs" />
+    <Compile Include="Migrations\201611140316462_kimi.Designer.cs">
+      <DependentUpon>201611140316462_kimi.cs</DependentUpon>
+    </Compile>
     <Compile Include="OntimeFiles.cs" />
     <Compile Include="DocReturnFiles.cs" />
     <Compile Include="OutboundedFiles.cs" />
@@ -517,6 +521,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611030928233_SubSegment.resx">
       <DependentUpon>201611030928233_SubSegment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611140316462_kimi.resx">
+      <DependentUpon>201611140316462_kimi.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

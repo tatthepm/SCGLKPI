@@ -207,17 +207,17 @@
         //#region 3 filter ShippingPoint,Shipto,TruckType
         $("#SegmentId").change(function (res) {
             segmentId = $("#SegmentId").val();
-            $.getJSON('/AdjustTendered/ShiptoFilter?SegmentId=' + segmentId, function (data) {
-                var ddl = $("#ShipTo");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddl.html(string);
-                ddl.select2('val', '');
-            });
+            //$.getJSON('/AdjustTendered/ShiptoFilter?SegmentId=' + segmentId, function (data) {
+            //    var ddl = $("#ShipTo");
+            //    // ddl.removeAttrs('disabled style');
+            //    ddl.addClass('js-source-states');
+            //    var string = '<option value="">ALL</option>';
+            //    $.each(data, function (i, S) {
+            //        string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+            //    });
+            //    ddl.html(string);
+            //    ddl.select2('val', '');
+            //});
             $.getJSON('/AdjustTendered/ShippingPointFilter?SegmentId=' + segmentId, function (data) {
                 var ddl = $("#ShipPoint");
                 // ddl.removeAttrs('disabled style');
@@ -274,7 +274,6 @@
             else {
                 var segmentId = $('#SegmentId').val();
                 var ShipPoint = $('#ShipPoint').val();
-                var Shipto = $('#ShipTo').val();
                 var TruckType = $('#TruckType').val();
                 var yearId = $('#YearId').val();
                 var monthId = $('#MonthId').val();
@@ -283,7 +282,6 @@
                 <input type="hidden" name="yearId" value="' + yearId + '" />\n\
                 <input type="hidden" name="segmentId" value="' + segmentId + '" />\n\
                 <input type="hidden" name="ShipPoint" value="' + ShipPoint + '" />\n\
-                <input type="hidden" name="ShipTo" value="' + ShipTo + '" />\n\
                 <input type="hidden" name="TruckType" value="' + TruckType + '" />\n');
                 $("#excelModal").show();
             }
@@ -437,7 +435,7 @@
             var monthId = $('#MonthId').val();
 
             var ShipPoint = $('#ShipPoint').val();
-            var ShipTo = $('#ShipTo').val();
+            //var ShipTo = $('#ShipTo').val();
             var TruckType = $('#TruckType').val();
 
             var adjustTender = $('#adjustTenderedTable').dataTable();
@@ -456,7 +454,7 @@
                         d.YearId = yearId;
                         d.MonthId = monthId;
                         d.ShipPoint = ShipPoint;
-                        d.ShipTo = ShipTo;
+                        //d.ShipTo = ShipTo;
                         d.TruckType = TruckType;
                     },
                     "dataSrc": ""

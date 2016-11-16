@@ -247,30 +247,37 @@ namespace SCGLKPIUI.Controllers
         {
             using (TransactionScope Trans = new TransactionScope())
             {
-                for (int i = 0; i < Request.Files.Count; i++)
+                try
                 {
-                    string reference = Request.Files.AllKeys[i];
-                    HttpPostedFileBase file = Request.Files[i]; //Uploaded file
-                                                                //Use the following properties to get file's name, size and MIMEType
-                    int fileSize = file.ContentLength;
-                    string fileName = file.FileName;
-                    string mimeType = file.ContentType;
-                    System.IO.Stream fileContent = file.InputStream;
-                    //To save file, use SaveAs method
-                    if (System.IO.File.Exists(Server.MapPath("~/Content/Docs/ontime/") + reference + "_" + fileName))
+                    for (int i = 0; i < Request.Files.Count; i++)
                     {
-                        return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
+                        string reference = Request.Files.AllKeys[i];
+                        HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                                                                    //Use the following properties to get file's name, size and MIMEType
+                        int fileSize = file.ContentLength;
+                        string fileName = file.FileName;
+                        string mimeType = file.ContentType;
+                        System.IO.Stream fileContent = file.InputStream;
+                        //To save file, use SaveAs method
+                        if (System.IO.File.Exists(Server.MapPath("~/Content/Docs/ontime/") + reference + "_" + fileName))
+                        {
+                            return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
+                        }
+                        OntimeFiles delvFiles = new OntimeFiles();
+                        delvFiles.DELVNO = reference;
+                        delvFiles.FILEPATH = "Content/Docs/ontime/" + reference + "_" + fileName;
+                        delvFiles.LOADED_DATE = DateTime.Now;
+                        delvFiles.LOADED_BY = User.Identity.Name;
+                        objBs.ontimeFilesBs.Insert(delvFiles);
+                        file.SaveAs(Server.MapPath("~/Content/Docs/ontime/") + reference + "_" + fileName); //File will be saved in application root
                     }
-                    OntimeFiles delvFiles = new OntimeFiles();
-                    delvFiles.DELVNO = reference;
-                    delvFiles.FILEPATH = "Content/Docs/ontime/" + reference + "_" + fileName;
-                    delvFiles.LOADED_DATE = DateTime.Now;
-                    delvFiles.LOADED_BY = User.Identity.Name;
-                    objBs.ontimeFilesBs.Insert(delvFiles);
-                    file.SaveAs(Server.MapPath("~/Content/Docs/ontime/") + reference + "_" + fileName); //File will be saved in application root
+                    Trans.Complete();
+                    return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
                 }
-                Trans.Complete();
-                return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
+                catch (Exception e)
+                {
+                    return Json("อัพโหลดไม่สำเร็จ :: Code " + e.ToString());
+                }
             }
         }
 
@@ -473,6 +480,7 @@ namespace SCGLKPIUI.Controllers
             }
             catch (Exception e)
             {
+                TempData["Msg"] = "Error" + e.ToString();
                 return View();
             }
         }

@@ -222,30 +222,37 @@ namespace SCGLKPIUI.Controllers
         {
             using (TransactionScope Trans = new TransactionScope())
             {
-                for (int i = 0; i < Request.Files.Count; i++)
+                try
                 {
-                    string reference = Request.Files.AllKeys[i];
-                    HttpPostedFileBase file = Request.Files[i]; //Uploaded file
-                                                                //Use the following properties to get file's name, size and MIMEType
-                    int fileSize = file.ContentLength;
-                    string fileName = file.FileName;
-                    string mimeType = file.ContentType;
-                    System.IO.Stream fileContent = file.InputStream;
-                    //To save file, use SaveAs method
-                    if (System.IO.File.Exists(Server.MapPath("~/Content/Docs/outb/") + reference + "_" + fileName))
+                    for (int i = 0; i < Request.Files.Count; i++)
                     {
-                        return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
+                        string reference = Request.Files.AllKeys[i];
+                        HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                                                                    //Use the following properties to get file's name, size and MIMEType
+                        int fileSize = file.ContentLength;
+                        string fileName = file.FileName;
+                        string mimeType = file.ContentType;
+                        System.IO.Stream fileContent = file.InputStream;
+                        //To save file, use SaveAs method
+                        if (System.IO.File.Exists(Server.MapPath("~/Content/Docs/outb/") + reference + "_" + fileName))
+                        {
+                            return Json("อัพโหลดไม่สำเร็จ - มีไฟล์นี้อยู่แล้ว");
+                        }
+                        OutboundedFiles outbFiles = new OutboundedFiles();
+                        outbFiles.DELVNO = reference;
+                        outbFiles.FILEPATH = "Content/Docs/outb/" + reference + "_" + fileName;
+                        outbFiles.LOADED_DATE = DateTime.Now;
+                        outbFiles.LOADED_BY = User.Identity.Name;
+                        objBs.outboundFilesBs.Insert(outbFiles);
+                        file.SaveAs(Server.MapPath("~/Content/Docs/outb/") + reference + "_" + fileName); //File will be saved in application root
                     }
-                    OutboundedFiles outbFiles = new OutboundedFiles();
-                    outbFiles.DELVNO = reference;
-                    outbFiles.FILEPATH = "Content/Docs/outb/" + reference + "_" + fileName;
-                    outbFiles.LOADED_DATE = DateTime.Now;
-                    outbFiles.LOADED_BY = User.Identity.Name;
-                    objBs.outboundFilesBs.Insert(outbFiles);
-                    file.SaveAs(Server.MapPath("~/Content/Docs/outb/") + reference + "_" + fileName); //File will be saved in application root
+                    Trans.Complete();
+                    return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
                 }
-                Trans.Complete();
-                return Json("อัพโหลดสำเร็จ " + Request.Files.Count + " ไฟล์");
+                catch (Exception e)
+                {
+                    return Json("อัพโหลดไม่สำเร็จ :: Code " + e.ToString());
+                }
             }
         }
         public JsonResult UploadReason()
@@ -278,8 +285,8 @@ namespace SCGLKPIUI.Controllers
                                 if (!String.IsNullOrEmpty(dr[0].ToString()))
                                 {
                                     string dn = dr[0].ToString();
-                                    int reasonId = Convert.ToInt32(dr[15].ToString());
-                                    string remark = dr[16].ToString();
+                                    int reasonId = Convert.ToInt32(dr[14].ToString());
+                                    string remark = dr[15].ToString();
                                     string reasonName = objBs.reasonOutboundBs.GetByID(reasonId).Name;
                                     bool isadjust = objBs.reasonOutboundBs.GetByID(Convert.ToInt32(reasonId)).IsAdjust;
 
@@ -420,6 +427,7 @@ namespace SCGLKPIUI.Controllers
             }
             catch (Exception e)
             {
+                TempData["Msg"] = "Error" + e.ToString();
                 return View();
             }
         }

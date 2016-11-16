@@ -93,6 +93,7 @@ namespace SCGLKPIUI.Controllers
                 model.TruckType = item.TRUCK_TYPE;
                 model.ShcrDate = item.SHCRDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.PlanTender = item.PLNTNRDDATE_D.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                model.Delays = item.DATEDIFF.ToString();
                 viewSummaryModel.Add(model);
             }
 

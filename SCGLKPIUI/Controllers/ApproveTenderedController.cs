@@ -87,7 +87,7 @@ namespace SCGLKPIUI.Controllers
             List<ApproveTenderedViewModels> viewModel = new List<ApproveTenderedViewModels>();
 
             //filter department
-            var q = from d in objBs.tenderedAdjustedBs.GetByFilter(SegmentId, Convert.ToInt32(MonthId), Convert.ToInt32(YearId))
+            var q = from d in objBs.tenderedAdjustedBs.GetByFilter(SegmentId, Convert.ToInt32(YearId), Convert.ToInt32(MonthId))
                     select d;
 
             //filter Shipping Point

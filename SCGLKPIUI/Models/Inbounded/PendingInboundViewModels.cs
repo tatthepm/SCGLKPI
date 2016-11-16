@@ -17,5 +17,6 @@ namespace SCGLKPIUI.Models.Inbounded {
         public string TruckType { get; set; }
         public string LTenderDate { get; set; } //LastTender
         public string PlanInbound { get; set; } //PLNINBDATE
+        public string Delays { get; set; }
     }
 }

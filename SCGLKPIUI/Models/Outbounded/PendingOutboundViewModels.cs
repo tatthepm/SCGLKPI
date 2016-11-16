@@ -17,5 +17,6 @@ namespace SCGLKPIUI.Models.Outbounded {
         public string ShiptoName { get; set; }
         public string ActualGIDate { get; set; } //ACTGI
         public string PlanOutbound { get; set; } //PLNOUTDATE
+        public string Delays { get; set; }
     }
 }

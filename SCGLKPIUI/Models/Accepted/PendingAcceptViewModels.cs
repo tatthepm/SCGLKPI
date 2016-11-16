@@ -16,5 +16,6 @@ namespace SCGLKPIUI.Models {
         public string TruckType { get; set; }
         public string LTenderDate { get; set; }
         public string PlanAccept { get; set; }
+        public string Delays { get; set; }
     }
 }

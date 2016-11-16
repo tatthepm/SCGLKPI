@@ -19,5 +19,6 @@ namespace SCGLKPIUI.Models.Delivered {
         public string ShcrDate { get; set; }
         public string RequestedDate { get; set; }
         public string PlanDelivery { get; set; } //PLNONTIMEDATE
+        public string Delays { get; set; }
     }
 }

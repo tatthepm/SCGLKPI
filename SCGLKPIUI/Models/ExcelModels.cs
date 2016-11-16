@@ -53,7 +53,7 @@ namespace SCGLKPIUI.Models
                     return tbl;
                 } // the using 
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
                 return null;
             }

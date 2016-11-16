@@ -55,7 +55,7 @@ namespace DAL {
         //GetByFilter
         public IQueryable<TenderedDelay> GetByFilter(string segment_id, int year , int month)
         {
-            return db.TenderedDelays.Where(x => x.SUBSEGMENT == segment_id && x.PLNTNRDDATE_D.Value.Year == year && x.PLNTNRDDATE_D.Value.Month == month);
+            return db.TenderedDelays.Where(x => x.SUBSEGMENT == segment_id && x.FTNRDDATE_D.Value.Year == year && x.FTNRDDATE_D.Value.Month == month);
         }
         //GetById
         public TenderedDelay GetByID(string shipmentNo) {

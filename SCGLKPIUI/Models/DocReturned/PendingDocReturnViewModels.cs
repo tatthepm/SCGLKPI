@@ -18,5 +18,6 @@ namespace SCGLKPIUI.Models.DocReturned {
         public string TruckType { get; set; }
         public string ActualGIDate { get; set; }
         public string PlanDocReturn { get; set; } //PLNDOCRETDATE_SCGL
+        public string Delays { get; set; }
     }
 }
