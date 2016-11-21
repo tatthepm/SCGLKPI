@@ -16,13 +16,13 @@
     }
 </style>
 <h4>
-    <i class="fa fa-truck"></i> Pending doc return | Monthly
+    <i class="fa fa-truck"></i> Document Aging | Monthly
 </h4>
 
 @*filter by month*@
 @Html.Partial("pv_FilterByMonth")
 
-@Html.Partial("pv_PendingDocReturn")
+@Html.Partial("pv_FollowDocReturn")
 
 <div>
     <div id="loading" class="modal">
@@ -107,7 +107,7 @@
         //#region 4 getJson Section
         $("#DepartmentId").change(function (res) {
             departmentId = $("#DepartmentId").val();
-            $.getJSON('/PendingDocReturn/SectionFilter?departmentId=' + departmentId, function (data) {
+            $.getJSON('/FollowDocReturn/SectionFilter?departmentId=' + departmentId, function (data) {
                 var ddl = $("#SectionId");
                 // ddl.removeAttrs('disabled style');
                 ddl.addClass('js-source-states');
@@ -125,7 +125,7 @@
         $("#SectionId").change(function (res) {
             departmentId = $("#DepartmentId").val();
             sectionId = $("#SectionId").val();
-            $.getJSON('/PendingDocReturn/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
+            $.getJSON('/FollowDocReturn/MatNameFilter?departmentId=' + departmentId + '&sectionid=' + sectionId, function (data) {
                 var ddl = $("#MatNameId");
                 // ddl.removeAttrs('disabled style');
                 ddl.addClass('js-source-states');
@@ -138,25 +138,25 @@
             });
         });
         $("#btnSearch").click(function () {
-            if ($('#DepartmentId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, Department is not selected ",
-                    type: "warning"
-                });
-            } else if ($('#SectionId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, Section is not selected ",
-                    type: "warning"
-                });
+            //if ($('#DepartmentId').val() == "") {
+            //    swal({
+            //        title: "Warning!",
+            //        text: "Sorry!, Department is not selected ",
+            //        type: "warning"
+            //    });
+            //} else if ($('#SectionId').val() == "") {
+            //    swal({
+            //        title: "Warning!",
+            //        text: "Sorry!, Section is not selected ",
+            //        type: "warning"
+            //    });
             //} else if ($('#MatNameId').val() == "") {
             //    swal({
             //        title: "Warning!",
             //        text: "Sorry!, MatName is not selected ",
             //        type: "warning"
             //    });
-            } else if ($('#YearId').val() == "") {
+            if ($('#YearId').val() == "") {
                 swal({
                     title: "Warning!",
                     text: "Sorry!, Year is not selected ",
@@ -179,14 +179,14 @@
                 var yearId = $('#YearId').val();
                 var monthId = $('#MonthId').val();
 
-                var tender = $('#PendingDocReturnSummary').dataTable();
+                var tender = $('#FollowDocReturnSummary').dataTable();
                 tender.fnDestroy();
                 tender.dataTable({
                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                     "ajax": {
                         "type": "POST",
-                        "url": '@(Url.RouteUrl("PendingDocReturnTableSummary"))',
+                        "url": '@(Url.RouteUrl("FollowDocReturnTableSummary"))',
                         "data": function (d) {
                             d.departmentId = departmentId;
                             d.sectionId = sectionId;
@@ -197,17 +197,14 @@
                         "dataSrc": ""
                     },
                     columns: [
-                        { data: "DeliveryNote" },
-                        { data: "Shipment" },
-                       { data: "RegionName" },
-                       { data: "SoldtoName" },
-                       { data: "ShiptoName" },
-                       { data: "ShippingPoint" },
-                       { data: "TruckType" },
-                       { data: "ActualGIDate" },
-                       { data: "PlanDelivery" },
-                       { data: "PlanDocReturn" },
-                       { data: "Delays" },
+                   { data: "Department" },
+                   { data: "Section" },
+                   { data: "Delay10" },
+                   { data: "Delay30" },
+                   { data: "Delay60" },
+                   { data: "Delay90" },
+                   { data: "Total" },
+                   { data: "More10" },
                     ],
                     select: true,
                     buttons: [

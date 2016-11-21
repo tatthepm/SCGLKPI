@@ -217,6 +217,7 @@
     <Compile Include="Controllers\AdjustDocReturnedController.cs" />
     <Compile Include="Controllers\AdjustInboundedController.cs" />
     <Compile Include="Controllers\AdjustOutboundedController.cs" />
+    <Compile Include="Controllers\FollowDocReturnController.cs" />
     <Compile Include="Controllers\ViewerDNController.cs" />
     <Compile Include="Controllers\ViewerShipmentController.cs" />
     <Compile Include="Controllers\Master\EquipmentTypesController.cs" />
@@ -296,6 +297,7 @@
     <Compile Include="Models\Delivered\DeliveredOntimeViewModels.cs" />
     <Compile Include="Models\Delivered\DeliveredOntimeYearlyViewModels.cs" />
     <Compile Include="Models\DocReturned\ApproveDocReturnedViewModels.cs" />
+    <Compile Include="Models\DocReturned\FollowDocReturnViewModels.cs" />
     <Compile Include="Models\DocReturned\PendingDocReturnViewModels.cs" />
     <Compile Include="Models\DocReturned\DocReturnedOntimeChartDailyViewModels.cs" />
     <Compile Include="Models\DocReturned\DocReturnedOntimeChartMonthlyViewModels.cs" />
@@ -3101,6 +3103,8 @@
     <Content Include="Views\ViewerDN\pv_DNViewer.cshtml" />
     <Content Include="Views\ViewerShipment\Index.cshtml" />
     <Content Include="Views\ViewerShipment\pv_ShipmentViewer.cshtml" />
+    <Content Include="Views\FollowDocReturn\Index.cshtml" />
+    <Content Include="Views\FollowDocReturn\pv_FollowDocReturn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\UploadFiles\" />

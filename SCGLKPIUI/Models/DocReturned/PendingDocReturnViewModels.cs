@@ -19,5 +19,6 @@ namespace SCGLKPIUI.Models.DocReturned {
         public string ActualGIDate { get; set; }
         public string PlanDocReturn { get; set; } //PLNDOCRETDATE_SCGL
         public string Delays { get; set; }
+        public string PlanDelivery { get; set; }
     }
 }
