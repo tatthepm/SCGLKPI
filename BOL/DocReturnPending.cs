@@ -87,6 +87,6 @@ namespace BOL {
         public string TRUCK_TYPE { get; set; }
         public int DATEDIFF { get; set; }
         [Column(TypeName = "datetime2")]
-        public DateTime? PLDLVDATE { get; set; }
+        public DateTime? PLNONTIMEDATE { get; set; }
     }
 }

@@ -97,6 +97,10 @@
     <Compile Include="Migrations\201611210224013_Upload PLNDELV-to-PendDocRtn.Designer.cs">
       <DependentUpon>201611210224013_Upload PLNDELV-to-PendDocRtn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611231013112_PLNDELV-to-PLNONTIME.cs" />
+    <Compile Include="Migrations\201611231013112_PLNDELV-to-PLNONTIME.Designer.cs">
+      <DependentUpon>201611231013112_PLNDELV-to-PLNONTIME.cs</DependentUpon>
+    </Compile>
     <Compile Include="OntimeFiles.cs" />
     <Compile Include="DocReturnFiles.cs" />
     <Compile Include="OutboundedFiles.cs" />
@@ -531,6 +535,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611210224013_Upload PLNDELV-to-PendDocRtn.resx">
       <DependentUpon>201611210224013_Upload PLNDELV-to-PendDocRtn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611231013112_PLNDELV-to-PLNONTIME.resx">
+      <DependentUpon>201611231013112_PLNDELV-to-PLNONTIME.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

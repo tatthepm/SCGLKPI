@@ -80,7 +80,7 @@ namespace SCGLKPIUI.Controllers
                 model.ActualGIDate = item.ACTGIDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.PlanDocReturn = item.PLNDOCRETDATE_SCGL_D.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 model.Delays = item.DATEDIFF.ToString();
-                model.PlanDelivery = item.PLDLVDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+                model.PlanDelivery = item.PLNONTIMEDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
                 viewSummaryModel.Add(model);
             }
 

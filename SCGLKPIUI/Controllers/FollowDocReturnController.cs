@@ -60,7 +60,7 @@ namespace SCGLKPIUI.Controllers
             int year = Convert.ToInt32(YearId);
             int month = Convert.ToInt32(MonthId);
             //filter department
-            var q = from d in objBs.docReturnPendingBs.GetAll().Where(x => x.ACTGIDATE_D.Value.Year == year && x.ACTGIDATE_D.Value.Month == month)
+            var q = from d in objBs.docReturnPendingBs.GetAll().Where(x => x.PLNDOCRETDATE_SCGL_D.Value.Year == year && x.PLNDOCRETDATE_SCGL_D.Value.Month == month && x.DEPARTMENT_ID != null)
                     select d;
 
             //filter Department
