@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AcceptedAdjustedDb.cs" />
     <Compile Include="AcceptedDelayDb.cs" />
+    <Compile Include="HubMastersDb.cs" />
     <Compile Include="OntimeFilesDb.cs" />
     <Compile Include="DocReturnFilesDb.cs" />
     <Compile Include="OutboundedFilesDb.cs" />

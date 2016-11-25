@@ -274,12 +274,14 @@ namespace SCGLKPIUI.Controllers
                 }
             }
         }
-        public JsonResult UploadReason()
+        public ContentResult UploadReason()
         {
             using (TransactionScope Trans = new TransactionScope())
             {
                 for (int i = 0; i < Request.Files.Count; i++)
                 {
+                    string errorRef = "";
+
                     string reference = Request.Files.AllKeys[i];
                     HttpPostedFileBase FileUpload = Request.Files[i]; //Uploaded file
                                                                       //Use the following properties to get file's name, size and MIMEType
@@ -321,60 +323,67 @@ namespace SCGLKPIUI.Controllers
                                     TenderedDelay tmp_adjusted = objBs.tenderedDelayBs.GetByID(sm);
                                     if (tmp_adjusted == null)
                                     {
-                                        return Json("shipment " + sm + " ได้ทำการ adjust ไปแล้ว");
+                                        errorRef = errorRef + sm + " , ";
                                     }
-                                    TenderedAdjusted tmp_toInsert = new TenderedAdjusted
+                                    else
                                     {
-                                        CARRIER_ID = tmp_adjusted.CARRIER_ID,
-                                        DEPARTMENT_ID = tmp_adjusted.DEPARTMENT_ID,
-                                        DEPARTMENT_Name = tmp_adjusted.DEPARTMENT_Name,
-                                        SECTION_ID = tmp_adjusted.SECTION_ID,
-                                        SECTION_NAME = tmp_adjusted.SECTION_NAME,
-                                        MATFRIGRP = tmp_adjusted.MATFRIGRP,
-                                        MATNAME = tmp_adjusted.MATNAME,
-                                        REGION_ID = tmp_adjusted.REGION_ID,
-                                        REGION_NAME_EN = tmp_adjusted.REGION_NAME_EN,
-                                        REGION_NAME_TH = tmp_adjusted.REGION_NAME_TH,
-                                        SOLDTO = tmp_adjusted.SOLDTO,
-                                        SOLDTO_NAME = tmp_adjusted.SOLDTO_NAME,
-                                        SHIPTO = tmp_adjusted.SHIPTO,
-                                        SEGMENT = tmp_adjusted.SEGMENT,
-                                        SUBSEGMENT = tmp_adjusted.SUBSEGMENT,
-                                        LAST_SHPG_LOC_NAME = tmp_adjusted.LAST_SHPG_LOC_NAME,
-                                        VENDOR_CODE = tmp_adjusted.VENDOR_CODE,
-                                        VENDOR_NAME = tmp_adjusted.VENDOR_NAME,
-                                        SHCRDATE = tmp_adjusted.SHCRDATE,
-                                        SHCRDATE_D = tmp_adjusted.SHCRDATE_D,
-                                        PLNTNRDDATE = tmp_adjusted.PLNTNRDDATE,
-                                        PLNTNRDDATE_D = tmp_adjusted.PLNTNRDDATE_D,
-                                        FTNRDDATE = tmp_adjusted.FTNRDDATE,
-                                        FTNRDDATE_D = tmp_adjusted.FTNRDDATE_D,
-                                        SHPPOINT = tmp_adjusted.SHPPOINT,
-                                        TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
-                                        SHPMNTNO = tmp_adjusted.SHPMNTNO,
-                                        DELVNO = tmp_adjusted.DELVNO,
-                                        LOADED_DATE = DateTime.Now,
-                                        TNRD_ADJUST = isadjust ? 1 : 0,
-                                        TNRD_ADJUST_BY = User.Identity.Name,
-                                        TNRD_ADJUST_DATE = DateTime.Now,
-                                        TNRD_ONTIME_REASON = reasonName,
-                                        TNRD_ONTIME_REASON_ID = Convert.ToInt32(reasonId),
-                                        TNRD_ONTIME_REMARK = remark
-                                    };
-                                    //insert waiting ofr approval
-                                    objBs.tenderedAdjustedBs.Insert(tmp_toInsert);
-                                    //delete AcceptedDelays
-                                    objBs.tenderedDelayBs.Delete(sm);
+                                        TenderedAdjusted tmp_toInsert = new TenderedAdjusted
+                                        {
+                                            CARRIER_ID = tmp_adjusted.CARRIER_ID,
+                                            DEPARTMENT_ID = tmp_adjusted.DEPARTMENT_ID,
+                                            DEPARTMENT_Name = tmp_adjusted.DEPARTMENT_Name,
+                                            SECTION_ID = tmp_adjusted.SECTION_ID,
+                                            SECTION_NAME = tmp_adjusted.SECTION_NAME,
+                                            MATFRIGRP = tmp_adjusted.MATFRIGRP,
+                                            MATNAME = tmp_adjusted.MATNAME,
+                                            REGION_ID = tmp_adjusted.REGION_ID,
+                                            REGION_NAME_EN = tmp_adjusted.REGION_NAME_EN,
+                                            REGION_NAME_TH = tmp_adjusted.REGION_NAME_TH,
+                                            SOLDTO = tmp_adjusted.SOLDTO,
+                                            SOLDTO_NAME = tmp_adjusted.SOLDTO_NAME,
+                                            SHIPTO = tmp_adjusted.SHIPTO,
+                                            SEGMENT = tmp_adjusted.SEGMENT,
+                                            SUBSEGMENT = tmp_adjusted.SUBSEGMENT,
+                                            LAST_SHPG_LOC_NAME = tmp_adjusted.LAST_SHPG_LOC_NAME,
+                                            VENDOR_CODE = tmp_adjusted.VENDOR_CODE,
+                                            VENDOR_NAME = tmp_adjusted.VENDOR_NAME,
+                                            SHCRDATE = tmp_adjusted.SHCRDATE,
+                                            SHCRDATE_D = tmp_adjusted.SHCRDATE_D,
+                                            PLNTNRDDATE = tmp_adjusted.PLNTNRDDATE,
+                                            PLNTNRDDATE_D = tmp_adjusted.PLNTNRDDATE_D,
+                                            FTNRDDATE = tmp_adjusted.FTNRDDATE,
+                                            FTNRDDATE_D = tmp_adjusted.FTNRDDATE_D,
+                                            SHPPOINT = tmp_adjusted.SHPPOINT,
+                                            TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
+                                            SHPMNTNO = tmp_adjusted.SHPMNTNO,
+                                            DELVNO = tmp_adjusted.DELVNO,
+                                            LOADED_DATE = DateTime.Now,
+                                            TNRD_ADJUST = isadjust ? 1 : 0,
+                                            TNRD_ADJUST_BY = User.Identity.Name,
+                                            TNRD_ADJUST_DATE = DateTime.Now,
+                                            TNRD_ONTIME_REASON = reasonName,
+                                            TNRD_ONTIME_REASON_ID = Convert.ToInt32(reasonId),
+                                            TNRD_ONTIME_REMARK = remark
+                                        };
+                                        //insert waiting ofr approval
+                                        objBs.tenderedAdjustedBs.Insert(tmp_toInsert);
+                                        //delete AcceptedDelays
+                                        objBs.tenderedDelayBs.Delete(sm);
 
-                                    countSM++;
+                                        countSM++;
+                                    }
                                 }
                             }
                             Trans.Complete();
-                            return Json("อัพโหลดสำเร็จ " + countSM + " Shipment");
+                            if (errorRef != "")
+                            {
+                                errorRef = "<div style='overflow:auto'> Shipment หมายเลข " + errorRef + "ได้ทำการ adjust ไปแล้ว </div>";
+                            }
+                            return Content("อัพโหลดสำเร็จ " + countSM + " Shipment" + "<br>" + errorRef);
                         }
                         catch (Exception e)
                         {
-                            return Json("อัพโหลดไม่สำเร็จ กรอกข้อมูลไม่ถูกต้อง");
+                            return Content("อัพโหลดไม่สำเร็จ กรอกข้อมูลไม่ถูกต้อง");
                         }
                     }
                     //deleting excel file from folder  
@@ -384,7 +393,7 @@ namespace SCGLKPIUI.Controllers
                     }
                 }
             }
-            return Json("อัพโหลดไม่สำเร็จ ประเภทไฟล์ไม่ถูกต้อง");
+            return Content("อัพโหลดไม่สำเร็จ ประเภทไฟล์ไม่ถูกต้อง");
         }
         /// <summary>
         /// Dump Accepts Excels

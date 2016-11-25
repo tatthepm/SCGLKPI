@@ -28,7 +28,7 @@
         <ul class="nav metismenu" id="side-menu">
 
             <li>
-                <a href="#"><span class="nav-label">KPI Performance</span></a>
+                <a href="#"><span class="nav-label"><i class="fa fa-bar-chart"></i> KPI Performance</span></a>
                 <ul class="nav nav-second-level">
                     @*On-time Delivery*@
                     <li>
@@ -125,7 +125,7 @@
             @*Adjust*@
 
             <li>
-                <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> ADJUST</span> <span class="label label-success pull-right">v.2</span> </a>
+                <a href="#"><span class="nav-label"><i class="fa fa-plus-square-o"></i> ADJUST</span> <span class="label label-success pull-right">v.2</span> </a>
                 <ul class="nav nav-second-level">
                     <li class="@Html.IsSelected(controller: "AdjustDelivered")">
                         <a href="@Url.Action("Index", "AdjustDelivered")"><span class="nav-label"> Adjust on-time deliver</span></a>
@@ -151,7 +151,7 @@
             @*Pending*@
 
             <li>
-                <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> PENDING</span> <span class="label label-success pull-right">v.1</span> </a>
+                <a href="#"><span class="nav-label"><i class="fa fa-question"></i> PENDING</span> <span class="label label-success pull-right">v.1</span> </a>
                 <ul class="nav nav-second-level">
                     <li class="@Html.IsSelected(controller: "FollowDocReturn")">
                         <a href="@Url.Action("Index", "FollowDocReturn")"><span class="nav-label"> Document aging report</span></a>
@@ -181,7 +181,7 @@
             @if (User.IsInRole("ADMIN") || User.IsInRole("MANAGER"))
             {
                 <li>
-                    <a href="#"><span class="nav-label"><i class="fa fa-adjust"></i> Approve Adjusted</span> <span class="label label-success pull-right">v.1</span> </a>
+                    <a href="#"><span class="nav-label"><i class="fa fa-check-square-o"></i> Approve Adjusted</span> <span class="label label-success pull-right">v.1</span> </a>
                     <ul class="nav nav-second-level">
                         <li class="@Html.IsSelected(controller: "ApproveDelivered")">
                             <a href="@Url.Action("Index", "ApproveDelivered")"><span class="nav-label"> Approve on-time delivery</span></a>
@@ -205,7 +205,7 @@
                 </li>
                 @*Master*@
                 <li>
-                    <a href="#"><span class="nav-label">Master</span> <span class="label label-success pull-right">v.1</span> </a>
+                    <a href="#"><span class="nav-label"><i class="fa fa-gears"></i> Master</span> <span class="label label-success pull-right">v.1</span> </a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="#"><span class="nav-label">Reason</span><span class="fa arrow"></span></a>
@@ -213,8 +213,8 @@
                                 <li class="@Html.IsSelected(controller: "ReasonDelivered")">
                                     <a href="@Url.Action("Index", "ReasonDelivered")"><span class="nav-label">Ontime delivery reason</span></a>
                                 </li>
-                                <li class="@Html.IsSelected(controller: "EquipmentTypes")">
-                                    <a href="@Url.Action("Index", "EquipmentTypes")"><span class="nav-label"> Tender reason</span></a>
+                                <li class="@Html.IsSelected(controller: "ReasonTendered")">
+                                    <a href="@Url.Action("Index", "ReasonTendered")"><span class="nav-label"> Tender reason</span></a>
                                 </li>
                                 <li class="@Html.IsSelected(controller: "ReasonAccepted")">
                                     <a href="@Url.Action("Index", "ReasonAccepted")"><span class="nav-label"> Accept reason</span></a>
@@ -229,6 +229,9 @@
                                     <a href="@Url.Action("Index", "ReasonDocReturned")"><span class="nav-label"> Document return reason</span></a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="@Html.IsSelected(controller: "HubMasters")">
+                            <a href="@Url.Action("Index", "HubMasters")"><span class="nav-label">Hub Masters</span></a>
                         </li>
                         <li class="@Html.IsSelected(controller: "EquipmentTypes")">
                             <a href="@Url.Action("Index", "EquipmentTypes")"><span class="nav-label">Equipment Types</span></a>
@@ -246,7 +249,7 @@
             @if (User.IsInRole("ADMIN"))
             {
                 <li>
-                    <a href="#"><span class="nav-label">User</span></a>
+                    <a href="#"><span class="nav-label"><i class="fa fa-street-view"></i> User</span></a>
                     <ul class="nav nav-second-level">
                         <li class="@Html.IsSelected(controller: "Login")">
                             <a href="@Url.Action("Register", "Login")"><span class="nav-label">Register User</span></a>

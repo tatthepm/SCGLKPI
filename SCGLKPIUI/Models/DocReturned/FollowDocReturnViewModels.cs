@@ -8,10 +8,10 @@ namespace SCGLKPIUI.Models.DocReturned {
     {
         public string Department { get; set; }
         public string Section { get; set; }
-        public int Delay10 { get; set; }
-        public int Delay30 { get; set; }
-        public int Delay60 { get; set; }
-        public int Delay90 { get; set; }
+        public int DelayNormal { get; set; }
+        public int DelayAlert { get; set; }
+        public int DelayAlarm { get; set; }
+        public int DelaySuperAlarm { get; set; }
         public int Total { get; set; }
         public int More10 { get; set; }
     }

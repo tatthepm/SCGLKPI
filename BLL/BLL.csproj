@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HubMastersBs.cs" />
     <Compile Include="OntimeFilesBs.cs" />
     <Compile Include="DocReturnFilesBs.cs" />
     <Compile Include="OutboundFilesBs.cs" />

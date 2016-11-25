@@ -281,12 +281,14 @@ namespace SCGLKPIUI.Controllers
             }
         }
 
-        public JsonResult UploadReason()
+        public ContentResult UploadReason()
         {
             using (TransactionScope Trans = new TransactionScope())
             {
                 for (int i = 0; i < Request.Files.Count; i++)
                 {
+                    string errorRef = "";
+
                     string reference = Request.Files.AllKeys[i];
                     HttpPostedFileBase FileUpload = Request.Files[i]; //Uploaded file
                                                                       //Use the following properties to get file's name, size and MIMEType
@@ -329,63 +331,70 @@ namespace SCGLKPIUI.Controllers
                                     OntimeDelay tmp_adjusted = objBs.ontimeDelayBs.GetByID(dn);
                                     if (tmp_adjusted == null)
                                     {
-                                        return Json("DN " + dn + " ได้ทำการ adjust ไปแล้ว");
+                                        errorRef = errorRef + dn + " , ";
                                     }
-                                    OntimeAdjusted tmp_toInsert = new OntimeAdjusted
+                                    else
                                     {
-                                        CARRIER_ID = tmp_adjusted.CARRIER_ID,
-                                        DEPARTMENT_ID = tmp_adjusted.DEPARTMENT_ID,
-                                        DEPARTMENT_Name = tmp_adjusted.DEPARTMENT_Name,
-                                        SECTION_ID = tmp_adjusted.SECTION_ID,
-                                        SECTION_NAME = tmp_adjusted.SECTION_NAME,
-                                        MATFRIGRP = tmp_adjusted.MATFRIGRP,
-                                        MATNAME = tmp_adjusted.MATNAME,
-                                        REGION_ID = tmp_adjusted.REGION_ID,
-                                        REGION_NAME_EN = tmp_adjusted.REGION_NAME_EN,
-                                        REGION_NAME_TH = tmp_adjusted.REGION_NAME_TH,
-                                        SOLDTO = tmp_adjusted.SOLDTO,
-                                        SOLDTO_NAME = tmp_adjusted.SOLDTO_NAME,
-                                        SHIPTO = tmp_adjusted.SHIPTO,
-                                        SEGMENT = tmp_adjusted.SEGMENT,
-                                        SUBSEGMENT = tmp_adjusted.SUBSEGMENT,
-                                        TO_SHPG_LOC_NAME = tmp_adjusted.TO_SHPG_LOC_NAME,
-                                        VENDOR_CODE = tmp_adjusted.VENDOR_CODE,
-                                        VENDOR_NAME = tmp_adjusted.VENDOR_NAME,
-                                        ORDCMPDATE = tmp_adjusted.ORDCMPDATE,
-                                        REQUESTED_DATE = tmp_adjusted.REQUESTED_DATE,
-                                        SHCRDATE = tmp_adjusted.SHCRDATE,
-                                        PLNONTIMEDATE = tmp_adjusted.PLNONTIMEDATE,
-                                        PLNONTIMEDATE_D = tmp_adjusted.PLNONTIMEDATE_D,
-                                        ACDLVDATE = tmp_adjusted.ACDLVDATE,
-                                        ACDLVDATE_D = tmp_adjusted.ACDLVDATE_D,
-                                        ACTGIDATE = tmp_adjusted.ACTGIDATE,
-                                        ACTGIDATE_D = tmp_adjusted.ACTGIDATE_D,
-                                        SHPPOINT = tmp_adjusted.SHPPOINT,
-                                        TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
-                                        DELVNO = tmp_adjusted.DELVNO,
-                                        SHPMNTNO = tmp_adjusted.SHPMNTNO,
-                                        LOADED_DATE = DateTime.Now,
-                                        ON_TIME_ADJUST = isadjust ? 1 : 0,
-                                        ON_TIME_ADJUST_BY = User.Identity.Name,
-                                        ON_TIME_ADJUST_DATE = DateTime.Now,
-                                        ON_TIME_REASON = reasonName,
-                                        ON_TIME_REASON_ID = Convert.ToInt32(reasonId),
-                                        ON_TIME_REMARK = remark
-                                    };
-                                    //insert waiting for approval
-                                    objBs.ontimeAdjustedBs.Insert(tmp_toInsert);
-                                    //delete AcceptedDelays
-                                    objBs.ontimeDelayBs.Delete(dn);
+                                        OntimeAdjusted tmp_toInsert = new OntimeAdjusted
+                                        {
+                                            CARRIER_ID = tmp_adjusted.CARRIER_ID,
+                                            DEPARTMENT_ID = tmp_adjusted.DEPARTMENT_ID,
+                                            DEPARTMENT_Name = tmp_adjusted.DEPARTMENT_Name,
+                                            SECTION_ID = tmp_adjusted.SECTION_ID,
+                                            SECTION_NAME = tmp_adjusted.SECTION_NAME,
+                                            MATFRIGRP = tmp_adjusted.MATFRIGRP,
+                                            MATNAME = tmp_adjusted.MATNAME,
+                                            REGION_ID = tmp_adjusted.REGION_ID,
+                                            REGION_NAME_EN = tmp_adjusted.REGION_NAME_EN,
+                                            REGION_NAME_TH = tmp_adjusted.REGION_NAME_TH,
+                                            SOLDTO = tmp_adjusted.SOLDTO,
+                                            SOLDTO_NAME = tmp_adjusted.SOLDTO_NAME,
+                                            SHIPTO = tmp_adjusted.SHIPTO,
+                                            SEGMENT = tmp_adjusted.SEGMENT,
+                                            SUBSEGMENT = tmp_adjusted.SUBSEGMENT,
+                                            TO_SHPG_LOC_NAME = tmp_adjusted.TO_SHPG_LOC_NAME,
+                                            VENDOR_CODE = tmp_adjusted.VENDOR_CODE,
+                                            VENDOR_NAME = tmp_adjusted.VENDOR_NAME,
+                                            ORDCMPDATE = tmp_adjusted.ORDCMPDATE,
+                                            REQUESTED_DATE = tmp_adjusted.REQUESTED_DATE,
+                                            SHCRDATE = tmp_adjusted.SHCRDATE,
+                                            PLNONTIMEDATE = tmp_adjusted.PLNONTIMEDATE,
+                                            PLNONTIMEDATE_D = tmp_adjusted.PLNONTIMEDATE_D,
+                                            ACDLVDATE = tmp_adjusted.ACDLVDATE,
+                                            ACDLVDATE_D = tmp_adjusted.ACDLVDATE_D,
+                                            ACTGIDATE = tmp_adjusted.ACTGIDATE,
+                                            ACTGIDATE_D = tmp_adjusted.ACTGIDATE_D,
+                                            SHPPOINT = tmp_adjusted.SHPPOINT,
+                                            TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
+                                            DELVNO = tmp_adjusted.DELVNO,
+                                            SHPMNTNO = tmp_adjusted.SHPMNTNO,
+                                            LOADED_DATE = DateTime.Now,
+                                            ON_TIME_ADJUST = isadjust ? 1 : 0,
+                                            ON_TIME_ADJUST_BY = User.Identity.Name,
+                                            ON_TIME_ADJUST_DATE = DateTime.Now,
+                                            ON_TIME_REASON = reasonName,
+                                            ON_TIME_REASON_ID = Convert.ToInt32(reasonId),
+                                            ON_TIME_REMARK = remark
+                                        };
+                                        //insert waiting for approval
+                                        objBs.ontimeAdjustedBs.Insert(tmp_toInsert);
+                                        //delete AcceptedDelays
+                                        objBs.ontimeDelayBs.Delete(dn);
 
-                                    countDN++;
+                                        countDN++;
+                                    }
                                 }
                             }
                             Trans.Complete();
-                            return Json("อัพโหลดสำเร็จ " + countDN + " DN");
+                            if (errorRef != "")
+                            {
+                                errorRef = "<div style='overflow:auto'> DN หมายเลข " + errorRef + "ได้ทำการ adjust ไปแล้ว </div>";
+                            }
+                            return Content("อัพโหลดสำเร็จ " + countDN + " DN" + "<br>" + errorRef);
                         }
                         catch (Exception e)
                         {
-                            return Json("อัพโหลดไม่สำเร็จ กรอกข้อมูลไม่ถูกต้อง");
+                            return Content("อัพโหลดไม่สำเร็จ กรอกข้อมูลไม่ถูกต้อง");
                         }
                     }
                     //deleting excel file from folder  
@@ -395,7 +404,7 @@ namespace SCGLKPIUI.Controllers
                     }
                 }
             }
-            return Json("อัพโหลดไม่สำเร็จ ประเภทไฟล์ไม่ถูกต้อง");
+            return Content("อัพโหลดไม่สำเร็จ ประเภทไฟล์ไม่ถูกต้อง");
         }
         /// <summary>
         /// Dump Accepts Excels

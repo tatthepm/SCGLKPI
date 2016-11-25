@@ -1,10 +1,10 @@
-﻿@model IEnumerable<BOL.EquipmentTypes>
+﻿@model IEnumerable<BOL.HubMasters>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h4><i class="fa fa-table"></i> Equipment Types</h4>
+<h4><i class="fa fa-table"></i> Hub Masters</h4>
 <div class="content animate-panel">
     <div class="row">
         <div class="col-lg-7">
@@ -17,17 +17,17 @@
                     
                 </div>
                 <div class="panel-body">
-                    @using (Html.BeginForm("Create", "EquipmentTypes", FormMethod.Post, new { @class = "form-horizontal" })) {
+                    @using (Html.BeginForm("Create", "HubMasters", FormMethod.Post, new { @class = "form-horizontal" })) {
                         @Html.AntiForgeryToken()
                         <div class="row">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Equipment Code</label>
+                                <label class="col-sm-2 control-label">Hub Id</label>
                                 <div class="col-sm-10"><input type="text" class="form-control" name="Eqmt_Code"></div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Equipment Description</label>
+                                <label class="col-sm-2 control-label">Hub Name</label>
                                 <div class="col-sm-10"><input type="text" class="form-control" name="Eqmt_Description"></div>
                             </div>
                         </div>
@@ -85,8 +85,8 @@
                             <thead>
                                 <tr>
                                     <th width="5%">#</th>
-                                    <th>Equipment Code</th>
-                                    <th>Equipment Desc</th>
+                                    <th>Hub Id</th>
+                                    <th>Hub Name</th>
                                     <th>Is Active</th>
                                     <th width="10%"></th>
 
@@ -97,8 +97,8 @@
                                 @foreach (var item in Model) {
                                     <tr>
                                         <td>@(itemNo++)</td>
-                                        <td>@item.Eqmt_Code</td>
-                                        <td>@item.Eqmt_Description</td>
+                                        <td>@item.Hub_Id</td>
+                                        <td>@item.Hub_Name</td>
                                         <td>@item.IsActive</td>
                                         <td>
                                             <a href="/ReasonOutbounded/Delete?Id=@item.id" onclick="return ConfirmDelete()"><span class="btn btn-danger"><i class="fa fa-trash-o"></i> Delete</span></a>

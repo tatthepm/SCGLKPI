@@ -171,38 +171,44 @@
             files = event.target.files;
             var formdata = new FormData(); //FormData object
             //var fileName = $(this).parent().find("input[name='massUpload']").val();
-            var r = confirm("กด OK เพื่อยืนยันการอัพโหลด");
-            if (r == true) {
-                $("#loading").show();
-                for (i = 0; i < files.length; i++) {
-                    //Appending each file to FormData object
-                    formdata.append('massUpload.xlsx', files[i]);
-                }
-                //Creating an XMLHttpRequest and sending
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/AdjustAccepted/UploadReason/');
-                xhr.send(formdata);
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        $("#loading").hide();
-                        alert(xhr.responseText);
-                        if ($('#DepartmentId').val() == "") {
-                        }
-                        else if ($('#SectionId').val() == "") {
-                        }
-                        else if ($('#YearId').val() == "") {
-                        }
-                        else if ($('#MonthId').val() == "") {
-                        }
-                        else {
-                            loadDataTable();
+            swal({
+                title: "ยืนยันไฟล์อัพโหลดถูกต้อง",
+                text: "คุณต้องการยืนยันการอัพโหลดด้วยไฟล์นี้? (ไม่สามารถแก้ไขภายหลังได้)",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonClass: "btn-danger",
+                confirmButtonText: "ยืนยันการอัพโหลด",
+                cancelButtonText: "ยกเลิก",
+                closeOnConfirm: true,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $("#loading").show();
+                    for (i = 0; i < files.length; i++) {
+                        //Appending each file to FormData object
+                        formdata.append('massUpload.xlsx', files[i]);
+                    }
+                    //Creating an XMLHttpRequest and sending
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/AdjustAccepted/UploadReason/');
+                    xhr.send(formdata);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            $("#loading").hide();
+                            swal("ผลการดำเนินการ", xhr.responseText);
+                            if (($('#DepartmentId').val() == "") || ($('#SectionId').val() == "") || ($('#YearId').val() == "") || ($('#MonthId').val() == "")) {
+                            }
+                            else {
+                                loadDataTable();
+                            }
                         }
                     }
+                } else {
+                    swal("Cancelled", "ยกเลิกการอัพโหลด", "error");
                 }
-            }
-            else {
-                alert("ยกเลิกการอัพโหลด");
-            }
+            });
+
             $("#massAdjust").hide();
         });
         //#region 3 filter matname
@@ -331,26 +337,37 @@
             files = event.target.files;
             var formdata = new FormData(); //FormData object
             var fileName = $(this).parent().find("input[name='fileName']").val();
-            var r = confirm("กด OK เพื่อยืนยันการอัพโหลด");
-            if (r == true) {
-                for (i = 0; i < files.length; i++) {
-                    //Appending each file to FormData object
-                    formdata.append(fileName, files[i]);
-                }
-                //Creating an XMLHttpRequest and sending
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/AdjustAccepted/Upload/');
-                xhr.send(formdata);
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        alert(xhr.responseText);
-                        loadDataTable();
+            swal({
+                title: "ยืนยันไฟล์อัพโหลดถูกต้อง",
+                text: "คุณต้องการยืนยันการอัพโหลดด้วยไฟล์นี้? (ไม่สามารถแก้ไขภายหลังได้)",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonClass: "btn-danger",
+                confirmButtonText: "ยืนยันการอัพโหลด",
+                cancelButtonText: "ยกเลิก",
+                closeOnConfirm: true,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    for (i = 0; i < files.length; i++) {
+                        //Appending each file to FormData object
+                        formdata.append(fileName, files[i]);
+                    }
+                    //Creating an XMLHttpRequest and sending
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/AdjustAccepted/Upload/');
+                    xhr.send(formdata);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            swal("ผลการดำเนินการ", xhr.responseText);
+                        }
                     }
                 }
-            }
-            else {
-                alert("ยกเลิกการอัพโหลด");
-            }
+                else {
+                    swal("Cancelled", "ยกเลิกการอัพโหลด", "error");
+                }
+            });
         });
         //#region 5 Bind normal buttons
 
@@ -385,6 +402,7 @@
         });
 
         $(function () {
+            $("#notifyMsg").hide();
 
             $('#frm').on('submit', function (e) {
                 //block posting.

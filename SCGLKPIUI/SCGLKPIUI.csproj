@@ -218,6 +218,7 @@
     <Compile Include="Controllers\AdjustInboundedController.cs" />
     <Compile Include="Controllers\AdjustOutboundedController.cs" />
     <Compile Include="Controllers\FollowDocReturnController.cs" />
+    <Compile Include="Controllers\Master\HubMastersController.cs" />
     <Compile Include="Controllers\ViewerDNController.cs" />
     <Compile Include="Controllers\ViewerShipmentController.cs" />
     <Compile Include="Controllers\Master\EquipmentTypesController.cs" />
@@ -3105,6 +3106,7 @@
     <Content Include="Views\ViewerShipment\pv_ShipmentViewer.cshtml" />
     <Content Include="Views\FollowDocReturn\Index.cshtml" />
     <Content Include="Views\FollowDocReturn\pv_FollowDocReturn.cshtml" />
+    <Content Include="Views\HubMasters\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\UploadFiles\" />

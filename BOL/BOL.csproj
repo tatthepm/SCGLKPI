@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HubMasters.cs" />
     <Compile Include="Migrations\201610031113499_Init.cs" />
     <Compile Include="Migrations\201610031113499_Init.Designer.cs">
       <DependentUpon>201610031113499_Init.cs</DependentUpon>
@@ -100,6 +101,14 @@
     <Compile Include="Migrations\201611231013112_PLNDELV-to-PLNONTIME.cs" />
     <Compile Include="Migrations\201611231013112_PLNDELV-to-PLNONTIME.Designer.cs">
       <DependentUpon>201611231013112_PLNDELV-to-PLNONTIME.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611240244196_how-is.cs" />
+    <Compile Include="Migrations\201611240244196_how-is.Designer.cs">
+      <DependentUpon>201611240244196_how-is.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611250108378_Add-HubMasters.cs" />
+    <Compile Include="Migrations\201611250108378_Add-HubMasters.Designer.cs">
+      <DependentUpon>201611250108378_Add-HubMasters.cs</DependentUpon>
     </Compile>
     <Compile Include="OntimeFiles.cs" />
     <Compile Include="DocReturnFiles.cs" />
@@ -538,6 +547,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611231013112_PLNDELV-to-PLNONTIME.resx">
       <DependentUpon>201611231013112_PLNDELV-to-PLNONTIME.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611240244196_how-is.resx">
+      <DependentUpon>201611240244196_how-is.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611250108378_Add-HubMasters.resx">
+      <DependentUpon>201611250108378_Add-HubMasters.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
