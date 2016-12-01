@@ -179,9 +179,9 @@
                 var yearId = $('#YearId').val();
                 var monthId = $('#MonthId').val();
 
-                var tender = $('#FollowDocReturnSummary').dataTable();
-                tender.fnDestroy();
-                tender.dataTable({
+                var follow = $('#FollowDocReturnSummary').dataTable();
+                follow.fnDestroy();
+                follow.dataTable({
                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                     "ajax": {
@@ -199,12 +199,11 @@
                     columns: [
                    { data: "Department" },
                    { data: "Section" },
-                   { data: "Delay10" },
-                   { data: "Delay30" },
-                   { data: "Delay60" },
-                   { data: "Delay90" },
+                   { data: "DelayNormal" },
+                   { data: "DelayAlert" },
+                   { data: "DelayAlarm" },
                    { data: "Total" },
-                   { data: "More10" },
+                   { data: "DelaySuperAlarm" },
                     ],
                     select: true,
                     buttons: [
@@ -214,7 +213,39 @@
                     ]
                 });
                 //#endregion table
-
+                var Hub = $('#FollowDocReturnByHub').dataTable();
+                Hub.fnDestroy();
+                Hub.dataTable({
+                    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "ajax": {
+                        "type": "POST",
+                        "url": '@(Url.RouteUrl("FollowDocReturnByHub"))',
+                        "data": function (d) {
+                            d.departmentId = departmentId;
+                            d.sectionId = sectionId;
+                            d.matNameId = matNameId;
+                            d.YearId = yearId;
+                            d.MonthId = monthId;
+                        },
+                        "dataSrc": ""
+                    },
+                    columns: [
+                   { data: "Department" },
+                   { data: "HubName" },
+                   { data: "DelayNormal" },
+                   { data: "DelayAlert" },
+                   { data: "DelayAlarm" },
+                   { data: "Total" },
+                   { data: "DelaySuperAlarm" },
+                    ],
+                    select: true,
+                    buttons: [
+                        { extend: 'copy', className: 'btn-sm' },
+                        { extend: 'csv', title: 'ExampleFile', className: 'btn-sm' },
+                        { extend: 'excel', title: 'ExampleFile', className: 'btn-sm' },
+                    ]
+                });
             } //end if else
 
         }); //end btnSerarch click

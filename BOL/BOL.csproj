@@ -110,6 +110,10 @@
     <Compile Include="Migrations\201611250108378_Add-HubMasters.Designer.cs">
       <DependentUpon>201611250108378_Add-HubMasters.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611250839265_PlanDocRet.cs" />
+    <Compile Include="Migrations\201611250839265_PlanDocRet.Designer.cs">
+      <DependentUpon>201611250839265_PlanDocRet.cs</DependentUpon>
+    </Compile>
     <Compile Include="OntimeFiles.cs" />
     <Compile Include="DocReturnFiles.cs" />
     <Compile Include="OutboundedFiles.cs" />
@@ -553,6 +557,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611250108378_Add-HubMasters.resx">
       <DependentUpon>201611250108378_Add-HubMasters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611250839265_PlanDocRet.resx">
+      <DependentUpon>201611250839265_PlanDocRet.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

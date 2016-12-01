@@ -88,5 +88,6 @@ namespace BOL {
         public int DATEDIFF { get; set; }
         [Column(TypeName = "datetime2")]
         public DateTime? PLNONTIMEDATE { get; set; }
+        public int TRACKING { get; set; }
     }
 }
