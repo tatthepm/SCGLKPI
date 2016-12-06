@@ -152,10 +152,7 @@
 
             <li>
                 <a href="#"><span class="nav-label"><i class="fa fa-question"></i> PENDING</span> <span class="label label-success pull-right">v.1</span> </a>
-                <ul class="nav nav-second-level">
-                    <li class="@Html.IsSelected(controller: "FollowDocReturn")">
-                        <a href="@Url.Action("Index", "FollowDocReturn")"><span class="nav-label"> Document aging report</span></a>
-                    </li>
+                <ul class="nav nav-second-level">                    
                     <li class="@Html.IsSelected(controller: "PendingDelivery")">
                         <a href="@Url.Action("Index", "PendingDelivery")"><span class="nav-label"> Pending on-time delivery</span></a>
                     </li>
@@ -173,6 +170,9 @@
                     </li>
                     <li class="@Html.IsSelected(controller: "PendingDocReturn")">
                         <a href="@Url.Action("Index", "PendingDocReturn")"><span class="nav-label"> Pending on-time document return</span></a>
+                    </li>
+                    <li class="@Html.IsSelected(controller: "FollowDocReturn")">
+                        <a href="@Url.Action("Index", "FollowDocReturn")"><span class="nav-label"> Document aging report</span></a>
                     </li>
                 </ul>
             </li>
