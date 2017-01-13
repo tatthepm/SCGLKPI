@@ -145,7 +145,9 @@ namespace SCGLKPIUI.Controllers
                              }).Distinct().OrderBy(x => x.Name);
             ViewBag.ReasonId = new SelectList(ddlReason.ToList(), "Id", "Name");
 
-            return Json(viewModel, JsonRequestBehavior.AllowGet);
+            var jsonResult = Json(viewModel, JsonRequestBehavior.AllowGet);
+            jsonResult.MaxJsonLength = int.MaxValue;
+            return jsonResult;
         }
 
         [HttpPost]

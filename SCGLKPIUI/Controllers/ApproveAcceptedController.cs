@@ -157,7 +157,7 @@ namespace SCGLKPIUI.Controllers
                         if (isadjust)
                         {
                             int id = objBs.ontimeAcceptBs.GetAll()
-                                .Where(x => x.AcceptDate == LACPDDate
+                                .Where(x => x.ActualGiDate == LACPDDate
                                        && x.DepartmentId == departmentId
                                        && x.SectionId == sectionId
                                        && x.MatFriGrp == matNameId).FirstOrDefault().Id;

@@ -74,23 +74,23 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => x.AcceptDate == FromDateSearch);
+                    q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => x.AcceptDate >= FromDateSearch && x.AcceptDate <= ToDateSearch);
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => x.AcceptDate == FromDateSearch);
+                q = q.Where(x => x.ActualGiDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => x.AcceptDate == ToDateSearch);
+                q = q.Where(x => x.ActualGiDate == ToDateSearch);
             }
 
             var results = (from c in q
-                           group c by new { c.AcceptDate } into g
+                           group c by new { c.ActualGiDate } into g
                            select new {
-                               AcceptedDate = g.Key.AcceptDate,
+                               AcceptedDate = g.Key.ActualGiDate,
                                Plan = 98.0,
                                Actual = ((double)g.Sum(x => x.OnTime) / (double)g.Sum(x => x.SumOfAccept)) * 100,
                                Adjust = (((double)g.Sum(x => x.OnTime) + (double)g.Sum(x => x.AdjustAccept))
@@ -137,17 +137,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => x.AcceptDate == FromDateSearch);
+                    q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => x.AcceptDate >= FromDateSearch && x.AcceptDate <= ToDateSearch);
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => x.AcceptDate.Value.Date == FromDateSearch.Value.Date);
+                q = q.Where(x => x.ActualGiDate.Value.Date == FromDateSearch.Value.Date);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => x.AcceptDate.Value.Date == ToDateSearch.Value.Date);
+                q = q.Where(x => x.ActualGiDate.Value.Date == ToDateSearch.Value.Date);
             }
             int TotalAccept = q.Sum(x => x.SumOfAccept);
             var results = (from c in q
@@ -203,25 +203,25 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => x.AcceptDate == FromDateSearch);
+                    q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => x.AcceptDate >= FromDateSearch && x.AcceptDate <= ToDateSearch);
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => x.AcceptDate == FromDateSearch);
+                q = q.Where(x => x.ActualGiDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => x.AcceptDate == ToDateSearch);
+                q = q.Where(x => x.ActualGiDate == ToDateSearch);
             }
 
-            foreach (var item in q.OrderBy(x => x.AcceptDate)) {
+            foreach (var item in q.OrderBy(x => x.ActualGiDate)) {
                 AcceptOntimeViewModels model = new AcceptOntimeViewModels();
-                string dd = item.AcceptDate.Value.Day.ToString();
-                string mm = item.AcceptDate.Value.Month.ToString();
-                string yyyy = item.AcceptDate.Value.Year.ToString();
-                model.AcceptDate = item.AcceptDate.Value.ToString("dd/MM/yyyy");
+                string dd = item.ActualGiDate.Value.Day.ToString();
+                string mm = item.ActualGiDate.Value.Month.ToString();
+                string yyyy = item.ActualGiDate.Value.Year.ToString();
+                model.ActualGiDate = item.ActualGiDate.Value.ToString("dd/MM/yyyy");
                 model.DepartmentName = item.DepartmentName;
                 model.SectionName = item.SectionName;
                 model.MatName = item.MatName;
@@ -266,17 +266,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => x.AcceptDate == FromDateSearch);
+                    q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => x.AcceptDate >= FromDateSearch && x.AcceptDate <= ToDateSearch);
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => x.AcceptDate == FromDateSearch);
+                q = q.Where(x => x.ActualGiDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => x.AcceptDate == ToDateSearch);
+                q = q.Where(x => x.ActualGiDate == ToDateSearch);
             }
 
             var results = (from c in q

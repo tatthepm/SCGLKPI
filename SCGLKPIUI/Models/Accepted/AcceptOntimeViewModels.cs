@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SCGLKPIUI.Models {
     public class AcceptOntimeViewModels {
 
-        public string AcceptDate { get; set; }
+        public string ActualGiDate { get; set; }
         public string DepartmentName { get; set; }
         public string SectionName { get; set; }
         public string MatName { get; set; }

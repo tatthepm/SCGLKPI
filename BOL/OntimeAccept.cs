@@ -11,7 +11,7 @@ namespace BOL {
 
         public int Id { get; set; }
         [Column(TypeName = "datetime2")]
-        public DateTime? AcceptDate { get; set; }
+        public DateTime? ActualGiDate { get; set; }
 
         [StringLength(5)]
         public string DepartmentId { get; set; }

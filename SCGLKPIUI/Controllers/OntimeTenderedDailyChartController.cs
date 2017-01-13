@@ -71,36 +71,36 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => x.FirstTenderDate == FromDateSearch);
+                    q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => x.FirstTenderDate >= FromDateSearch && x.FirstTenderDate <= ToDateSearch);
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => x.FirstTenderDate == FromDateSearch);
+                q = q.Where(x => x.ActualGiDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => x.FirstTenderDate == ToDateSearch);
+                q = q.Where(x => x.ActualGiDate == ToDateSearch);
             }
 
             var results = (from c in q
-                           group c by new { c.FirstTenderDate } into g
+                           group c by new { c.ActualGiDate } into g
                            select new {
-                               FirstTenderDate = g.Key.FirstTenderDate,
+                               ActualGiDate = g.Key.ActualGiDate,
                                Plan = 98.0,
                                Actual = ((double)g.Sum(x => x.OnTime) / (double)g.Sum(x => x.SumOfTender)) * 100,
                                Adjust = (((double)g.Sum(x => x.OnTime) + (double)g.Sum(x => x.AdjustTender))
                                         / (double)g.Sum(x => x.SumOfTender)) * 100,
                                SumOfTender = g.Sum(x => x.SumOfTender)
-                           }).OrderBy(x => x.FirstTenderDate);
+                           }).OrderBy(x => x.ActualGiDate);
 
-            foreach (var item in results.OrderBy(x => x.FirstTenderDate)) {
+            foreach (var item in results.OrderBy(x => x.ActualGiDate)) {
                 TenderedOntimeChartDailyViewModels model = new TenderedOntimeChartDailyViewModels();
-                string dd = item.FirstTenderDate.Value.Day.ToString();
-                string mm = item.FirstTenderDate.Value.Month.ToString();
-                string yyyy = item.FirstTenderDate.Value.Year.ToString();
-                model.FirstTenderDate = item.FirstTenderDate.Value.ToString("dd/MM/yyyy");
+                string dd = item.ActualGiDate.Value.Day.ToString();
+                string mm = item.ActualGiDate.Value.Month.ToString();
+                string yyyy = item.ActualGiDate.Value.Year.ToString();
+                model.ActualGiDate = item.ActualGiDate.Value.ToString("dd/MM/yyyy");
                 model.Plan = item.Plan;
                 model.Actual = Math.Round(item.Actual, 2);
                 model.Adjust = Math.Round(item.Adjust, 2);
@@ -140,17 +140,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => x.FirstTenderDate == FromDateSearch);
+                    q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => x.FirstTenderDate >= FromDateSearch && x.FirstTenderDate <= ToDateSearch);
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => x.FirstTenderDate == FromDateSearch);
+                q = q.Where(x => x.ActualGiDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => x.FirstTenderDate == ToDateSearch);
+                q = q.Where(x => x.ActualGiDate == ToDateSearch);
             }
             int TotalTender = q.Sum(x => x.SumOfTender);
             var results = (from c in q
@@ -210,25 +210,25 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => x.FirstTenderDate == FromDateSearch);
+                    q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => x.FirstTenderDate >= FromDateSearch && x.FirstTenderDate <= ToDateSearch);
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => x.FirstTenderDate == FromDateSearch);
+                q = q.Where(x => x.ActualGiDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => x.FirstTenderDate == ToDateSearch);
+                q = q.Where(x => x.ActualGiDate == ToDateSearch);
             }
 
-            foreach (var item in q.OrderBy(x => x.FirstTenderDate)) {
+            foreach (var item in q.OrderBy(x => x.ActualGiDate)) {
                 TenderedOntimeViewModels model = new TenderedOntimeViewModels();
-                string dd = item.FirstTenderDate.Value.Day.ToString();
-                string mm = item.FirstTenderDate.Value.Month.ToString();
-                string yyyy = item.FirstTenderDate.Value.Year.ToString();
-                model.FirstTenderDate = item.FirstTenderDate.Value.ToString("dd/MM/yyyy");
+                string dd = item.ActualGiDate.Value.Day.ToString();
+                string mm = item.ActualGiDate.Value.Month.ToString();
+                string yyyy = item.ActualGiDate.Value.Year.ToString();
+                model.ActualGiDate = item.ActualGiDate.Value.ToString("dd/MM/yyyy");
                 model.SegmentName = item.Segment;
                 model.SectionName = item.SectionName;
                 model.MatName = item.MatName;
@@ -273,17 +273,17 @@ namespace SCGLKPIUI.Controllers {
             //filter from date, to date
             if (FromDateSearch != null && ToDateSearch != null) {
                 if (FromDateSearch == ToDateSearch) {
-                    q = q.Where(x => x.FirstTenderDate == FromDateSearch);
+                    q = q.Where(x => x.ActualGiDate == FromDateSearch);
                 }
                 else {
-                    q = q.Where(x => x.FirstTenderDate >= FromDateSearch && x.FirstTenderDate <= ToDateSearch);
+                    q = q.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);
                 }
             }
             if (FromDateSearch != null && ToDateSearch == null) {
-                q = q.Where(x => x.FirstTenderDate == FromDateSearch);
+                q = q.Where(x => x.ActualGiDate == FromDateSearch);
             }
             if (FromDateSearch == null && ToDateSearch != null) {
-                q = q.Where(x => x.FirstTenderDate == ToDateSearch);
+                q = q.Where(x => x.ActualGiDate == ToDateSearch);
             }
 
             var results = (from c in q

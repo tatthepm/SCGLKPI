@@ -169,7 +169,7 @@ namespace SCGLKPIUI.Controllers
                         if (isadjust)
                         {
                             int id = objBs.ontimeTenderBs.GetAll()
-                                .Where(x => x.FirstTenderDate == FTNRDDate
+                                .Where(x => x.ActualGiDate == FTNRDDate
                                        && x.MatFriGrp == matName
                                        && x.SubSegment == segmentId
                                        && x.SectionId == sectionId

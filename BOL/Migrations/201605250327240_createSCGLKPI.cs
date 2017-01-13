@@ -300,7 +300,7 @@ namespace BOL.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        AcceptDate = c.DateTime(precision: 7, storeType: "datetime2"),
+                        ActualGiDate = c.DateTime(precision: 7, storeType: "datetime2"),
                         DepartmentId = c.String(maxLength: 5),
                         DepartmentName = c.String(),
                         SectionId = c.String(maxLength: 5),
@@ -322,7 +322,7 @@ namespace BOL.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        FirstTenderDate = c.DateTime(precision: 7, storeType: "datetime2"),
+                        ActualGiDate = c.DateTime(precision: 7, storeType: "datetime2"),
                         DepartmentId = c.String(maxLength: 5),
                         DepartmentName = c.String(),
                         SectionId = c.String(maxLength: 5),

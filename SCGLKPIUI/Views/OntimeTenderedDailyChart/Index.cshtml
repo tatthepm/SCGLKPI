@@ -212,7 +212,7 @@
                         // console.info(data);
                         $.each(data, function (index, item) {
                             //
-                            //var d = new Date(item.FirstTenderDate);
+                            //var d = new Date(item.ActualGiDate);
                             //var day = d.getDate();
                             //var month = d.getMonth() + 1;
                             //var year = d.getFullYear();
@@ -224,7 +224,7 @@
                             //}
                             //var date = day + "/" + month + "/" + year;
                             //
-                            var date = item.FirstTenderDate;
+                            var date = item.ActualGiDate;
                             label.push(date);
                             plan.push(item.Plan);
                             actual.push(item.Actual);
@@ -463,7 +463,7 @@
                         "dataSrc": ""
                     },
                     columns: [
-                   { data: "FirstTenderDate" },
+                   { data: "ActualGiDate" },
                    { data: "SegmentName" },
                    { data: "SectionName" },
                    { data: "MatName" },

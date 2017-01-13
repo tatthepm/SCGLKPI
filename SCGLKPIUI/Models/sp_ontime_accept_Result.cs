@@ -13,7 +13,7 @@ namespace SCGLKPIUI.Models
     
     public partial class sp_ontime_accept_Result
     {
-        public Nullable<System.DateTime> AcceptDate { get; set; }
+        public Nullable<System.DateTime> ActualGiDate { get; set; }
         public string DEPARTMENT_Name { get; set; }
         public string SECTION_NAME { get; set; }
         public string MATNAME { get; set; }

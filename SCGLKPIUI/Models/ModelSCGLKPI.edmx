@@ -29,7 +29,7 @@
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_ontime_accept_Result">
-          <Property Type="DateTime" Name="AcceptDate" Nullable="true" />
+          <Property Type="DateTime" Name="ActualGiDate" Nullable="true" />
           <Property Type="String" Name="DEPARTMENT_Name" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="SECTION_NAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="MATNAME" Nullable="true" MaxLength="100" />
@@ -57,7 +57,7 @@
           <FunctionImportMapping FunctionImportName="sp_ontime_accept" FunctionName="SCGLKPIModel.Store.sp_ontime_accept">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SCGLKPIModel.sp_ontime_accept_Result">
-                <ScalarProperty Name="AcceptDate" ColumnName="AcceptDate" />
+                <ScalarProperty Name="ActualGiDate" ColumnName="ActualGiDate" />
                 <ScalarProperty Name="DEPARTMENT_Name" ColumnName="DEPARTMENT_Name" />
                 <ScalarProperty Name="SECTION_NAME" ColumnName="SECTION_NAME" />
                 <ScalarProperty Name="MATNAME" ColumnName="MATNAME" />
