@@ -18,6 +18,10 @@ namespace BLL {
         public IQueryable<DWH_ONTIME_SHIPMENT> GetAll() {
             return objDb.GetAll();
         }
+        public IQueryable<DWH_ONTIME_SHIPMENT> GetByDate(DateTime? FromDateSearch, DateTime? ToDateSearch)
+        {
+            return objDb.GetByDate(FromDateSearch, ToDateSearch);
+        }
         public IQueryable<DWH_ONTIME_SHIPMENT> GetByFilter(List<Tuple<string,string>> expression,List<string> logic)
         {
             if (expression != null)

@@ -32,6 +32,11 @@ namespace SCGLKPIUI {
             routes.MapRoute("FollowDocReturnByHub", "FollowDocReturn/FollowDocReturnByHub/",
                 new { controller = "FollowDocReturn", action = "FollowDocReturnByHub" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
+
+            routes.MapRoute("ReportSales", "ReportSales/jsonData/",
+                new { controller = "ReportSales", action = "jsonData" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+            
             #endregion
 
             #region 1 on-time accepted tendered

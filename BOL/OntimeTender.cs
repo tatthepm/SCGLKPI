@@ -56,6 +56,15 @@ namespace BOL {
         [StringLength(20)]
         public string TRUCK_TYPE { get; set; }
 
+        [StringLength(10)]
+        public string SoldToId { get; set; }
+        [StringLength(800)]
+        public string SoldToName { get; set; }
+        [StringLength(10)]
+        public string CarrierId { get; set; }
+        [StringLength(800)]
+        public string CarrierName { get; set; }
+
         public double Percent {
             get {
                 if (this.OnTime > 0) {

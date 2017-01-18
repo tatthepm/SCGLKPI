@@ -17,6 +17,10 @@ namespace DAL {
         public IQueryable<DWH_ONTIME_SHIPMENT> GetAll() {
             return db.DWH_ONTIME_SHIPMENTs;
         }
+        public IQueryable<DWH_ONTIME_SHIPMENT> GetByDate(DateTime? FromDateSearch, DateTime? ToDateSearch)
+        {
+            return db.DWH_ONTIME_SHIPMENTs.Where(x => x.ACTGIDATE >= FromDateSearch && x.ACTGIDATE <= ToDateSearch);
+        }
         //GetByFilter
         public IQueryable<DWH_ONTIME_SHIPMENT> GetByFilter(Expression<Func<DWH_ONTIME_SHIPMENT, bool>> exp)
         {

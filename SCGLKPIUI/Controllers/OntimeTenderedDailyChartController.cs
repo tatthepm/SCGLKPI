@@ -30,18 +30,6 @@ namespace SCGLKPIUI.Controllers {
                 return RedirectToAction("Index", new { sms = "Operation Tender failed " + ex.InnerException.InnerException.Message.ToString() });
             }
         }
-        public JsonResult ShiptoFilter(string SegmentId)
-        {
-            return Json(objBs.ontimeTenderBs.GetByShipto(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult ShippingPointFilter(string SegmentId)
-        {
-            return Json(objBs.ontimeTenderBs.GetByShipPoint(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult truckTypeFilter(string SegmentId)
-        {
-            return Json(objBs.ontimeTenderBs.GetByTruckType(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
-        }
         public JsonResult jsonData(string SegmentId,  DateTime? FromDateSearch, DateTime? ToDateSearch, string ShipPoint, string ShipTo, string TruckType) {
 
             //add summary data

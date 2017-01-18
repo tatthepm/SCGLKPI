@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SCGLKPIUI.Models {
     public class AcceptOntimeChartDailyViewModels {
-        public string AcceptedDate { get; set; }
+        public string ActualGiDate { get; set; }
         public string DepartmentName { get; set; }
         public string SectionName { get; set; }
         public double Plan { get; set; }

@@ -21,12 +21,42 @@ namespace SCGLKPIUI.Models
             List<DropdownlistViewModels> viewModel = new List<DropdownlistViewModels>();
             switch (filtername)
             {
-                case "Department":
-                    var ddlDept = (from d in objBs.dWH_ONTIME_SHIPMENTBs.GetAll()
+                case "Customer":
+                    var ddlCust = (from d in objBs.ontimeDeliveryBs.GetAll()
                                    select new
                                    {
-                                       Id = d.DEPARTMENT_ID,
-                                       Name = d.DEPARTMENT_Name
+                                       Id = d.SoldToId ?? "0",
+                                       Name = d.SoldToName ?? "No Master"
+                                   }).Take(50000).Distinct().Where(x => !String.IsNullOrEmpty(x.Name)).OrderBy(x => x.Name);
+                    foreach (var item in ddlCust)
+                    {
+                        DropdownlistViewModels model = new DropdownlistViewModels();
+                        model.Id = item.Id;
+                        model.Name = item.Name;
+                        viewModel.Add(model);
+                    }
+                    return viewModel;
+                case "Carrier":
+                    var ddlCarr = (from d in objBs.ontimeDeliveryBs.GetAll()
+                                   select new
+                                   {
+                                       Id = d.CarrierId ?? "0",
+                                       Name = d.CarrierName ?? "No Master"
+                                   }).Take(50000).Distinct().Where(x => !String.IsNullOrEmpty(x.Name)).OrderBy(x => x.Name);
+                    foreach (var item in ddlCarr)
+                    {
+                        DropdownlistViewModels model = new DropdownlistViewModels();
+                        model.Id = item.Id;
+                        model.Name = item.Name;
+                        viewModel.Add(model);
+                    }
+                    return viewModel;
+                case "Department":
+                    var ddlDept = (from d in objBs.ontimeDeliveryBs.GetAll()
+                                   select new
+                                   {
+                                       Id = d.DepartmentId ?? "0",
+                                       Name = d.DepartmentName ?? "No Master"
                                    }).Take(50000).Distinct().Where(x => !String.IsNullOrEmpty(x.Name)).OrderBy(x => x.Name);
                     foreach (var item in ddlDept)
                     {
@@ -37,12 +67,12 @@ namespace SCGLKPIUI.Models
                     }
                     return viewModel;
                 case "Section":
-                    var ddlSec = (from d in objBs.dWH_ONTIME_SHIPMENTBs.GetAll()
+                    var ddlSec = (from d in objBs.ontimeDeliveryBs.GetAll()
                                   //where !String.IsNullOrEmpty(d.SECTION_NAME)
                                   select new
                                   {
-                                      Id = d.SECTION_ID,
-                                      Name = d.SECTION_NAME
+                                      Id = d.SectionId ?? "0",
+                                      Name = d.SectionName ?? "No Master"
                                   }).Take(50000).Distinct().Where(x => !String.IsNullOrEmpty(x.Name)).OrderBy(x => x.Name);
                     foreach (var item in ddlSec)
                     {

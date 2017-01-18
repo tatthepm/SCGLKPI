@@ -1,0 +1,394 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .chart-legend li span {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-right: 5px;
+        list-style: none;
+    }
+
+    .chart-legend ul {
+        list-style-type: none;
+    }
+
+    /* Green check. */
+    .glyphicon-ok {
+        color: green;
+    }
+    /* Red X. */
+    .glyphicon-remove {
+        color: red;
+    }
+</style>
+
+<h4>
+    <i class="fa fa-bar-chart"></i> Chart on-time accept tender | Daily
+</h4>
+@*filter by date*@
+@Html.Partial("pv_FilterReportSales")
+
+@Html.Partial("pv_ReportSalesChart")
+
+@Html.Partial("pv_ReportSalesTable")
+
+<div>
+    <div id="loading" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Loading...</h4>
+                </div>
+                <div class="modal-body">
+                    @*<div class="progress progress-success">
+                            <div class="progress-bar" style="width:100%"></div>
+                        </div>*@
+                    <div class="progress m-t-xs full progress-small">
+                        <div style="width:100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-striped active">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    @Styles.Render("~/bundles/datatables/css")
+    @Styles.Render("~/bundles/xeditable/css")
+    @Styles.Render("~/bundles/select2/css")
+    @Styles.Render("~/bundles/touchspin/css")
+    @Styles.Render("~/bundles/datepicker/css")
+    @Styles.Render("~/bundles/bootstrapCheckbox/css")
+    @Styles.Render("~/bundles/datetimepicker/css")
+    @Styles.Render("~/bundles/clockpicker/css")
+    @Styles.Render("~/bundles/sweetAlert/css")
+    @Styles.Render("~/bundles/toastr/css")
+    @Styles.Render("~/bundles/ladda/css")
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/moment/js")
+    @Scripts.Render("~/bundles/xeditable/js")
+    @Scripts.Render("~/bundles/select2/js")
+    @Scripts.Render("~/bundles/touchspin/js")
+    @Scripts.Render("~/bundles/clockpicker/js")
+    @Scripts.Render("~/bundles/chartjs/js")
+    @Scripts.Render("~/bundles/datatables/js")
+    @Scripts.Render("~/bundles/datatablesBootstrap/js")
+    @Scripts.Render("~/bundles/datatablesPlugins/js")
+    @Scripts.Render("~/bundles/sweetAlert/js")
+    @Scripts.Render("~/bundles/toastr/js")
+    @Scripts.Render("~/bundles/ladda/js")
+
+    <script src="~/Scripts/jquery.datetimepicker.js"></script>
+    <script type="text/javascript">
+
+        //created global object Then just before initializing the chart i destroyed
+        var chartOntime;
+        var chartOntimeAdj;
+        var chartShipment;
+        var pieChartOntime;
+        //
+        // show progress
+        $(document).ajaxStart(function () {
+            $("#loading").show();
+        });
+
+        $(document).ajaxStop(function () {
+            $("#loading").hide();
+        });
+        //
+
+        //#region 1 autocomplete dropdownlist
+        $(".js-source-states").select2();
+        //#endregion
+
+        //#region 2 date time picker
+        jQuery('#FromDateSearch').datetimepicker({
+            format: 'Y/m/d',
+            onShow: function (ct) {
+                this.setOptions({
+                    maxDate: jQuery('#ToDateSearch').val() ? jQuery('#ToDateSearch').val() : false
+                })
+            },
+            timepicker: false
+        });
+        jQuery('#ToDateSearch').datetimepicker({
+            format: 'Y/m/d',
+            onShow: function (ct) {
+                this.setOptions({
+                    minDate: jQuery('#FromDateSearch').val() ? jQuery('#FromDateSearch').val() : false
+                })
+            },
+            timepicker: false
+        });
+        //#endregion
+
+        //#region 4 getJson Section
+        $("#SegmentId").change(function (res) {
+            segmentId = $("#SegmentId").val();
+            $.getJSON('/ReportSales/CustomerFilter?segmentId=' + segmentId, function (data) {
+                var ddl = $("#CustomerId");
+                // ddl.removeAttrs('disabled style');
+                ddl.addClass('js-source-states');
+                var string = '<option value="">ALL</option>';
+                $.each(data, function (i, S) {
+                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                });
+                ddl.html(string);
+                ddl.select2('val', '');
+            });
+        });
+
+        //#endregion
+
+        //#region 5 getJson MatName
+        $("#CustomerId").change(function (res) {
+            if ($('#SegmentId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Segment is not selected ",
+                    type: "warning"
+                });
+            } else {
+                segmentId = $("#SegmentId").val();
+                customerId = $("#CustomerId").val();
+                $.getJSON('/ReportSales/MatNameFilter?segmentId=' + segmentId + '&customerId=' + customerId, function (data) {
+                    var ddl = $("#MatNameId");
+                    // ddl.removeAttrs('disabled style');
+                    ddl.addClass('js-source-states');
+                    var string = '<option value="">ALL</option>';
+                    $.each(data, function (i, S) {
+                        string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                    });
+                    ddl.html(string);
+                    ddl.select2('val', '');
+                })
+            }
+        });
+
+        //#endregion
+
+        //#region 4 btnSearch button click
+        $("#btnSearch").click(function () {
+            var sdate = $('#FromDateSearch').val();
+            var edate = $('#ToDateSearch').val();
+            var day_start = new Date(sdate);
+            var day_end = new Date(edate);
+            var total_days = ((day_end - day_start) / (1000 * 60 * 60 * 24)) + 1;
+
+            if ($('#SegmentId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Segment is not selected ",
+                    type: "warning"
+                });
+            } else if ($('#CustomerId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Customer is not selected ",
+                    type: "warning"
+                });
+            } else if (sdate == "" && edate == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, You must choose date in the calendar",
+                    type: "warning"
+                });
+            }
+            else if (total_days > 31) {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, you can not use duration more than 31 days",
+                    type: "warning"
+                });
+            }
+            else {
+                var label = [];
+                var plan = [];
+                var actual = [];
+                var adjust = [];
+                var shipment = [];
+                var planshipment = [];
+                var segmentId = $('#SegmentId').val();
+                var customerId = $('#CustomerId').val();
+                var matNameId = $('#MatNameId').val();
+
+                //$.ajax({
+                //    async : true,
+                //    type: "POST",
+                //    data: $('form').serialize(),
+                //    url: "/ReportSales/jsonData/",
+                //    dataType : "json",
+
+                //    success : function(json) {
+
+                //        var lineChartData = {
+                //            labels: label,
+                //            datasets: [
+                //                {
+                //                    label: "Plan",
+                //                    fillColor: "rgba(220,220,220,0)",
+                //                    strokeColor: "rgba(220,180,0,1)",
+                //                    pointColor: "rgba(220,180,0,1)",
+                //                    data: json.Plan //[100, 100, 100, 100, 100]
+                //                },
+                //                {
+                //                    label: "Actual",
+                //                    fillColor: "rgba(98,203,49,0.5)",
+                //                    strokeColor: "rgba(98,203,49,0.8)",
+                //                    highlightFill: "rgba(98,203,49,0.75)",
+                //                    highlightStroke: "rgba(98,203,49,1)",
+                //                    data: json.OntimeTender //[28, 48, 40, 19, 86]
+                //                },
+                //                {
+                //                    label: "Adjusted",
+                //                    fillColor: "rgba(28, 48, 207,0.5)",
+                //                    strokeColor: "rgba(28, 48, 207,0.8)",
+                //                    highlightFill: "rgba(28, 48, 207,0.75)",
+                //                    highlightStroke: "rgba(28, 48, 207,1)",
+                //                    data: json.AdjustTender //[28, 48, 40, 19, 86]
+                //                }
+                //            ]
+                //        };
+
+                //        //Then just before initializing the chart i destroyed
+                //        if (chartOntimeAdj != undefined || chartOntimeAdj != null) {
+                //            chartOntimeAdj.destroy();
+                //        }
+
+                //        Chart.defaults.global.animationSteps = 50;
+                //        Chart.defaults.global.tooltipYPadding = 16;
+                //        Chart.defaults.global.tooltipCornerRadius = 0;
+                //        Chart.defaults.global.tooltipTitleFontStyle = "normal";
+                //        Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
+                //        Chart.defaults.global.animationEasing = "easeOutBounce";
+                //        Chart.defaults.global.responsive = true;
+                //        Chart.defaults.global.scaleLineColor = "black";
+                //        Chart.defaults.global.scaleFontSize = 16;
+
+                //        var ctx = document.getElementById("barReportSalesAdjusted").getContext("2d");
+                //        //var myNewChart = new Chart(ctx).Bar(barData, barOptions);
+                //        var LineChart = new Chart(ctx).Line(lineChartData, {
+                //            pointDotRadius: 10,
+                //            bezierCurve: false,
+                //            scaleShowVerticalLines: false,
+                //            scaleGridLineColor: "black"
+                //        });
+
+                //    },
+
+                //    error : function(xhr, ajaxOptions, thrownError) {
+                //        alert(xhr.status);
+                //        alert(thrownError);
+                //    }
+                //});
+
+                //#region table
+                // on-time accept daliy dataTable
+
+                var acceptTender = $('#ReportSalesSummary').dataTable();
+                acceptTender.fnDestroy();
+                acceptTender.dataTable({
+                    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    "ajax": {
+                        "type": "POST",
+                        "url": '@(Url.RouteUrl("ReportSales"))',
+                        "data": function (d) {
+                            d.SegmentId = segmentId;
+                            d.CustomerId = customerId;
+                            d.MatNameId = matNameId;
+                            d.FromDateSearch = sdate;
+                            d.ToDateSearch = edate;
+                        },
+                        "dataSrc": ""
+                    },
+                    columns: [
+                   { data: "Segment" },
+                   { data: "SoldToName" },
+                   { data: "MatFreight" },
+                   { data: "ActualGiDate" },
+                   { data: "PcTender_Ontime" },
+                   { data: "PcTender_Adjust" },
+                   { data: "SumOfTender" },
+                   { data: "PcAccept_Ontime" },
+                   { data: "PcAccept_Adjust" },
+                   { data: "SumOfAccept" },
+                   { data: "PcInbound_Ontime" },
+                   { data: "PcInbound_Adjust" },
+                   { data: "SumOfInbound" },
+                   { data: "PcOutbound_Ontime" },
+                   { data: "PcOutbound_Adjust" },
+                   { data: "SumOfOutbound" },
+                   { data: "PcOntime_Ontime" },
+                   { data: "PcOntime_Adjust" },
+                   { data: "SumOfOntime" },
+                   { data: "PcDocReturn_Ontime" },
+                   { data: "PcDocReturn_Adjust" },
+                   { data: "SumOfDocReturn" },
+                    ],
+                    //    "columnDefs": [
+                    //{
+                    //    "render": function (data, type, row) {
+                    //        return (row.PercentAdjust >= 98.0) ? '<img src="/Content/img/TrafficLight-Green-small50-18.png" />' : '<img src="/Content/img/TrafficLight-Red-small50-18.png" />'
+                    //    },
+                    //    "targets": 11
+                    //}
+                    //    ],
+                    select: true,
+                    buttons: [
+                        { extend: 'copy', className: 'btn-sm' },
+                        { extend: 'csv', title: 'On-time Accept Daily', className: 'btn-sm' },
+                        { extend: 'excel', title: 'On-time Accept Daily', className: 'btn-sm' },
+                    ]
+                });
+                //#enregion tagle
+            } //end if else
+
+        }); //end btnSerarch click
+
+        //#endregion
+
+        //#region Bind normal buttons
+
+        $('.ladda-button').ladda('bind', { timeout: 2000 });
+
+        // Bind progress buttons and simulate loading progress
+        Ladda.bind('.progress-demo .ladda-button', {
+            callback: function (instance) {
+                var progress = 0;
+                var interval = setInterval(function () {
+                    progress = Math.min(progress + Math.random() * 0.1, 1);
+                    instance.setProgress(progress);
+
+                    if (progress === 1) {
+                        instance.stop();
+                        clearInterval(interval);
+                    }
+                }, 200);
+            }
+        });
+
+        var l = $('.ladda-button-demo').ladda();
+        l.click(function () {
+            // Start loading
+            l.ladda('start');
+
+            // Timeout example
+            // Do something in backend and then stop ladda
+            setTimeout(function () {
+                l.ladda('stop');
+            }, 5000)
+        });
+        //#endregion
+
+    </script>
+}
+
+

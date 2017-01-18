@@ -22,6 +22,11 @@ namespace BLL
         {
             return objDb.GetAll();
         }
+
+        public IQueryable<DWH_ONTIME_DN> GetByDate(DateTime? FromDateSearch, DateTime? ToDateSearch)
+        {
+            return objDb.GetByDate(FromDateSearch,ToDateSearch);
+        }
         public IQueryable<DWH_ONTIME_DN> GetByFilter(List<Tuple<string, string>> expression, List<string> logic)
         {
             if (expression != null)

@@ -17,6 +17,10 @@ namespace DAL {
         public IQueryable<DWH_ONTIME_DN> GetAll() {
             return db.DWH_ONTIME_DNs;
         }
+        public IQueryable<DWH_ONTIME_DN> GetByDate(DateTime? FromDateSearch, DateTime? ToDateSearch)
+        {
+            return db.DWH_ONTIME_DNs.Where(x => x.ACTGIDATE >= FromDateSearch && x.ACTGIDATE <= ToDateSearch);
+        }
         //GetByFilter
         /// <summary>
         /// GetByFilter is Expression based method which take Lambda Expression as input

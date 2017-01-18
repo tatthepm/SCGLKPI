@@ -90,20 +90,20 @@ namespace SCGLKPIUI.Controllers {
             var results = (from c in q
                            group c by new { c.ActualGiDate } into g
                            select new {
-                               AcceptedDate = g.Key.ActualGiDate,
+                               ActualGiDate = g.Key.ActualGiDate,
                                Plan = 98.0,
                                Actual = ((double)g.Sum(x => x.OnTime) / (double)g.Sum(x => x.SumOfAccept)) * 100,
                                Adjust = (((double)g.Sum(x => x.OnTime) + (double)g.Sum(x => x.AdjustAccept))
                                         / (double)g.Sum(x => x.SumOfAccept)) * 100,
                                SumOfAccept = g.Sum(x => x.SumOfAccept)
-                           }).OrderBy(x => x.AcceptedDate);
+                           }).OrderBy(x => x.ActualGiDate);
 
             foreach (var item in results) {
                 AcceptOntimeChartDailyViewModels model = new AcceptOntimeChartDailyViewModels();
-                string dd = item.AcceptedDate.Value.Day.ToString();
-                string mm = item.AcceptedDate.Value.Month.ToString();
-                string yyyy = item.AcceptedDate.Value.Year.ToString();
-                model.AcceptedDate = item.AcceptedDate.Value.ToString("dd/MM/yyyy");
+                string dd = item.ActualGiDate.Value.Day.ToString();
+                string mm = item.ActualGiDate.Value.Month.ToString();
+                string yyyy = item.ActualGiDate.Value.Year.ToString();
+                model.ActualGiDate = item.ActualGiDate.Value.ToString("dd/MM/yyyy");
                 model.Plan = item.Plan;
                 model.Actual = Math.Round(item.Actual, 2);
                 model.Adjust = Math.Round(item.Adjust, 2);
