@@ -191,7 +191,23 @@ namespace SCGLKPIUI.Controllers
             if (!String.IsNullOrEmpty(TruckType))
                 q = q.Where(x => x.TRUCK_TYPE == TruckType);
 
-            foreach (var item in q.OrderBy(x => x.Month).ThenBy(x => x.SubSegment)) {
+            var results = (from c in q
+                           group c by new { c.Year, c.Month, c.Segment, c.SectionName, c.MatName } into g
+                           select new
+                           {
+                               Year = g.Key.Year,
+                               Month = g.Key.Month,
+                               MatName = g.Key.MatName,
+                               Segment = g.Key.Segment,
+                               SectionName = g.Key.SectionName,
+                               SumOfTender = g.Sum(x => x.SumOfTender),
+                               OnTime = g.Sum(x => x.OnTime),
+                               Delay = g.Sum(x => x.Delay),
+                               AdjustTender = g.Sum(x => x.AdjustTender)
+                           }).OrderBy(x => x.Year).ThenBy(x => x.Month).ThenBy(x => x.Segment);
+
+            foreach (var item in results)
+            {
                 TenderedOntimeMonthlyViewModels model = new TenderedOntimeMonthlyViewModels();
                 model.Month = DateTimeFormatInfo.CurrentInfo.GetAbbreviatedMonthName(Convert.ToInt32(item.Month)).ToString();
                 model.SegmentName = item.Segment;

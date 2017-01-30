@@ -21,6 +21,7 @@ namespace BOL {
         public DbSet<KPIFrequency> KPIFrequencies { get; set; }
         public DbSet<EquipmentTypes> EquipmentTypes { get; set; }
         public DbSet<HubMasters> HubMasters { get; set; }
+        public DbSet<OntimeReports> OntimeReports { get; set; }
         //tendered
         public DbSet<OntimeTender> OntimeTenders { get; set; }
         public DbSet<OntimeTenderMonth> OntimeTenderMonths { get; set; }

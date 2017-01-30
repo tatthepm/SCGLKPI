@@ -55,6 +55,7 @@
     <Compile Include="HubMastersDb.cs" />
     <Compile Include="OntimeFilesDb.cs" />
     <Compile Include="DocReturnFilesDb.cs" />
+    <Compile Include="OntimeReports.cs" />
     <Compile Include="OutboundedFilesDb.cs" />
     <Compile Include="InboundedFilesDb.cs" />
     <Compile Include="EquipmentTypesDb.cs" />

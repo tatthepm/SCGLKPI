@@ -30,10 +30,8 @@
 </h4>
 @*filter by date*@
 @Html.Partial("pv_FilterReportSales")
-
-@Html.Partial("pv_ReportSalesChart")
-
 @Html.Partial("pv_ReportSalesTable")
+@Html.Partial("pv_ReportSalesChart")
 
 <div>
     <div id="loading" class="modal">
@@ -172,6 +170,32 @@
             }
         });
 
+        /* Formatting function for row details - modify as you need */
+        function format(d) {
+            $.ajax({
+                type: 'post',
+                url: '@(Url.RouteUrl("ReportSales/DetailData"))',
+                data: { DN: d },
+                success: function (data) {
+                    $('#displayView').html(data);
+                }
+            });
+            // `d` is the original data object for the row
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                '<tr>' +
+                    '<td>Full name:</td>' +
+                    '<td>' + data.DeliveryNo + '</td>' +
+                '</tr>' +
+                '<tr>' +
+                    '<td>Extension number:</td>' +
+                    '<td>' + data.ShipmentNo + '</td>' +
+                '</tr>' +
+                '<tr>' +
+                    '<td>Extra info:</td>' +
+                    '<td>And any further details here (images etc)...</td>' +
+                '</tr>' +
+            '</table>';
+        }
         //#endregion
 
         //#region 4 btnSearch button click
@@ -228,73 +252,218 @@
 
                 //    success : function(json) {
 
-                //        var lineChartData = {
-                //            labels: label,
-                //            datasets: [
-                //                {
-                //                    label: "Plan",
-                //                    fillColor: "rgba(220,220,220,0)",
-                //                    strokeColor: "rgba(220,180,0,1)",
-                //                    pointColor: "rgba(220,180,0,1)",
-                //                    data: json.Plan //[100, 100, 100, 100, 100]
-                //                },
-                //                {
-                //                    label: "Actual",
-                //                    fillColor: "rgba(98,203,49,0.5)",
-                //                    strokeColor: "rgba(98,203,49,0.8)",
-                //                    highlightFill: "rgba(98,203,49,0.75)",
-                //                    highlightStroke: "rgba(98,203,49,1)",
-                //                    data: json.OntimeTender //[28, 48, 40, 19, 86]
-                //                },
-                //                {
-                //                    label: "Adjusted",
-                //                    fillColor: "rgba(28, 48, 207,0.5)",
-                //                    strokeColor: "rgba(28, 48, 207,0.8)",
-                //                    highlightFill: "rgba(28, 48, 207,0.75)",
-                //                    highlightStroke: "rgba(28, 48, 207,1)",
-                //                    data: json.AdjustTender //[28, 48, 40, 19, 86]
-                //                }
-                //            ]
-                //        };
+                var jsonString = $.getJSON('/ReportSales/jsonData?DepartmentId=' + departmentId
+                    + '&CustomerId=' + customerId
+                    + '&FromDateSearch=' + sdate
+                    + '&ToDateSearch=' + edate
+                    + '&MatNameId=' + matNameId, function (data) {
+                        // console.info(data);
+                        $.each(data, function (index, item) {
+                            //
+                            //var d = new Date(item.ActualGiDate);
+                            //var day = d.getDate();
+                            //var month = d.getMonth() + 1;
+                            //var year = d.getFullYear();
+                            //if (day < 10) {
+                            //    day = "0" + day;
+                            //}
+                            //if (month < 10) {
+                            //    month = "0" + month;
+                            //}
+                            //var date = day + "/" + month + "/" + year;
+                            //
+                            var date = item.ActualGiDate;
+                            label.push(date);
+                            plan.push(item.Plan);
+                            actual.push(item.Actual);
+                            adjust.push(item.Adjust);
+                            shipment.push(item.SumOfDelivery);
+                            planshipment.push(item.SumOfDelivery);
+                        });
+                        //console.info(data);
 
-                //        //Then just before initializing the chart i destroyed
-                //        if (chartOntimeAdj != undefined || chartOntimeAdj != null) {
-                //            chartOntimeAdj.destroy();
-                //        }
+                        //#region 1 bar chart ontime inbounded
+                        var steps = 5;
+                        var barOptions = {
+                            scaleBeginAtZero: true,
+                            scaleShowGridLines: true,
+                            scaleGridLineColor: "rgba(0,0,0,.05)",
+                            scaleGridLineWidth: 1,
+                            //barShowStroke: true,
+                            //barStrokeWidth: 2,
+                            //barValueSpacing: 5,
+                            //barDatasetSpacing: 1,
+                            responsive: true,
+                            //
+                            scaleOverride: true,
+                            scaleSteps: steps,
+                            scaleStepWidth: Math.ceil(100 / steps),
+                            scaleStartValue: 0
+                            //
+                        };
+                        /**
+                         * Data for Bar chart
+                         */
+                        var barData = {
+                            labels: label, //["January", "February", "March", "April", "May"],
+                            datasets: [
+                                {
+                                    label: "PLAN",
+                                    fillColor: "rgba(220,220,220,0.5)",
+                                    strokeColor: "rgba(220,220,220,0.8)",
+                                    pointColor: "rgba(220,220,220,1)",
+                                    //strokeColor: 'rgba(0, 0, 0, 0.8)',
+                                    //highlightFill: "rgba(220,220,220,0.75)",
+                                    //highlightStroke: "rgba(220,220,220,1)",
+                                    //highlightStroke: 'rgba(47, 132, 71, 0.8)',
+                                    data: plan //[100, 100, 100, 100, 100],
+                                },
+                                {
+                                    label: "ACTUAL",
+                                    fillColor: "rgba(98,203,49,0.5)",
+                                    strokeColor: "rgba(98,203,49,0.8)",
+                                    pointColor: "rgba(98,203,49,0,1)",
+                                    //highlightFill: "rgba(98,203,49,0.75)",
+                                    //highlightStroke: "rgba(98,203,49,1)",
+                                    data: actual //[28, 48, 40, 19, 86],
+                                }
+                            ]
+                        };
 
-                //        Chart.defaults.global.animationSteps = 50;
-                //        Chart.defaults.global.tooltipYPadding = 16;
-                //        Chart.defaults.global.tooltipCornerRadius = 0;
-                //        Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                //        Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-                //        Chart.defaults.global.animationEasing = "easeOutBounce";
-                //        Chart.defaults.global.responsive = true;
-                //        Chart.defaults.global.scaleLineColor = "black";
-                //        Chart.defaults.global.scaleFontSize = 16;
+                        //Then just before initializing the chart i destroyed
+                        if (chartOntime != undefined || chartOntime != null) {
+                            chartOntime.destroy();
+                        }
 
-                //        var ctx = document.getElementById("barReportSalesAdjusted").getContext("2d");
-                //        //var myNewChart = new Chart(ctx).Bar(barData, barOptions);
-                //        var LineChart = new Chart(ctx).Line(lineChartData, {
-                //            pointDotRadius: 10,
-                //            bezierCurve: false,
-                //            scaleShowVerticalLines: false,
-                //            scaleGridLineColor: "black"
-                //        });
+                        var ctx = document.getElementById("barOntimeDelivery").getContext("2d");
+                        //var myNewChart = new Chart(ctx).Bar(barData, barOptions);
+                        //chartOntime = new Chart(ctx).Bar(barData, barOptions);
+                        chartOntime = new Chart(ctx).Line(barData, barOptions);
+                        document.getElementById('js-legend').innerHTML = chartOntime.generateLegend();
 
-                //    },
+                        //#endregion
 
-                //    error : function(xhr, ajaxOptions, thrownError) {
-                //        alert(xhr.status);
-                //        alert(thrownError);
-                //    }
-                //});
+                        //#region 2 bar chart ontime inbound adjust
+                        /**
+                      * Options for Bar chart
+                      */
+                        var steps = 5;
+                        var barOptions = {
+                            scaleBeginAtZero: true,
+                            scaleShowGridLines: true,
+                            scaleGridLineColor: "rgba(0,0,0,.05)",
+                            scaleGridLineWidth: 1,
+                            barShowStroke: true,
+                            barStrokeWidth: 2,
+                            barValueSpacing: 5,
+                            barDatasetSpacing: 1,
+                            responsive: true,
+                            scaleOverride: true,
+                            scaleSteps: steps,
+                            scaleStepWidth: Math.ceil(100 / steps),
+                            scaleStartValue: 0
+                        };
+                        /**
+                         * Data for Bar chart
+                         */
+                        var barData = {
+                            labels: label,
+                            datasets: [
+                                {
+                                    label: "PLAN",
+                                    fillColor: "rgba(220,220,220,0.5)",
+                                    // strokeColor: "rgba(220,220,220,0.8)",
+                                    strokeColor: 'rgba(47, 132, 71, 1.8)',
+                                    highlightFill: "rgba(220,220,220,0.75)",
+                                    highlightStroke: "rgba(220,220,220,1)",
+                                    highlightStroke: 'rgba(47, 132, 71, 1.8)',
+                                    data: plan //[100, 100, 100, 100, 100]
+                                },
+                                {
+                                    label: "ACTUAL",
+                                    fillColor: "rgba(98,203,49,0.5)",
+                                    strokeColor: "rgba(98,203,49,0.8)",
+                                    highlightFill: "rgba(98,203,49,0.75)",
+                                    highlightStroke: "rgba(98,203,49,1)",
+                                    data: adjust //[28, 48, 40, 19, 86]
+                                }
+                            ]
+                        };
+
+                        //Then just before initializing the chart i destroyed
+                        if (chartOntimeAdj != undefined || chartOntimeAdj != null) {
+                            chartOntimeAdj.destroy();
+                        }
+
+                        var ctx = document.getElementById("barOntimeDeliveryAdjust").getContext("2d");
+                        //var myNewChart = new Chart(ctx).Bar(barData, barOptions);
+                        chartOntimeAdj = new Chart(ctx).Bar(barData, barOptions);
+                        document.getElementById('js-legend2').innerHTML = chartOntimeAdj.generateLegend();
+
+                        //#endregion
+
+                        //#region 3 bar chart shipment
+                        /**
+                      * Options for Bar chart
+                      */
+                        var barOptions = {
+                            scaleBeginAtZero: true,
+                            scaleShowGridLines: true,
+                            scaleGridLineColor: "rgba(0,0,0,.05)",
+                            scaleGridLineWidth: 1,
+                            barShowStroke: true,
+                            barStrokeWidth: 2,
+                            barValueSpacing: 5,
+                            barDatasetSpacing: 1,
+                            responsive: true,
+                        };
+                        /**
+                         * Data for Bar chart
+                         */
+                        var barData = {
+                            labels: label,
+                            datasets: [
+                                {
+                                    label: "PLAN",
+                                    fillColor: "rgba(220,220,220,0.5)",
+                                    // strokeColor: "rgba(220,220,220,0.8)",
+                                    strokeColor: 'rgba(47, 132, 71, 1.8)',
+                                    highlightFill: "rgba(220,220,220,0.75)",
+                                    highlightStroke: "rgba(220,220,220,1)",
+                                    highlightStroke: 'rgba(47, 132, 71, 1.8)',
+                                    data: shipment //[100, 100, 100, 100, 100]
+                                },
+                                {
+                                    label: "ACTUAL",
+                                    fillColor: "rgba(98,203,49,0.5)",
+                                    strokeColor: "rgba(98,203,49,0.8)",
+                                    highlightFill: "rgba(98,203,49,0.75)",
+                                    highlightStroke: "rgba(98,203,49,1)",
+                                    data: shipment //[28, 48, 40, 19, 86]
+                                }
+                            ]
+                        };
+
+                        //Then just before initializing the chart i destroyed
+                        if (chartShipment != undefined || chartShipment != null) {
+                            chartShipment.destroy();
+                        }
+
+                        var ctx = document.getElementById("barChartShipment").getContext("2d");
+                        //var myNewChart = new Chart(ctx).Bar(barData, barOptions);
+                        chartShipment = new Chart(ctx).Bar(barData, barOptions);
+                        document.getElementById('js-legend3').innerHTML = chartOntimeAdj.generateLegend();
+
+                        //#endregion
+
+                    }); //end getJson
 
                 //#region table
                 // on-time accept daliy dataTable
 
-                var acceptTender = $('#ReportSalesSummary').dataTable();
-                acceptTender.fnDestroy();
-                acceptTender.dataTable({
+                var ReportSales = $('#ReportSalesSummary').dataTable();
+                ReportSales.fnDestroy();
+                ReportSales.dataTable({
                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                     "ajax": {
@@ -310,28 +479,35 @@
                         "dataSrc": ""
                     },
                     columns: [
+                        {
+                            "className": 'details-control',
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": ''
+                        },
                    { data: "Segment" },
-                   { data: "SoldToName" },
-                   { data: "MatFreight" },
+                   { data: "Customer" },
+                   { data: "MatName" },
                    { data: "ActualGiDate" },
-                   { data: "PcTender_Ontime" },
-                   { data: "PcTender_Adjust" },
                    { data: "SumOfTender" },
-                   { data: "PcAccept_Ontime" },
-                   { data: "PcAccept_Adjust" },
+                   { data: "OnTimeTender" },
+                   { data: "AdjustTender" },
                    { data: "SumOfAccept" },
-                   { data: "PcInbound_Ontime" },
-                   { data: "PcInbound_Adjust" },
+                   { data: "OnTimeAccept" },
+                   { data: "AdjustAccept" },
                    { data: "SumOfInbound" },
-                   { data: "PcOutbound_Ontime" },
-                   { data: "PcOutbound_Adjust" },
+                   { data: "OnTimeInbound" },
+                   { data: "AdjustInbound" },
                    { data: "SumOfOutbound" },
-                   { data: "PcOntime_Ontime" },
-                   { data: "PcOntime_Adjust" },
+                   { data: "OnTimeOutbound" },
+                   { data: "AdjustOutbound" },
                    { data: "SumOfOntime" },
-                   { data: "PcDocReturn_Ontime" },
-                   { data: "PcDocReturn_Adjust" },
+                   { data: "OnTimeOntime" },
+                   { data: "AdjustOntime" },
                    { data: "SumOfDocReturn" },
+                   { data: "OnTimeDocReturn" },
+                   { data: "AdjustDocReturn" },
+
                     ],
                     //    "columnDefs": [
                     //{
@@ -354,7 +530,17 @@
         }); //end btnSerarch click
 
         //#endregion
+        //#region Toggle column visibility
+        $('a.toggle-vis').on('click', function (e) {
+            e.preventDefault();
 
+            // Get the column API object
+            var column = table.column($(this).attr('data-column'));
+
+            // Toggle the visibility
+            column.visible(!column.visible());
+        });
+        //#endregion
         //#region Bind normal buttons
 
         $('.ladda-button').ladda('bind', { timeout: 2000 });

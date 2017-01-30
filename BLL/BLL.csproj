@@ -57,6 +57,7 @@
     <Compile Include="HubMastersBs.cs" />
     <Compile Include="OntimeFilesBs.cs" />
     <Compile Include="DocReturnFilesBs.cs" />
+    <Compile Include="OntimeReports.cs" />
     <Compile Include="OutboundFilesBs.cs" />
     <Compile Include="InboundFilesBs.cs" />
     <Compile Include="EquipmentTypesBs.cs" />

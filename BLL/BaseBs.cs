@@ -22,6 +22,7 @@ namespace BLL {
         public MenuTableBs menuTableBs { get; set; }
         public HubMastersBs HubMastersBs { get; set; }
         public EquipmentTypesBs EquipmentTypesBs { get; set; }
+        public OntimeReportsBs OntimeReportsBs { get; set; }
         //accepted
         public OntimeAcceptBs ontimeAcceptBs { get; set; }
         public OntimeAcceptMonthBs ontimeAcceptMonthBs { get; set; }
@@ -89,6 +90,7 @@ namespace BLL {
             HomeKPIBs = new HomeKPIBs();
             EquipmentTypesBs = new EquipmentTypesBs();
             HubMastersBs = new HubMastersBs();
+            OntimeReportsBs = new OntimeReportsBs();
 
             //tendered
             ontimeTenderBs = new OntimeTenderBs();

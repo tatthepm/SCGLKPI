@@ -216,7 +216,23 @@ namespace SCGLKPIUI.Controllers {
                 q = q.Where(x => x.ActualGiDate == ToDateSearch);
             }
 
-            foreach (var item in q.OrderBy(x => x.ActualGiDate)) {
+            var results = (from c in q
+                           group c by new { c.ActualGiDate, c.DepartmentName, c.SectionName, c.MatName } into g
+                           select new
+                           {
+                               ActualGiDate = g.Key.ActualGiDate,
+                               DepartmentName = g.Key.DepartmentName,
+                               SectionName = g.Key.SectionName,
+                               MatName = g.Key.MatName,
+                               Plan = 98.0,
+                               SumOfOutbound = ((int)g.Sum(x => x.SumOfOutbound)),
+                               OnTime = ((int)g.Sum(x => x.OnTime)),
+                               Delay = ((int)g.Sum(x => x.Delay)),
+                               AdjustOutbound = ((int)g.Sum(x => x.AdjustOutbound)),
+                           }).OrderBy(x => x.ActualGiDate).ToList();
+
+            foreach (var item in results)
+            {
                 OutboundedOntimeViewModels model = new OutboundedOntimeViewModels();
                 string dd = item.ActualGiDate.Value.Day.ToString();
                 string mm = item.ActualGiDate.Value.Month.ToString();

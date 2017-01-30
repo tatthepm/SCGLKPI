@@ -233,12 +233,10 @@
                             barValueSpacing: 5,
                             barDatasetSpacing: 1,
                             responsive: true,
-                            //
                             scaleOverride: true,
                             scaleSteps: steps,
                             scaleStepWidth: Math.ceil(100 / steps),
                             scaleStartValue: 0
-                            //
                         };
                         /**
                          * Data for Bar chart
@@ -249,12 +247,12 @@
                                 {
                                     label: "PLAN",
                                     fillColor: "rgba(220,220,220,0.5)",
-                                    //strokeColor: "rgba(220,220,220,0.8)",
-                                    strokeColor: 'rgba(0, 0, 0, 0.8)',
+                                    // strokeColor: "rgba(220,220,220,0.8)",
+                                    strokeColor: 'rgba(47, 132, 71, 1.8)',
                                     highlightFill: "rgba(220,220,220,0.75)",
-                                    //highlightStroke: "rgba(220,220,220,1)",
-                                    highlightStroke: 'rgba(47, 132, 71, 0.8)',
-                                    data: plan //[100, 100, 100, 100, 100],
+                                    highlightStroke: "rgba(220,220,220,1)",
+                                    highlightStroke: 'rgba(47, 132, 71, 1.8)',
+                                    data: plan //[100, 100, 100, 100, 100]
                                 },
                                 {
                                     label: "ACTUAL",
@@ -262,7 +260,7 @@
                                     strokeColor: "rgba(98,203,49,0.8)",
                                     highlightFill: "rgba(98,203,49,0.75)",
                                     highlightStroke: "rgba(98,203,49,1)",
-                                    data: actual //[28, 48, 40, 19, 86],
+                                    data: adjust //[28, 48, 40, 19, 86]
                                 }
                             ]
                         };

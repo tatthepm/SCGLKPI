@@ -30,6 +30,20 @@ namespace SCGLKPIUI.Controllers {
                 return RedirectToAction("Index", new { sms = "Operation Tender failed " + ex.InnerException.InnerException.Message.ToString() });
             }
         }
+
+        public JsonResult ShiptoFilter(string SegmentId)
+        {
+            return Json(objBs.ontimeTenderBs.GetByShipto(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ShippingPointFilter(string SegmentId)
+        {
+            return Json(objBs.ontimeTenderBs.GetByShipPoint(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult truckTypeFilter(string SegmentId)
+        {
+            return Json(objBs.ontimeTenderBs.GetByTruckType(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult jsonData(string SegmentId,  DateTime? FromDateSearch, DateTime? ToDateSearch, string ShipPoint, string ShipTo, string TruckType) {
 
             //add summary data
@@ -211,7 +225,24 @@ namespace SCGLKPIUI.Controllers {
                 q = q.Where(x => x.ActualGiDate == ToDateSearch);
             }
 
-            foreach (var item in q.OrderBy(x => x.ActualGiDate)) {
+            var results = (from c in q
+                           group c by new { c.ActualGiDate, c.DepartmentName, c.SectionName, c.MatName, c.Segment } into g
+                           select new
+                           {
+                               ActualGiDate = g.Key.ActualGiDate,
+                               DepartmentName = g.Key.DepartmentName,
+                               SectionName = g.Key.SectionName,
+                               MatName = g.Key.MatName,
+                               Segment = g.Key.Segment,
+                               Plan = 98.0,
+                               SumOfTender = ((int)g.Sum(x => x.SumOfTender)),
+                               OnTime = ((int)g.Sum(x => x.OnTime)),
+                               Delay = ((int)g.Sum(x => x.Delay)),
+                               AdjustTender = ((int)g.Sum(x => x.AdjustTender)),
+                           }).OrderBy(x => x.ActualGiDate).ToList();
+
+            foreach (var item in results)
+            {
                 TenderedOntimeViewModels model = new TenderedOntimeViewModels();
                 string dd = item.ActualGiDate.Value.Day.ToString();
                 string mm = item.ActualGiDate.Value.Month.ToString();

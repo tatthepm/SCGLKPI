@@ -171,7 +171,22 @@ namespace SCGLKPIUI.Controllers {
             if (!String.IsNullOrEmpty(TruckType))
                 q = q.Where(x => x.TRUCK_TYPE == TruckType);
 
-            foreach (var item in q.OrderBy(x => x.Year).ThenBy(x => x.DepartmentName)) {
+            var results = (from c in q
+                           group c by new { c.Year, c.Segment, c.SectionName, c.MatName } into g
+                           select new
+                           {
+                               Year = g.Key.Year,
+                               MatName = g.Key.MatName,
+                               Segment = g.Key.Segment,
+                               SectionName = g.Key.SectionName,
+                               SumOfTender = g.Sum(x => x.SumOfTender),
+                               OnTime = g.Sum(x => x.OnTime),
+                               Delay = g.Sum(x => x.Delay),
+                               AdjustTender = g.Sum(x => x.AdjustTender)
+                           }).OrderBy(x => x.Year).ThenBy(x => x.Segment);
+
+            foreach (var item in results)
+            {
                 TenderedOntimeYearlyViewModels model = new TenderedOntimeYearlyViewModels();
                 model.Year = item.Year;
                 model.SegmentName = item.Segment;

@@ -3,11 +3,11 @@ title: Pie & Doughnut Charts
 anchor: doughnut-pie-chart
 ---
 ###Introduction
-Pie and doughnut charts are probably the most commonly used chart there are. They are divided into segments, the arc of each segment shows a the proportional value of each piece of data.
+Pie and doughnut charts are probably the most commonly used chart there are. They are divided into segments, the arc of each segment shows the proportional value of each piece of data.
 
 They are excellent at showing the relational proportions between data.
 
-Pie and doughnut charts in are effectively the same class in Chart.js, but have one different default value - their `percentageInnerCutout`. This equates what percentage of the inner should be cut out. This defaults to `0` for pie charts, and `50` for doughnuts.
+Pie and doughnut charts are effectively the same class in Chart.js, but have one different default value - their `percentageInnerCutout`. This equates what percentage of the inner should be cut out. This defaults to `0` for pie charts, and `50` for doughnuts.
 
 They are also registered under two aliases in the `Chart` core. Other than their different default value, and different alias, they are exactly the same.
 
@@ -84,6 +84,12 @@ These are the customisation options specific to Pie & Doughnut charts. These opt
 	//Boolean - Whether we animate the rotation of the Doughnut
 	animateRotate : true,
 
+	//Number - How much of 360 should be used to display the doughnut 0 = 0, 0.5 = 180, 1 = 360
+	scale : 1,
+
+	//Number - At what angle to start drawing 0 = 90, 0.5 = 180, 1 = 270, 1.5 = 0
+	startAngle : 1.5,
+
 	//Boolean - Whether we animate scaling the Doughnut from the centre
 	animateScale : false,
 	{% raw %}
@@ -104,13 +110,24 @@ new Chart(ctx).Doughnut(data, {
 // and the Doughnut chart defaults but this particular instance will have `animateScale` set to `true`.
 ```
 
+
+```javascript
+new Chart(ctx).Doughnut(data, {
+	scale: 0.5,
+	startAngle: 1
+});
+// This will create a chart with all of the default options, merged from the global config,
+// and the Doughnut chart defaults but this particular instance will be a semi circle (180) and start drawing from left of the canvas not the top.
+```
+
 We can also change these defaults values for each Doughnut type that is created, this object is available at `Chart.defaults.Doughnut`. Pie charts also have a clone of these defaults available to change at `Chart.defaults.Pie`, with the only difference being `percentageInnerCutout` being set to 0.
+
 
 ### Prototype methods
 
 #### .getSegmentsAtEvent( event )
 
-Calling `getSegmentsAtEvent(event)` on your Chart instance passing an argument of an event, or jQuery event, will return the segment elements that are at that the same position of that event.
+Calling `getSegmentsAtEvent(event)` on your Chart instance passing an argument of an event, or jQuery event, will return the segment elements that are at the same position of that event.
 
 ```javascript
 canvas.onclick = function(evt){
@@ -135,7 +152,7 @@ myDoughnutChart.update();
 
 #### .addData( segmentData, index )
 
-Calling `addData(segmentData, index)` on your Chart instance passing an object in the same format as in the constructor. There is an option second argument of 'index', this determines at what index the new segment should be inserted into the chart.
+Calling `addData(segmentData, index)` on your Chart instance passing an object in the same format as in the constructor. There is an optional second argument of 'index', this determines at what index the new segment should be inserted into the chart.
 
 ```javascript
 // An object in the same format as the original data source

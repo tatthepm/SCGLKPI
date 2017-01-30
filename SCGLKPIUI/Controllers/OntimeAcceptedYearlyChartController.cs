@@ -172,7 +172,22 @@ namespace SCGLKPIUI.Controllers {
                 q = q.Where(x => x.MatFriGrp == MatNameId);
 
 
-            foreach (var item in q.OrderBy(x => x.Year).ThenBy(x => x.DepartmentName)) {
+            var results = (from c in q
+                           group c by new { c.Year, c.DepartmentName, c.SectionName, c.MatName } into g
+                           select new
+                           {
+                               Year = g.Key.Year,
+                               MatName = g.Key.MatName,
+                               DepartmentName = g.Key.DepartmentName,
+                               SectionName = g.Key.SectionName,
+                               SumOfAccept = g.Sum(x => x.SumOfAccept),
+                               OnTime = g.Sum(x => x.OnTime),
+                               Delay = g.Sum(x => x.Delay),
+                               AdjustAccept = g.Sum(x => x.AdjustAccept)
+                           }).OrderBy(x => x.Year).ThenBy(x => x.DepartmentName);
+
+            foreach (var item in results)
+            {
                 AcceptOntimeYearlyViewModels model = new AcceptOntimeYearlyViewModels();
                 model.Year = item.Year;
                 model.DepartmentName = item.DepartmentName;

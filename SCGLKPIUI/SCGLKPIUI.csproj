@@ -400,6 +400,8 @@
     <Content Include="Content\Docs\ontime\dummy.html" />
     <Content Include="Content\Docs\outb\dummy.html" />
     <Content Include="Content\Docs\tnrd\dummy.html" />
+    <Content Include="Content\img\details_close.png" />
+    <Content Include="Content\img\details_open.png" />
     <Content Include="Content\img\green%402x.png" />
     <Content Include="Content\img\green.ico" />
     <Content Include="Content\img\green.png" />

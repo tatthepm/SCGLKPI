@@ -29,6 +29,7 @@ var data = {
 			pointStrokeColor: "#fff",
 			pointHighlightFill: "#fff",
 			pointHighlightStroke: "rgba(220,220,220,1)",
+			showTooltip: true, //optional default is true
 			data: [65, 59, 80, 81, 56, 55, 40]
 		},
 		{
@@ -39,15 +40,18 @@ var data = {
 			pointStrokeColor: "#fff",
 			pointHighlightFill: "#fff",
 			pointHighlightStroke: "rgba(151,187,205,1)",
-			data: [28, 48, 40, 19, 86, 27, 90]
+			showTooltip: true, //optional default is true
+			data: [28, 48, 40, null, 86, 27, 90]
 		}
 	]
 };
 ```
 
 The line chart requires an array of labels for each of the data points. This is shown on the X axis.
-The data for line charts is broken up into an array of datasets. Each dataset has a colour for the fill, a colour for the line and colours for the points and strokes of the points. These colours are strings just like CSS. You can use RGBA, RGB, HEX or HSL notation.
+The data for line charts is broken up into an array of datasets. If no data is avaliable but you would like to show this as a gap then include null in the data.
 
+Each dataset has a colour for the fill, a colour for the line and colours for the points and strokes of the points. These colours are strings just like CSS. You can use RGBA, RGB, HEX or HSL notation.
+For fine control of the displaying of tooltips ```showTooltip``` can be passed as either true or flase (default is true). If flase is passed that datasets tooltip will not be dispayed.
 The label key on each dataset is optional, and can be used when generating a scale for the chart.
 
 ### Chart options
@@ -56,8 +60,11 @@ These are the customisation options specific to Line charts. These options are m
 
 ```javascript
 {
+	//Function - Whether the current x-axis label should be filtered out, takes in current label and 
+	//index, returns true to filter out the label returns false to keep the label
+	labelsFilter : function(label,index){return false;},
 
-	///Boolean - Whether grid lines are shown across the chart
+	//Boolean - Whether grid lines are shown across the chart
 	scaleShowGridLines : true,
 
 	//String - Colour of the grid lines
@@ -65,6 +72,12 @@ These are the customisation options specific to Line charts. These options are m
 
 	//Number - Width of the grid lines
 	scaleGridLineWidth : 1,
+
+	//Boolean - Whether to show horizontal lines (except X axis)
+	scaleShowHorizontalLines: true,
+
+	//Boolean - Whether to show vertical lines (except Y axis)
+	scaleShowVerticalLines: true,
 
 	//Boolean - Whether the line is curved between points
 	bezierCurve : true,
@@ -94,7 +107,7 @@ These are the customisation options specific to Line charts. These options are m
 	datasetFill : true,
 	{% raw %}
 	//String - A legend template
-	legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+	legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 	{% endraw %}
 };
 ```
@@ -105,10 +118,16 @@ For example, we could have a line chart without bezier curves between points by 
 
 ```javascript
 new Chart(ctx).Line(data, {
-	bezierCurve: false
+	bezierCurve: false,
+	labelsFilter: function(value, index)
+	{
+		return (index+1)%5 !== 0;
+	}
+}
 });
 // This will create a chart with all of the default options, merged from the global config,
-// and the Line chart defaults, but this particular instance will have `bezierCurve` set to false.
+// and the Line chart defaults, but this particular instance will have `bezierCurve` set to false. 
+// It will also only display every 5th x-axis label
 ```
 
 We can also change these defaults values for each Line type that is created, this object is available at `Chart.defaults.Line`.

@@ -191,7 +191,23 @@ namespace SCGLKPIUI.Controllers {
             if (!String.IsNullOrEmpty(MonthId))
                 q = q.Where(x => x.Month == MonthId);
 
-            foreach (var item in q.OrderBy(x => x.Month).ThenBy(x => x.DepartmentName)) {
+            var results = (from c in q
+                           group c by new { c.Year, c.Month, c.DepartmentName, c.SectionName, c.MatName } into g
+                           select new
+                           {
+                               Year = g.Key.Year,
+                               Month = g.Key.Month,
+                               MatName = g.Key.MatName,
+                               DepartmentName = g.Key.DepartmentName,
+                               SectionName = g.Key.SectionName,
+                               SumOfOutbound = g.Sum(x => x.SumOfOutbound),
+                               OnTime = g.Sum(x => x.OnTime),
+                               Delay = g.Sum(x => x.Delay),
+                               AdjustOutbound = g.Sum(x => x.AdjustOutbound)
+                           }).OrderBy(x => x.Year).ThenBy(x => x.Month).ThenBy(x => x.DepartmentName);
+
+            foreach (var item in results)
+            {
                 OutboundedOntimeMonthlyViewModels model = new OutboundedOntimeMonthlyViewModels();
                 model.Month = DateTimeFormatInfo.CurrentInfo.GetAbbreviatedMonthName(Convert.ToInt32(item.Month)).ToString();
                 model.DepartmentName = item.DepartmentName;

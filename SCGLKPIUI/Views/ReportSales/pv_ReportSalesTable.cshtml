@@ -7,6 +7,12 @@
                     <div class="panel-tools">
                         <a class="showhide"><i class="fa fa-chevron-up"></i></a>
                         <a class="closebox"><i class="fa fa-times"></i></a>
+                        <a class="toggle-vis" data-column="5">Tender</a>
+                        <a class="toggle-vis" data-column="8">Accept</a>
+                        <a class="toggle-vis" data-column="11">Inbound</a>
+                        <a class="toggle-vis" data-column="14">Outbound</a>
+                        <a class="toggle-vis" data-column="17">Delivery</a>
+                        <a class="toggle-vis" data-column="20">Doc Return</a>
                     </div>
                     <b>Summary of accept tender (เฉพาะที่มีการวัดในระบบ)</b>
                 </div>
@@ -15,34 +21,43 @@
                         <form action="" id="frm" method="post" name="frm">
                             <table id="ReportSalesSummary" class="table table-striped table-bordered table-hover">
                                 <thead>
-                                    
                                     <tr>
-                                        <th >Segment</th>
-                                        <th>Customer</th>
-                                        <th>Mat. Freight</th>
-                                        <th>Actual GI</th>
-                                        <th>Count</th>
-                                        <th>% Ontime</th>
-                                        <th>% Adjusted</th>
-                                        <th>Count</th>
-                                        <th>% Ontime</th>
-                                        <th>% Adjusted</th>
-                                        <th>Count</th>
-                                        <th>% Ontime</th>
-                                        <th>% Adjusted</th>
-                                        <th>Count</th>
-                                        <th>% Ontime</th>
-                                        <th>% Adjusted</th>
-                                        <th>Count</th>
-                                        <th>% Ontime</th>
-                                        <th>% Adjusted</th>
-                                        <th>Count</th>
-                                        <th>% Ontime</th>
-                                        <th>% Adjusted</th>
+                                        <th rowspan="2"></th>
+                                        <th rowspan="2">Segment</th>
+                                        <th rowspan="2">Customer</th>
+                                        <th rowspan="2">Mat. Freight</th>
+                                        <th rowspan="2">Actual GI</th>
+                                        <th colspan="3">Tender</th>
+                                        <th colspan="3">Accept</th>
+                                        <th colspan="3">Inbound</th>
+                                        <th colspan="3">Outbound</th>
+                                        <th colspan="3">Delivery</th>
+                                        <th colspan="3">Doc Return</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Tender Count</th>
+                                        <th>%Tender Ontime</th>
+                                        <th>%Tender Adjusted</th>
+                                        <th>Accept Count</th>
+                                        <th>%Accept Ontime</th>
+                                        <th>%Accept Adjusted</th>
+                                        <th>Inbound Count</th>
+                                        <th>%Inbound Ontime</th>
+                                        <th>%Inbound Adjusted</th>
+                                        <th>Outbound Count</th>
+                                        <th>%Outbound Ontime</th>
+                                        <th>%Outbound Adjusted</th>
+                                        <th>Delivery Count</th>
+                                        <th>%Delivery Ontime</th>
+                                        <th>%Delivery Adjusted</th>
+                                        <th>DocReturn Count</th>
+                                        <th>%DocReturn Ontime</th>
+                                        <th>%DocReturn Adjusted</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>

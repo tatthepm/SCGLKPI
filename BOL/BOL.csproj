@@ -122,8 +122,13 @@
     <Compile Include="Migrations\201701130429288_sales-aspect.Designer.cs">
       <DependentUpon>201701130429288_sales-aspect.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701230438598_OntimeReports.cs" />
+    <Compile Include="Migrations\201701230438598_OntimeReports.Designer.cs">
+      <DependentUpon>201701230438598_OntimeReports.cs</DependentUpon>
+    </Compile>
     <Compile Include="OntimeFiles.cs" />
     <Compile Include="DocReturnFiles.cs" />
+    <Compile Include="OntimeReports.cs" />
     <Compile Include="OutboundedFiles.cs" />
     <Compile Include="InboundedFiles.cs" />
     <Compile Include="EquipmentTypes.cs" />
@@ -574,6 +579,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701130429288_sales-aspect.resx">
       <DependentUpon>201701130429288_sales-aspect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701230438598_OntimeReports.resx">
+      <DependentUpon>201701230438598_OntimeReports.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

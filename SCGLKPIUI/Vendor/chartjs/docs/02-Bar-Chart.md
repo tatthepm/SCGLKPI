@@ -29,6 +29,7 @@ var data = {
 			strokeColor: "rgba(220,220,220,0.8)",
 			highlightFill: "rgba(220,220,220,0.75)",
 			highlightStroke: "rgba(220,220,220,1)",
+			showTooltip: true, //optional default is true
 			data: [65, 59, 80, 81, 56, 55, 40]
 		},
 		{
@@ -37,6 +38,7 @@ var data = {
 			strokeColor: "rgba(151,187,205,0.8)",
 			highlightFill: "rgba(151,187,205,0.75)",
 			highlightStroke: "rgba(151,187,205,1)",
+			showTooltip: true, //optional default is true
 			data: [28, 48, 40, 19, 86, 27, 90]
 		}
 	]
@@ -44,7 +46,7 @@ var data = {
 ```
 The bar chart has the a very similar data structure to the line chart, and has an array of datasets, each with colours and an array of data. Again, colours are in CSS format.
 We have an array of labels too for display. In the example, we are showing the same data as the previous line chart example.
-
+For fine control of the displaying of tooltips ```showTooltip``` can be passed as either true or flase (default is true). If flase is passed that datasets tooltip will not be dispayed.
 The label key on each dataset is optional, and can be used when generating a scale for the chart.
 
 ### Chart Options
@@ -52,7 +54,11 @@ The label key on each dataset is optional, and can be used when generating a sca
 These are the customisation options specific to Bar charts. These options are merged with the [global chart configuration options](#getting-started-global-chart-configuration), and form the options of the chart.
 
 ```javascript
-{
+{	
+	//Function - Whether the current x-axis label should be filtered out, takes in current label and 
+	//index, returns true to filter out the label returns false to keep the label
+	labelsFilter : function(label,index){return false;},
+
 	//Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
 	scaleBeginAtZero : true,
 
@@ -64,6 +70,12 @@ These are the customisation options specific to Bar charts. These options are me
 
 	//Number - Width of the grid lines
 	scaleGridLineWidth : 1,
+
+	//Boolean - Whether to show horizontal lines (except X axis)
+	scaleShowHorizontalLines: true,
+
+	//Boolean - Whether to show vertical lines (except Y axis)
+	scaleShowVerticalLines: true,
 
 	//Boolean - If there is a stroke on each bar
 	barShowStroke : true,
@@ -78,7 +90,7 @@ These are the customisation options specific to Bar charts. These options are me
 	barDatasetSpacing : 1,
 	{% raw %}
 	//String - A legend template
-	legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+	legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 	{% endraw %}
 }
 ```
@@ -89,10 +101,15 @@ For example, we could have a bar chart without a stroke on each bar by doing the
 
 ```javascript
 new Chart(ctx).Bar(data, {
-	barShowStroke: false
+	barShowStroke: false,
+	labelsFilter: function(value, index)
+	{
+		return (index+1)%5 !== 0;
+	}
 });
 // This will create a chart with all of the default options, merged from the global config,
 //  and the Bar chart defaults but this particular instance will have `barShowStroke` set to false.
+// It will also only display every 5th x-axis label
 ```
 
 We can also change these defaults values for each Bar type that is created, this object is available at `Chart.defaults.Bar`.
