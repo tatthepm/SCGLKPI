@@ -80,21 +80,29 @@ namespace SCGLKPIUI.Controllers
 
             DateTime DateTo = Convert.ToDateTime(ToDateSearch, new System.Globalization.CultureInfo("en-US", false).DateTimeFormat);
 
-            IEnumerable<dynamic> DN = objBs.dWH_ONTIME_DNBs.GetByDate(DateFrom, DateTo).ToList();
-
-            IEnumerable<dynamic> SH = objBs.dWH_ONTIME_SHIPMENTBs.GetByDate(DateFrom, DateTo).ToList();
-
-            DN = DN.Where(x => x.DATA_SUBGRP == SegmentId && x.SOLDTO == CustomerId);
-
-            //filter matname
+            var criteria = new List<Tuple<string, string>>();
+            if (!String.IsNullOrEmpty(CustomerId))
+                criteria.Add(new Tuple<string, string>("SOLDTO", CustomerId));
+            if (!String.IsNullOrEmpty(SegmentId))
+                criteria.Add(new Tuple<string, string>("DATA_SUBGRP", SegmentId));
             if (!String.IsNullOrEmpty(MatNameId))
-                DN = DN.Where(x => x.MATFRIGRP == MatNameId);
+                criteria.Add(new Tuple<string, string>("MATFRIGRP", MatNameId));
 
-            SH = SH.Where(x => x.DATA_SUBGRP == SegmentId && x.SOLDTO == CustomerId);
+            IEnumerable<dynamic> DN = objBs.dWH_ONTIME_DNBs.GetByFilter(DateFrom, DateTo, criteria).ToList();
 
-            //filter matname
-            if (!String.IsNullOrEmpty(MatNameId))
-                SH = SH.Where(x => x.MATFRIGRP == MatNameId);
+            IEnumerable<dynamic> SH = objBs.dWH_ONTIME_SHIPMENTBs.GetByFilter(DateFrom, DateTo,criteria).ToList();
+
+            //DN = DN.Where(x => x.DATA_SUBGRP == SegmentId && x.SOLDTO == CustomerId);
+
+            ////filter matname
+            //if (!String.IsNullOrEmpty(MatNameId))
+            //    DN = DN.Where(x => x.MATFRIGRP == MatNameId);
+
+            //SH = SH.Where(x => x.DATA_SUBGRP == SegmentId && x.SOLDTO == CustomerId);
+
+            ////filter matname
+            //if (!String.IsNullOrEmpty(MatNameId))
+            //    SH = SH.Where(x => x.MATFRIGRP == MatNameId);
 
             IEnumerable<dynamic> q = (from dn in DN
                                       join sh in SH on dn.DELVNO equals sh.DELVNO
@@ -215,9 +223,21 @@ namespace SCGLKPIUI.Controllers
 
             DateTime DateTo = Convert.ToDateTime(ToDateSearch, new System.Globalization.CultureInfo("en-US", false).DateTimeFormat);
 
-            IEnumerable<dynamic> DN = objBs.dWH_ONTIME_DNBs.GetByDate(DateFrom, DateTo).ToList();
+            var criteria = new List<Tuple<string, string>>();
+            if (!String.IsNullOrEmpty(CustomerId))
+                criteria.Add(new Tuple<string, string>("SOLDTO", CustomerId));
+            if (!String.IsNullOrEmpty(SegmentId))
+                criteria.Add(new Tuple<string, string>("DATA_SUBGRP", SegmentId));
+            if (!String.IsNullOrEmpty(MatNameId))
+                criteria.Add(new Tuple<string, string>("MATFRIGRP", MatNameId));
 
-            IEnumerable<dynamic> SH = objBs.dWH_ONTIME_SHIPMENTBs.GetByDate(DateFrom, DateTo).ToList();
+            IEnumerable<dynamic> DN = objBs.dWH_ONTIME_DNBs.GetByFilter(DateFrom, DateTo, criteria).ToList();
+
+            IEnumerable<dynamic> SH = objBs.dWH_ONTIME_SHIPMENTBs.GetByFilter(DateFrom, DateTo, criteria).ToList();
+
+            //IEnumerable<dynamic> DN = objBs.dWH_ONTIME_DNBs.GetByDate(DateFrom, DateTo).ToList();
+
+            //IEnumerable<dynamic> SH = objBs.dWH_ONTIME_SHIPMENTBs.GetByDate(DateFrom, DateTo).ToList();
 
             DN = DN.Where(x => x.DATA_SUBGRP == SegmentId && x.SOLDTO == CustomerId);
 

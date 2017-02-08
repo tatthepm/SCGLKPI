@@ -27,7 +27,7 @@ namespace BLL
         {
             return objDb.GetByDate(FromDateSearch,ToDateSearch);
         }
-        public IQueryable<DWH_ONTIME_DN> GetByFilter(List<Tuple<string, string>> expression, List<string> logic)
+        public IQueryable<DWH_ONTIME_DN> GetByFilter(DateTime? FromDateSearch, DateTime? ToDateSearch,List<Tuple<string, string>> expression)
         {
             if (expression != null)
             {
@@ -43,28 +43,28 @@ namespace BLL
                             Expression.Property(param, expression[i].Item1),
                             Expression.Constant(expression[i].Item2)
                         );
-                    if (!String.IsNullOrEmpty(logic[i]))
-                    {
-                        switch (logic[i])
-                        {
-                            case "and":
-                                binExp = Expression.AndAlso(binExp, binExp2);
-                                break;
-                            case "or":
-                                binExp = Expression.OrElse(binExp, binExp2);
-                                break;
-                            default:
-                                binExp = Expression.AndAlso(binExp, binExp2);
-                                break;
-                        }
-                    }
+                    binExp = Expression.AndAlso(binExp, binExp2);
                 }
                 var exp = Expression.Lambda<Func<DWH_ONTIME_DN, bool>>(binExp,param);
+
+                var binExp3 = helperClass.MyGreaterThan(
+                           Expression.Property(param, "ACTGIDATE"),
+                           Expression.Constant(FromDateSearch)
+                       );
+                binExp = Expression.AndAlso(binExp, binExp3);
+
+                var binExp4 = helperClass.MyLessThan(
+                            Expression.Property(param, "ACTGIDATE"),
+                            Expression.Constant(ToDateSearch)
+                        );
+                binExp = Expression.AndAlso(binExp, binExp4);
+
                 return objDb.GetByFilter(exp);
             }
             else
             { return null; }
         }
+        
         //GetCount
         public int GetCount()
         {

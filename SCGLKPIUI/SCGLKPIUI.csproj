@@ -18,7 +18,7 @@
     <AssemblyName>SCGLKPIUI</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -316,6 +316,7 @@
     <Compile Include="Models\DropDownList.cs" />
     <Compile Include="Models\DropdownlistViewModels.cs" />
     <Compile Include="Models\ExcelModels.cs" />
+    <Compile Include="Models\helperClass.cs" />
     <Compile Include="Models\HomeModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\DocReturned\AdjustDocReturnedViewModels.cs" />
@@ -3206,7 +3207,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53342</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:53342/</IISUrl>
+          <IISUrl>http://localhost/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

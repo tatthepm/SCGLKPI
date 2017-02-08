@@ -108,7 +108,7 @@ namespace SCGLKPIUI
 
             // Chart JS
             bundles.Add(new ScriptBundle("~/bundles/chartjs/js").Include(
-                      "~/Vendor/chartjs/Chart.min.js"));
+                      "~/Scripts/Chart.min.js"));
 
             // Datatables
             bundles.Add(new ScriptBundle("~/bundles/datatables/js").Include(
