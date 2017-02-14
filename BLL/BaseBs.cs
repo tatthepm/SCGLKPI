@@ -23,6 +23,9 @@ namespace BLL {
         public HubMastersBs HubMastersBs { get; set; }
         public EquipmentTypesBs EquipmentTypesBs { get; set; }
         public OntimeReportsBs OntimeReportsBs { get; set; }
+        public OperationDailyBs OperationDailyBs { get; set; }
+        public SaleDailyBs SaleDailyBs { get; set; }
+        public CarrierDailyBs CarrierDailyBs { get; set; }
         //accepted
         public OntimeAcceptBs ontimeAcceptBs { get; set; }
         public OntimeAcceptMonthBs ontimeAcceptMonthBs { get; set; }
@@ -91,6 +94,9 @@ namespace BLL {
             EquipmentTypesBs = new EquipmentTypesBs();
             HubMastersBs = new HubMastersBs();
             OntimeReportsBs = new OntimeReportsBs();
+            OperationDailyBs = new OperationDailyBs();
+            SaleDailyBs = new SaleDailyBs();
+            CarrierDailyBs = new CarrierDailyBs();
 
             //tendered
             ontimeTenderBs = new OntimeTenderBs();

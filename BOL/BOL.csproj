@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CarrierSummaryDaily.cs" />
     <Compile Include="HubMasters.cs" />
     <Compile Include="Migrations\201610031113499_Init.cs" />
     <Compile Include="Migrations\201610031113499_Init.Designer.cs">
@@ -126,9 +127,19 @@
     <Compile Include="Migrations\201701230438598_OntimeReports.Designer.cs">
       <DependentUpon>201701230438598_OntimeReports.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702130218123_update-report.cs" />
+    <Compile Include="Migrations\201702130218123_update-report.Designer.cs">
+      <DependentUpon>201702130218123_update-report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702130305362_update-report2.cs" />
+    <Compile Include="Migrations\201702130305362_update-report2.Designer.cs">
+      <DependentUpon>201702130305362_update-report2.cs</DependentUpon>
+    </Compile>
     <Compile Include="OntimeFiles.cs" />
     <Compile Include="DocReturnFiles.cs" />
     <Compile Include="OntimeReports.cs" />
+    <Compile Include="SaleSummaryDaily.cs" />
+    <Compile Include="OperationSummaryDaily.cs" />
     <Compile Include="OutboundedFiles.cs" />
     <Compile Include="InboundedFiles.cs" />
     <Compile Include="EquipmentTypes.cs" />
@@ -582,6 +593,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701230438598_OntimeReports.resx">
       <DependentUpon>201701230438598_OntimeReports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702130218123_update-report.resx">
+      <DependentUpon>201702130218123_update-report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702130305362_update-report2.resx">
+      <DependentUpon>201702130305362_update-report2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

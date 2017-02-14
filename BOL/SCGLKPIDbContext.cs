@@ -22,6 +22,9 @@ namespace BOL {
         public DbSet<EquipmentTypes> EquipmentTypes { get; set; }
         public DbSet<HubMasters> HubMasters { get; set; }
         public DbSet<OntimeReports> OntimeReports { get; set; }
+        public DbSet<OperationSummaryDaily> OperationSummaryDaily { get; set; }
+        public DbSet<SaleSummaryDaily> SaleSummaryDaily { get; set; }
+        public DbSet<CarrierSummaryDaily> CarrierSummaryDaily { get; set; }
         //tendered
         public DbSet<OntimeTender> OntimeTenders { get; set; }
         public DbSet<OntimeTenderMonth> OntimeTenderMonths { get; set; }

@@ -41,6 +41,22 @@ namespace SCGLKPIUI {
                 new { controller = "ReportSales", action = "DetailData" },
                 new[] { "JsonRenderingMvcApplication.Controllers" });
 
+            routes.MapRoute("ReportOperations", "ReportOperations/jsonData/",
+                new { controller = "ReportOperations", action = "jsonData" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
+            routes.MapRoute("ReportOperations/DetailData", "ReportOperations/DetailData/",
+                new { controller = "ReportOperations", action = "DetailData" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
+            routes.MapRoute("ReportCarriers", "ReportCarriers/jsonData/",
+                new { controller = "ReportCarriers", action = "jsonData" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
+            routes.MapRoute("ReportCarriers/DetailData", "ReportCarriers/DetailData/",
+                new { controller = "ReportCarriers", action = "DetailData" },
+                new[] { "JsonRenderingMvcApplication.Controllers" });
+
             #endregion
 
             #region 1 on-time accepted tendered

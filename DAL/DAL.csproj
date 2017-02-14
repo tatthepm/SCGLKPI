@@ -56,9 +56,12 @@
     <Compile Include="OntimeFilesDb.cs" />
     <Compile Include="DocReturnFilesDb.cs" />
     <Compile Include="OntimeReports.cs" />
+    <Compile Include="CarrierDailyDb.cs" />
     <Compile Include="OutboundedFilesDb.cs" />
     <Compile Include="InboundedFilesDb.cs" />
     <Compile Include="EquipmentTypesDb.cs" />
+    <Compile Include="OperationDailyDb.cs" />
+    <Compile Include="SaleDailyDb.cs" />
     <Compile Include="TenderedFilesDb.cs" />
     <Compile Include="AcceptedFilesDb.cs" />
     <Compile Include="AcceptedPendingDb.cs" />

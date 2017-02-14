@@ -219,6 +219,7 @@
     <Compile Include="Controllers\AdjustOutboundedController.cs" />
     <Compile Include="Controllers\FollowDocReturnController.cs" />
     <Compile Include="Controllers\Master\HubMastersController.cs" />
+    <Compile Include="Controllers\ReportOperationsController.cs" />
     <Compile Include="Controllers\ReportSalesController.cs" />
     <Compile Include="Controllers\ViewerDNController.cs" />
     <Compile Include="Controllers\ViewerShipmentController.cs" />
@@ -367,6 +368,7 @@
     <Compile Include="Models\Outbounded\OutboundedOntimeViewModels.cs" />
     <Compile Include="Models\Outbounded\OutboundedOntimeYearlyViewModels.cs" />
     <Compile Include="Models\ReportSalesViewModels.cs" />
+    <Compile Include="Models\ReportOperationsViewModels.cs" />
     <Compile Include="Models\sp_ontime_accept_Result.cs">
       <DependentUpon>ModelSCGLKPI.tt</DependentUpon>
     </Compile>
@@ -3116,6 +3118,10 @@
     <Content Include="Views\ReportSales\pv_ReportSalesChart.cshtml" />
     <Content Include="Views\ReportSales\pv_ReportSalesTable.cshtml" />
     <Content Include="Views\ReportSales\pv_FilterReportSales.cshtml" />
+    <Content Include="Views\ReportOperations\Index.cshtml" />
+    <Content Include="Views\ReportOperations\pv_FilterReportOperations.cshtml" />
+    <Content Include="Views\ReportOperations\pv_ReportOperationsChart.cshtml" />
+    <Content Include="Views\ReportOperations\pv_ReportOperationsTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\UploadFiles\" />

@@ -10,18 +10,20 @@ using SCGLKPIUI.Models;
 
 namespace SCGLKPIUI.Controllers
 {
-    public class ReportSalesController : BaseController
+    public class ReportOperationsController : BaseController
     {
-        public ActionResult Index(string SegmentId, string CustomerId, string CarrierId, DateTime? FromDateSearch, DateTime? ToDateSearch, string MatNameId)
+        public ActionResult Index(string DepartmentId, string SectionId, DateTime? FromDateSearch, DateTime? ToDateSearch, string MatNameId)
         {
             try
             {
                 DropDownList ddl = new DropDownList();
-                var ddlSeg = ddl.GetDropDownListSegment();
-                var ddlCust = ddl.GetDropDownList("Customer");
+
+                var ddlDept = ddl.GetDropDownList("Department");
+                var ddlSec = ddl.GetDropDownList("Section");
                 var ddlMatName = ddl.GetDropDownListAcceptedMonth("Matname");
-                ViewBag.SegmentId = new SelectList(ddlSeg.ToList(), "Id", "Name");
-                ViewBag.CustomerId = new SelectList(ddlCust.ToList(), "Id", "Name");
+                
+                ViewBag.DepartmentId = new SelectList(ddlDept.ToList(), "Id", "Name");
+                ViewBag.SectionId = new SelectList(ddlSec.ToList(), "Id", "Name");
                 ViewBag.MatNameId = new SelectList(ddlMatName.ToList(), "Id", "Name");
 
                 return View();
@@ -33,24 +35,24 @@ namespace SCGLKPIUI.Controllers
             }
         }
 
-        public JsonResult CustomerFilter(string segmentId)
+        public JsonResult SectionFilter(string departmentId)
         {
             var result = (from m in objBs.ontimeDeliveryBs.GetAll()
-                          where m.SubSegment == segmentId
+                          where m.DepartmentId == departmentId
                           select new
                           {
-                              Id = m.SoldToId,
-                              Name = m.SoldToName
+                              Id = m.SectionId,
+                              Name = m.SectionName
                           }).Distinct().OrderBy(x => x.Name);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult MatNameFilter(string segmentId, string customerId)
+        public JsonResult MatNameFilter(string sectionId, string departmentId)
         {
             var result = (from m in objBs.ontimeDeliveryBs.GetAll()
-                          where m.SubSegment == segmentId
-                          && m.SoldToId == customerId
+                          where m.DepartmentId == departmentId
+                          && m.SectionId == sectionId
                           select new
                           {
                               Id = m.MatFriGrp,
@@ -61,11 +63,11 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public JsonResult jsonData(string SegmentId, string CustomerId, string FromDateSearch, string ToDateSearch, string MatNameId)
+        public JsonResult jsonData(string DepartmentId, string SectionId, string FromDateSearch, string ToDateSearch, string MatNameId)
         {
 
             //add summary data
-            List<ReportSalesViewModels> viewSummaryModel = new List<ReportSalesViewModels>();
+            List<ReportOperationsViewModels> viewSummaryModel = new List<ReportOperationsViewModels>();
 
             if (FromDateSearch != null && ToDateSearch == null)
             {
@@ -81,10 +83,10 @@ namespace SCGLKPIUI.Controllers
             DateTime DateTo = Convert.ToDateTime(ToDateSearch, new System.Globalization.CultureInfo("en-US", false).DateTimeFormat);
 
             var criteria = new List<Tuple<string, string>>();
-            if (!String.IsNullOrEmpty(CustomerId))
-                criteria.Add(new Tuple<string, string>("SOLDTO", CustomerId));
-            if (!String.IsNullOrEmpty(SegmentId))
-                criteria.Add(new Tuple<string, string>("DATA_SUBGRP", SegmentId));
+            if (!String.IsNullOrEmpty(DepartmentId))
+                criteria.Add(new Tuple<string, string>("DEPARTMENT_ID", DepartmentId));
+            if (!String.IsNullOrEmpty(SectionId))
+                criteria.Add(new Tuple<string, string>("SECTION_ID", SectionId));
             if (!String.IsNullOrEmpty(MatNameId))
                 criteria.Add(new Tuple<string, string>("MATFRIGRP", MatNameId));
 
@@ -98,10 +100,11 @@ namespace SCGLKPIUI.Controllers
                                       {
                                           DELVNO = dn.DELVNO,
                                           SHPMNTNO = sh.SHPMNTNO,
-                                          SUB_SEGMENT = sh.DATA_SUBGRP,
-                                          //MATFRIGRP = dn.MATFRIGRP,
-                                          SOLDTO = dn.SOLDTO,
-                                          SOLDTO_NAME = dn.SOLDTO_NAME,
+                                          DEPARTMENT_ID = dn.DEPARTMENT_ID,
+                                          DEPARTMENT_NAME = dn.DEPARTMENT_Name,
+                                          SECTION_ID = dn.SECTION_ID,
+                                          SECTION_NAME = dn.SECTION_NAME,
+                                          MATFRIGRP = dn.MATFRIGRP,               
                                           ACPD_ONTIME = sh.ACPD_ONTIME == null ? 0 : sh.ACPD_ONTIME,
                                           ACPD_ADJUST = sh.ACPD_ADJUST == null ? 0 : sh.ACPD_ADJUST,
                                           ACPD_COUNT = sh.ACPD_COUNT == null ? 0 : sh.ACPD_COUNT,
@@ -124,12 +127,12 @@ namespace SCGLKPIUI.Controllers
                                       }).ToList();
 
             var results = (from c in q
-                           group c by new { c.ACTGIDATE, c.SOLDTO_NAME/*, c.MATFRIGRP*/, c.SUB_SEGMENT } into g
+                           group c by new { c.ACTGIDATE, c.DEPARTMENT_NAME, /*c.MATFRIGRP,*/ c.SECTION_NAME } into g
                            select new
                            {
                                ActualGiDate = g.Key.ACTGIDATE,
-                               Segment = g.Key.SUB_SEGMENT,
-                               SoldToName = g.Key.SOLDTO_NAME,
+                               Department = g.Key.DEPARTMENT_NAME,
+                               Section = g.Key.SECTION_NAME,
                                //MatFreight = g.Key.MATFRIGRP,
                                Plan = 98.0,
                                SumOfAccept = (int)g.Sum(x => x.ACPD_COUNT == null ? 0 : x.ACPD_COUNT),
@@ -161,9 +164,9 @@ namespace SCGLKPIUI.Controllers
 
             foreach (var item in results)
             {
-                ReportSalesViewModels model = new ReportSalesViewModels();
-                model.Segment = item.Segment;
-                model.Customer = item.SoldToName;
+                ReportOperationsViewModels model = new ReportOperationsViewModels();
+                model.Department = item.Department;
+                model.Section = item.Section;
                 //model.MatName = item.MatFreight;
                 model.ActualGiDate = item.ActualGiDate.ToString("dd/MM/yyyy");
                 model.Plan = item.Plan;
@@ -192,7 +195,7 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public JsonResult DetailData(string SegmentId, string CustomerId, string FromDateSearch, string ToDateSearch, string MatNameId)
+        public JsonResult DetailData(string DepartmentId, string SectionId, string FromDateSearch, string ToDateSearch, string MatNameId)
         {
 
             //add summary data
@@ -212,10 +215,10 @@ namespace SCGLKPIUI.Controllers
             DateTime DateTo = Convert.ToDateTime(ToDateSearch, new System.Globalization.CultureInfo("en-US", false).DateTimeFormat);
 
             var criteria = new List<Tuple<string, string>>();
-            if (!String.IsNullOrEmpty(CustomerId))
-                criteria.Add(new Tuple<string, string>("SOLDTO", CustomerId));
-            if (!String.IsNullOrEmpty(SegmentId))
-                criteria.Add(new Tuple<string, string>("DATA_SUBGRP", SegmentId));
+            if (!String.IsNullOrEmpty(DepartmentId))
+                criteria.Add(new Tuple<string, string>("DEPARTMENT_ID", DepartmentId));
+            if (!String.IsNullOrEmpty(SectionId))
+                criteria.Add(new Tuple<string, string>("SECTION_ID", SectionId));
             if (!String.IsNullOrEmpty(MatNameId))
                 criteria.Add(new Tuple<string, string>("MATFRIGRP", MatNameId));
 
@@ -227,18 +230,6 @@ namespace SCGLKPIUI.Controllers
 
             //IEnumerable<dynamic> SH = objBs.dWH_ONTIME_SHIPMENTBs.GetByDate(DateFrom, DateTo).ToList();
 
-            DN = DN.Where(x => x.DATA_SUBGRP == SegmentId && x.SOLDTO == CustomerId);
-
-            //filter matname
-            if (!String.IsNullOrEmpty(MatNameId))
-                DN = DN.Where(x => x.MATFRIGRP == MatNameId);
-
-            SH = SH.Where(x => x.DATA_SUBGRP == SegmentId && x.SOLDTO == CustomerId);
-
-            //filter matname
-            if (!String.IsNullOrEmpty(MatNameId))
-                SH = SH.Where(x => x.MATFRIGRP == MatNameId);
-
             IEnumerable<dynamic> q = (from dn in DN
                                       join sh in SH
                                       //on new { dn.DELVNO, dn.SHPMNTNO } equals new { sh.DELVNO, sh.SHPMNTNO }
@@ -246,11 +237,11 @@ namespace SCGLKPIUI.Controllers
                                       select new
                                       {
                                           DeliveryNo = dn.DELVNO,
-                                          ShipmentNo = sh.SHPMNTNO,
-                                          Segment = sh.DATA_SUBGRP,
+                                          DEPARTMENT_ID = dn.DEPARTMENT_ID,
+                                          DEPARTMENT_NAME = dn.DEPARTMENT_Name,
+                                          SECTION_ID = dn.SECTION_ID,
+                                          SECTION_NAME = dn.SECTION_NAME,
                                           MatFreight = dn.MATFRIGRP,
-                                          CustomerCode = dn.SOLDTO,
-                                          CustomerName = dn.SOLDTO_NAME,
 
                                           OrderComplete = dn.ORDCMPDATE == null ? "No Data" : sh.ORDCMPDATE,
                                           ShipmentCreate = dn.SHCRDATE == null ? "No Data" : sh.SHCRDATE,
