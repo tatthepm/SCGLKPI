@@ -96,7 +96,7 @@ namespace SCGLKPIUI.Controllers
             }
 
             var data = from p in q
-                       group p by new { p.DEPARTMENT_Name, p.SECTION_NAME }
+                       group p by new { p.DEPARTMENT_NAME, p.SECTION_NAME }
             into g
                        select new { index = g.Key, DocReturn = g, Count = g.Count() };
 
@@ -109,7 +109,7 @@ namespace SCGLKPIUI.Controllers
 
                 FollowDocReturnViewModels model = new FollowDocReturnViewModels();
 
-                model.Department = i.index.DEPARTMENT_Name;
+                model.Department = i.index.DEPARTMENT_NAME;
                 model.Section = i.index.SECTION_NAME;
                 foreach (var x in dataByDept)
                 {
@@ -209,7 +209,7 @@ namespace SCGLKPIUI.Controllers
             }
 
             var data = from p in q
-                       group p by new { p.DEPARTMENT_Name, p.TO_SHPG_LOC_NAME }
+                       group p by new { p.DEPARTMENT_NAME, p.TO_SHPG_LOC_NAME }
             into g
                        select new { index = g.Key, DocReturn = g, Count = g.Count() };
 
@@ -222,7 +222,7 @@ namespace SCGLKPIUI.Controllers
 
                 FollowDocReturnHubViewModels model = new FollowDocReturnHubViewModels();
 
-                model.Department = i.index.DEPARTMENT_Name;
+                model.Department = i.index.DEPARTMENT_NAME;
                 model.HubName = i.index.TO_SHPG_LOC_NAME;
                 foreach (var x in dataByDept)
                 {

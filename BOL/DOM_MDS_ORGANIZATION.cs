@@ -42,7 +42,7 @@ namespace BOL {
         public string DEPARTMENT_ID { get; set; }
 
         [StringLength(100)]
-        public string DEPARTMENT_Name { get; set; }
+        public string DEPARTMENT_NAME { get; set; }
 
         [StringLength(5)]
         public string SECTION_ID { get; set; }

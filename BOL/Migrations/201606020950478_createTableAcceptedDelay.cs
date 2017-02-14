@@ -20,7 +20,7 @@ namespace BOL.Migrations
                         REGION_NAME_TH = c.String(maxLength: 30),
                         REGION_NAME_EN = c.String(maxLength: 30),
                         DEPARTMENT_ID = c.String(maxLength: 5),
-                        DEPARTMENT_Name = c.String(maxLength: 100),
+                        DEPARTMENT_NAME = c.String(maxLength: 100),
                         SECTION_ID = c.String(maxLength: 5),
                         SECTION_NAME = c.String(maxLength: 100),
                         SOLDTO = c.String(maxLength: 10),

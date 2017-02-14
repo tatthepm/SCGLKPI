@@ -30,7 +30,7 @@
         </EntityContainer>
         <ComplexType Name="sp_ontime_accept_Result">
           <Property Type="DateTime" Name="ActualGiDate" Nullable="true" />
-          <Property Type="String" Name="DEPARTMENT_Name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="SECTION_NAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="MATNAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="MATFRIGRP" Nullable="false" MaxLength="8" />
@@ -40,7 +40,7 @@
         </ComplexType>
         <ComplexType Name="sp_ontime_tender_Result">
           <Property Type="DateTime" Name="TenderDate" Nullable="true" />
-          <Property Type="String" Name="DEPARTMENT_Name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="DEPARTMENT_NAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="SECTION_NAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="MATNAME" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="MATFRIGRP" Nullable="false" MaxLength="8" />
@@ -58,7 +58,7 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="SCGLKPIModel.sp_ontime_accept_Result">
                 <ScalarProperty Name="ActualGiDate" ColumnName="ActualGiDate" />
-                <ScalarProperty Name="DEPARTMENT_Name" ColumnName="DEPARTMENT_Name" />
+                <ScalarProperty Name="DEPARTMENT_NAME" ColumnName="DEPARTMENT_NAME" />
                 <ScalarProperty Name="SECTION_NAME" ColumnName="SECTION_NAME" />
                 <ScalarProperty Name="MATNAME" ColumnName="MATNAME" />
                 <ScalarProperty Name="MATFRIGRP" ColumnName="MATFRIGRP" />
@@ -72,7 +72,7 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="SCGLKPIModel.sp_ontime_tender_Result">
                 <ScalarProperty Name="TenderDate" ColumnName="TenderDate" />
-                <ScalarProperty Name="DEPARTMENT_Name" ColumnName="DEPARTMENT_Name" />
+                <ScalarProperty Name="DEPARTMENT_NAME" ColumnName="DEPARTMENT_NAME" />
                 <ScalarProperty Name="SECTION_NAME" ColumnName="SECTION_NAME" />
                 <ScalarProperty Name="MATNAME" ColumnName="MATNAME" />
                 <ScalarProperty Name="MATFRIGRP" ColumnName="MATFRIGRP" />

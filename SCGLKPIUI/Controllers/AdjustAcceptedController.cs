@@ -164,7 +164,7 @@ namespace SCGLKPIUI.Controllers
                             {
                                 CARRIER_ID = tmp_adjusted.CARRIER_ID,
                                 DEPARTMENT_ID = tmp_adjusted.DEPARTMENT_ID,
-                                DEPARTMENT_Name = tmp_adjusted.DEPARTMENT_Name,
+                                DEPARTMENT_NAME = tmp_adjusted.DEPARTMENT_NAME,
                                 SECTION_ID = tmp_adjusted.SECTION_ID,
                                 SECTION_NAME = tmp_adjusted.SECTION_NAME,
                                 SEGMENT = tmp_adjusted.SEGMENT,
@@ -314,7 +314,7 @@ namespace SCGLKPIUI.Controllers
                                         {
                                             CARRIER_ID = tmp_adjusted.CARRIER_ID,
                                             DEPARTMENT_ID = tmp_adjusted.DEPARTMENT_ID,
-                                            DEPARTMENT_Name = tmp_adjusted.DEPARTMENT_Name,
+                                            DEPARTMENT_NAME = tmp_adjusted.DEPARTMENT_NAME,
                                             SECTION_ID = tmp_adjusted.SECTION_ID,
                                             SECTION_NAME = tmp_adjusted.SECTION_NAME,
                                             SEGMENT = tmp_adjusted.SEGMENT,

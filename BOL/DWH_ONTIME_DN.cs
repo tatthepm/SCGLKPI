@@ -310,7 +310,7 @@ namespace BOL {
         public string DEPARTMENT_ID { get; set; }
 
         [StringLength(100)]
-        public string DEPARTMENT_Name { get; set; }
+        public string DEPARTMENT_NAME { get; set; }
 
         //add 2/6/2016
         [StringLength(64)]

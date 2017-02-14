@@ -135,6 +135,14 @@
     <Compile Include="Migrations\201702130305362_update-report2.Designer.cs">
       <DependentUpon>201702130305362_update-report2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702140507237_update_department.cs" />
+    <Compile Include="Migrations\201702140507237_update_department.Designer.cs">
+      <DependentUpon>201702140507237_update_department.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702140656552_update_summaryPage.cs" />
+    <Compile Include="Migrations\201702140656552_update_summaryPage.Designer.cs">
+      <DependentUpon>201702140656552_update_summaryPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="OntimeFiles.cs" />
     <Compile Include="DocReturnFiles.cs" />
     <Compile Include="OntimeReports.cs" />
@@ -599,6 +607,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702130305362_update-report2.resx">
       <DependentUpon>201702130305362_update-report2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702140507237_update_department.resx">
+      <DependentUpon>201702140507237_update_department.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702140656552_update_summaryPage.resx">
+      <DependentUpon>201702140656552_update_summaryPage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

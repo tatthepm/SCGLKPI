@@ -101,7 +101,7 @@ namespace SCGLKPIUI.Controllers
                                           DELVNO = dn.DELVNO,
                                           SHPMNTNO = sh.SHPMNTNO,
                                           DEPARTMENT_ID = dn.DEPARTMENT_ID,
-                                          DEPARTMENT_NAME = dn.DEPARTMENT_Name,
+                                          DEPARTMENT_NAME = dn.DEPARTMENT_NAME,
                                           SECTION_ID = dn.SECTION_ID,
                                           SECTION_NAME = dn.SECTION_NAME,
                                           MATFRIGRP = dn.MATFRIGRP,               
@@ -238,7 +238,7 @@ namespace SCGLKPIUI.Controllers
                                       {
                                           DeliveryNo = dn.DELVNO,
                                           DEPARTMENT_ID = dn.DEPARTMENT_ID,
-                                          DEPARTMENT_NAME = dn.DEPARTMENT_Name,
+                                          DEPARTMENT_NAME = dn.DEPARTMENT_NAME,
                                           SECTION_ID = dn.SECTION_ID,
                                           SECTION_NAME = dn.SECTION_NAME,
                                           MatFreight = dn.MATFRIGRP,

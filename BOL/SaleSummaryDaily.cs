@@ -21,11 +21,11 @@ namespace BOL
         [Column(TypeName = "datetime2")]
         public DateTime LoadedDate { get; set; }
 
-        [StringLength(5)]
+        [StringLength(10)]
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
 
-        [StringLength(5)]
+        [StringLength(10)]
         public string SegmentId { get; set; }
         public string SegmentName { get; set; }
 

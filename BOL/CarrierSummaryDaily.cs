@@ -21,7 +21,7 @@ namespace BOL
         [Column(TypeName = "datetime2")]
         public DateTime LoadedDate { get; set; }
 
-        [StringLength(5)]
+        [StringLength(10)]
         public string CarrierId { get; set; }
         public string CarrierName { get; set; }
 

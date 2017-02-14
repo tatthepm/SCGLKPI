@@ -45,7 +45,7 @@ namespace BOL.Migrations
                         COMPCODE = c.String(maxLength: 10),
                         COMPANY_NAME = c.String(maxLength: 50),
                         DEPARTMENT_ID = c.String(maxLength: 5),
-                        DEPARTMENT_Name = c.String(maxLength: 100),
+                        DEPARTMENT_NAME = c.String(maxLength: 100),
                         SECTION_ID = c.String(maxLength: 5),
                         SECTION_NAME = c.String(maxLength: 100),
                         BU = c.String(maxLength: 100),
@@ -196,7 +196,7 @@ namespace BOL.Migrations
                         PLNDOCRETDATE_SCGL_D = c.DateTime(precision: 7, storeType: "datetime2"),
                         PLNDOCRETDATE_CUST_D = c.DateTime(precision: 7, storeType: "datetime2"),
                         DEPARTMENT_ID = c.String(maxLength: 5),
-                        DEPARTMENT_Name = c.String(maxLength: 100),
+                        DEPARTMENT_NAME = c.String(maxLength: 100),
                     })
                 .PrimaryKey(t => t.DELVNO);
             
@@ -252,7 +252,7 @@ namespace BOL.Migrations
                         DATA_SUBGRP = c.String(maxLength: 20),
                         LOADEDDATE = c.DateTime(),
                         DEPARTMENT_ID = c.String(maxLength: 5),
-                        DEPARTMENT_Name = c.String(maxLength: 100),
+                        DEPARTMENT_NAME = c.String(maxLength: 100),
                     })
                 .PrimaryKey(t => t.SHPMNTNO);
             
