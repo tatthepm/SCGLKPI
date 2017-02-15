@@ -17,6 +17,10 @@ namespace DAL
             db = new SCGLKPIDbContext();
         }
         //GetAll
+        public IQueryable<OperationSummaryDaily> GetAll()
+        {
+            return db.OperationSummaryDaily;
+        }
         public IQueryable<OperationSummaryDaily> GetByDate(DateTime? FromDateSearch, DateTime? ToDateSearch)
         {
             return db.OperationSummaryDaily.Where(x => x.ActualGiDate >= FromDateSearch && x.ActualGiDate <= ToDateSearch);

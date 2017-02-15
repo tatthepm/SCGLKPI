@@ -35,27 +35,52 @@ namespace SCGLKPIUI.Controllers
 
         public JsonResult CustomerFilter(string segmentId)
         {
-            var result = (from m in objBs.ontimeDeliveryBs.GetAll()
-                          where m.SubSegment == segmentId
-                          select new
-                          {
-                              Id = m.SoldToId,
-                              Name = m.SoldToName
-                          }).Distinct().OrderBy(x => x.Name);
+            List<object> result = new List<object>();
 
+            if (segmentId.Contains("BULK"))
+            {
+                result.Add(new { Id = "0", Name = "Siam Cement" });
+            }
+            else if (segmentId.Contains("CONSO WF"))
+            {
+                result.Add(new { Id = "0", Name = "Siam Sanitary Ware" });
+            }
+            else if (segmentId.Contains("FTL CE"))
+            {
+                result.Add(new { Id = "0", Name = "SCG Ceramic" });
+            }
+            else if (segmentId.Contains("CONSO INT"))
+            {
+                result.Add(new { Id = "0", Name = "SCG Sourcing" });
+            }
+            else
+            {
+                result.AddRange((from m in objBs.SaleDailyBs.GetAll()
+                                 where m.SegmentId == segmentId
+                                 select new
+                                 {
+                                     Id = m.CustomerId,
+                                     Name = m.CustomerName
+                                 }).Distinct().OrderBy(x => x.Name).ToList());
+            }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult MatNameFilter(string segmentId, string customerId)
         {
-            var result = (from m in objBs.ontimeDeliveryBs.GetAll()
-                          where m.SubSegment == segmentId
-                          && m.SoldToId == customerId
-                          select new
-                          {
-                              Id = m.MatFriGrp,
-                              Name = m.MatName
-                          }).Distinct().OrderBy(x => x.Name);
+            var q = from m in objBs.SaleDailyBs.GetAll()
+                        where m.SegmentId == segmentId
+                        select m;
+            if (customerId != "0")
+            {
+                q = q.Where(x => x.CustomerId == customerId);
+            }
+            var result = ((from m in q
+                             select new
+                             {
+                                 Id = m.MatFriGrp,
+                                 Name = m.MatName
+                             }).Distinct().OrderBy(x => x.Name).ToList());
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -80,111 +105,70 @@ namespace SCGLKPIUI.Controllers
 
             DateTime DateTo = Convert.ToDateTime(ToDateSearch, new System.Globalization.CultureInfo("en-US", false).DateTimeFormat);
 
-            var criteria = new List<Tuple<string, string>>();
+            var q = (from c in objBs.SaleDailyBs.GetByDate(DateFrom, DateTo) select c);
+
             if (!String.IsNullOrEmpty(CustomerId))
-                criteria.Add(new Tuple<string, string>("SOLDTO", CustomerId));
+                q = q.Where(x => x.CustomerId == CustomerId);
+
             if (!String.IsNullOrEmpty(SegmentId))
-                criteria.Add(new Tuple<string, string>("DATA_SUBGRP", SegmentId));
+                q = q.Where(x => x.SegmentId == SegmentId);
+
             if (!String.IsNullOrEmpty(MatNameId))
-                criteria.Add(new Tuple<string, string>("MATFRIGRP", MatNameId));
-
-            IEnumerable<dynamic> DN = objBs.dWH_ONTIME_DNBs.GetByFilter(DateFrom, DateTo, criteria).ToList();
-
-            IEnumerable<dynamic> SH = objBs.dWH_ONTIME_SHIPMENTBs.GetByFilter(DateFrom, DateTo,criteria).ToList();
-
-            IEnumerable<dynamic> q = (from dn in DN
-                                      join sh in SH on dn.DELVNO equals sh.DELVNO
-                                      select new
-                                      {
-                                          DELVNO = dn.DELVNO,
-                                          SHPMNTNO = sh.SHPMNTNO,
-                                          SUB_SEGMENT = sh.DATA_SUBGRP,
-                                          //MATFRIGRP = dn.MATFRIGRP,
-                                          SOLDTO = dn.SOLDTO,
-                                          SOLDTO_NAME = dn.SOLDTO_NAME,
-                                          ACPD_ONTIME = sh.ACPD_ONTIME == null ? 0 : sh.ACPD_ONTIME,
-                                          ACPD_ADJUST = sh.ACPD_ADJUST == null ? 0 : sh.ACPD_ADJUST,
-                                          ACPD_COUNT = sh.ACPD_COUNT == null ? 0 : sh.ACPD_COUNT,
-                                          TNRD_ONTIME = sh.TNRD_ONTIME == null ? 0 : sh.TNRD_ONTIME,
-                                          TNRD_ADJUST = sh.TNRD_ADJUST == null ? 0 : sh.TNRD_ADJUST,
-                                          TNRD_COUNT = sh.TNRD_COUNT == null ? 0 : sh.TNRD_COUNT,
-                                          INB_ONTIME = dn.INB_ONTIME_FLAG == null ? 0 : dn.INB_ONTIME_FLAG,
-                                          INB_ADJUST = dn.INB_ADJUST == null ? 0 : dn.INB_ADJUST,
-                                          INB_COUNT = dn.INB_COUNT == null ? 0 : dn.INB_COUNT,
-                                          OUTB_ONTIME = dn.OUTB_ONTIME_FLAG == null ? 0 : dn.OUTB_ONTIME_FLAG,
-                                          OUTB_ADJUST = dn.OUTB_ADJUST == null ? 0 : dn.OUTB_ADJUST,
-                                          OUTB_COUNT = dn.OUTB_COUNT == null ? 0 : dn.OUTB_COUNT,
-                                          ONTIME_ONTIME = dn.ON_TIME_FLAG == null ? 0 : dn.ON_TIME_FLAG,
-                                          ONTIME_ADJUST = dn.ON_TIME_ADJUST == null ? 0 : dn.ON_TIME_ADJUST,
-                                          ONTIME_COUNT = dn.ON_TIME_COUNT == null ? 0 : dn.ON_TIME_COUNT,
-                                          SCGL_DOCRTN_ONTIME = dn.SCGL_DOCRET_ONTIME_FLAG == null ? 0 : dn.SCGL_DOCRET_ONTIME_FLAG,
-                                          SCGL_DOCRTN_ADJUST = dn.SCGL_DOCRET_ADJUST == null ? 0 : dn.SCGL_DOCRET_ADJUST,
-                                          SCGL_DOCRTN_COUNT = dn.SCGL_DOCRET_COUNT == null ? 0 : dn.SCGL_DOCRET_COUNT,
-                                          ACTGIDATE = dn.ACTGIDATE_D
-                                      }).ToList();
+                q = q.Where(x => x.MatFriGrp == MatNameId);
 
             var results = (from c in q
-                           group c by new { c.ACTGIDATE, c.SOLDTO_NAME/*, c.MATFRIGRP*/, c.SUB_SEGMENT } into g
+                           group c by new { c.ActualGiDate, c.CustomerName, c.SegmentName } into g
                            select new
                            {
-                               ActualGiDate = g.Key.ACTGIDATE,
-                               Segment = g.Key.SUB_SEGMENT,
-                               SoldToName = g.Key.SOLDTO_NAME,
-                               //MatFreight = g.Key.MATFRIGRP,
-                               Plan = 98.0,
-                               SumOfAccept = (int)g.Sum(x => x.ACPD_COUNT == null ? 0 : x.ACPD_COUNT),
-                               PcAccept_Ontime = (double)g.Sum(x => x.ACPD_COUNT) == 0 ? 0 : ((double)g.Sum(x => x.ACPD_ONTIME) / (double)g.Sum(x => x.ACPD_COUNT)) * 100,
-                               PcAccept_Adjust = (double)g.Sum(x => x.ACPD_COUNT) == 0 ? 0 : (((double)g.Sum(x => x.ACPD_ADJUST) + (double)g.Sum(x => x.ACPD_ONTIME))
-                                        / (double)g.Sum(x => x.ACPD_COUNT)) * 100,
-                               SumOfTender = (int)g.Sum(x => x.TNRD_COUNT == null ? 0 : x.TNRD_COUNT),
-                               PcTender_Ontime = (double)g.Sum(x => x.TNRD_COUNT) == 0 ? 0 : ((double)g.Sum(x => x.TNRD_ONTIME) / (double)g.Sum(x => x.TNRD_COUNT)) * 100,
-                               PcTender_Adjust = (double)g.Sum(x => x.TNRD_COUNT) == 0 ? 0 : (((double)g.Sum(x => x.TNRD_ADJUST) + (double)g.Sum(x => x.TNRD_ONTIME))
-                                        / (double)g.Sum(x => x.TNRD_COUNT)) * 100,
-                               SumOfInbound = (int)g.Sum(x => x.INB_COUNT == null ? 0 : x.INB_COUNT),
-                               PcInbound_Ontime = (double)g.Sum(x => x.INB_COUNT) == 0 ? 0 : ((double)g.Sum(x => x.INB_ONTIME) / (double)g.Sum(x => x.INB_COUNT)) * 100,
-                               PcInbound_Adjust = (double)g.Sum(x => x.INB_COUNT) == 0 ? 0 : (((double)g.Sum(x => x.INB_ADJUST) + (double)g.Sum(x => x.INB_ONTIME))
-                                        / (double)g.Sum(x => x.INB_COUNT)) * 100,
-                               SumOfOutbound = (int)g.Sum(x => x.OUTB_COUNT == null ? 0 : x.OUTB_COUNT),
-                               PcOutbound_Ontime = (double)g.Sum(x => x.OUTB_COUNT) == 0 ? 0 : ((double)g.Sum(x => x.OUTB_ONTIME) / (double)g.Sum(x => x.OUTB_COUNT)) * 100,
-                               PcOutbound_Adjust = (double)g.Sum(x => x.OUTB_COUNT) == 0 ? 0 : (((double)g.Sum(x => x.OUTB_ADJUST) + (double)g.Sum(x => x.OUTB_ONTIME))
-                                        / (double)g.Sum(x => x.OUTB_COUNT)) * 100,
-                               SumOfDocReturn = (int)g.Sum(x => x.SCGL_DOCRTN_COUNT == null ? 0 : x.SCGL_DOCRTN_COUNT),
-                               PcDocReturn_Ontime = (double)g.Sum(x => x.SCGL_DOCRTN_COUNT) == 0 ? 0 : ((double)g.Sum(x => x.SCGL_DOCRTN_ONTIME) / (double)g.Sum(x => x.SCGL_DOCRTN_COUNT)) * 100,
-                               PcDocReturn_Adjust = (double)g.Sum(x => x.SCGL_DOCRTN_COUNT) == 0 ? 0 : (((double)g.Sum(x => x.SCGL_DOCRTN_ADJUST) + (double)g.Sum(x => x.SCGL_DOCRTN_ONTIME))
-                                        / (double)g.Sum(x => x.SCGL_DOCRTN_COUNT)) * 100,
-                               SumOfOntime = (int)g.Sum(x => x.ONTIME_COUNT == null ? 0 : x.ONTIME_COUNT),
-                               PcOntime_Ontime = (double)g.Sum(x => x.ONTIME_COUNT) == 0 ? 0 : ((double)g.Sum(x => x.ONTIME_ONTIME) / (double)g.Sum(x => x.ONTIME_COUNT)) * 100,
-                               PcOntime_Adjust = (double)g.Sum(x => x.ONTIME_COUNT) == 0 ? 0 : (((double)g.Sum(x => x.ONTIME_ADJUST) + (double)g.Sum(x => x.ONTIME_ONTIME))
-                                        / (double)g.Sum(x => x.ONTIME_COUNT)) * 100,
-
-                           }).OrderBy(x => x.ActualGiDate).ToList();
+                               ActualGiDate = g.Key.ActualGiDate,
+                               CustomerName = g.Key.CustomerName,
+                               SegmentName = g.Key.SegmentName,
+                               OnTimeTender = g.Sum(x => x.OnTimeTender),
+                               AdjustedTender = g.Sum(x => x.AdjustedTender),
+                               SumOfTender = g.Sum(x => x.SumOfTender),
+                               OnTimeAccept = g.Sum(x => x.OnTimeAccept),
+                               AdjustedAccept = g.Sum(x => x.AdjustedAccept),
+                               SumOfAccept = g.Sum(x => x.SumOfAccept),
+                               OnTimeInbound = g.Sum(x => x.OnTimeInbound),
+                               AdjustedInbound = g.Sum(x => x.AdjustedInbound),
+                               SumOfInbound = g.Sum(x => x.SumOfInbound),
+                               OnTimeOutbound = g.Sum(x => x.OnTimeOutbound),
+                               AdjustedOutbound = g.Sum(x => x.AdjustedOutbound),
+                               SumOfOutbound = g.Sum(x => x.SumOfOutbound),
+                               OnTimeDelivery = g.Sum(x => x.OnTimeDelivery),
+                               AdjustedDelivery = g.Sum(x => x.AdjustedDelivery),
+                               SumOfDelivery = g.Sum(x => x.SumOfDelivery),
+                               OnTimeDocreturn = g.Sum(x => x.OnTimeDocreturn),
+                               AdjustedDocreturn = g.Sum(x => x.AdjustedDocreturn),
+                               SumOfDocreturn = g.Sum(x => x.SumOfDocreturn)
+                           }).OrderBy(x => x.ActualGiDate);
 
             foreach (var item in results)
             {
                 ReportSalesViewModels model = new ReportSalesViewModels();
-                model.Segment = item.Segment;
-                model.Customer = item.SoldToName;
+                model.Segment = item.SegmentName;
+                model.Customer = item.CustomerName;
                 //model.MatName = item.MatFreight;
                 model.ActualGiDate = item.ActualGiDate.ToString("dd/MM/yyyy");
-                model.Plan = item.Plan;
-                model.OnTimeTender = Math.Round(item.PcTender_Ontime, 2);
-                model.AdjustTender = Math.Round(item.PcTender_Adjust, 2);
+                model.Plan = 98.0;
+                model.OnTimeTender = item.OnTimeTender;
+                model.AdjustTender = item.AdjustedTender;
                 model.SumOfTender = item.SumOfTender;
-                model.OnTimeAccept = Math.Round(item.PcAccept_Ontime, 2);
-                model.AdjustAccept = Math.Round(item.PcAccept_Adjust, 2);
+                model.OnTimeAccept = item.OnTimeAccept;
+                model.AdjustAccept = item.AdjustedAccept;
                 model.SumOfAccept = item.SumOfAccept;
-                model.OnTimeInbound = Math.Round(item.PcInbound_Ontime, 2);
-                model.AdjustInbound = Math.Round(item.PcInbound_Adjust, 2);
+                model.OnTimeInbound = item.OnTimeInbound;
+                model.AdjustInbound = item.AdjustedInbound;
                 model.SumOfInbound = item.SumOfInbound;
-                model.OnTimeOutbound = Math.Round(item.PcOutbound_Ontime, 2);
-                model.AdjustOutbound = Math.Round(item.PcOutbound_Adjust, 2);
+                model.OnTimeOutbound = item.OnTimeOutbound;
+                model.AdjustOutbound = item.AdjustedOutbound;
                 model.SumOfOutbound = item.SumOfOutbound;
-                model.OnTimeOntime = Math.Round(item.PcOntime_Ontime, 2);
-                model.AdjustOntime = Math.Round(item.PcOntime_Adjust, 2);
-                model.SumOfOntime = item.SumOfOntime;
-                model.OnTimeDocReturn = Math.Round(item.PcDocReturn_Ontime, 2);
-                model.AdjustDocReturn = Math.Round(item.PcDocReturn_Adjust, 2);
-                model.SumOfDocReturn = item.SumOfDocReturn;
+                model.OnTimeOntime = item.OnTimeDelivery;
+                model.AdjustOntime = item.AdjustedDelivery;
+                model.SumOfOntime = item.SumOfDelivery;
+                model.OnTimeDocReturn = item.OnTimeDocreturn;
+                model.AdjustDocReturn = item.AdjustedDocreturn;
+                model.SumOfDocReturn = item.SumOfDocreturn;
                 viewSummaryModel.Add(model);
             }
 

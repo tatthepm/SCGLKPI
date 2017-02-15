@@ -16,6 +16,10 @@ namespace BLL
             objDb = new OperationDailyDb();
         }
         //GetAll
+        public IQueryable<OperationSummaryDaily> GetAll()
+        {
+            return objDb.GetAll();
+        }
         public IQueryable<OperationSummaryDaily> GetByDate(DateTime? FromDateSearch, DateTime? ToDateSearch)
         {
             return objDb.GetByDate(FromDateSearch, ToDateSearch);
