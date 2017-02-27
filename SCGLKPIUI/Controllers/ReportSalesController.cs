@@ -107,71 +107,134 @@ namespace SCGLKPIUI.Controllers
 
             var q = (from c in objBs.SaleDailyBs.GetByDate(DateFrom, DateTo) select c);
 
-            if (!String.IsNullOrEmpty(CustomerId))
-                q = q.Where(x => x.CustomerId == CustomerId);
-
             if (!String.IsNullOrEmpty(SegmentId))
                 q = q.Where(x => x.SegmentId == SegmentId);
 
             if (!String.IsNullOrEmpty(MatNameId))
                 q = q.Where(x => x.MatFriGrp == MatNameId);
 
-            var results = (from c in q
-                           group c by new { c.ActualGiDate, c.CustomerName, c.SegmentName } into g
-                           select new
-                           {
-                               ActualGiDate = g.Key.ActualGiDate,
-                               CustomerName = g.Key.CustomerName,
-                               SegmentName = g.Key.SegmentName,
-                               OnTimeTender = g.Sum(x => x.OnTimeTender),
-                               AdjustedTender = g.Sum(x => x.AdjustedTender),
-                               SumOfTender = g.Sum(x => x.SumOfTender),
-                               OnTimeAccept = g.Sum(x => x.OnTimeAccept),
-                               AdjustedAccept = g.Sum(x => x.AdjustedAccept),
-                               SumOfAccept = g.Sum(x => x.SumOfAccept),
-                               OnTimeInbound = g.Sum(x => x.OnTimeInbound),
-                               AdjustedInbound = g.Sum(x => x.AdjustedInbound),
-                               SumOfInbound = g.Sum(x => x.SumOfInbound),
-                               OnTimeOutbound = g.Sum(x => x.OnTimeOutbound),
-                               AdjustedOutbound = g.Sum(x => x.AdjustedOutbound),
-                               SumOfOutbound = g.Sum(x => x.SumOfOutbound),
-                               OnTimeDelivery = g.Sum(x => x.OnTimeDelivery),
-                               AdjustedDelivery = g.Sum(x => x.AdjustedDelivery),
-                               SumOfDelivery = g.Sum(x => x.SumOfDelivery),
-                               OnTimeDocreturn = g.Sum(x => x.OnTimeDocreturn),
-                               AdjustedDocreturn = g.Sum(x => x.AdjustedDocreturn),
-                               SumOfDocreturn = g.Sum(x => x.SumOfDocreturn)
-                           }).OrderBy(x => x.ActualGiDate);
 
-            foreach (var item in results)
+            if (!String.IsNullOrEmpty(CustomerId) && (CustomerId != "0"))
             {
-                ReportSalesViewModels model = new ReportSalesViewModels();
-                model.Segment = item.SegmentName;
-                model.Customer = item.CustomerName;
-                //model.MatName = item.MatFreight;
-                model.ActualGiDate = item.ActualGiDate.ToString("dd/MM/yyyy");
-                model.Plan = 98.0;
-                model.OnTimeTender = item.OnTimeTender;
-                model.AdjustTender = item.AdjustedTender;
-                model.SumOfTender = item.SumOfTender;
-                model.OnTimeAccept = item.OnTimeAccept;
-                model.AdjustAccept = item.AdjustedAccept;
-                model.SumOfAccept = item.SumOfAccept;
-                model.OnTimeInbound = item.OnTimeInbound;
-                model.AdjustInbound = item.AdjustedInbound;
-                model.SumOfInbound = item.SumOfInbound;
-                model.OnTimeOutbound = item.OnTimeOutbound;
-                model.AdjustOutbound = item.AdjustedOutbound;
-                model.SumOfOutbound = item.SumOfOutbound;
-                model.OnTimeOntime = item.OnTimeDelivery;
-                model.AdjustOntime = item.AdjustedDelivery;
-                model.SumOfOntime = item.SumOfDelivery;
-                model.OnTimeDocReturn = item.OnTimeDocreturn;
-                model.AdjustDocReturn = item.AdjustedDocreturn;
-                model.SumOfDocReturn = item.SumOfDocreturn;
-                viewSummaryModel.Add(model);
+                q = q.Where(x => x.CustomerId == CustomerId);
             }
 
+            if (CustomerId != "0")
+            {
+                var results = (from c in q
+                               group c by new { c.ActualGiDate, c.CustomerName, c.SegmentName } into g
+                               select new
+                               {
+                                   ActualGiDate = g.Key.ActualGiDate,
+                                   CustomerName = g.Key.CustomerName,
+                                   SegmentName = g.Key.SegmentName,
+                                   OnTimeTender = g.Sum(x => x.OnTimeTender),
+                                   AdjustedTender = g.Sum(x => x.AdjustedTender),
+                                   SumOfTender = g.Sum(x => x.SumOfTender),
+                                   OnTimeAccept = g.Sum(x => x.OnTimeAccept),
+                                   AdjustedAccept = g.Sum(x => x.AdjustedAccept),
+                                   SumOfAccept = g.Sum(x => x.SumOfAccept),
+                                   OnTimeInbound = g.Sum(x => x.OnTimeInbound),
+                                   AdjustedInbound = g.Sum(x => x.AdjustedInbound),
+                                   SumOfInbound = g.Sum(x => x.SumOfInbound),
+                                   OnTimeOutbound = g.Sum(x => x.OnTimeOutbound),
+                                   AdjustedOutbound = g.Sum(x => x.AdjustedOutbound),
+                                   SumOfOutbound = g.Sum(x => x.SumOfOutbound),
+                                   OnTimeDelivery = g.Sum(x => x.OnTimeDelivery),
+                                   AdjustedDelivery = g.Sum(x => x.AdjustedDelivery),
+                                   SumOfDelivery = g.Sum(x => x.SumOfDelivery),
+                                   OnTimeDocreturn = g.Sum(x => x.OnTimeDocreturn),
+                                   AdjustedDocreturn = g.Sum(x => x.AdjustedDocreturn),
+                                   SumOfDocreturn = g.Sum(x => x.SumOfDocreturn)
+                               }).OrderBy(x => x.ActualGiDate);
+
+                foreach (var item in results)
+                {
+                    ReportSalesViewModels model = new ReportSalesViewModels();
+                    model.Segment = item.SegmentName;
+                    model.Customer = item.CustomerName;
+                    //model.MatName = item.MatFreight;
+                    model.ActualGiDate = item.ActualGiDate.ToString("dd/MM/yyyy");
+                    model.Plan = 98.0;
+                    model.OnTimeTender = item.OnTimeTender;
+                    model.AdjustTender = item.AdjustedTender;
+                    model.SumOfTender = item.SumOfTender;
+                    model.OnTimeAccept = item.OnTimeAccept;
+                    model.AdjustAccept = item.AdjustedAccept;
+                    model.SumOfAccept = item.SumOfAccept;
+                    model.OnTimeInbound = item.OnTimeInbound;
+                    model.AdjustInbound = item.AdjustedInbound;
+                    model.SumOfInbound = item.SumOfInbound;
+                    model.OnTimeOutbound = item.OnTimeOutbound;
+                    model.AdjustOutbound = item.AdjustedOutbound;
+                    model.SumOfOutbound = item.SumOfOutbound;
+                    model.OnTimeOntime = item.OnTimeDelivery;
+                    model.AdjustOntime = item.AdjustedDelivery;
+                    model.SumOfOntime = item.SumOfDelivery;
+                    model.OnTimeDocReturn = item.OnTimeDocreturn;
+                    model.AdjustDocReturn = item.AdjustedDocreturn;
+                    model.SumOfDocReturn = item.SumOfDocreturn;
+                    viewSummaryModel.Add(model);
+                }
+            }
+            else
+            {
+                var results = (from c in q
+                               group c by new { c.ActualGiDate, c.SegmentName } into g
+                               select new
+                               {
+                                   ActualGiDate = g.Key.ActualGiDate,
+                                   CustomerName = "SCG Customer",
+                                   SegmentName = g.Key.SegmentName,
+                                   OnTimeTender = g.Sum(x => x.OnTimeTender),
+                                   AdjustedTender = g.Sum(x => x.AdjustedTender),
+                                   SumOfTender = g.Sum(x => x.SumOfTender),
+                                   OnTimeAccept = g.Sum(x => x.OnTimeAccept),
+                                   AdjustedAccept = g.Sum(x => x.AdjustedAccept),
+                                   SumOfAccept = g.Sum(x => x.SumOfAccept),
+                                   OnTimeInbound = g.Sum(x => x.OnTimeInbound),
+                                   AdjustedInbound = g.Sum(x => x.AdjustedInbound),
+                                   SumOfInbound = g.Sum(x => x.SumOfInbound),
+                                   OnTimeOutbound = g.Sum(x => x.OnTimeOutbound),
+                                   AdjustedOutbound = g.Sum(x => x.AdjustedOutbound),
+                                   SumOfOutbound = g.Sum(x => x.SumOfOutbound),
+                                   OnTimeDelivery = g.Sum(x => x.OnTimeDelivery),
+                                   AdjustedDelivery = g.Sum(x => x.AdjustedDelivery),
+                                   SumOfDelivery = g.Sum(x => x.SumOfDelivery),
+                                   OnTimeDocreturn = g.Sum(x => x.OnTimeDocreturn),
+                                   AdjustedDocreturn = g.Sum(x => x.AdjustedDocreturn),
+                                   SumOfDocreturn = g.Sum(x => x.SumOfDocreturn)
+                               }).OrderBy(x => x.ActualGiDate);
+
+                foreach (var item in results)
+                {
+                    ReportSalesViewModels model = new ReportSalesViewModels();
+                    model.Segment = item.SegmentName;
+                    model.Customer = item.CustomerName;
+                    //model.MatName = item.MatFreight;
+                    model.ActualGiDate = item.ActualGiDate.ToString("dd/MM/yyyy");
+                    model.Plan = 98.0;
+                    model.OnTimeTender = item.OnTimeTender;
+                    model.AdjustTender = item.AdjustedTender;
+                    model.SumOfTender = item.SumOfTender;
+                    model.OnTimeAccept = item.OnTimeAccept;
+                    model.AdjustAccept = item.AdjustedAccept;
+                    model.SumOfAccept = item.SumOfAccept;
+                    model.OnTimeInbound = item.OnTimeInbound;
+                    model.AdjustInbound = item.AdjustedInbound;
+                    model.SumOfInbound = item.SumOfInbound;
+                    model.OnTimeOutbound = item.OnTimeOutbound;
+                    model.AdjustOutbound = item.AdjustedOutbound;
+                    model.SumOfOutbound = item.SumOfOutbound;
+                    model.OnTimeOntime = item.OnTimeDelivery;
+                    model.AdjustOntime = item.AdjustedDelivery;
+                    model.SumOfOntime = item.SumOfDelivery;
+                    model.OnTimeDocReturn = item.OnTimeDocreturn;
+                    model.AdjustDocReturn = item.AdjustedDocreturn;
+                    model.SumOfDocReturn = item.SumOfDocreturn;
+                    viewSummaryModel.Add(model);
+                }
+            }
             return Json(viewSummaryModel, JsonRequestBehavior.AllowGet);
         }
 

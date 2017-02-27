@@ -236,9 +236,19 @@
                         }
 
                         var ctx = document.getElementById("barOntimeAcceptMonthly").getContext("2d");
-                        chartOntime = new Chart(ctx).Bar(barData, barOptions);
-                        document.getElementById('js-legend').innerHTML = chartOntime.generateLegend();
-
+                        chartOntime = new Chart(ctx, {
+                            type: 'bar',
+                            data: barData,
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true,
+                                        }
+                                    }]
+                                }
+                            }
+                        });
                         //#endregion
 
                         //#region 2 bar chart ontime accepted adjust
@@ -294,64 +304,22 @@
                         }
 
                         var ctx = document.getElementById("barOntimeAcceptAdjustMonthly").getContext("2d");
-                        chartOntimeAdj = new Chart(ctx).Bar(barData, barOptions);
-                        document.getElementById('js-legend2').innerHTML = chartOntimeAdj.generateLegend();
-
-                        //#endregion
-
-                        //#region 3 bar chart shipment
-                        /**
-                      * Options for Bar chart
-                      */
-                        var barOptions = {
-                            scaleBeginAtZero: true,
-                            scaleShowGridLines: true,
-                            scaleGridLineColor: "rgba(0,0,0,.05)",
-                            scaleGridLineWidth: 1,
-                            barShowStroke: true,
-                            barStrokeWidth: 2,
-                            barValueSpacing: 5,
-                            barDatasetSpacing: 1,
-                            responsive: true,
-                        };
-                        /**
-                         * Data for Bar chart
-                         */
-                        var barData = {
-                            labels: label,
-                            datasets: [
-                                {
-                                    label: "PLAN",
-                                    fillColor: "rgba(220,220,220,0.5)",
-                                    // strokeColor: "rgba(220,220,220,0.8)",
-                                    strokeColor: 'rgba(47, 132, 71, 1.8)',
-                                    highlightFill: "rgba(220,220,220,0.75)",
-                                    highlightStroke: "rgba(220,220,220,1)",
-                                    highlightStroke: 'rgba(47, 132, 71, 1.8)',
-                                    data: shipment //[100, 100, 100, 100, 100]
-                                },
-                                {
-                                    label: "ACTUAL",
-                                    fillColor: "rgba(98,203,49,0.5)",
-                                    strokeColor: "rgba(98,203,49,0.8)",
-                                    highlightFill: "rgba(98,203,49,0.75)",
-                                    highlightStroke: "rgba(98,203,49,1)",
-                                    data: shipment //[28, 48, 40, 19, 86]
+                        chartOntimeAdj = new Chart(ctx, {
+                            type: 'bar',
+                            data: barData,
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true,
+                                        }
+                                    }]
                                 }
-                            ]
-                        };
-
-                        //Then just before initializing the chart i destroyed
-                        if (chartShipment != undefined || chartShipment != null) {
-                            chartShipment.destroy();
-                        }
-
-                        var ctx = document.getElementById("barChartShipmentMonthly").getContext("2d");
-                        chartShipment = new Chart(ctx).Bar(barData, barOptions);
-                        document.getElementById('js-legend3').innerHTML = chartOntimeAdj.generateLegend();
-
+                            }
+                        });
                         //#endregion
 
+                        
                     }); //end getJson
 
                 //#region 4 pie chart jsonPieString
@@ -386,9 +354,19 @@
 
                         var ctx = document.getElementById("doughnutChartMonthly").getContext("2d");
                         //var myNewChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
-                        pieChartOntime = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
-                        document.getElementById('js-legend4').innerHTML = pieChartOntime.generateLegend();
-
+                        pieChartOntime = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: doughnutData,
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true,
+                                        }
+                                    }]
+                                }
+                            }
+                        });
                     }); // end jsonPieString
 
                 //#endregion

@@ -245,7 +245,6 @@ namespace SCGLKPIUI.Controllers
                     }
                     model.Total = model.Total + x.Count;
                 }
-
                 viewSummaryModel.Add(model);
             }
 
