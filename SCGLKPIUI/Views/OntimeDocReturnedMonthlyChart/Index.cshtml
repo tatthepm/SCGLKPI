@@ -166,230 +166,230 @@
                 var shipment = [];
                 var planshipment = [];
 
-                var jsonString = $.getJSON('/OntimeDocReturnedMonthlyChart/jsonData?DepartmentId=' + departmentId
-                    + '&SectionId=' + sectionId
-                    + '&YearId=' + yearId
-                    + '&MonthId=' + monthId
-                    + '&MatNameId=' + matNameId, function (data) {
-                        // console.info(data);
-                        $.each(data, function (index, item) {
-                            label.push(item.Month);
-                            plan.push(item.Plan);
-                            actual.push(item.Actual);
-                            adjust.push(item.Adjust);
-                            shipment.push(item.SumOfDocReturn);
-                            planshipment.push(item.SumOfDocReturn);
-                        });
-                        //console.info(label);
+                //var jsonString = $.getJSON('/OntimeDocReturnedMonthlyChart/jsonData?DepartmentId=' + departmentId
+                //    + '&SectionId=' + sectionId
+                //    + '&YearId=' + yearId
+                //    + '&MonthId=' + monthId
+                //    + '&MatNameId=' + matNameId, function (data) {
+                //        // console.info(data);
+                //        $.each(data, function (index, item) {
+                //            label.push(item.Month);
+                //            plan.push(item.Plan);
+                //            actual.push(item.Actual);
+                //            adjust.push(item.Adjust);
+                //            shipment.push(item.SumOfDocReturn);
+                //            planshipment.push(item.SumOfDocReturn);
+                //        });
+                //        //console.info(label);
 
-                        //#region 1 bar chart ontime accepted
-                        var steps = 5;
-                        var barOptions = {
-                            scaleBeginAtZero: true,
-                            scaleShowGridLines: true,
-                            scaleGridLineColor: "rgba(0,0,0,.05)",
-                            scaleGridLineWidth: 1,
-                            barShowStroke: true,
-                            barStrokeWidth: 2,
-                            barValueSpacing: 5,
-                            barDatasetSpacing: 1,
-                            responsive: true,
-                            //
-                            scaleOverride: true,
-                            scaleSteps: steps,
-                            scaleStepWidth: Math.ceil(100 / steps),
-                            scaleStartValue: 0
-                            //
-                        };
-                        /**
-                         * Data for Bar chart
-                         */
-                        var barData = {
-                            labels: label, //["January", "February", "March", "April", "May"],
-                            datasets: [
-                                {
-                                    label: "PLAN",
-                                    fillColor: "rgba(220,220,220,0.5)",
-                                    //strokeColor: "rgba(220,220,220,0.8)",
-                                    strokeColor: 'rgba(0, 0, 0, 0.8)',
-                                    highlightFill: "rgba(220,220,220,0.75)",
-                                    //highlightStroke: "rgba(220,220,220,1)",
-                                    highlightStroke: 'rgba(47, 132, 71, 0.8)',
-                                    data: plan //[100, 100, 100, 100, 100],
-                                },
-                                {
-                                    label: "ACTUAL",
-                                    fillColor: "rgba(98,203,49,0.5)",
-                                    strokeColor: "rgba(98,203,49,0.8)",
-                                    highlightFill: "rgba(98,203,49,0.75)",
-                                    highlightStroke: "rgba(98,203,49,1)",
-                                    data: actual //[28, 48, 40, 19, 86],
-                                }
-                            ]
-                        };
+                //        //#region 1 bar chart ontime accepted
+                //        var steps = 5;
+                //        var barOptions = {
+                //            scaleBeginAtZero: true,
+                //            scaleShowGridLines: true,
+                //            scaleGridLineColor: "rgba(0,0,0,.05)",
+                //            scaleGridLineWidth: 1,
+                //            barShowStroke: true,
+                //            barStrokeWidth: 2,
+                //            barValueSpacing: 5,
+                //            barDatasetSpacing: 1,
+                //            responsive: true,
+                //            //
+                //            scaleOverride: true,
+                //            scaleSteps: steps,
+                //            scaleStepWidth: Math.ceil(100 / steps),
+                //            scaleStartValue: 0
+                //            //
+                //        };
+                //        /**
+                //         * Data for Bar chart
+                //         */
+                //        var barData = {
+                //            labels: label, //["January", "February", "March", "April", "May"],
+                //            datasets: [
+                //                {
+                //                    label: "PLAN",
+                //                    fillColor: "rgba(220,220,220,0.5)",
+                //                    //strokeColor: "rgba(220,220,220,0.8)",
+                //                    strokeColor: 'rgba(0, 0, 0, 0.8)',
+                //                    highlightFill: "rgba(220,220,220,0.75)",
+                //                    //highlightStroke: "rgba(220,220,220,1)",
+                //                    highlightStroke: 'rgba(47, 132, 71, 0.8)',
+                //                    data: plan //[100, 100, 100, 100, 100],
+                //                },
+                //                {
+                //                    label: "ACTUAL",
+                //                    fillColor: "rgba(98,203,49,0.5)",
+                //                    strokeColor: "rgba(98,203,49,0.8)",
+                //                    highlightFill: "rgba(98,203,49,0.75)",
+                //                    highlightStroke: "rgba(98,203,49,1)",
+                //                    data: actual //[28, 48, 40, 19, 86],
+                //                }
+                //            ]
+                //        };
 
-                        //Then just before initializing the chart i destroyed
-                        if (chartOntime != undefined || chartOntime != null) {
-                            chartOntime.destroy();
-                        }
+                //        //Then just before initializing the chart i destroyed
+                //        if (chartOntime != undefined || chartOntime != null) {
+                //            chartOntime.destroy();
+                //        }
 
-                        var ctx = document.getElementById("barOntimeDocReturnMonthly").getContext("2d");
-                        chartOntime = new Chart(ctx).Bar(barData, barOptions);
-                        document.getElementById('js-legend').innerHTML = chartOntime.generateLegend();
+                //        var ctx = document.getElementById("barOntimeDocReturnMonthly").getContext("2d");
+                //        chartOntime = new Chart(ctx).Bar(barData, barOptions);
+                //        document.getElementById('js-legend').innerHTML = chartOntime.generateLegend();
 
-                        //#endregion
+                //        //#endregion
 
-                        //#region 2 bar chart ontime accepted adjust
-                        /**
-                      * Options for Bar chart
-                      */
-                        var steps = 5;
-                        var barOptions = {
-                            scaleBeginAtZero: true,
-                            scaleShowGridLines: true,
-                            scaleGridLineColor: "rgba(0,0,0,.05)",
-                            scaleGridLineWidth: 1,
-                            barShowStroke: true,
-                            barStrokeWidth: 2,
-                            barValueSpacing: 5,
-                            barDatasetSpacing: 1,
-                            responsive: true,
-                            scaleOverride: true,
-                            scaleSteps: steps,
-                            scaleStepWidth: Math.ceil(100 / steps),
-                            scaleStartValue: 0
-                        };
-                        /**
-                         * Data for Bar chart
-                         */
-                        var barData = {
-                            labels: label,
-                            datasets: [
-                                {
-                                    label: "PLAN",
-                                    fillColor: "rgba(220,220,220,0.5)",
-                                    // strokeColor: "rgba(220,220,220,0.8)",
-                                    strokeColor: 'rgba(47, 132, 71, 1.8)',
-                                    highlightFill: "rgba(220,220,220,0.75)",
-                                    highlightStroke: "rgba(220,220,220,1)",
-                                    highlightStroke: 'rgba(47, 132, 71, 1.8)',
-                                    data: plan //[100, 100, 100, 100, 100]
-                                },
-                                {
-                                    label: "ACTUAL",
-                                    fillColor: "rgba(98,203,49,0.5)",
-                                    strokeColor: "rgba(98,203,49,0.8)",
-                                    highlightFill: "rgba(98,203,49,0.75)",
-                                    highlightStroke: "rgba(98,203,49,1)",
-                                    data: adjust //[28, 48, 40, 19, 86]
-                                }
-                            ]
-                        };
+                //        //#region 2 bar chart ontime accepted adjust
+                //        /**
+                //      * Options for Bar chart
+                //      */
+                //        var steps = 5;
+                //        var barOptions = {
+                //            scaleBeginAtZero: true,
+                //            scaleShowGridLines: true,
+                //            scaleGridLineColor: "rgba(0,0,0,.05)",
+                //            scaleGridLineWidth: 1,
+                //            barShowStroke: true,
+                //            barStrokeWidth: 2,
+                //            barValueSpacing: 5,
+                //            barDatasetSpacing: 1,
+                //            responsive: true,
+                //            scaleOverride: true,
+                //            scaleSteps: steps,
+                //            scaleStepWidth: Math.ceil(100 / steps),
+                //            scaleStartValue: 0
+                //        };
+                //        /**
+                //         * Data for Bar chart
+                //         */
+                //        var barData = {
+                //            labels: label,
+                //            datasets: [
+                //                {
+                //                    label: "PLAN",
+                //                    fillColor: "rgba(220,220,220,0.5)",
+                //                    // strokeColor: "rgba(220,220,220,0.8)",
+                //                    strokeColor: 'rgba(47, 132, 71, 1.8)',
+                //                    highlightFill: "rgba(220,220,220,0.75)",
+                //                    highlightStroke: "rgba(220,220,220,1)",
+                //                    highlightStroke: 'rgba(47, 132, 71, 1.8)',
+                //                    data: plan //[100, 100, 100, 100, 100]
+                //                },
+                //                {
+                //                    label: "ACTUAL",
+                //                    fillColor: "rgba(98,203,49,0.5)",
+                //                    strokeColor: "rgba(98,203,49,0.8)",
+                //                    highlightFill: "rgba(98,203,49,0.75)",
+                //                    highlightStroke: "rgba(98,203,49,1)",
+                //                    data: adjust //[28, 48, 40, 19, 86]
+                //                }
+                //            ]
+                //        };
 
-                        //Then just before initializing the chart i destroyed
-                        if (chartOntimeAdj != undefined || chartOntimeAdj != null) {
-                            chartOntimeAdj.destroy();
-                        }
+                //        //Then just before initializing the chart i destroyed
+                //        if (chartOntimeAdj != undefined || chartOntimeAdj != null) {
+                //            chartOntimeAdj.destroy();
+                //        }
 
-                        var ctx = document.getElementById("barOntimeDocReturnAdjustMonthly").getContext("2d");
-                        chartOntimeAdj = new Chart(ctx).Bar(barData, barOptions);
-                        document.getElementById('js-legend2').innerHTML = chartOntimeAdj.generateLegend();
+                //        var ctx = document.getElementById("barOntimeDocReturnAdjustMonthly").getContext("2d");
+                //        chartOntimeAdj = new Chart(ctx).Bar(barData, barOptions);
+                //        document.getElementById('js-legend2').innerHTML = chartOntimeAdj.generateLegend();
 
-                        //#endregion
+                //        //#endregion
 
-                        //#region 3 bar chart shipment
-                        /**
-                      * Options for Bar chart
-                      */
-                        var barOptions = {
-                            scaleBeginAtZero: true,
-                            scaleShowGridLines: true,
-                            scaleGridLineColor: "rgba(0,0,0,.05)",
-                            scaleGridLineWidth: 1,
-                            barShowStroke: true,
-                            barStrokeWidth: 2,
-                            barValueSpacing: 5,
-                            barDatasetSpacing: 1,
-                            responsive: true,
-                        };
-                        /**
-                         * Data for Bar chart
-                         */
-                        var barData = {
-                            labels: label,
-                            datasets: [
-                                {
-                                    label: "PLAN",
-                                    fillColor: "rgba(220,220,220,0.5)",
-                                    // strokeColor: "rgba(220,220,220,0.8)",
-                                    strokeColor: 'rgba(47, 132, 71, 1.8)',
-                                    highlightFill: "rgba(220,220,220,0.75)",
-                                    highlightStroke: "rgba(220,220,220,1)",
-                                    highlightStroke: 'rgba(47, 132, 71, 1.8)',
-                                    data: shipment //[100, 100, 100, 100, 100]
-                                },
-                                {
-                                    label: "ACTUAL",
-                                    fillColor: "rgba(98,203,49,0.5)",
-                                    strokeColor: "rgba(98,203,49,0.8)",
-                                    highlightFill: "rgba(98,203,49,0.75)",
-                                    highlightStroke: "rgba(98,203,49,1)",
-                                    data: shipment //[28, 48, 40, 19, 86]
-                                }
-                            ]
-                        };
+                //        //#region 3 bar chart shipment
+                //        /**
+                //      * Options for Bar chart
+                //      */
+                //        var barOptions = {
+                //            scaleBeginAtZero: true,
+                //            scaleShowGridLines: true,
+                //            scaleGridLineColor: "rgba(0,0,0,.05)",
+                //            scaleGridLineWidth: 1,
+                //            barShowStroke: true,
+                //            barStrokeWidth: 2,
+                //            barValueSpacing: 5,
+                //            barDatasetSpacing: 1,
+                //            responsive: true,
+                //        };
+                //        /**
+                //         * Data for Bar chart
+                //         */
+                //        var barData = {
+                //            labels: label,
+                //            datasets: [
+                //                {
+                //                    label: "PLAN",
+                //                    fillColor: "rgba(220,220,220,0.5)",
+                //                    // strokeColor: "rgba(220,220,220,0.8)",
+                //                    strokeColor: 'rgba(47, 132, 71, 1.8)',
+                //                    highlightFill: "rgba(220,220,220,0.75)",
+                //                    highlightStroke: "rgba(220,220,220,1)",
+                //                    highlightStroke: 'rgba(47, 132, 71, 1.8)',
+                //                    data: shipment //[100, 100, 100, 100, 100]
+                //                },
+                //                {
+                //                    label: "ACTUAL",
+                //                    fillColor: "rgba(98,203,49,0.5)",
+                //                    strokeColor: "rgba(98,203,49,0.8)",
+                //                    highlightFill: "rgba(98,203,49,0.75)",
+                //                    highlightStroke: "rgba(98,203,49,1)",
+                //                    data: shipment //[28, 48, 40, 19, 86]
+                //                }
+                //            ]
+                //        };
 
-                        //Then just before initializing the chart i destroyed
-                        if (chartShipment != undefined || chartShipment != null) {
-                            chartShipment.destroy();
-                        }
+                //        //Then just before initializing the chart i destroyed
+                //        if (chartShipment != undefined || chartShipment != null) {
+                //            chartShipment.destroy();
+                //        }
 
-                        var ctx = document.getElementById("barChartShipmentMonthly").getContext("2d");
-                        chartShipment = new Chart(ctx).Bar(barData, barOptions);
-                        document.getElementById('js-legend3').innerHTML = chartOntimeAdj.generateLegend();
+                //        var ctx = document.getElementById("barChartShipmentMonthly").getContext("2d");
+                //        chartShipment = new Chart(ctx).Bar(barData, barOptions);
+                //        document.getElementById('js-legend3').innerHTML = chartOntimeAdj.generateLegend();
 
-                        //#endregion
+                //        //#endregion
 
-                    }); //end getJson
+                //    }); //end getJson
 
-                //#region 4 pie chart jsonPieString
+                ////#region 4 pie chart jsonPieString
 
-                var valuePie = [];
-                var labelPie = [];
-                var colorPie = [];
-                var jsonPieString = $.getJSON('/OntimeDocReturnedMonthlyChart/jsonPieData?DepartmentId=' + departmentId
-                    + '&SectionId=' + sectionId
-                    + '&YearId=' + yearId
-                    + '&MonthId=' + monthId
-                    + '&MatNameId=' + matNameId, function (data) {
-                        // console.info(data);
+                //var valuePie = [];
+                //var labelPie = [];
+                //var colorPie = [];
+                //var jsonPieString = $.getJSON('/OntimeDocReturnedMonthlyChart/jsonPieData?DepartmentId=' + departmentId
+                //    + '&SectionId=' + sectionId
+                //    + '&YearId=' + yearId
+                //    + '&MonthId=' + monthId
+                //    + '&MatNameId=' + matNameId, function (data) {
+                //        // console.info(data);
 
-                        var doughnutData = data;
-                        var doughnutOptions = {
-                            segmentShowStroke: true,
-                            segmentStrokeColor: "#fff",
-                            segmentStrokeWidth: 2,
-                            percentageInnerCutout: 45, // This is 0 for Pie charts
-                            animationSteps: 100,
-                            animationEasing: "easeOutBounce",
-                            animateRotate: true,
-                            animateScale: false,
-                            responsive: true,
-                        };
+                //        var doughnutData = data;
+                //        var doughnutOptions = {
+                //            segmentShowStroke: true,
+                //            segmentStrokeColor: "#fff",
+                //            segmentStrokeWidth: 2,
+                //            percentageInnerCutout: 45, // This is 0 for Pie charts
+                //            animationSteps: 100,
+                //            animationEasing: "easeOutBounce",
+                //            animateRotate: true,
+                //            animateScale: false,
+                //            responsive: true,
+                //        };
 
-                        //Then just before initializing the chart i destroyed
-                        if (pieChartOntime != undefined || pieChartOntime != null) {
-                            pieChartOntime.destroy();
-                        }
+                //        //Then just before initializing the chart i destroyed
+                //        if (pieChartOntime != undefined || pieChartOntime != null) {
+                //            pieChartOntime.destroy();
+                //        }
 
-                        var ctx = document.getElementById("doughnutChartMonthly").getContext("2d");
-                        //var myNewChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
-                        pieChartOntime = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
-                        document.getElementById('js-legend4').innerHTML = pieChartOntime.generateLegend();
+                //        var ctx = document.getElementById("doughnutChartMonthly").getContext("2d");
+                //        //var myNewChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+                //        pieChartOntime = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+                //        document.getElementById('js-legend4').innerHTML = pieChartOntime.generateLegend();
 
-                    }); // end jsonPieString
+                //    }); // end jsonPieString
 
-                //#endregion
+                ////#endregion
 
                 //#region table
                 // on-time inbound detail dataTable

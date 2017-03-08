@@ -164,7 +164,7 @@
 
         //#region 2 filter section
         //#endregion
-        $('#massAdjust ').on('change', 'input[type="file"]', function (e) {
+        $('#massAdjust').on('change', 'input[type="file"]', function (e) {
             files = event.target.files;
             var formdata = new FormData(); //FormData object
             //var fileName = $(this).parent().find("input[name='massUpload']").val();
@@ -290,6 +290,7 @@
 
         $("#closeModal").click(function () {
             $("#excelModal").hide();
+            $("#excelBody").empty();
         });
 
         $("#btnMassUpload").click(function () {
