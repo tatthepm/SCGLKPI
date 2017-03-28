@@ -322,53 +322,6 @@
                         
                     }); //end getJson
 
-                //#region 4 pie chart jsonPieString
-
-                var valuePie = [];
-                var labelPie = [];
-                var colorPie = [];
-                var jsonPieString = $.getJSON('/OntimeAcceptedMonthlyChart/jsonPieData?DepartmentId=' + departmentId
-                    + '&SectionId=' + sectionId
-                    + '&YearId=' + yearId
-                    + '&MonthId=' + monthId
-                    + '&MatNameId=' + matNameId, function (data) {
-                        // console.info(data);
-
-                        var doughnutData = data;
-                        var doughnutOptions = {
-                            segmentShowStroke: true,
-                            segmentStrokeColor: "#fff",
-                            segmentStrokeWidth: 2,
-                            percentageInnerCutout: 45, // This is 0 for Pie charts
-                            animationSteps: 100,
-                            animationEasing: "easeOutBounce",
-                            animateRotate: true,
-                            animateScale: false,
-                            responsive: true,
-                        };
-
-                        //Then just before initializing the chart i destroyed
-                        if (pieChartOntime != undefined || pieChartOntime != null) {
-                            pieChartOntime.destroy();
-                        }
-
-                        var ctx = document.getElementById("doughnutChartMonthly").getContext("2d");
-                        //var myNewChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
-                        pieChartOntime = new Chart(ctx, {
-                            type: 'doughnut',
-                            data: doughnutData,
-                            options: {
-                                scales: {
-                                    yAxes: [{
-                                        ticks: {
-                                            beginAtZero: true,
-                                        }
-                                    }]
-                                }
-                            }
-                        });
-                    }); // end jsonPieString
-
                 //#endregion
 
                 //#region table

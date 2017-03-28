@@ -103,6 +103,8 @@ namespace SCGLKPIUI.Controllers {
                 string dd = item.ActualGiDate.Value.Day.ToString();
                 string mm = item.ActualGiDate.Value.Month.ToString();
                 string yyyy = item.ActualGiDate.Value.Year.ToString();
+                model.DepartmentName = q.Select(x => x.DepartmentName).FirstOrDefault();
+                model.SectionName = q.Select(x => x.SectionName).FirstOrDefault();
                 model.ActualGiDate = item.ActualGiDate.Value.ToString("dd/MM/yyyy");
                 model.Plan = item.Plan;
                 model.Actual = Math.Round(item.Actual, 2);
