@@ -243,22 +243,27 @@
                             labels: label, //["January", "February", "March", "April", "May"],
                             datasets: [
                                 {
-                                    label: "PLAN",
-                                    fillColor: "rgba(220,220,220,0.5)",
-                                    //strokeColor: "rgba(220,220,220,0.8)",
-                                    strokeColor: 'rgba(0, 0, 0, 0.8)',
-                                    highlightFill: "rgba(220,220,220,0.75)",
-                                    //highlightStroke: "rgba(220,220,220,1)",
-                                    highlightStroke: 'rgba(47, 132, 71, 0.8)',
-                                    data: plan //[100, 100, 100, 100, 100],
-                                },
-                                {
-                                    label: "ACTUAL",
-                                    fillColor: "rgba(98,203,49,0.5)",
-                                    strokeColor: "rgba(98,203,49,0.8)",
-                                    highlightFill: "rgba(98,203,49,0.75)",
-                                    highlightStroke: "rgba(98,203,49,1)",
-                                    data: actual //[28, 48, 40, 19, 86],
+                                    label: "Plan",
+                                    //new option, type will default to bar as that what is used to create the scale
+                                    type: "bar",
+                                    fill: false,
+                                    borderColor: '#EC932F',
+                                    backgroundColor: '#EC932F',
+                                    pointBorderColor: '#EC932F',
+                                    pointBackgroundColor: '#EC932F',
+                                    pointHoverBackgroundColor: '#EC932F',
+                                    pointHoverBorderColor: '#EC932F',
+                                    data: plan
+                                }, {
+                                    label: "Actual",
+                                    //new option, type will default to bar as that what is used to create the scale
+                                    type: "bar",
+                                    fill: false,
+                                    backgroundColor: '#71B37C',
+                                    borderColor: '#71B37C',
+                                    hoverBackgroundColor: '#71B37C',
+                                    hoverBorderColor: '#71B37C',
+                                    data: actual
                                 }
                             ]
                         };
@@ -312,22 +317,27 @@
                             labels: label,
                             datasets: [
                                 {
-                                    label: "PLAN",
-                                    fillColor: "rgba(220,220,220,0.5)",
-                                    // strokeColor: "rgba(220,220,220,0.8)",
-                                    strokeColor: 'rgba(47, 132, 71, 1.8)',
-                                    highlightFill: "rgba(220,220,220,0.75)",
-                                    highlightStroke: "rgba(220,220,220,1)",
-                                    highlightStroke: 'rgba(47, 132, 71, 1.8)',
-                                    data: plan //[100, 100, 100, 100, 100]
-                                },
-                                {
-                                    label: "ACTUAL",
-                                    fillColor: "rgba(98,203,49,0.5)",
-                                    strokeColor: "rgba(98,203,49,0.8)",
-                                    highlightFill: "rgba(98,203,49,0.75)",
-                                    highlightStroke: "rgba(98,203,49,1)",
-                                    data: adjust //[28, 48, 40, 19, 86]
+                                    label: "Plan",
+                                    //new option, type will default to bar as that what is used to create the scale
+                                    type: "bar",
+                                    fill: false,
+                                    borderColor: '#EC932F',
+                                    backgroundColor: '#EC932F',
+                                    pointBorderColor: '#EC932F',
+                                    pointBackgroundColor: '#EC932F',
+                                    pointHoverBackgroundColor: '#EC932F',
+                                    pointHoverBorderColor: '#EC932F',
+                                    data: plan
+                                }, {
+                                    label: "Actual",
+                                    //new option, type will default to bar as that what is used to create the scale
+                                    type: "bar",
+                                    fill: false,
+                                    backgroundColor: '#71B37C',
+                                    borderColor: '#71B37C',
+                                    hoverBackgroundColor: '#71B37C',
+                                    hoverBorderColor: '#71B37C',
+                                    data: adjust
                                 }
                             ]
                         };

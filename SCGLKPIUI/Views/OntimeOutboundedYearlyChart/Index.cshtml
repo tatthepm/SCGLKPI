@@ -16,14 +16,14 @@
     }
 </style>
 <h4>
-    <i class="fa fa-bar-chart"></i> Chart on-time document returned | Monthly
+    <i class="fa fa-bar-chart"></i> Chart on-time outbound | Yearly
 </h4>
 @*filter by month*@
-@Html.Partial("pv_FilterByMonth")
+@Html.Partial("pv_FilterByYear")
 
-@Html.Partial("pv_DocReturnOntimeChartMonthly")
+@Html.Partial("pv_OutboundOntimeChartYearly")
 
-@Html.Partial("pv_DocReturnOntimeTableMonthly")
+@Html.Partial("pv_OutboundOntimeTableYearly")
 
 <div>
     <div id="loading" class="modal">
@@ -95,6 +95,7 @@
             $("#loading").hide();
         });
 
+
         //#region 1 autocomplete dropdownlist
         $(".js-source-states").select2();
         //#endregion
@@ -102,7 +103,7 @@
         //#region 2 filter section
         $("#DepartmentId").change(function (res) {
             departmentId = $("#DepartmentId").val();
-            $.getJSON('/OntimeDocReturnedMonthlyChart/SectionFilter?departmentId=' + departmentId, function (data) {
+            $.getJSON('/OntimeOutbounedYearlyChart/SectionFilter?departmentId=' + departmentId, function (data) {
                 var ddl = $("#SectionId");
                 // ddl.removeAttrs('disabled style');
                 ddl.addClass('js-source-states');
@@ -120,7 +121,7 @@
         $("#SectionId").change(function (res) {
             departmentId = $("#DepartmentId").val();
             sectionId = $("#SectionId").val();
-            $.getJSON('/OntimeDocReturnedMonthlyChart/MatNameFilter?departmentId=' + departmentId
+            $.getJSON('/OntimeOutbounedYearlyChart/MatNameFilter?departmentId=' + departmentId
                 + '&sectionid=' + sectionId, function (data) {
                     var ddl = $("#MatNameId");
                     // ddl.removeAttrs('disabled style');
@@ -138,26 +139,9 @@
         //#region 4 btnSearch click
         //#endregion
         $("#btnSearch").click(function () {
-            //if ($('#DepartmentId').val() == "") {
-            //    swal({
-            //        title: "Warning!",
-            //        text: "Sorry!, Department is not selected ",
-            //        type: "warning"
-            //    });
-            //} else
-            if ($('#YearId').val() == "") {
-                swal({
-                    title: "Warning!",
-                    text: "Sorry!, Year is not selected ",
-                    type: "warning"
-                });
-            } else {
-
                 var departmentId = $('#DepartmentId').val();
                 var sectionId = $('#SectionId').val();
                 var matNameId = $('#MatNameId').val();
-                var yearId = $('#YearId').val();
-                var monthId = $('#MonthId').val();
 
                 var label = [];
                 var plan = [];
@@ -166,23 +150,21 @@
                 var shipment = [];
                 var planshipment = [];
 
-                var jsonString = $.getJSON('/OntimeDocReturnedMonthlyChart/jsonData?DepartmentId=' + departmentId
+                var jsonString = $.getJSON('/OntimeOutboundedYearlyChart/jsonData?DepartmentId=' + departmentId
                     + '&SectionId=' + sectionId
-                    + '&YearId=' + yearId
-                    + '&MonthId=' + monthId
                     + '&MatNameId=' + matNameId, function (data) {
                         // console.info(data);
                         $.each(data, function (index, item) {
-                            label.push(item.Month);
+                            label.push(item.Year);
                             plan.push(item.Plan);
                             actual.push(item.Actual);
                             adjust.push(item.Adjust);
-                            shipment.push(item.SumOfDocReturn);
-                            planshipment.push(item.SumOfDocReturn);
+                            shipment.push(item.SumOfOutbound);
+                            planshipment.push(item.SumOfOutbound);
                         });
                         //console.info(label);
 
-                        //#region 1 bar chart ontime DocReturned
+                        //#region 1 bar chart ontime Outbounded
                         var steps = 5;
                         var barOptions = {
                             scaleBeginAtZero: true,
@@ -238,7 +220,7 @@
                             chartOntime.destroy();
                         }
 
-                        var ctx = document.getElementById("barOntimeDocReturnMonthly").getContext("2d");
+                        var ctx = document.getElementById("barOntimeOutboundYearly").getContext("2d");
                         chartOntime = new Chart(ctx, {
                             type: 'bar',
                             data: barData,
@@ -254,7 +236,7 @@
                         });
                         //#endregion
 
-                        //#region 2 bar chart ontime DocReturned adjust
+                        //#region 2 bar chart ontime Outbounded adjust
                         /**
                       * Options for Bar chart
                       */
@@ -311,7 +293,7 @@
                             chartOntimeAdj.destroy();
                         }
 
-                        var ctx = document.getElementById("barOntimeDocReturnAdjustMonthly").getContext("2d");
+                        var ctx = document.getElementById("barOntimeOutboundAdjustYearly").getContext("2d");
                         chartOntimeAdj = new Chart(ctx, {
                             type: 'bar',
                             data: barData,
@@ -328,44 +310,40 @@
                         //#endregion
 
 
+
                     }); //end getJson
 
-                //#endregion
-
+            //#endregion
                 //#region table
                 // on-time inbound detail dataTable
                 var departmentId = $('#DepartmentId').val();
                 var sectionId = $('#SectionId').val();
                 var matNameId = $('#MatNameId').val();
-                var yearId = $('#YearId').val();
-                var monthId = $('#MonthId').val();
 
-                var docreturn = $('#docreturn').dataTable();
-                docreturn.fnDestroy();
-                docreturn.dataTable({
+                var outbound = $('#outbound').dataTable();
+                outbound.fnDestroy();
+                outbound.dataTable({
                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                     "ajax": {
                         "type": "POST",
-                        "url": '@(Url.RouteUrl("OntimeDocReturnedMonthly"))',
+                        "url": '@(Url.RouteUrl("OntimeOutboundedYearly"))',
                         "data": function (d) {
                             d.DepartmentId = departmentId;
                             d.SectionId = sectionId;
-                            d.YearId = yearId;
-                            d.MonthId = monthId;
                             d.MatNameId = matNameId;
                         },
                         "dataSrc": ""
                     },
                     columns: [
-                   { data: "Month" },
+                   { data: "Year" },
                    { data: "DepartmentName" },
                    { data: "SectionName" },
                    { data: "MatName" },
-                   { data: "SumOfDocReturn" },
+                   { data: "SumOfOutbound" },
                    { data: "OnTime" },
                    { data: "Delay" },
-                   { data: "AdjustDocReturn" },
+                   { data: "AdjustOutbound" },
                    { data: "Plan" },
                    { data: "Percent" },
                    { data: "PercentAdjust" }
@@ -381,25 +359,23 @@
                     select: true,
                     buttons: [
                         { extend: 'copy', className: 'btn-sm' },
-                        { extend: 'csv', title: 'On-time DocReturn Monthly', className: 'btn-sm' },
-                        { extend: 'excel', title: 'On-time DocReturn Monthly', className: 'btn-sm' },
+                        { extend: 'csv', title: 'On-time Outbound Yearly', className: 'btn-sm' },
+                        { extend: 'excel', title: 'On-time Outbound Yearly', className: 'btn-sm' },
                     ]
                 });
 
                 //on-time accept summary daily
-                var docreturnSummary = $('#docreturnSummary').dataTable();
-                docreturnSummary.fnDestroy();
-                docreturnSummary.dataTable({
+                var outboundSummary = $('#outboundSummary').dataTable();
+                outboundSummary.fnDestroy();
+                outboundSummary.dataTable({
                     dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>tp",
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                     "ajax": {
                         "type": "POST",
-                        "url": '@(Url.RouteUrl("OntimeDocReturnedSummaryMonthly"))',
+                        "url": '@(Url.RouteUrl("OntimeOutboundedSummaryYearly"))',
                         "data": function (d) {
                             d.DepartmentId = departmentId;
                             d.SectionId = sectionId;
-                            d.YearId = yearId;
-                            d.MonthId = monthId;
                             d.MatNameId = matNameId;
                         },
                         "dataSrc": ""
@@ -407,7 +383,7 @@
                     columns: [
                    { data: "DepartmentName" },
                    { data: "SectionName" },
-                   { data: "SumOfDocReturn" },
+                   { data: "SumOfOutbound" },
                    { data: "OnTime" },
                    { data: "Delay" },
                    { data: "Adjust" },
@@ -415,17 +391,23 @@
                    { data: "Percent" },
                    { data: "PercentAdjust" }
                     ],
+                    "columnDefs": [
+                        {
+                            "render": function (data, type, row) {
+                                return (row.PercentAdjust >= 98.0) ? '<img src="/Content/img/TrafficLight-Green-small50-18.png" />' : '<img src="/Content/img/TrafficLight-Red-small50-18.png" />'
+                            },
+                            "targets": 9
+                        }
+                    ],  
                     select: true,
                     buttons: [
                         { extend: 'copy', className: 'btn-sm' },
-                        { extend: 'csv', title: 'DocReturn summary monthly', className: 'btn-sm' },
-                        { extend: 'excel', title: 'DocReturn summary monthly', className: 'btn-sm' },
+                        { extend: 'csv', title: 'Outbound summary yearly', className: 'btn-sm' },
+                        { extend: 'excel', title: 'Outbound summary yearly', className: 'btn-sm' },
                     ]
                 });
 
                 //#endregion table
-
-            } //end if else
 
         }); //end btnSerarch click
 
@@ -463,5 +445,3 @@
         //#endregion
     </script>
 }
-
-

@@ -259,7 +259,7 @@
     <Compile Include="Controllers\OntimeInboundedYearlyChartController.cs" />
     <Compile Include="Controllers\OntimeOutboundedDailyChartController.cs" />
     <Compile Include="Controllers\OntimeOutboundedMonthlyChartController.cs" />
-    <Compile Include="Controllers\OntimeOutbounedYearlyChartController.cs" />
+    <Compile Include="Controllers\OntimeOutboundedYearlyChartController.cs" />
     <Compile Include="Controllers\OntimeTenderedDailyChartController.cs" />
     <Compile Include="Controllers\OntimeTenderedMonthlyChartController.cs" />
     <Compile Include="Controllers\OntimeTenderedYearlyChartController.cs" />
@@ -3118,9 +3118,9 @@
     <Content Include="Views\OntimeInboundedYearlyChart\Index.cshtml" />
     <Content Include="Views\OntimeInboundedYearlyChart\pv_InboundOntimeChartYearly.cshtml" />
     <Content Include="Views\OntimeInboundedYearlyChart\pv_InboundOntimeTableYearly.cshtml" />
-    <Content Include="Views\OntimeOutbounedYearlyChart\Index.cshtml" />
-    <Content Include="Views\OntimeOutbounedYearlyChart\pv_OutboundOntimeChartYearly.cshtml" />
-    <Content Include="Views\OntimeOutbounedYearlyChart\pv_OutboundOntimeTableYearly.cshtml" />
+    <Content Include="Views\OntimeOutboundedYearlyChart\Index.cshtml" />
+    <Content Include="Views\OntimeOutboundedYearlyChart\pv_OutboundOntimeChartYearly.cshtml" />
+    <Content Include="Views\OntimeOutboundedYearlyChart\pv_OutboundOntimeTableYearly.cshtml" />
     <Content Include="Views\OntimeDocReturnedYearlyChart\Index.cshtml" />
     <Content Include="Views\OntimeDocReturnedYearlyChart\pv_DocReturnOntimeChartYearly.cshtml" />
     <Content Include="Views\OntimeDocReturnedYearlyChart\pv_DocReturnOntimeTableYearly.cshtml" />

@@ -9,7 +9,7 @@ using SCGLKPIUI.Models.Outbounded;
 
 namespace SCGLKPIUI.Controllers
 {
-    public class OntimeOutbounedYearlyChartController : BaseController
+    public class OntimeOutboundedYearlyChartController : BaseController
     {
         // GET: OntimeOutbounedYearlyChart
         public ActionResult Index(string DepartmentId, string SectionId, string MatNameId)

@@ -327,5 +327,11 @@ namespace BOL {
 
         [Column(TypeName = "datetime2")]
         public DateTime? LOADED_DATE { get; set; }
+
+        [StringLength(40)]
+        public string CRTD_USR_CD { get; set; }
+
+        [StringLength(40)]
+        public string UPDT_USR_CD { get; set; }
     }
 }
