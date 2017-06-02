@@ -17,11 +17,13 @@ namespace BOL {
         public string Month { get; set; }
 
         [StringLength(5)]
+        [Index(IsUnique = false)]
         public string DepartmentId { get; set; }
 
         public string DepartmentName { get; set; }
 
         [StringLength(5)]
+        [Index(IsUnique = false)]
         public string SectionId { get; set; }
 
         public string SectionName { get; set; }

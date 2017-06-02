@@ -111,5 +111,11 @@ namespace BOL {
         public string SHPPOINT { get; set; }
         [StringLength(20)]
         public string TRUCK_TYPE { get; set; }
+
+        [StringLength(40)]
+        public string CRTD_USR_CD { get; set; }
+
+        [StringLength(40)]
+        public string UPDT_USR_CD { get; set; }
     }
 }

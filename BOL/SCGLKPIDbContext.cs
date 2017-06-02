@@ -10,6 +10,7 @@ namespace BOL {
     public class SCGLKPIDbContext : DbContext {
         public DbSet<TUser> Tusers { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<DOM_SAP_SHPPOINT> DOM_SAP_SHPPOINT { get; set; }
         public DbSet<DOM_CMD_VENDOR> DOM_CMD_VENDORs { get; set; }
         public DbSet<DOM_MDS_ORGANIZATION> DOM_MDS_ORGANIZATIONs { get; set; }
         public DbSet<DOM_SAP_MATFRIGRP> DOM_SAP_MATFRIGRPs { get; set; }
@@ -79,5 +80,12 @@ namespace BOL {
         public DbSet<OntimePending> OntimePendings { get; set; }
         public DbSet<OntimeAdjusted> OntimeAdjusted { get; set; }
         public DbSet<OntimeFiles> OntimeFiles { get; set; }
+
+        //Monthly Masters
+        public DbSet<TenderUsers> TenderUsers { get; set; }
+        public DbSet<ShippingPoints> ShippingPoints { get; set; }
+        public DbSet<MatFreightGroups> MatFreightGroups { get; set; }
+        public DbSet<Carriers> Carriers { get; set; }
+
     }
 }

@@ -12,6 +12,10 @@ namespace BLL {
         public TenderedDelayBs() {
             objDb = new TenderedDelayDb();
         }
+        public IQueryable<BOLDropdownLists> GetByUser(int month, int year)
+        {
+            return objDb.GetByUser(month, year);
+        }
         //GetAll
         public IQueryable<TenderedDelay> GetAll() {
             return objDb.GetAll();

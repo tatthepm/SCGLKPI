@@ -153,10 +153,10 @@ namespace SCGLKPIUI.Controllers
                         objBs.inboundAdjustedBs.Delete(dn);
 
                         //update sum of adjust daily
-                        DateTime ONTIMEDate = Convert.ToDateTime(objBs.dWH_ONTIME_DNBs.GetByID(dn).ACTGIDATE_D);
-                        string matNameId = Convert.ToString(objBs.dWH_ONTIME_DNBs.GetByID(dn).MATFRIGRP);
-                        string sectionId = Convert.ToString(objBs.dWH_ONTIME_DNBs.GetByID(dn).SECTION_ID);
-                        string departmentId = Convert.ToString(objBs.dWH_ONTIME_DNBs.GetByID(dn).DEPARTMENT_ID);
+                        DateTime ONTIMEDate = Convert.ToDateTime(ontimeDn.ACTGIDATE_D);
+                        string matNameId = Convert.ToString(ontimeDn.MATFRIGRP);
+                        string sectionId = Convert.ToString(ontimeDn.SECTION_ID);
+                        string departmentId = Convert.ToString(ontimeDn.DEPARTMENT_ID);
 
                         if (isadjust)
                         {

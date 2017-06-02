@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarrierSummaryDaily.cs" />
+    <Compile Include="AllMasters.cs" />
+    <Compile Include="DOM_SAP_SHPPOINT.cs" />
     <Compile Include="HubMasters.cs" />
     <Compile Include="Migrations\201610031113499_Init.cs" />
     <Compile Include="Migrations\201610031113499_Init.Designer.cs">
@@ -146,6 +148,26 @@
     <Compile Include="Migrations\201705120409040_addusertender.cs" />
     <Compile Include="Migrations\201705120409040_addusertender.Designer.cs">
       <DependentUpon>201705120409040_addusertender.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705250235040_Update-UserTender.cs" />
+    <Compile Include="Migrations\201705250235040_Update-UserTender.Designer.cs">
+      <DependentUpon>201705250235040_Update-UserTender.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705250443586_Update-UserTender2.cs" />
+    <Compile Include="Migrations\201705250443586_Update-UserTender2.Designer.cs">
+      <DependentUpon>201705250443586_Update-UserTender2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705250621084_Update-dbfix.cs" />
+    <Compile Include="Migrations\201705250621084_Update-dbfix.Designer.cs">
+      <DependentUpon>201705250621084_Update-dbfix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705260148235_Update-dbfix2.cs" />
+    <Compile Include="Migrations\201705260148235_Update-dbfix2.Designer.cs">
+      <DependentUpon>201705260148235_Update-dbfix2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705260222345_Update-dbShippoint.cs" />
+    <Compile Include="Migrations\201705260222345_Update-dbShippoint.Designer.cs">
+      <DependentUpon>201705260222345_Update-dbShippoint.cs</DependentUpon>
     </Compile>
     <Compile Include="OntimeFiles.cs" />
     <Compile Include="DocReturnFiles.cs" />
@@ -620,6 +642,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705120409040_addusertender.resx">
       <DependentUpon>201705120409040_addusertender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705250235040_Update-UserTender.resx">
+      <DependentUpon>201705250235040_Update-UserTender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705250443586_Update-UserTender2.resx">
+      <DependentUpon>201705250443586_Update-UserTender2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705250621084_Update-dbfix.resx">
+      <DependentUpon>201705250621084_Update-dbfix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705260148235_Update-dbfix2.resx">
+      <DependentUpon>201705260148235_Update-dbfix2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705260222345_Update-dbShippoint.resx">
+      <DependentUpon>201705260222345_Update-dbShippoint.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

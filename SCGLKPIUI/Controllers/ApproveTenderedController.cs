@@ -32,10 +32,12 @@ namespace SCGLKPIUI.Controllers
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
-                var ddlShipPoint = ddl.GetDropDownListTenderedMonth("ShippingPoint");
+                var ddlTenderUser = ddl.GetDropDownListTenderUser();
+                var ddlShipPoint = ddl.GetDropDownList("ShippingPoint");
                 var ddlShipTo = ddl.GetDropDownListTenderedMonth("ShipTo");
                 var ddlTruckType = ddl.GetDropDownListTenderedMonth("TruckType");
 
+                ViewBag.TenderUser = new SelectList(ddlTenderUser.ToList(), "Id", "Name");
                 ViewBag.ShipPoint = new SelectList(ddlShipPoint.ToList(), "Id", "Name");
                 ViewBag.ShipTo = new SelectList(ddlShipTo.ToList(), "Id", "Name");
                 ViewBag.TruckType = new SelectList(ddlTruckType.ToList(), "Id", "Name");
@@ -55,6 +57,11 @@ namespace SCGLKPIUI.Controllers
             {
                 return RedirectToAction("Index", new { sms = "Operation Delivery failed " + ex.ToString() });
             }
+        }
+        public JsonResult UserFilter(string MonthId, string YearId)
+        {
+            return Json(objBs.tenderedAdjustedBs.GetByUser(Convert.ToInt32(MonthId), Convert.ToInt32(YearId)).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+
         }
         public JsonResult ShiptoFilter(string SegmentId)
         {
@@ -90,21 +97,22 @@ namespace SCGLKPIUI.Controllers
             var q = from d in objBs.tenderedAdjustedBs.GetByFilter(SegmentId, Convert.ToInt32(YearId), Convert.ToInt32(MonthId))
                     select d;
 
-            //filter Shipping Point
-            if (!String.IsNullOrEmpty(ShipPoint))
-                q = q.Where(x => x.SHPPOINT == ShipPoint);
+            ////filter Shipping Point
+            //if (!String.IsNullOrEmpty(ShipPoint))
+            //    q = q.Where(x => x.SHPPOINT == ShipPoint);
 
-            //filter Shipping To
-            if (!String.IsNullOrEmpty(ShipTo))
-                q = q.Where(x => x.SHIPTO == ShipTo);
+            ////filter Shipping To
+            //if (!String.IsNullOrEmpty(ShipTo))
+            //    q = q.Where(x => x.SHIPTO == ShipTo);
 
-            //filter Truck Type
-            if (!String.IsNullOrEmpty(TruckType))
-                q = q.Where(x => x.TRUCK_TYPE == TruckType);
+            ////filter Truck Type
+            //if (!String.IsNullOrEmpty(TruckType))
+            //    q = q.Where(x => x.TRUCK_TYPE == TruckType);
 
             foreach (var item in q)
             {
                 ApproveTenderedViewModels model = new ApproveTenderedViewModels();
+                model.TenderUser = item.CRTD_USR_CD;
                 model.Shipment = item.SHPMNTNO;
                 model.CarrierId = item.CARRIER_ID;
                 model.RegionId = item.REGION_ID;
@@ -160,11 +168,13 @@ namespace SCGLKPIUI.Controllers
                         objBs.tenderedAdjustedBs.Delete(sm);
 
                         //update sum of adjust daily
-                        DateTime FTNRDDate = Convert.ToDateTime(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).FTNRDDATE_D);
-                        string matName = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).MATFRIGRP;
-                        string segmentId = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).DATA_SUBGRP;
-                        string sectionId = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).SECTION_ID;
-                        string departmentId = objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).DEPARTMENT_ID;
+                        DateTime FTNRDDate = Convert.ToDateTime(ontimeShipment.FTNRDDATE_D);
+                        string matName = ontimeShipment.MATFRIGRP;
+                        string segmentId = ontimeShipment.DATA_SUBGRP;
+                        string sectionId = ontimeShipment.SECTION_ID;
+                        string departmentId = ontimeShipment.DEPARTMENT_ID;
+                        string UserId = ontimeShipment.CRTD_USR_CD;
+                        string UpdateUserId = ontimeShipment.UPDT_USR_CD;
 
                         if (isadjust)
                         {
@@ -173,6 +183,8 @@ namespace SCGLKPIUI.Controllers
                                        && x.MatFriGrp == matName
                                        && x.SubSegment == segmentId
                                        && x.SectionId == sectionId
+                                       && x.CRTD_USR_CD == UserId
+                                       && x.UPDT_USR_CD == UpdateUserId
                                        && x.DepartmentId == departmentId).FirstOrDefault().Id;
                             OntimeTender ontimeTender = objBs.ontimeTenderBs.GetByID(id);
                             int adjTNRD = ontimeTender.AdjustTender + 1;
@@ -187,6 +199,8 @@ namespace SCGLKPIUI.Controllers
                                       && x.Month == monthId
                                       && x.SubSegment == segmentId
                                       && x.SectionId == sectionId
+                                      && x.CRTD_USR_CD == UserId
+                                      && x.UPDT_USR_CD == UpdateUserId
                                       && x.DepartmentId == departmentId).FirstOrDefault().Id;
                             OntimeTenderMonth ontimeTenderMonth = objBs.ontimeTenderMonthBs.GetByID(idM);
                             int adjTNRDMonth = ontimeTenderMonth.AdjustTender + 1;
@@ -200,6 +214,8 @@ namespace SCGLKPIUI.Controllers
                                       && x.MatFriGrp == matName
                                       && x.SubSegment == segmentId
                                       && x.SectionId == sectionId
+                                      && x.CRTD_USR_CD == UserId
+                                      && x.UPDT_USR_CD == UpdateUserId
                                       && x.DepartmentId == departmentId).FirstOrDefault().Id;
                             OntimeTenderYear ontimeTenderYear = objBs.ontimeTenderYearBs.GetByID(idY);
                             int adjTNRDYear = ontimeTenderYear.AdjustTender + 1;

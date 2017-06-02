@@ -31,14 +31,15 @@ namespace SCGLKPIUI.Controllers
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
-                var ddlShipPoint = ddl.GetDropDownListTenderedMonth("ShippingPoint");
+                var ddlTenderUser = ddl.GetDropDownListTenderUser();
+                var ddlShipPoint = ddl.GetDropDownList("ShippingPoint");
                 var ddlShipTo = ddl.GetDropDownListTenderedMonth("ShipTo");
                 var ddlTruckType = ddl.GetDropDownListTenderedMonth("TruckType");
 
+                ViewBag.TenderUser = new SelectList(ddlTenderUser.ToList(), "Id", "Name");
                 ViewBag.ShipPoint = new SelectList(ddlShipPoint.ToList(), "Id", "Name");
                 ViewBag.ShipTo = new SelectList(ddlShipTo.ToList(), "Id", "Name");
                 ViewBag.TruckType = new SelectList(ddlTruckType.ToList(), "Id", "Name");
-
                 return View();
 
             }
@@ -47,6 +48,15 @@ namespace SCGLKPIUI.Controllers
                 return RedirectToAction("Index", new { sms = "Operation Accept failed " + ex.InnerException.InnerException.Message.ToString() });
             }
         }
+        public JsonResult UserFilter(string MonthId,string YearId)
+        {
+            return Json(objBs.tenderedPendingBs.GetByUser(Convert.ToInt32(MonthId), Convert.ToInt32(YearId)).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+
+        }
+        //public JsonResult UserFilter(string UserId)
+        //{
+        //    return Json(objBs.tenderedPendingBs.GetByShipto(UserId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+        //}
         public JsonResult ShiptoFilter(string SegmentId)
         {
             return Json(objBs.tenderedPendingBs.GetByShipto(SegmentId).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
@@ -61,14 +71,16 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public JsonResult PendingTenderTableSummary(string SegmentId, string YearId, string MonthId, string ShipPoint, string ShipTo, string TruckType)
+        public JsonResult PendingTenderTableSummary(string TenderUser, string SegmentId, string YearId, string MonthId, string ShipPoint, string ShipTo, string TruckType)
         {
             // add IEnumerable<AcceptOntimeSummaryViewModels>
             List<PendingTenderViewModels> viewSummaryModel = new List<PendingTenderViewModels>();
 
-            //filter department
-            var q = from d in objBs.tenderedPendingBs.GetByFilter(SegmentId, Convert.ToInt32(MonthId), Convert.ToInt32(YearId))
+            var month = Convert.ToInt16(MonthId);
+            var year = Convert.ToInt16(YearId);
+            var q = from d in objBs.tenderedPendingBs.GetAll().Where(x=>x.CRTD_USR_CD == TenderUser && x.PLNTNRDDATE_D.Value.Year == year && x.PLNTNRDDATE_D.Value.Month == month)
                     select d;
+            q.ToList();
 
             //filter Shipping Point
             if (!String.IsNullOrEmpty(ShipPoint))
@@ -85,6 +97,7 @@ namespace SCGLKPIUI.Controllers
             foreach (var item in q)
             {
                 PendingTenderViewModels model = new PendingTenderViewModels();
+                model.TenderUser = item.CRTD_USR_CD;
                 model.Shipment = item.SHPMNTNO;
                 model.RegionName = item.REGION_NAME_TH;
                 model.SoldtoName = item.SOLDTO_NAME;
@@ -99,5 +112,46 @@ namespace SCGLKPIUI.Controllers
 
             return Json(viewSummaryModel, JsonRequestBehavior.AllowGet);
         }
+
+        //old implementation
+        //[HttpPost]
+        //public JsonResult PendingTenderTableSummary(string SegmentId, string YearId, string MonthId, string ShipPoint, string ShipTo, string TruckType)
+        //{
+        //    // add IEnumerable<AcceptOntimeSummaryViewModels>
+        //    List<PendingTenderViewModels> viewSummaryModel = new List<PendingTenderViewModels>();
+
+        //    //filter department
+        //    var q = from d in objBs.tenderedPendingBs.GetByFilter(SegmentId, Convert.ToInt32(MonthId), Convert.ToInt32(YearId))
+        //            select d;
+
+        //    //filter Shipping Point
+        //    if (!String.IsNullOrEmpty(ShipPoint))
+        //        q = q.Where(x => x.SHPPOINT == ShipPoint);
+
+        //    //filter Shipping To
+        //    if (!String.IsNullOrEmpty(ShipTo))
+        //        q = q.Where(x => x.SHIPTO == ShipTo);
+
+        //    //filter Truck Type
+        //    if (!String.IsNullOrEmpty(TruckType))
+        //        q = q.Where(x => x.TRUCK_TYPE == TruckType);
+
+        //    foreach (var item in q)
+        //    {
+        //        PendingTenderViewModels model = new PendingTenderViewModels();
+        //        model.Shipment = item.SHPMNTNO;
+        //        model.RegionName = item.REGION_NAME_TH;
+        //        model.SoldtoName = item.SOLDTO_NAME;
+        //        model.ShiptoName = item.LAST_SHPG_LOC_NAME;
+        //        model.ShippingPoint = item.SHPPOINT;
+        //        model.TruckType = item.TRUCK_TYPE;
+        //        model.ShcrDate = item.SHCRDATE.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+        //        model.PlanTender = item.PLNTNRDDATE_D.Value.ToString("dd/MM/yyyy HH:mm", new CultureInfo("th-TH"));
+        //        model.Delays = item.DATEDIFF.ToString();
+        //        viewSummaryModel.Add(model);
+        //    }
+
+        //    return Json(viewSummaryModel, JsonRequestBehavior.AllowGet);
+        //}
     }
 }

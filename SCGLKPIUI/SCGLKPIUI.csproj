@@ -3173,6 +3173,9 @@
     <Content Include="Views\ReportOperations\pv_FilterReportOperations.cshtml" />
     <Content Include="Views\ReportOperations\pv_ReportOperationsChart.cshtml" />
     <Content Include="Views\ReportOperations\pv_ReportOperationsTable.cshtml" />
+    <Content Include="Views\Shared\pv_FilterTenderUserByDate.cshtml" />
+    <Content Include="Views\Shared\pv_FilterTenderUserByMonth.cshtml" />
+    <Content Include="Views\Shared\pv_FilterTenderUserByYear.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\UploadFiles\" />

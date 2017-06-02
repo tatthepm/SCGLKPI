@@ -5,6 +5,7 @@ using System.Web;
 
 namespace SCGLKPIUI.Models.Tendered {
     public class PendingTenderViewModels {
+        public string TenderUser { get; set; }
         public string Shipment { get; set; }
         public string RegionId { get; set; }
         public string RegionName { get; set; }

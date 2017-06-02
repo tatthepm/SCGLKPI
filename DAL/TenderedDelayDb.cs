@@ -57,6 +57,18 @@ namespace DAL {
         {
             return db.TenderedDelays.Where(x => x.SUBSEGMENT == segment_id && x.FTNRDDATE_D.Value.Year == year && x.FTNRDDATE_D.Value.Month == month);
         }
+        //GetByUser
+        public IQueryable<BOLDropdownLists> GetByUser(int month, int year)
+        {
+            var Queryable = (from m in db.TenderedDelays
+                             where m.FTNRDDATE_D.Value.Year == year && m.FTNRDDATE_D.Value.Month == month
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.CRTD_USR_CD,
+                                 Name = m.CRTD_USR_CD,
+                             }).Distinct();
+            return Queryable;
+        }
         //GetById
         public TenderedDelay GetByID(string shipmentNo) {
             return db.TenderedDelays.Find(shipmentNo);

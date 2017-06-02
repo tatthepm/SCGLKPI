@@ -34,11 +34,12 @@ namespace SCGLKPIUI.Controllers
                 ViewBag.YearId = new SelectList(ddlYear.ToList(), "Id", "Name");
                 ViewBag.MonthId = new SelectList(ddlMonth.ToList(), "Id", "Name");
 
-
-                var ddlShipPoint = ddl.GetDropDownListTenderedMonth("ShippingPoint");
+                var ddlTenderUser = ddl.GetDropDownListTenderUser();
+                var ddlShipPoint = ddl.GetDropDownList("ShippingPoint");
                 var ddlShipTo = ddl.GetDropDownListTenderedMonth("ShipTo");
                 var ddlTruckType = ddl.GetDropDownListTenderedMonth("TruckType");
 
+                ViewBag.TenderUser = new SelectList(ddlTenderUser.ToList(), "Id", "Name");
                 ViewBag.ShipPoint = new SelectList(ddlShipPoint.ToList(), "Id", "Name");
                 ViewBag.ShipTo = new SelectList(ddlShipTo.ToList(), "Id", "Name");
                 ViewBag.TruckType = new SelectList(ddlTruckType.ToList(), "Id", "Name");
@@ -58,6 +59,11 @@ namespace SCGLKPIUI.Controllers
             {
                 return RedirectToAction("Index", new { sms = "Operation Accept failed " + ex.InnerException.InnerException.Message.ToString() });
             }
+        }
+        public JsonResult UserFilter(string MonthId, string YearId)
+        {
+            return Json(objBs.tenderedDelayBs.GetByUser(Convert.ToInt32(MonthId), Convert.ToInt32(YearId)).OrderBy(x => x.Name), JsonRequestBehavior.AllowGet);
+
         }
         public JsonResult ShiptoFilter(string SegmentId)
         {
@@ -84,9 +90,9 @@ namespace SCGLKPIUI.Controllers
         }
 
         [HttpPost]
-        public JsonResult JsonAdjustTenderTable(string SegmentId, string YearId, string MonthId, string ShipPoint, string ShipTo, string TruckType)
+        public JsonResult JsonAdjustTenderTable(string TenderUser, string SegmentId, string YearId, string MonthId, string ShipPoint, string ShipTo, string TruckType)
         {
-            ViewBag.SegmentId = SegmentId;
+            //ViewBag.SegmentId = SegmentId;
             ViewBag.YearId = YearId;
             ViewBag.MonthId = MonthId;
             ViewBag.ShipPoint = ShipPoint;
@@ -97,25 +103,32 @@ namespace SCGLKPIUI.Controllers
             List<AdjustTenderedViewModels> viewModel = new List<AdjustTenderedViewModels>();
 
             //filter department
-            var q = from d in objBs.tenderedDelayBs.GetByFilter(SegmentId, Convert.ToInt32(YearId), Convert.ToInt32(MonthId))
+            //var q = from d in objBs.tenderedDelayBs.GetByFilter(SegmentId, Convert.ToInt32(YearId), Convert.ToInt32(MonthId))
+            //        select d;
+
+            var month = Convert.ToInt16(MonthId);
+            var year = Convert.ToInt16(YearId);
+            var q = from d in objBs.tenderedDelayBs.GetAll().Where(x => x.CRTD_USR_CD == TenderUser && x.PLNTNRDDATE_D.Value.Year == year && x.PLNTNRDDATE_D.Value.Month == month)
                     select d;
+            q.ToList();
 
-            //filter Shipping Point
-            if (!String.IsNullOrEmpty(ShipPoint))
-                q = q.Where(x => x.SHPPOINT == ShipPoint);
+            ////filter Shipping Point
+            //if (!String.IsNullOrEmpty(ShipPoint))
+            //    q = q.Where(x => x.SHPPOINT == ShipPoint);
 
-            //filter Shipping To
-            if (!String.IsNullOrEmpty(ShipTo))
-                q = q.Where(x => x.SHIPTO == ShipTo);
+            ////filter Shipping To
+            //if (!String.IsNullOrEmpty(ShipTo))
+            //    q = q.Where(x => x.SHIPTO == ShipTo);
 
-            //filter Truck Type
-            if (!String.IsNullOrEmpty(TruckType))
-                q = q.Where(x => x.TRUCK_TYPE == TruckType);
+            ////filter Truck Type
+            //if (!String.IsNullOrEmpty(TruckType))
+            //    q = q.Where(x => x.TRUCK_TYPE == TruckType);
 
             //int c = q.Count();
             foreach (var item in q)
             {
                 AdjustTenderedViewModels model = new AdjustTenderedViewModels();
+                model.TenderUser = item.CRTD_USR_CD;
                 model.Shipment = item.SHPMNTNO;
                 model.CarrierId = item.CARRIER_ID;
                 model.RegionId = item.REGION_ID;
@@ -211,6 +224,8 @@ namespace SCGLKPIUI.Controllers
                                 TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                 SHPMNTNO = tmp_adjusted.SHPMNTNO,
                                 DELVNO = tmp_adjusted.DELVNO,
+                                CRTD_USR_CD = tmp_adjusted.CRTD_USR_CD,
+                                UPDT_USR_CD = tmp_adjusted.UPDT_USR_CD,
                                 LOADED_DATE = DateTime.Now,
                                 TNRD_ADJUST = isadjust ? 1 : 0,
                                 TNRD_ADJUST_BY = User.Identity.Name,
@@ -359,6 +374,8 @@ namespace SCGLKPIUI.Controllers
                                             TRUCK_TYPE = tmp_adjusted.TRUCK_TYPE,
                                             SHPMNTNO = tmp_adjusted.SHPMNTNO,
                                             DELVNO = tmp_adjusted.DELVNO,
+                                            CRTD_USR_CD = tmp_adjusted.CRTD_USR_CD,
+                                            UPDT_USR_CD = tmp_adjusted.UPDT_USR_CD,
                                             LOADED_DATE = DateTime.Now,
                                             TNRD_ADJUST = isadjust ? 1 : 0,
                                             TNRD_ADJUST_BY = User.Identity.Name,
@@ -407,7 +424,7 @@ namespace SCGLKPIUI.Controllers
         /// <param name="MatNameId">String</param>
         /// <returns>ActionResult </returns>
         [HttpPost]
-        public ActionResult ExportExcel(string SegmentId, string YearId, string MonthId, string ShipPoint, string ShipTo, string TruckType)
+        public ActionResult ExportExcel(string TenderUser, string SegmentId, string YearId, string MonthId, string ShipPoint, string ShipTo, string TruckType)
         {
             try
             {
@@ -416,25 +433,32 @@ namespace SCGLKPIUI.Controllers
                 List<AdjustTenderedViewModels> viewModel = new List<AdjustTenderedViewModels>();
 
                 //filter department
-                var q = from d in objBs.tenderedDelayBs.GetByFilter(SegmentId, Convert.ToInt32(YearId), Convert.ToInt32(MonthId))
+                //var q = from d in objBs.tenderedDelayBs.GetByFilter(SegmentId, Convert.ToInt32(YearId), Convert.ToInt32(MonthId))
+                //        select d;
+
+                var month = Convert.ToInt16(MonthId);
+                var year = Convert.ToInt16(YearId);
+                var q = from d in objBs.tenderedDelayBs.GetAll().Where(x => x.CRTD_USR_CD == TenderUser && x.PLNTNRDDATE_D.Value.Year == year && x.PLNTNRDDATE_D.Value.Month == month)
                         select d;
+                q.ToList();
 
-                //filter Shipping Point
-                if (!String.IsNullOrEmpty(ShipPoint))
-                    q = q.Where(x => x.SHPPOINT == ShipPoint);
+                ////filter Shipping Point
+                //if (!String.IsNullOrEmpty(ShipPoint))
+                //    q = q.Where(x => x.SHPPOINT == ShipPoint);
 
-                //filter Shipping To
-                if (!String.IsNullOrEmpty(ShipTo))
-                    q = q.Where(x => x.SHIPTO == ShipTo);
+                ////filter Shipping To
+                //if (!String.IsNullOrEmpty(ShipTo))
+                //    q = q.Where(x => x.SHIPTO == ShipTo);
 
-                //filter Truck Type
-                if (!String.IsNullOrEmpty(TruckType))
-                    q = q.Where(x => x.TRUCK_TYPE == TruckType);
+                ////filter Truck Type
+                //if (!String.IsNullOrEmpty(TruckType))
+                //    q = q.Where(x => x.TRUCK_TYPE == TruckType);
 
                 //int c = q.Count();
                 foreach (var item in q)
                 {
                     AdjustTenderedViewModels model = new AdjustTenderedViewModels();
+                    model.TenderUser = item.CRTD_USR_CD;
                     model.Shipment = item.SHPMNTNO;
                     model.CarrierId = item.CARRIER_ID;
                     model.RegionId = item.REGION_ID;
@@ -456,7 +480,7 @@ namespace SCGLKPIUI.Controllers
                 templateData.Columns.Add("Remark", typeof(string));
 
                 ExcelModels ex = new ExcelModels();
-                ex.DumpExcel(templateData, "ExportedAdjustOutbound_" + DateTime.Now.ToString("yyyyMMddHHmm", new CultureInfo("th-TH")));//dump
+                ex.DumpExcel(templateData, "ExportedAdjustTender_" + DateTime.Now.ToString("yyyyMMddHHmm", new CultureInfo("th-TH")));//dump
 
                 return View();
             }

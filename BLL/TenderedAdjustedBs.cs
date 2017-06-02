@@ -12,6 +12,10 @@ namespace BLL {
         public TenderedAdjustedBs() {
             objDb = new TenderedAdjustedDb();
         }
+        public IQueryable<BOLDropdownLists> GetByUser(int month, int year)
+        {
+            return objDb.GetByUser(month, year);
+        }
         public IQueryable<BOLDropdownLists> GetByShipto(string segment)
         {
             return objDb.GetByShipto(segment);

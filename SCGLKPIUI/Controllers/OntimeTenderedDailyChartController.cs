@@ -16,10 +16,13 @@ namespace SCGLKPIUI.Controllers {
                 DropDownList ddl = new DropDownList();
                 var ddlSeg = ddl.GetDropDownListSegment();
                 ViewBag.SegmentId = new SelectList(ddlSeg.ToList(), "Id", "Name");
-                var ddlShipPoint = ddl.GetDropDownListTenderedMonth("ShippingPoint");
+
+                var ddlTenderUser = ddl.GetDropDownListTenderUser();
+                var ddlShipPoint = ddl.GetDropDownList("ShippingPoint");
                 var ddlShipTo = ddl.GetDropDownListTenderedMonth("ShipTo");
                 var ddlTruckType = ddl.GetDropDownListTenderedMonth("TruckType");
 
+                ViewBag.TenderUser = new SelectList(ddlTenderUser.ToList(), "Id", "Name");
                 ViewBag.ShipPoint = new SelectList(ddlShipPoint.ToList(), "Id", "Name");
                 ViewBag.ShipTo = new SelectList(ddlShipTo.ToList(), "Id", "Name");
                 ViewBag.TruckType = new SelectList(ddlTruckType.ToList(), "Id", "Name");

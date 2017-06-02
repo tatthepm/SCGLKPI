@@ -5,6 +5,7 @@ using System.Web;
 
 namespace SCGLKPIUI.Models.Tendered {
     public class AdjustTenderedViewModels {
+        public string TenderUser { get; set; }
         public string Shipment { get; set; }
         public string CarrierId { get; set; }
         public string RegionId { get; set; }

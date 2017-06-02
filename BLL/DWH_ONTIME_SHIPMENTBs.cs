@@ -13,7 +13,6 @@ namespace BLL {
         public DWH_ONTIME_SHIPMENTBs() {
             objDb = new DWH_ONTIME_SHIPMENTDb();
         }
-
         //GetAll
         public IQueryable<DWH_ONTIME_SHIPMENT> GetAll() {
             return objDb.GetAll();

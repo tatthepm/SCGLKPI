@@ -21,7 +21,7 @@
 </h4>
 
 @*filter by month*@
-@Html.Partial("pv_FilterSegmentByMonth")
+@Html.Partial("pv_FilterTenderUserByMonth")
 
 @Html.Partial("pv_AdjustTendered")
 
@@ -195,7 +195,7 @@
                         if (xhr.readyState == 4 && xhr.status == 200) {
                             $("#loading").hide();
                             swal("ผลการดำเนินการ", xhr.responseText);
-                            if (($('#SegmentId').val() == "") || ($('#ShipPoint').val() == "") || ($('#YearId').val() == "") || ($('#MonthId').val() == "")) {
+                            if (($('#TenderUser').val() == "") || ($('#ShipPoint').val() == "") || ($('#YearId').val() == "") || ($('#MonthId').val() == "")) {
                             }
                             else {
                                 loadDataTable();
@@ -211,59 +211,110 @@
         });
 
         //#region 3 filter ShippingPoint,Shipto,TruckType
-        $("#SegmentId").change(function (res) {
-            segmentId = $("#SegmentId").val();
-            //$.getJSON('/AdjustTendered/ShiptoFilter?SegmentId=' + segmentId, function (data) {
-            //    var ddl = $("#ShipTo");
-            //    // ddl.removeAttrs('disabled style');
-            //    ddl.addClass('js-source-states');
-            //    var string = '<option value="">ALL</option>';
-            //    $.each(data, function (i, S) {
-            //        string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-            //    });
-            //    ddl.html(string);
-            //    ddl.select2('val', '');
-            //});
-            $.getJSON('/AdjustTendered/ShippingPointFilter?SegmentId=' + segmentId, function (data) {
-                var ddl = $("#ShipPoint");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+        $("#YearId").change(function (res) {
+            yearId = $("#YearId").val();
+            monthId = $("#MonthId").val();
+            if ($('#MonthId').val() != "") {
+                $.getJSON('/AdjustTendered/UserFilter?YearId=' + yearId + '&MonthId=' + monthId, function (data) {
+                    var ddl = $("#TenderUser");
+                    // ddl.removeAttrs('disabled style');
+                    ddl.addClass('js-source-states');
+                    var string = '<option value="">ALL</option>';
+                    $.each(data, function (i, S) {
+                        string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                    });
+                    ddl.html(string);
+                    ddl.select2('val', '');
                 });
-                ddl.html(string);
-                ddl.select2('val', '');
-            });
-            $.getJSON('/AdjustTendered/truckTypeFilter?SegmentId=' + segmentId, function (data) {
-                var ddl = $("#TruckType");
-                // ddl.removeAttrs('disabled style');
-                ddl.addClass('js-source-states');
-                var string = '<option value="">ALL</option>';
-                $.each(data, function (i, S) {
-                    string += '<option value="' + S.Id + '">' + S.Name + '</option>'
-                });
-                ddl.html(string);
-                ddl.select2('val', '');
-            });
+            }
         });
-        //#endregion
+        $("#MonthId").change(function (res) {
+            yearId = $("#YearId").val();
+            monthId = $("#MonthId").val();
+            if ($('#MonthId').val() != "") {
+                $.getJSON('/AdjustTendered/UserFilter?YearId=' + yearId + '&MonthId=' + monthId, function (data) {
+                    var ddl = $("#TenderUser");
+                    // ddl.removeAttrs('disabled style');
+                    ddl.addClass('js-source-states');
+                    var string = '<option value="">ALL</option>';
+                    $.each(data, function (i, S) {
+                        string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+                    });
+                    ddl.html(string);
+                    ddl.select2('val', '');
+                });
+            }
+        });
 
-        $("#btnExcelModal").click(function () {
-            if ($('#SegmentId').val() == "") {
+        $("#TenderUser").click(function (res) {
+            if ($('#YearId').val() == "") {
                 swal({
                     title: "Warning!",
-                    text: "Sorry!, Segments is not selected ",
+                    text: "Sorry!, Year is not selected ",
                     type: "warning"
                 });
             }
-            //else if ($('#ShipPoint').val() == "") {
-            //    swal({
-            //        title: "Warning!",
-            //        text: "Sorry!, Shipping Point is not selected ",
-            //        type: "warning"
-            //    });
-            //}
+            else if ($('#MonthId').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Month is not selected ",
+                    type: "warning"
+                });
+            }
+        });
+        //$("#SegmentId").change(function (res) {
+        //    segmentId = $("#SegmentId").val();
+        //    $.getJSON('/PendingTender/ShiptoFilter?SegmentId=' + segmentId, function (data) {
+        //        var ddl = $("#ShipTo");
+        //        // ddl.removeAttrs('disabled style');
+        //        ddl.addClass('js-source-states');
+        //        var string = '<option value="">ALL</option>';
+        //        $.each(data, function (i, S) {
+        //            string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+        //        });
+        //        ddl.html(string);
+        //        ddl.select2('val', '');
+        //    });
+        //    $.getJSON('/PendingTender/ShippingPointFilter?SegmentId=' + segmentId, function (data) {
+        //        var ddl = $("#ShipPoint");
+        //        // ddl.removeAttrs('disabled style');
+        //        ddl.addClass('js-source-states');
+        //        var string = '<option value="">ALL</option>';
+        //        $.each(data, function (i, S) {
+        //            string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+        //        });
+        //        ddl.html(string);
+        //        ddl.select2('val', '');
+        //    });
+        //    $.getJSON('/PendingTender/truckTypeFilter?SegmentId=' + segmentId, function (data) {
+        //        var ddl = $("#TruckType");
+        //        // ddl.removeAttrs('disabled style');
+        //        ddl.addClass('js-source-states');
+        //        var string = '<option value="">ALL</option>';
+        //        $.each(data, function (i, S) {
+        //            string += '<option value="' + S.Id + '">' + S.Name + '</option>'
+        //        });
+        //        ddl.html(string);
+        //        ddl.select2('val', '');
+        //    });
+        //});
+        //#endregion
+
+        $("#btnExcelModal").click(function () {
+            if ($('#TenderUser').val() == "") {
+                swal({
+                    title: "Warning!",
+                    text: "Sorry!, Tender user is not selected ",
+                    type: "warning"
+                });
+            }
+                //else if ($('#ShipPoint').val() == "") {
+                //    swal({
+                //        title: "Warning!",
+                //        text: "Sorry!, Shipping Point is not selected ",
+                //        type: "warning"
+                //    });
+                //}
             else if ($('#YearId').val() == "") {
                 swal({
                     title: "Warning!",
@@ -278,7 +329,8 @@
                 });
             }
             else {
-                var segmentId = $('#SegmentId').val();
+                var tenderUser = $('#TenderUser').val();
+                //var segmentId = $('#SegmentId').val();
                 var ShipPoint = $('#ShipPoint').val();
                 var TruckType = $('#TruckType').val();
                 var yearId = $('#YearId').val();
@@ -286,7 +338,7 @@
 
                 $("#excelBody").append('<input type="hidden" name="monthId" value="' + monthId + '" />\n\
                 <input type="hidden" name="yearId" value="' + yearId + '" />\n\
-                <input type="hidden" name="segmentId" value="' + segmentId + '" />\n\
+                <input type="hidden" name="tenderUser" value="' + tenderUser + '" />\n\
                 <input type="hidden" name="ShipPoint" value="' + ShipPoint + '" />\n\
                 <input type="hidden" name="TruckType" value="' + TruckType + '" />\n');
                 $("#excelModal").show();
@@ -314,20 +366,20 @@
             //    });
             //} else
 
-            if ($('#SegmentId').val() == "") {
+            if ($('#TenderUser').val() == "") {
                 swal({
                     title: "Warning!",
-                    text: "Sorry!, Segments is not selected ",
+                    text: "Sorry!, Tender user is not selected ",
                     type: "warning"
                 });
             }
-            //else if ($('#ShipPoint').val() == "") {
-            //    swal({
-            //        title: "Warning!",
-            //        text: "Sorry!, Shipping Point is not selected ",
-            //        type: "warning"
-            //    });
-            //}
+                //else if ($('#ShipPoint').val() == "") {
+                //    swal({
+                //        title: "Warning!",
+                //        text: "Sorry!, Shipping Point is not selected ",
+                //        type: "warning"
+                //    });
+                //}
             else if ($('#YearId').val() == "") {
                 swal({
                     title: "Warning!",
@@ -375,7 +427,7 @@
                     xhr.send(formdata);
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState == 4 && xhr.status == 200) {
-                            swal("ผลการดำเนินการ",xhr.responseText);
+                            swal("ผลการดำเนินการ", xhr.responseText);
                         }
                     }
                 }
@@ -450,13 +502,14 @@
 
             //#region table
             // on-time tender monthly dataTable
-            var segmentId = $('#SegmentId').val();
+            //var segmentId = $('#SegmentId').val();
             var yearId = $('#YearId').val();
             var monthId = $('#MonthId').val();
 
-            var ShipPoint = $('#ShipPoint').val();
+            //var ShipPoint = $('#ShipPoint').val();
             //var ShipTo = $('#ShipTo').val();
-            var TruckType = $('#TruckType').val();
+            //var TruckType = $('#TruckType').val();
+            var tenderUser = $('#TenderUser').val();
 
             var adjustTender = $('#adjustTenderedTable').dataTable();
             adjustTender.fnDestroy();
@@ -470,16 +523,18 @@
                         //d.departmentId = departmentId;
                         //d.sectionId = sectionId;
                         //d.matNameId = matNameId;
-                        d.segmentId = segmentId;
+                        //d.segmentId = segmentId;
+                        d.TenderUser = tenderUser;
                         d.YearId = yearId;
                         d.MonthId = monthId;
-                        d.ShipPoint = ShipPoint;
+                        //d.ShipPoint = ShipPoint;
                         //d.ShipTo = ShipTo;
-                        d.TruckType = TruckType;
+                        //d.TruckType = TruckType;
                     },
                     "dataSrc": ""
                 },
                 columns: [
+                    { data: "TenderUser" },
                { data: "Shipment" },
                { data: "RegionName" },
                { data: "SoldtoName" },
@@ -496,17 +551,17 @@
                                 "mRender": function (data, type, full) {
                                     return reasonString;
                                 },
-                                "targets": 10
+                                "targets": 11
                             },
                             {
-                                "targets": 11,
+                                "targets": 12,
                                 "data": function (row, type, val, meta) {
                                     return '<input name="fileInput" type="file" multiple>\n\
                                             <input type="hidden" name="fileName" value="' + row.Shipment + '">';
                                 }
                             },
                             {
-                                "targets": 12,
+                                "targets": 13,
                                 "data": function (row, type, val, meta) {
                                     return '<input type="text" name="txtRemark" />\n\
                                             <input type="hidden" name="txtSM" value="' + row.Shipment + '">';

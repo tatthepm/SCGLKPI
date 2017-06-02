@@ -26,6 +26,9 @@ namespace BLL {
         public OperationDailyBs OperationDailyBs { get; set; }
         public SaleDailyBs SaleDailyBs { get; set; }
         public CarrierDailyBs CarrierDailyBs { get; set; }
+        public ShippingPointBs ShippingPointBs { get; set; }
+        public TenderUserBs TenderUserBs { get; set; }
+
         //accepted
         public OntimeAcceptBs ontimeAcceptBs { get; set; }
         public OntimeAcceptMonthBs ontimeAcceptMonthBs { get; set; }
@@ -97,6 +100,8 @@ namespace BLL {
             OperationDailyBs = new OperationDailyBs();
             SaleDailyBs = new SaleDailyBs();
             CarrierDailyBs = new CarrierDailyBs();
+            ShippingPointBs = new ShippingPointBs();
+            TenderUserBs = new TenderUserBs();
 
             //tendered
             ontimeTenderBs = new OntimeTenderBs();

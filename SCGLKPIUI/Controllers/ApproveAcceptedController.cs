@@ -149,10 +149,10 @@ namespace SCGLKPIUI.Controllers
                         objBs.acceptedAdjustedBs.Delete(sm);
 
                         //update sum of adjust daily
-                        DateTime LACPDDate = Convert.ToDateTime(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).LACPDDATE_D);
-                        string matNameId = Convert.ToString(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).MATFRIGRP);
-                        string sectionId = Convert.ToString(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).SECTION_ID);
-                        string departmentId = Convert.ToString(objBs.dWH_ONTIME_SHIPMENTBs.GetByID(sm).DEPARTMENT_ID);
+                        DateTime LACPDDate = Convert.ToDateTime(ontimeShipment.LACPDDATE_D);
+                        string matNameId = Convert.ToString(ontimeShipment.MATFRIGRP);
+                        string sectionId = Convert.ToString(ontimeShipment.SECTION_ID);
+                        string departmentId = Convert.ToString(ontimeShipment.DEPARTMENT_ID);
 
                         if (isadjust)
                         {

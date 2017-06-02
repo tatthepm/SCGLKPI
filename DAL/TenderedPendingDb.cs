@@ -28,6 +28,18 @@ namespace DAL {
                              }).Distinct();
             return Queryable;
         }
+        //GetByUser
+        public IQueryable<BOLDropdownLists> GetByUser(int month, int year)
+        {
+            var Queryable = (from m in db.TenderPendings
+                             where m.PLNTNRDDATE_D.Value.Year == year && m.PLNTNRDDATE_D.Value.Month == month
+                             select new BOLDropdownLists
+                             {
+                                 Id = m.CRTD_USR_CD,
+                                 Name = m.CRTD_USR_CD,
+                             }).Distinct();
+            return Queryable;
+        }
         //GetByShipPoint
         public IQueryable<BOLDropdownLists> GetByShipPoint(string segment)
         {

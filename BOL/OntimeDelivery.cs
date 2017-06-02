@@ -9,16 +9,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BOL {
     public class OntimeDelivery {
         public int Id { get; set; }
-
+        [Index(IsUnique = false)]
         [Column(TypeName = "datetime2")]
         public DateTime? ActualGiDate { get; set; }
-
+        
         [StringLength(5)]
+        [Index(IsUnique = false)]
         public string DepartmentId { get; set; }
 
         public string DepartmentName { get; set; }
-
+        
         [StringLength(5)]
+        [Index(IsUnique = false)]
         public string SectionId { get; set; }
 
         public string SectionName { get; set; }
@@ -48,10 +50,12 @@ namespace BOL {
         public string KpiName { get; set; }
 
         [StringLength(10)]
+        [Index(IsUnique = false)]
         public string SoldToId { get; set; }
         [StringLength(800)]
         public string SoldToName { get; set; }
         [StringLength(10)]
+        [Index(IsUnique = false)]
         public string CarrierId { get; set; }
         [StringLength(800)]
         public string CarrierName { get; set; }

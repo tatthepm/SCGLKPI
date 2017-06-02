@@ -12,6 +12,10 @@ namespace BLL {
         public TenderedPendingBs() {
             objDb = new TenderedPendingDb();
         }
+        public IQueryable<BOLDropdownLists> GetByUser(int month, int year)
+        {
+            return objDb.GetByUser(month,year);
+        }
         public IQueryable<BOLDropdownLists> GetByShipto(string segment)
         {
             return objDb.GetByShipto(segment);

@@ -20,18 +20,18 @@
                         <div class="col-md-2">
                             @Html.DropDownList("ShipPoint", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
                         </div>
-                        
-                        @*<div class="col-md-1">@Html.Label("Ship To")</div>
+
+                        <div class="col-md-1">@Html.Label("Ship To")</div>
                         <div class="col-md-3">
                             @Html.DropDownList("ShipTo", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
-                        </div>*@
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
                         <div class="col-md-1">@Html.Label("Truck Type")</div>
                         <div class="col-md-2">
                             @Html.DropDownList("TruckType", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
                         </div>
-                    </div>
-                    <div class="form-group">
-                        
                         <div class="col-md-1">@Html.Label("FROM ", new { @style = "width:100%" })<span style="color:red">*</span></div>
                         <div class="col-md-2">
                             <div class="input-group date">
@@ -44,6 +44,10 @@
                                 <input type="text" class="form-control" id="ToDateSearch" placeholder="YYYY/MM/DD" name="ToDateSearch"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </div>
                         </div>
+                        @*<div class="col-md-1">@Html.Label("Tender User")<span style="color:red">*</span></div>
+                        <div class="col-md-2">
+                            @Html.DropDownList("TenderUser", null, "ALL", new { @class = "js-source-states", @style = "width: 100%" })
+                        </div>*@
                         <div class="col-md-1">
                             <button class="ladda-button btn btn-success" data-style="slide-down" id="btnSearch"><span class="ladda-label">Submit</span><span class="ladda-spinner"></span></button>
                         </div>

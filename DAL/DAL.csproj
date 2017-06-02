@@ -62,6 +62,7 @@
     <Compile Include="EquipmentTypesDb.cs" />
     <Compile Include="OperationDailyDb.cs" />
     <Compile Include="SaleDailyDb.cs" />
+    <Compile Include="TenderUserDb.cs" />
     <Compile Include="TenderedFilesDb.cs" />
     <Compile Include="AcceptedFilesDb.cs" />
     <Compile Include="AcceptedPendingDb.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="RoleDb.cs" />
     <Compile Include="TenderedAdjustedDb.cs" />
     <Compile Include="TenderedDelayDb.cs" />
+    <Compile Include="ShippingPointDb.cs" />
     <Compile Include="TenderedPendingDb.cs" />
     <Compile Include="TUserDb.cs" />
   </ItemGroup>
